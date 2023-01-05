@@ -114,9 +114,8 @@ class PDS:
         else:
             line = None
 
-        for file in files:
-            filename = file[0]
-            label = file[1]
+        for label in files:
+            filename = files[label]
 
             data = self.read_data(filename)
             x_data = data[0]

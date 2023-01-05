@@ -145,16 +145,23 @@ class LBIC:
         return True
 
     def show_image(self, file, range=None, color='turbid', profiles=None):
+        # Only one image can be shown
+        if len(file) != 1:
+            return "Err: Exactly one image can be generated at a time"
+
+        # Grab filename
+        filename = next(iter(file.values()))
         self.style_image(profiles)
-        filename = file[0][0]
         self.read_data(filename)
 
+        # Set range
         if range is None:
             range = [0, 0]
             zauto = True
         else:
             zauto = False
 
+        # Generate image as heatmap including the colorscale
         self.fig.add_trace(
             go.Heatmap(
                 x=self.x,
@@ -173,9 +180,16 @@ class LBIC:
         return "Image opened in browser"
 
     def plot_intensities(self, file):
-        self.read_data(file[0][0])
+        # Only one dataset can be parsed
+        if len(file) != 1:
+            return "Err: Exactly one dataset can be parsed at a time"
+
+        # Grab filename
+        filename = next(iter(file.values()))
+        self.read_data(filename)
         self.style_distribution()
 
+        # Compute intensity histogram
         data = [zval for zrow in self.z for zval in zrow]
         self.fig.add_trace(
             go.Histogram(x=data, histnorm='probability')
@@ -184,7 +198,13 @@ class LBIC:
         return "Plot opened in browser"
 
     def plot_horiz_profile(self, file, ycoord=None):
-        self.read_data(file[0][0])
+        # Only one dataset can be parsed
+        if len(file) != 1:
+            return "Err: Exactly one profile can be produced at a time"
+
+        # Grab filename
+        filename = next(iter(file.values()))
+        self.read_data(filename)
         self.style_profile()
 
         # Find nearest to given y value

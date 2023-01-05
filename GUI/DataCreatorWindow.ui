@@ -6,325 +6,549 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>572</width>
-    <height>636</height>
+    <width>545</width>
+    <height>639</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Data Creation</string>
   </property>
-  <widget class="QPushButton" name="doneBtn">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>470</x>
-     <y>560</y>
-     <width>75</width>
-     <height>30</height>
+     <x>10</x>
+     <y>10</y>
+     <width>522</width>
+     <height>611</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <family>Open Sans</family>
-     <pointsize>11</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Done</string>
-   </property>
-   <property name="icon">
-    <iconset theme="application-exit">
-     <normaloff>C:/Users/lucp8023/.designer/backup</normaloff>C:/Users/lucp8023/.designer/backup</iconset>
-   </property>
-  </widget>
-  <widget class="QFrame" name="frame">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>140</y>
-     <width>521</width>
-     <height>161</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Open Sans</family>
-     <pointsize>11</pointsize>
-    </font>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::WinPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Sunken</enum>
-   </property>
-   <widget class="QPlainTextEdit" name="browseText">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>50</y>
-      <width>331</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Open Sans</family>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="tabChangesFocus">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="browseBtn">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>79</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Open Sans</family>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Browse</string>
-    </property>
-   </widget>
-   <widget class="QPlainTextEdit" name="labelText">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>10</y>
-      <width>331</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Open Sans</family>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="tabChangesFocus">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="addLabelBtn">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>120</y>
-      <width>121</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Open Sans</family>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Add to set</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>151</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Open Sans</family>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>File Label</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>50</y>
-      <width>151</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Open Sans</family>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>File Location</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QFrame" name="frame_2">
-   <property name="geometry">
-    <rect>
-     <x>29</x>
-     <y>20</y>
-     <width>521</width>
-     <height>111</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Open Sans</family>
-     <pointsize>11</pointsize>
-    </font>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::WinPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Sunken</enum>
-   </property>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>151</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Open Sans</family>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Dataset Name</string>
-    </property>
-   </widget>
-   <widget class="QPlainTextEdit" name="nameText">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>20</y>
-      <width>331</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Open Sans</family>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="tabChangesFocus">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>60</y>
-      <width>151</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Open Sans</family>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Data type</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="dataTypeCombo">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>60</y>
-      <width>331</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Open Sans</family>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <property name="text">
-      <string>Sunbrick</string>
-     </property>
+     <widget class="QFrame" name="frame_2">
+      <property name="minimumSize">
+       <size>
+        <width>520</width>
+        <height>80</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Open Sans</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::WinPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>501</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Dataset Name</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="nameEdit">
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Data type</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QComboBox" name="dataTypeCombo">
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <item>
+             <property name="text">
+              <string>Sunbrick</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>DW2000</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>LBIC</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PDS</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PTI</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </item>
     <item>
-     <property name="text">
-      <string>DW2000</string>
-     </property>
+     <widget class="QFrame" name="frame">
+      <property name="minimumSize">
+       <size>
+        <width>520</width>
+        <height>250</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Open Sans</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::WinPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>500</width>
+         <height>211</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>500</width>
+         <height>210</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Open Sans</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="tabPosition">
+        <enum>QTabWidget::West</enum>
+       </property>
+       <property name="tabShape">
+        <enum>QTabWidget::Triangular</enum>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <property name="documentMode">
+        <bool>false</bool>
+       </property>
+       <widget class="QWidget" name="manual_tab">
+        <attribute name="title">
+         <string>Manual</string>
+        </attribute>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>451</width>
+           <height>201</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QLabel" name="instruction">
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Type in a label and browse for the corresponding file. Click &amp;quot;&lt;/span&gt;&lt;span style=&quot; font-size:11pt; font-style:italic;&quot;&gt;Add to set&lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;&amp;quot; to add the file to the current dataset.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QLabel" name="legend_label">
+              <property name="font">
+               <font>
+                <family>Open Sans</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>File Label</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="labelEdit">
+              <property name="font">
+               <font>
+                <family>Open Sans</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <widget class="QLabel" name="file_location">
+                <property name="font">
+                 <font>
+                  <family>Open Sans</family>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>File Location</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="browseFilesBtn">
+                <property name="font">
+                 <font>
+                  <family>Open Sans</family>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Browse</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="browseFilesText">
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>60</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Open Sans</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="tabChangesFocus">
+               <bool>true</bool>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="addLabelBtn">
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Add to set</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="auto_tab">
+        <attribute name="title">
+         <string>Automatic</string>
+        </attribute>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>451</width>
+           <height>201</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0">
+          <item>
+           <widget class="QLabel" name="instruction_2">
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Browse for the correct directory. All files within the directory will be used to create a new dataset. Labels for legends will be automatically generated.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <widget class="QLabel" name="dir_label">
+                <property name="font">
+                 <font>
+                  <family>Open Sans</family>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Directory</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="browseDirBtn">
+                <property name="font">
+                 <font>
+                  <family>Open Sans</family>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Browse</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="browseDirText">
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>60</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Open Sans</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="tabChangesFocus">
+               <bool>true</bool>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="generateBtn">
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Generate</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
     </item>
     <item>
-     <property name="text">
-      <string>LBIC</string>
-     </property>
+     <widget class="QPlainTextEdit" name="showSetPlainText">
+      <property name="font">
+       <font>
+        <family>Open Sans</family>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="tabChangesFocus">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="centerOnScroll">
+       <bool>true</bool>
+      </property>
+     </widget>
     </item>
     <item>
-     <property name="text">
-      <string>PDS</string>
-     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QPushButton" name="resetBtn">
+        <property name="font">
+         <font>
+          <family>Open Sans</family>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Reset</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="doneBtn">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="font">
+         <font>
+          <family>Open Sans</family>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Done</string>
+        </property>
+        <property name="icon">
+         <iconset theme="application-exit">
+          <normaloff>C:/Users/lucp8023/.designer/backup</normaloff>C:/Users/lucp8023/.designer/backup</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
-    <item>
-     <property name="text">
-      <string>PTI</string>
-     </property>
-    </item>
-   </widget>
-  </widget>
-  <widget class="QPlainTextEdit" name="showSetPlainText">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>310</y>
-     <width>521</width>
-     <height>241</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Open Sans</family>
-     <pointsize>11</pointsize>
-    </font>
-   </property>
-   <property name="tabChangesFocus">
-    <bool>true</bool>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
+   </layout>
   </widget>
  </widget>
  <tabstops>
-  <tabstop>nameText</tabstop>
-  <tabstop>labelText</tabstop>
-  <tabstop>browseText</tabstop>
-  <tabstop>showSetPlainText</tabstop>
-  <tabstop>browseBtn</tabstop>
+  <tabstop>nameEdit</tabstop>
+  <tabstop>dataTypeCombo</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>labelEdit</tabstop>
+  <tabstop>browseFilesText</tabstop>
+  <tabstop>browseFilesBtn</tabstop>
   <tabstop>addLabelBtn</tabstop>
+  <tabstop>browseDirText</tabstop>
+  <tabstop>browseDirBtn</tabstop>
+  <tabstop>generateBtn</tabstop>
+  <tabstop>showSetPlainText</tabstop>
+  <tabstop>resetBtn</tabstop>
   <tabstop>doneBtn</tabstop>
  </tabstops>
  <resources/>

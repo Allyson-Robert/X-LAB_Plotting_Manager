@@ -1,63 +1,75 @@
-import numpy as np
-import csv
-import json
 import plotly.graph_objects as go
+import numpy as np
+import json
+import csv
 
 
 class Sunbrick:
     """
-    A class to read in data from the sunbrick setup. The plots can be of a single measurement of multiple cells or can
-    show the time evolution of cell properties.
-    Single measurement plot types:
-        - IV curves
-        - PV curves
-    Time evolution plot types:
-        - FF
-        - MPP
-        - PCE
-        - Isc/Jsc
-        - Voc
+        A class to read in data from the sunbrick setup. The plots can be of a single measurement of multiple cells or can
+        show the time evolution of cell properties.
+        Single measurement plot types:
+            - IV curves (complete data or truncated)
+            - PV curves
+        Time evolution plot for stability measurements:
+            - FF
+            - PCE
+            - Isc/Jsc
+            - Voc
+        Data sets should be dictionaries containing file paths as values. Dicts are allowed to be nested 1 level deep.
     """
     def __init__(self, files):
-        self.data = []
-        for file in files:
-            voltage, current = self.read_data(file[0])
-
-            self.data.append({
-                'label': '',
-                'xdata': [],
-                'ydata': [],
-                'voltage': [],
-                'current': [],
-                'Isc': 0,
-                'Voc': 0,
-                'maxpwr': {},
-                'mpp': [],
-                'FF': 0,
-                'Rsh': 0,
-                'Rs': 0
-            })
-            self.data[-1]['label'] = file[1]
-            self.data[-1]['xdata'] = voltage
-            self.data[-1]['ydata'] = current
-
-            self.determine_crossings(self.data[-1])
-            self.determine_mpp(self.data[-1])
+        self.data = {}
+        for key in files:
+            self.data[key] = {}
+            if type(files[key]) == dict:
+                for filename in files[key]:
+                    if type(files[key][filename]) == str:
+                        try:
+                            self.data[key][filename] = self.read_data(files[key][filename])
+                        except Exception as e:
+                            print(f"Reading file {filename} failed: {e}")
+            elif type(files[key]) == str:
+                try:
+                    self.data[key] = self.read_data(files[key])
+                except Exception as e:
+                    print(f"Reading file {filename} failed: {e}")
 
     def read_data(self, filename):
+        datadict = {
+            'label': filename,
+            'xdata': [],
+            'ydata': [],
+            'voltage': [],
+            'current': [],
+            'Isc': 0,
+            'Voc': 0,
+            'maxpwr': {},
+            'mpp': [],
+            'FF': 0,
+            'Rsh': 0,
+            'Rs': 0
+        }
+
         with open(filename) as csvfile:
             reader = csv.reader(csvfile, delimiter='\t')
             voltage = []
             current = []
-            power = []
             for [i, j] in reader:
                 if i and j:
                     voltage.append(float(i))
                     current.append(float(j))
-        return voltage, current
 
-    def determine_crossings(self, set):
-        size = len(set['xdata'])
+        datadict['xdata'] = voltage
+        datadict['ydata'] = current
+
+        self.determine_crossings(datadict)
+        self.determine_mpp(datadict)
+
+        return datadict
+
+    def determine_crossings(self, dataset):
+        size = len(dataset['xdata'])
         isc_found = False
         isc = 0
         voc_found = False
@@ -72,22 +84,22 @@ class Sunbrick:
         # Search for Voc and Isc
         for i in range(1, size):
             if isc_found and voc_found:
-                set['Voc'] = voc
-                set['Isc'] = isc
+                dataset['Voc'] = voc
+                dataset['Isc'] = isc
 
-                set['voltage'] = set['xdata'][start_idx:end_idx]
-                set['current'] = set['ydata'][start_idx:end_idx]
+                dataset['voltage'] = dataset['xdata'][start_idx:end_idx]
+                dataset['current'] = dataset['ydata'][start_idx:end_idx]
 
-                set['Rsh'] = rsh
-                set['Rs'] = rs
+                dataset['Rsh'] = rsh
+                dataset['Rs'] = rs
 
                 return 0
 
-            prev_voltage = set['xdata'][i-1]
-            voltage = set['xdata'][i]
+            prev_voltage = dataset['xdata'][i-1]
+            voltage = dataset['xdata'][i]
 
-            prev_current = set['ydata'][i-1]
-            current = set['ydata'][i]
+            prev_current = dataset['ydata'][i-1]
+            current = dataset['ydata'][i]
 
             xp = [prev_voltage, voltage]
             yp = [prev_current, current]
@@ -106,72 +118,25 @@ class Sunbrick:
                 voc = np.interp(0, yp, xp)
                 rs = (voltage-prev_voltage)/(current - prev_current)
 
-    def determine_mpp(self, set):
+    def determine_mpp(self, dataset):
         # Determine MPP within the Isc - Voc range of the power curve, save MPP and index
-        pwrdata = [abs(set['voltage'][i] * set['current'][i]) for i in range(len(set['voltage']))]
-        # print(pwrdata)
-        set['power'] = pwrdata
+        pwrdata = [abs(dataset['voltage'][i] * dataset['current'][i]) for i in range(len(dataset['voltage']))]
+        dataset['power'] = pwrdata
         maxpwr = max(pwrdata)
         maxpwridx = pwrdata.index(maxpwr)
-        set['maxpwr'] = [maxpwridx, maxpwr]
-        set['mpp'] = {
-            'v': set['voltage'][maxpwridx],
-            'i': set['current'][maxpwridx],
+        dataset['maxpwr'] = [maxpwridx, maxpwr]
+        dataset['mpp'] = {
+            'v': dataset['voltage'][maxpwridx],
+            'i': dataset['current'][maxpwridx],
             'p': maxpwr,
-            'r': abs(set['voltage'][maxpwridx]/set['current'][maxpwridx])
+            'r': abs(dataset['voltage'][maxpwridx]/dataset['current'][maxpwridx])
         }
 
-        set['FF'] = maxpwr/(set['Voc']*set['Isc'])
+        dataset['FF'] = maxpwr/(dataset['Voc']*dataset['Isc'])
 
         return 0
 
-    def plot_fulliv(self, title):
-        fig = go.Figure()
-        fig.update_layout(
-            title={
-                'text': title,
-                'y':0.9,
-                'x':0.5,
-                'xanchor': 'center',
-                'yanchor': 'top'
-            },
-            xaxis_title="Voltage (V)",
-            yaxis_title="Current (A)",
-            legend_title="Sample",
-            font=dict(
-                family="Open Sans",
-                size=18,
-                color="RebeccaPurple"
-            ),
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)'
-        )
-
-        fig.update_xaxes(
-            showline=True,
-            linewidth=2,
-            linecolor='black',
-            ticks="outside"
-        )
-
-        fig.update_yaxes(
-            showline=True,
-            linewidth=2,
-            linecolor='black',
-            ticks="outside"
-        )
-
-        for set in self.data:
-            fig.add_trace(go.Scatter(
-                x=set['xdata'],
-                y=set['ydata'],
-                mode='lines',
-                name=set['label']
-            ))
-        fig.show()
-        return "Full IV curve opened in browser"
-
-    def plot_iv(self, title, presentation=False):
+    def prep(self, title, type='iv'):
         fig = go.Figure()
         fig.update_layout(
             title={
@@ -181,8 +146,6 @@ class Sunbrick:
                 'xanchor': 'center',
                 'yanchor': 'top'
             },
-            xaxis_title="Voltage (V)",
-            yaxis_title="Current (A)",
             legend_title="Sample",
             font=dict(
                 family="Open Sans",
@@ -192,6 +155,16 @@ class Sunbrick:
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)'
         )
+        if type == 'iv':
+            fig.update_layout(
+                xaxis_title="Voltage (V)",
+                yaxis_title="Current (A)",
+            )
+        elif type == 'pv':
+            fig.update_layout(
+                xaxis_title="Voltage (V)",
+                yaxis_title="Power (W)",
+            )
 
         fig.update_xaxes(
             showline=True,
@@ -206,8 +179,23 @@ class Sunbrick:
             linecolor='black',
             ticks="outside"
         )
-        fig.update_xaxes(showgrid=False)
-        fig.update_yaxes(showgrid=False)
+
+        return fig
+
+    def plot_fulliv(self, title):
+        fig = self.prep(title)
+        for dataset in self.data:
+            fig.add_trace(go.Scatter(
+                x=dataset['xdata'],
+                y=dataset['ydata'],
+                mode='lines',
+                name=dataset['label']
+            ))
+        fig.show()
+        return "Full IV curve opened in browser"
+
+    def plot_iv(self, title, presentation=False):
+        fig = self.prep(title, presentation)
 
         if presentation:
             line = go.scatter.Line(width=5)
@@ -217,31 +205,32 @@ class Sunbrick:
         else:
             line = None
 
-        for set in self.data:
+        for lbl in self.data:
+            dataset = self.data[lbl]
             fig.add_trace(go.Scatter(
-                x=set['voltage'],
-                y=set['current'],
+                x=dataset['voltage'],
+                y=dataset['current'],
                 mode='lines',
-                name=set['label'],
+                name=dataset['label'],
                 line=line
             ))
             fig.add_trace(go.Scatter(
-                x=[set['voltage'][set['maxpwr'][0]]],
-                y=[set['current'][set['maxpwr'][0]]],
+                x=[dataset['voltage'][dataset['maxpwr'][0]]],
+                y=[dataset['current'][dataset['maxpwr'][0]]],
                 mode='markers',
                 marker_color='black',
                 showlegend=False
             ))
             fig.add_trace(go.Scatter(
                 x=[0],
-                y=[set['Isc']],
+                y=[dataset['Isc']],
                 mode='markers',
                 marker_color='red',
                 # symbol_sequence=['x-thin'],
                 showlegend=False
             ))
             fig.add_trace(go.Scatter(
-                x=[set['Voc']],
+                x=[dataset['Voc']],
                 y=[0],
                 mode='markers',
                 marker_color='blue',
@@ -251,52 +240,25 @@ class Sunbrick:
         fig.show()
         return "Truncated IV curve opened in browser"
 
+    def plot_stability(self, title):
+        # Prep the plotting area
+        print(self.data)
+        return "Cell properties opened in browser"
+
     def plot_pv(self, title):
-        fig = go.Figure()
-        fig.update_layout(
-            title={
-                'text': title,
-                'y': 0.9,
-                'x': 0.5,
-                'xanchor': 'center',
-                'yanchor': 'top'
-            },
-            xaxis_title="Voltage (V)",
-            yaxis_title="Power (W)",
-            legend_title="Sample",
-            font=dict(
-                family="Open Sans",
-                size=18,
-                color="RebeccaPurple"
-            ),
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)'
-        )
+        fig = self.prep(title, type='pv')
 
-        fig.update_xaxes(
-            showline=True,
-            linewidth=2,
-            linecolor='black',
-            ticks="outside"
-        )
-
-        fig.update_yaxes(
-            showline=True,
-            linewidth=2,
-            linecolor='black',
-            ticks="outside"
-        )
-
-        for set in self.data:
+        for lbl in self.data:
+            dataset = self.data[lbl]
             fig.add_trace(go.Scatter(
-                x=set['voltage'],
-                y=set['power'],
+                x=dataset['voltage'],
+                y=dataset['power'],
                 mode='lines',
-                name=set['label']
+                name=dataset['label']
             ))
             fig.add_trace(go.Scatter(
-                x=[set['voltage'][set['maxpwr'][0]]],
-                y=[set['power'][set['maxpwr'][0]]],
+                x=[dataset['voltage'][dataset['maxpwr'][0]]],
+                y=[dataset['power'][dataset['maxpwr'][0]]],
                 mode='markers',
                 marker_color='black',
                 showlegend=False

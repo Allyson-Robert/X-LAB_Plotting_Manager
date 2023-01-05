@@ -5,12 +5,16 @@ import plotly.graph_objects as go
 
 class DW2000:
     """
-    A class to read in data from the dw2000 setup. It can read both excel and csv files regardless of the delimiter
+        A class to read in data from the dw2000 setup. It can read both excel and csv files regardless of the delimiter.
+        Datasets should be unnested dicts.
     """
 
     def __init__(self, title):
-        self.fig = go.Figure()
-        self.fig.update_layout(
+        self.fig = self.prep(title)
+
+    def prep(self, title):
+        fig = go.Figure()
+        fig.update_layout(
             title={
                 'text': title,
                 'y':0.9,
@@ -19,12 +23,12 @@ class DW2000:
                 'yanchor': 'top'
             },
         )
-        self.fig.update_layout(
+        fig.update_layout(
             xaxis_title="Wavelength (nm)",
             yaxis_title="Optical Density",
             legend_title="Sample",
         )
-        self.fig.update_layout(
+        fig.update_layout(
             font=dict(
                 family="Open Sans",
                 size=18,
@@ -32,36 +36,38 @@ class DW2000:
             )
         )
 
-        self.fig.update_layout(
+        fig.update_layout(
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)'
         )
 
-        self.fig.update_xaxes(
+        fig.update_xaxes(
             showline=True,
             linewidth=2,
             linecolor='black',
             ticks="outside"
         )
 
-        self.fig.update_yaxes(
+        fig.update_yaxes(
             showline=True,
             linewidth=2,
             linecolor='black',
             ticks="outside"
         )
 
-        self.fig.update_xaxes(
+        fig.update_xaxes(
             showgrid=True,
             gridwidth=1,
             gridcolor='black'
         )
 
-        self.fig.update_yaxes(
+        fig.update_yaxes(
             showgrid=True,
             gridwidth=1,
             gridcolor='black'
         )
+
+        return fig
 
     def read_data(self, filename):
         if 'xls' in filename.split('.')[-1]:
@@ -90,9 +96,8 @@ class DW2000:
     def plot(self, files, normalised=False):
         if len(files) == 0:
             return "Err: Must select file"
-        for file in files:
-            filename = file[0]
-            label = file[1]
+        for label in files:
+            filename = files[label]
             data = self.read_data(filename)
 
             x_data = data[0]

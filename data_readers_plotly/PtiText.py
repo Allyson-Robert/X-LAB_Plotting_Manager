@@ -67,9 +67,9 @@ class PtiText:
     #     )
 
     def read_data(self, filename):
-        # Two options for the contents of the file
-        # Either two columns with straight up data
-        # Or four with additional metadata in the first column
+        # Two options for the contents of the file, will open both
+        #       Either two columns with straight up data
+        #       Or four with additional metadata in the first column
         with open(filename) as csvfile:
             reader = csv.reader(csvfile, delimiter='\t')
             line = next(reader)
@@ -109,18 +109,19 @@ class PtiText:
         return data
 
     def plot(self, files):
-        for file in files:
-            data = file[0]
-            label = file[1]
-
-            data = self.read_data(data)
-            if data != None:
+        # Go through all the files in the dict
+        for label in files:
+            path = files[label]
+            # Read the data in the file and plot it if successful
+            data = self.read_data(path)
+            if data is not None:
                 self.fig.add_trace(go.Scatter(
                     x=data[0],
                     y=data[1],
                     mode='lines',
                     name=label
                 ))
-
-        self.fig.show()
-        return "Fluorescence spectra opened in browser"
+                self.fig.show()
+                return "Fluorescence spectra opened in browser"
+            else:
+                return "Err: Something went wrong when reading the file"
