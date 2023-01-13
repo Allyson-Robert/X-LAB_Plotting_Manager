@@ -141,6 +141,11 @@
               <string>PTI</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Generic</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>

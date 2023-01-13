@@ -1,3 +1,4 @@
+from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import numpy as np
 import json
@@ -240,9 +241,72 @@ class Sunbrick:
         fig.show()
         return "Truncated IV curve opened in browser"
 
+    def four_param_plot_area(self, title):
+        fig = make_subplots(
+            rows=2,
+            cols=2,
+            subplot_titles=("A", "B", "C", "D")
+        )
+
+        # edit axis labels
+        fig['layout']['xaxis']['title'] = 'Time (hrs)'
+        fig['layout']['yaxis']['title'] = 'I_sc (A)'
+
+        fig['layout']['xaxis2']['title'] = 'Time (in hrs)'
+        fig['layout']['yaxis2']['title'] = 'V_oc (V)'
+
+        fig['layout']['xaxis3']['title'] = 'Time (in hrs)'
+        fig['layout']['yaxis3']['title'] = 'Fill Factor'
+
+        fig['layout']['xaxis4']['title'] = 'Time (hrs)'
+        fig['layout']['yaxis4']['title'] = 'Efficiency'
+
+        fig.update_layout(title_text=title)
+        return fig
+
     def plot_stability(self, title):
         # Prep the plotting area
-        print(self.data)
+        fig = self.four_param_plot_area(title)
+
+        # Grab the values for Isc, Voc, FF and eff from the data
+        currents = {}
+        voltages = {}
+        fills = {}
+        efficiencies = {}
+        times = {}
+        for series in self.data:
+            currents[series] = []
+            voltages[series] = []
+            fills[series] = []
+            efficiencies[series] = []
+            times[series] = [0]
+            for point in self.data[series]:
+                currents[series].append(self.data[series][point]["Isc"])
+                voltages[series].append(self.data[series][point]["Voc"])
+                fills[series].append(self.data[series][point]["FF"])
+                # efficiencies[series].append(self.data[series][point]["eff"])
+                efficiencies[series].append(0)
+                times[series].append(times[series][-1]+1)
+
+            fig.add_trace(
+                go.Scatter(x=times[series], y=currents[series]),
+                row=1, col=1
+            )
+            fig.add_trace(
+                go.Scatter(x=times[series], y=voltages[series]),
+                row=1, col=2
+            )
+            fig.add_trace(
+                go.Scatter(x=times[series], y=fills[series]),
+                row=2, col=1
+            )
+            fig.add_trace(
+                go.Scatter(x=times[series], y=efficiencies[series]),
+                row=2, col=2
+            )
+        fig.show()
+
+        # Proceed with plotting
         return "Cell properties opened in browser"
 
     def plot_pv(self, title):
@@ -268,9 +332,9 @@ class Sunbrick:
 
     def print(self):
         for set in self.data:
-            prunedset =  {k: set[k] for k in set.keys() - {'xdata', 'ydata', 'voltage', 'current', 'power'}}
-            print(json.dumps(prunedset,
+            prunedset =  {k: self.data[set][k] for k in self.data[set].keys() - {'xdata', 'ydata', 'voltage', 'current', 'power'}}
+            return json.dumps(prunedset,
                 sort_keys=True,
                 indent=4,
                 separators=(',', ': ')
-            ))
+            )
