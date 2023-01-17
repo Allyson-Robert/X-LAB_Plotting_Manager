@@ -99,13 +99,31 @@ class Generic:
             else:
                 y_data = data[1]
 
-            # Hacky way to remove title row
+            # Plot the data
             self.fig.add_trace(go.Scatter(
-                x=x_data[1:],
-                y=y_data[1:],
+                x=x_data,
+                y=y_data,
                 mode='lines',
                 name=label
             ))
 
         self.fig.show()
         return "Generic plot opened in browser"
+
+    def plot_distribution(self, files, range=None, normalised=False, presentation=False, fit=False):
+        if len(files) == 0:
+            return "Err: Must select file"
+        for label in files:
+            filename = files[label]
+            data = self.read_data(filename)
+
+            # Take a distribution of the dependent variable
+            y_data = data[1]
+
+            # Plot the histogram
+            self.fig.add_trace(
+                go.Histogram(x=y_data)
+            )
+
+        self.fig.show()
+        return "Generic distribution opened in browser"

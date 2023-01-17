@@ -34,7 +34,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
             'DW2000': 2,
             'LBIC': 3,
             'PDS': 4,
-            'PTI': 5
+            'PTI': 5,
+            'Generic': 6
         }
 
         # Define possible plot types to show to the user for each device
@@ -44,6 +45,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             'LBIC': ['show_image', 'plot_intensities', 'plot_horiz_profile'],
             'PDS': ['plot'],
             'PTI': ['plot'],
+            'Generic': ['plot', 'plot_distribution']
         }
 
         # Load the UI,
@@ -225,12 +227,14 @@ class UiMainWindow(QtWidgets.QMainWindow):
                 return_str = self.plot_pds(plot_type, selected_files)
             elif device == "PTI":
                 return_str = self.plot_pti(plot_type, selected_files)
+            elif device == "Generic":
+                return_str = self.plot_generic(plot_type, selected_files)
             else:
                 return_str = "Err: Unknown device type"
 
             self.console_print(return_str)
         except Exception as e:
-            self.console_print(f"Fatal Err: Plot aborted{e}")
+            self.console_print(f"Fatal Err: Plot aborted: {e}")
 
     def plot_sunbrick(self, plot_type, selected_files):
         # Initialise sunbrick with files and grab relevant parameters
@@ -246,6 +250,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
             return reader.plot_pv(title=self.data['name'])
         elif plot_type == 'plot_stability':
             return reader.plot_stability(title=self.data['name'])
+        elif plot_type == 'print':
+            return reader.print()
         else:
             return "Unknown plot type, skipped action."
 
@@ -319,6 +325,26 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Call the corresponding plot function
         if plot_type == "plot":
             return reader.plot(selected_files)
+        else:
+            return "Unknown plot type, skipped action."
+
+    def plot_generic(self, plot_type, selected_files):
+        x_title = self.xTitleLineEdit.text()
+        y_title = self.yTitleLineEdit.text()
+        l_title = self.lTitleLineEdit.text()
+        reader = drp.Generic(
+            title=self.data['name'],
+            x_title=x_title,
+            y_title=y_title,
+            l_title=l_title
+        )
+
+        n = self.genericNormCheckBox.isChecked()
+        p = self.presentationCheckBox.isChecked()
+        if plot_type == "plot":
+            return reader.plot(selected_files, presentation=p)
+        elif plot_type == "plot_distribution":
+            return reader.plot_distribution(selected_files, presentation=p)
         else:
             return "Unknown plot type, skipped action."
 

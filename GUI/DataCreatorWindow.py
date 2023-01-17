@@ -88,46 +88,52 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         self.data['autogen'] = False
 
     def generate_set(self):
-        path = self.browseDirText.toPlainText()
-        subdirs = natsort.natsorted(os.listdir(path))
+        try:
+            path = self.browseDirText.toPlainText()
+            subdirs = natsort.natsorted(os.listdir(path))
+            print("Paths read")
 
-        # Automated dataset creation is only allowed to go into subdirectories once
-        # If items in subdirectories are not files then they will be ignored
-        errors = ""
-        for dir in subdirs:
-            # If the item in the parent directory is a file add it directly
-            dirpath = f"{path}/{dir}"
-            if os.path.isfile(dirpath):
-                self.data['files'][dir] = dirpath
+            # Automated dataset creation is only allowed to go into subdirectories once
+            # If items in subdirectories are not files then they will be ignored
+            errors = ""
+            for dir in subdirs:
+                # If the item in the parent directory is a file add it directly
+                dirpath = f"{path}/{dir}"
+                if os.path.isfile(dirpath):
+                    self.data['files'][dir] = dirpath
+                    print("File added")
 
-            # Create nested dict for directory and check all items within
-            self.data['files'][dir] = {}
-            for file in os.listdir(dirpath):
-                # Only append to dataset if the item is actually a file
-                filepath = f"{path}/{dir}/{file}"
-                if os.path.isfile(filepath):
-                    self.data['files'][dir][file] = filepath
-                # Ignore otherwise
-                else:
-                    errors += f"Ignored {dir}/{file} as it is not a file\n"
+                # Create nested dict for directory and check all items within
+                self.data['files'][dir] = {}
+                for file in os.listdir(dirpath):
+                    # Only append to dataset if the item is actually a file
+                    filepath = f"{path}/{dir}/{file}"
+                    if os.path.isfile(filepath):
+                        self.data['files'][dir][file] = filepath
+                    # Ignore otherwise
+                    else:
+                        errors += f"Ignored {dir}/{file} as it is not a file\n"
+                        print("Item ignired")
 
-        # Show the directories/files that were ignored to the user
-        if errors != "":
-            msg = QtWidgets.QMessageBox()
-            msg.setWindowTitle("Files were ignored")
-            msg.setText(errors)
-            x = msg.exec_()
+            # Show the directories/files that were ignored to the user
+            if errors != "":
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle("Files were ignored")
+                msg.setText(errors)
+                x = msg.exec_()
 
-        # Show the files in the GUI
-        self.showSetPlainText.setPlainText(
-            json.dumps(
-                self.data['files'],
-                indent=4,
-                separators=(',', ': ')
+            # Show the files in the GUI
+            self.showSetPlainText.setPlainText(
+                json.dumps(
+                    self.data['files'],
+                    indent=4,
+                    separators=(',', ': ')
+                )
             )
-        )
-        # Set autogeneration flag
-        self.data['autogen'] = True
+            # Set autogeneration flag
+            self.data['autogen'] = True
+        except Exception as e:
+            self.console_print(f"Fatal Err: Plot aborted{e}")
 
     def button_state(self):
         # The GUI should not be closed while the dataset is still empty
