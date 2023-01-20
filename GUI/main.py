@@ -380,10 +380,14 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.console_print("Cleared memory")
 
     def show_about(self):
+        # Grab the about info from about.txt
+        with open("about.txt") as about_file:
+            about_contents = about_file.read()
+
         # Show a basic about message
-        msg = QtWidgets.QMessageBox()
+        msg = QtWidgets.QMessageBox(self.centralwidget)
         msg.setWindowTitle("About")
-        msg.setText("""Allyson Plotting GUI \nVersion number: v1.0.2\nLast update: 2023/01/05\nAuthor: Allyson Robert""")
+        msg.setText(about_contents)
         x = msg.exec_()
 
     @staticmethod

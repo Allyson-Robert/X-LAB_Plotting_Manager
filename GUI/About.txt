@@ -1,0 +1,21 @@
+Allyson Plotting GUI v1.1.2
+Last update: 2023/01/20
+Author: Allyson Robert (https://github.com/Allyson-Robert)
+
+Built in: Python 3.9
+Python Dependencies:
+    Data processing and plotting:
+        plotly 5.11.0
+        numpy 1.24.0
+        pandas 1.5.2
+
+    GUI
+        PyQt5 5.15.4
+        natsort 8.2.0
+
+    Built in (no install needed)
+        json
+        csv
+        datetime
+        sys
+        os

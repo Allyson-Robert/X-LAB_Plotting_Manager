@@ -34,9 +34,10 @@ class Sunbrick:
                 try:
                     self.data[key] = self.read_data(files[key])
                 except Exception as e:
-                    print(f"Reading file {filename} failed: {e}")
+                    print(f"Reading file {files[key]} failed: {e}")
 
-    def read_data(self, filename):
+    def read_data(self, filepath):
+        filename = filepath.split("/")[-1]
         datadict = {
             'label': filename,
             'xdata': [],
@@ -52,7 +53,7 @@ class Sunbrick:
             'Rs': 0
         }
 
-        with open(filename) as csvfile:
+        with open(filepath) as csvfile:
             reader = csv.reader(csvfile, delimiter='\t')
             voltage = []
             current = []
@@ -72,29 +73,20 @@ class Sunbrick:
     def determine_crossings(self, dataset):
         size = len(dataset['xdata'])
         isc_found = False
-        isc = 0
+        isc = min(dataset['ydata'])
         voc_found = False
-        voc = 0
+        voc = max(dataset['xdata'])
         rsh = 0
         rs = 0
 
         # Crop the curves as well
         start_idx = 0
-        end_idx = 0
+        end_idx = size
 
         # Search for Voc and Isc
         for i in range(1, size):
             if isc_found and voc_found:
-                dataset['Voc'] = voc
-                dataset['Isc'] = isc
-
-                dataset['voltage'] = dataset['xdata'][start_idx:end_idx]
-                dataset['current'] = dataset['ydata'][start_idx:end_idx]
-
-                dataset['Rsh'] = rsh
-                dataset['Rs'] = rs
-
-                return 0
+                break
 
             prev_voltage = dataset['xdata'][i-1]
             voltage = dataset['xdata'][i]
@@ -109,20 +101,41 @@ class Sunbrick:
             if (prev_voltage < 0) and (voltage > 0):
                 isc_found = True
                 start_idx = i-1
-                isc = np.interp(0, xp, yp)
+                # Find zero-crossing by interpolating and setting voltage to zero
+                isc = abs(np.interp(0, xp, yp))
                 rsh = (voltage-prev_voltage)/(current - prev_current)
 
             # Voc located at the x crossing, current will turn positive there
             if (prev_current < 0) and (current > 0):
                 voc_found = True
                 end_idx = i + 1
+                # Swap x-, and y-axes and find zero-crossing by interpolating and setting current to zero
                 voc = np.interp(0, yp, xp)
                 rs = (voltage-prev_voltage)/(current - prev_current)
 
+        print(voc_found, isc_found, voc, isc)
+        dataset['Voc'] = voc
+        dataset['Isc'] = isc
+
+        dataset['voltage'] = dataset['xdata'][start_idx:end_idx]
+        dataset['current'] = dataset['ydata'][start_idx:end_idx]
+
+        dataset['Rsh'] = rsh
+        dataset['Rs'] = rs
+
+        return 0
+
     def determine_mpp(self, dataset):
-        # Determine MPP within the Isc - Voc range of the power curve, save MPP and index
-        pwrdata = [abs(dataset['voltage'][i] * dataset['current'][i]) for i in range(len(dataset['voltage']))]
+        # Compute pwr from V and I, shorten the range to exclude the boundaries,
+        #     as the PMM is between Voc and Isc. Add leading and ending zeroes
+        #     to make the length of voltage and power data match
+        pwrdata = [0]
+        for i in range(1, len(dataset['voltage'])-1):
+            pwrdata.append(abs(dataset['voltage'][i] * dataset['current'][i]))
         dataset['power'] = pwrdata
+        pwrdata.append(0)
+
+        # Find maximum power, corresponding index and save to the dataset
         maxpwr = max(pwrdata)
         maxpwridx = pwrdata.index(maxpwr)
         dataset['maxpwr'] = [maxpwridx, maxpwr]
@@ -132,7 +145,7 @@ class Sunbrick:
             'p': maxpwr,
             'r': abs(dataset['voltage'][maxpwridx]/dataset['current'][maxpwridx])
         }
-
+        # Compute fill factor
         dataset['FF'] = maxpwr/(dataset['Voc']*dataset['Isc'])
 
         return 0
@@ -187,10 +200,10 @@ class Sunbrick:
         fig = self.prep(title)
         for dataset in self.data:
             fig.add_trace(go.Scatter(
-                x=dataset['xdata'],
-                y=dataset['ydata'],
+                x=self.data[dataset]['xdata'],
+                y=self.data[dataset]['ydata'],
                 mode='lines',
-                name=dataset['label']
+                name=self.data[dataset]['label']
             ))
         fig.show()
         return "Full IV curve opened in browser"
@@ -206,6 +219,7 @@ class Sunbrick:
         else:
             line = None
 
+        # TODO: This is incompatible with the new data structure
         for lbl in self.data:
             dataset = self.data[lbl]
             fig.add_trace(go.Scatter(
@@ -220,23 +234,21 @@ class Sunbrick:
                 y=[dataset['current'][dataset['maxpwr'][0]]],
                 mode='markers',
                 marker_color='black',
-                showlegend=False
+                name="MPP",
             ))
             fig.add_trace(go.Scatter(
                 x=[0],
-                y=[dataset['Isc']],
+                y=[-dataset['Isc']],
                 mode='markers',
                 marker_color='red',
-                # symbol_sequence=['x-thin'],
-                showlegend=False
+                name="Isc"
             ))
             fig.add_trace(go.Scatter(
                 x=[dataset['Voc']],
                 y=[0],
                 mode='markers',
                 marker_color='blue',
-                # marker_symbol='x-thin',
-                showlegend=False
+                name="Voc"
             ))
         fig.show()
         return "Truncated IV curve opened in browser"

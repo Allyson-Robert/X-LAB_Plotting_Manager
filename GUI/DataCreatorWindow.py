@@ -91,7 +91,6 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         try:
             path = self.browseDirText.toPlainText()
             subdirs = natsort.natsorted(os.listdir(path))
-            print("Paths read")
 
             # Automated dataset creation is only allowed to go into subdirectories once
             # If items in subdirectories are not files then they will be ignored
@@ -101,19 +100,19 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
                 dirpath = f"{path}/{dir}"
                 if os.path.isfile(dirpath):
                     self.data['files'][dir] = dirpath
-                    print("File added")
-
-                # Create nested dict for directory and check all items within
-                self.data['files'][dir] = {}
-                for file in os.listdir(dirpath):
-                    # Only append to dataset if the item is actually a file
-                    filepath = f"{path}/{dir}/{file}"
-                    if os.path.isfile(filepath):
-                        self.data['files'][dir][file] = filepath
-                    # Ignore otherwise
-                    else:
-                        errors += f"Ignored {dir}/{file} as it is not a file\n"
-                        print("Item ignired")
+                    print(f"File added {dirpath}")
+                else:
+                    # Create nested dict for directory and check all items within
+                    self.data['files'][dir] = {}
+                    for file in os.listdir(dirpath):
+                        # Only append to dataset if the item is actually a file
+                        filepath = f"{path}/{dir}/{file}"
+                        if os.path.isfile(filepath):
+                            self.data['files'][dir][file] = filepath
+                        # Ignore otherwise
+                        else:
+                            errors += f"Ignored {dir}/{file} as it is not a file\n"
+                            print("Item ignored")
 
             # Show the directories/files that were ignored to the user
             if errors != "":

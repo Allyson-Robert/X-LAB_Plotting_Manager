@@ -1,6 +1,5 @@
 import csv
 import plotly.graph_objects as go
-import re
 
 class PtiText:
     """ A class to read in data from the pti setup"""
