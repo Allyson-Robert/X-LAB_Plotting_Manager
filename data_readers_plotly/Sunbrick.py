@@ -113,7 +113,6 @@ class Sunbrick:
                 voc = np.interp(0, yp, xp)
                 rs = (voltage-prev_voltage)/(current - prev_current)
 
-        print(voc_found, isc_found, voc, isc)
         dataset['Voc'] = voc
         dataset['Isc'] = isc
 
