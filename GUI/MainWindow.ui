@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>848</width>
-    <height>600</height>
+    <height>620</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,7 +32,7 @@
       <x>10</x>
       <y>12</y>
       <width>825</width>
-      <height>519</height>
+      <height>551</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -203,7 +203,7 @@
             <enum>QFrame::Plain</enum>
            </property>
            <property name="currentIndex">
-            <number>6</number>
+            <number>3</number>
            </property>
            <widget class="QWidget" name="emptyPage"/>
            <widget class="QWidget" name="sunbrickPage"/>
@@ -345,7 +345,7 @@
            </widget>
            <widget class="QWidget" name="ptiPage"/>
            <widget class="QWidget" name="genericPage">
-            <widget class="QWidget" name="">
+            <widget class="QWidget" name="layoutWidget">
              <property name="geometry">
               <rect>
                <x>0</x>
@@ -1041,6 +1041,13 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QProgressBar" name="progressBar">
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

@@ -100,7 +100,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
                 dirpath = f"{path}/{dir}"
                 if os.path.isfile(dirpath):
                     self.data['files'][dir] = dirpath
-                    print(f"File added {dirpath}")
+
                 else:
                     # Create nested dict for directory and check all items within
                     self.data['files'][dir] = {}

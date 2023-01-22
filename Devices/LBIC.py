@@ -126,7 +126,7 @@ class LBIC:
             gridcolor='black',
         )
 
-    def read_data(self, filename):
+    def read_data(self, filename) -> bool:
         if self.x and self.y and self.z:
             self.fig = go.Figure()
             return True
@@ -176,8 +176,50 @@ class LBIC:
                 hovertemplate='x (mm): %{x}<br>y (mm): %{y}<br>I (A): %{z}<extra></extra>'
             )
         )
-        self.fig.show()
+        self.fig.show(config={
+          'toImageButtonOptions': {
+            'format': 'svg', # one of png, svg, jpeg, webp
+            'filename': 'custom_image',
+          }
+        })
         return "Image opened in browser"
+
+    def show_3d(self, file, range=None, color='turbid'):
+        # Only one image can be shown
+        if len(file) != 1:
+            return "Err: Exactly one image can be generated at a time"
+
+        # Grab filename
+        filename = next(iter(file.values()))
+        # self.style_image(profiles)
+        self.read_data(filename)
+
+        # Set range
+        if range is None:
+            range = [min(self.z), max(self.z)]
+
+        # Generate image as heatmap including the colorscale
+        self.fig.add_trace(
+            go.Surface(
+                x=self.x,
+                y=self.y,
+                z=self.z,
+                cmin=range[0],
+                cmax=range[1],
+                colorscale=color,
+                reversescale=True,
+                colorbar=dict(title='I (A)'),
+                hovertemplate='x (mm): %{x}<br>y (mm): %{y}<br>I (A): %{z}<extra></extra>'
+            )
+        )
+
+        self.fig.update_layout(
+            scene=dict(
+                zaxis=dict(range=range),
+            ),
+        )
+        self.fig.show()
+        return "Surface opened in browser"
 
     def plot_intensities(self, file):
         # Only one dataset can be parsed

@@ -5,6 +5,15 @@ import json
 import csv
 
 
+class Stability:
+    """ Responsible for plotting stability datasets extracted from IV curves"""
+    def __init__(self):
+        pass
+
+    def plot_stability(self, title, params=None):
+        pass
+
+
 class Sunbrick:
     """
         A class to read in data from the sunbrick setup. The plots can be of a single measurement of multiple cells or can
@@ -21,19 +30,29 @@ class Sunbrick:
     """
     def __init__(self, files):
         self.data = {}
+
+        # Check all files/dirs
         for key in files:
             self.data[key] = {}
+
+            # If item is a dictionary (directory) unpack it
             if type(files[key]) == dict:
                 for filename in files[key]:
+
+                    # If a string (file) is found in the subdir, try reading it
                     if type(files[key][filename]) == str:
                         try:
                             self.data[key][filename] = self.read_data(files[key][filename])
                         except Exception as e:
+                            print(files[key][filename])
                             print(f"Reading file {filename} failed: {e}")
+
+            # If item is a string (file) try reading it
             elif type(files[key]) == str:
                 try:
                     self.data[key] = self.read_data(files[key])
                 except Exception as e:
+                    print(files[key])
                     print(f"Reading file {files[key]} failed: {e}")
 
     def read_data(self, filepath):
@@ -260,17 +279,17 @@ class Sunbrick:
         )
 
         # edit axis labels
-        fig['layout']['xaxis']['title'] = 'Time (hrs)'
-        fig['layout']['yaxis']['title'] = 'I_sc (A)'
+        fig['layout']['xaxis']['title'] = '$Time ~(hrs)$'
+        fig['layout']['yaxis']['title'] = '$I_{sc} ~(A)$'
 
-        fig['layout']['xaxis2']['title'] = 'Time (in hrs)'
-        fig['layout']['yaxis2']['title'] = 'V_oc (V)'
+        fig['layout']['xaxis2']['title'] = '$Time ~(hrs)$'
+        fig['layout']['yaxis2']['title'] = '$V_{oc} ~(V)$'
 
-        fig['layout']['xaxis3']['title'] = 'Time (in hrs)'
-        fig['layout']['yaxis3']['title'] = 'Fill Factor'
+        fig['layout']['xaxis3']['title'] = '$Time ~(hrs)$'
+        fig['layout']['yaxis3']['title'] = '$Fill Factor$'
 
-        fig['layout']['xaxis4']['title'] = 'Time (hrs)'
-        fig['layout']['yaxis4']['title'] = 'Efficiency'
+        fig['layout']['xaxis4']['title'] = '$Time ~(hrs)$'
+        fig['layout']['yaxis4']['title'] = '$P_{max}$'
 
         fig.update_layout(title_text=title)
         return fig
@@ -283,20 +302,19 @@ class Sunbrick:
         currents = {}
         voltages = {}
         fills = {}
-        efficiencies = {}
+        max_power = {}
         times = {}
         for series in self.data:
             currents[series] = []
             voltages[series] = []
             fills[series] = []
-            efficiencies[series] = []
+            max_power[series] = []
             times[series] = [0]
             for point in self.data[series]:
                 currents[series].append(self.data[series][point]["Isc"])
                 voltages[series].append(self.data[series][point]["Voc"])
                 fills[series].append(self.data[series][point]["FF"])
-                # efficiencies[series].append(self.data[series][point]["eff"])
-                efficiencies[series].append(0)
+                max_power[series].append(self.data[series][point]["maxpwr"][1])
                 times[series].append(times[series][-1]+1)
 
             fig.add_trace(
@@ -312,7 +330,7 @@ class Sunbrick:
                 row=2, col=1
             )
             fig.add_trace(
-                go.Scatter(x=times[series], y=efficiencies[series]),
+                go.Scatter(x=times[series], y=max_power[series]),
                 row=2, col=2
             )
         fig.show()
@@ -349,3 +367,6 @@ class Sunbrick:
                 indent=4,
                 separators=(',', ': ')
             )
+
+    def generate_stability_file(self):
+        pass
