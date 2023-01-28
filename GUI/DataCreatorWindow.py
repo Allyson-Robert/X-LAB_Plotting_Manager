@@ -104,7 +104,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
                 else:
                     # Create nested dict for directory and check all items within
                     self.data['files'][dir] = {}
-                    for file in os.listdir(dirpath):
+                    for file in sorted(os.listdir(dirpath)):
                         # Only append to dataset if the item is actually a file
                         filepath = f"{path}/{dir}/{file}"
                         if os.path.isfile(filepath):

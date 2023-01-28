@@ -361,12 +361,9 @@ class Sunbrick:
 
     def print(self):
         for set in self.data:
-            prunedset =  {k: self.data[set][k] for k in self.data[set].keys() - {'xdata', 'ydata', 'voltage', 'current', 'power'}}
-            return json.dumps(prunedset,
-                sort_keys=True,
-                indent=4,
-                separators=(',', ': ')
-            )
+            prunedset = {k: self.data[set][k] for k in self.data[set].keys() - {'xdata', 'ydata', 'voltage', 'current', 'power'}}
+            print(json.dumps(prunedset, sort_keys=True, indent=4, separators=(',', ': ')))
+        return "Printed to pycharm"
 
     def generate_stability_file(self):
         pass
