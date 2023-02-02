@@ -112,7 +112,6 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
                         # Ignore otherwise
                         else:
                             errors += f"Ignored {dir}/{file} as it is not a file\n"
-                            print("Item ignored")
 
             # Show the directories/files that were ignored to the user
             if errors != "":

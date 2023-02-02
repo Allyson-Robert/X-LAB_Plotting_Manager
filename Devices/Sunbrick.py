@@ -1,5 +1,6 @@
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+import plotly.express as px
 import numpy as np
 import json
 import csv
@@ -56,7 +57,7 @@ class Sunbrick:
                     print(f"Reading file {files[key]} failed: {e}")
 
     def read_data(self, filepath):
-        filename = filepath.split("/")[-1]
+        filename = filepath.split("/")[-2] + "/" + filepath.split("/")[-1]
         datadict = {
             'label': filename,
             'xdata': [],
@@ -83,9 +84,11 @@ class Sunbrick:
 
         datadict['xdata'] = voltage
         datadict['ydata'] = current
-
-        self.determine_crossings(datadict)
-        self.determine_mpp(datadict)
+        try:
+            self.determine_crossings(datadict)
+            self.determine_mpp(datadict)
+        except Exception as e:
+            print("Could not determine crossings or mpp")
 
         return datadict
 
@@ -292,11 +295,15 @@ class Sunbrick:
         fig['layout']['yaxis4']['title'] = '$P_{max}$'
 
         fig.update_layout(title_text=title)
-        return fig
+        fig.update_layout(legend_tracegroupgap=0)
+
+        colours = px.colors.qualitative.Plotly
+
+        return fig, colours
 
     def plot_stability(self, title):
         # Prep the plotting area
-        fig = self.four_param_plot_area(title)
+        fig, colours = self.four_param_plot_area(title)
 
         # Grab the values for Isc, Voc, FF and eff from the data
         currents = {}
@@ -304,7 +311,7 @@ class Sunbrick:
         fills = {}
         max_power = {}
         times = {}
-        for series in self.data:
+        for index, series in enumerate(self.data):
             currents[series] = []
             voltages[series] = []
             fills[series] = []
@@ -318,19 +325,46 @@ class Sunbrick:
                 times[series].append(times[series][-1]+1)
 
             fig.add_trace(
-                go.Scatter(x=times[series], y=currents[series]),
+                go.Scatter(
+                    x=times[series],
+                    y=currents[series],
+                    legendgroup=series,
+                    name=series,
+                    marker=dict(color=colours[index % len(colours)])
+                ),
                 row=1, col=1
             )
             fig.add_trace(
-                go.Scatter(x=times[series], y=voltages[series]),
+                go.Scatter(
+                    x=times[series],
+                    y=voltages[series],
+                    legendgroup=series,
+                    name=series,
+                    showlegend=False,
+                    marker=dict(color=colours[index % len(colours)])
+                ),
                 row=1, col=2
             )
             fig.add_trace(
-                go.Scatter(x=times[series], y=fills[series]),
+                go.Scatter(
+                    x=times[series],
+                    y=fills[series],
+                    legendgroup=series,
+                    name=series,
+                    showlegend=False,
+                    marker=dict(color=colours[index % len(colours)])
+                ),
                 row=2, col=1
             )
             fig.add_trace(
-                go.Scatter(x=times[series], y=max_power[series]),
+                go.Scatter(
+                    x=times[series],
+                    y=max_power[series],
+                    legendgroup=series,
+                    name=series,
+                    showlegend=False,
+                    marker=dict(color=colours[index % len(colours)])
+                ),
                 row=2, col=2
             )
         fig.show()

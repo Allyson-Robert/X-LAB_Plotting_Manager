@@ -206,7 +206,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
     def plot_manager(self):
         # Manage plotting
-        self.console_print(f"Producing plot for {self.data['name']}")
         # Grab the selected files for plotting
         selected_files = {}
         for item in self.selectedFilesList.selectedItems():
@@ -216,6 +215,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Try plotting the data using the proper device (delegate to dedicated plotting function)
         device = self.data['device']
         plot_type = self.plotTypeCombo.currentText()
+        self.console_print(f"Producing {device}-{plot_type} plot for {self.data['name']}")
         try:
             if device == "Sunbrick":
                 return_str = self.plot_sunbrick(plot_type, selected_files)
