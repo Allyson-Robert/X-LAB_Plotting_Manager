@@ -77,18 +77,6 @@ class PDS:
             ticks="outside"
         )
 
-        # self.fig.update_xaxes(
-        #     showgrid=True,
-        #     gridwidth=1,
-        #     gridcolor='black'
-        # )
-        #
-        # self.fig.update_yaxes(
-        #     showgrid=True,
-        #     gridwidth=1,
-        #     gridcolor='black'
-        # )
-
     def read_data(self, filename):
         with open(filename) as csvfile:
             reader = csv.reader(csvfile, delimiter='\t')
