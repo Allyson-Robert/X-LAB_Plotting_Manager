@@ -1,10 +1,9 @@
 # Main.py
 from PyQt5 import QtWidgets, uic
+import fileset as fs
 import datetime
-import natsort
 import json
 import sys
-import os
 
 
 class UiDataCreatorWindow(QtWidgets.QDialog):
@@ -19,16 +18,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         # Note that loadUI adds objects to 'self' using objectName
         uic.loadUi("DataCreatorWindow.ui", self)
 
-        # Create empty dataset
-        self.data = {
-            'name': '',
-            'date': '',
-            'device': '',
-            'autogen': False,
-            'notes': '',
-            'console': {},
-            'files': {}
-        }
+        self.fileset = fs.Fileset(datetime.datetime.now().strftime("%d_%m_%Y"))
 
         # Set starting tab to manual data creation
         self.tabWidget.setCurrentIndex(0)
@@ -64,17 +54,17 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         file_label = self.labelEdit.text()
 
         # Check for duplicate label
-        if file_label in self.data['files'].keys():
+        if file_label in self.fileset.get_labels():
             msg = QtWidgets.QMessageBox()
             msg.setWindowTitle("Duplicate Label")
             msg.setText("""This label has already been used. Choose another label and try again.""")
-            x = msg.exec_()
+            msg.exec_()
         else:
             # Add the file to the dataset and update the GUI
-            self.data['files'][file_label] = file_name
+            self.fileset.add_filepath(file_name, file_label)
             self.showSetPlainText.setPlainText(
                 json.dumps(
-                    self.data['files'],
+                    self.fileset.get_filepaths(),
                     indent=4,
                     separators=(',', ': ')
                 )
@@ -84,34 +74,10 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         # Empty label widget
         self.labelEdit.clear()
 
-        # Set auto generation flag to False
-        self.data['autogen'] = False
-
     def generate_set(self):
         try:
             path = self.browseDirText.toPlainText()
-            subdirs = natsort.natsorted(os.listdir(path))
-
-            # Automated dataset creation is only allowed to go into subdirectories once
-            # If items in subdirectories are not files then they will be ignored
-            errors = ""
-            for dir in subdirs:
-                # If the item in the parent directory is a file add it directly
-                dirpath = f"{path}/{dir}"
-                if os.path.isfile(dirpath):
-                    self.data['files'][dir] = dirpath
-
-                else:
-                    # Create nested dict for directory and check all items within
-                    self.data['files'][dir] = {}
-                    for file in sorted(os.listdir(dirpath)):
-                        # Only append to dataset if the item is actually a file
-                        filepath = f"{path}/{dir}/{file}"
-                        if os.path.isfile(filepath):
-                            self.data['files'][dir][file] = filepath
-                        # Ignore otherwise
-                        else:
-                            errors += f"Ignored {dir}/{file} as it is not a file\n"
+            errors = self.fileset.construct_structured_filepaths(path)
 
             # Show the directories/files that were ignored to the user
             if errors != "":
@@ -123,13 +89,12 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
             # Show the files in the GUI
             self.showSetPlainText.setPlainText(
                 json.dumps(
-                    self.data['files'],
+                    self.fileset.get_filepaths(),
                     indent=4,
                     separators=(',', ': ')
                 )
             )
-            # Set autogeneration flag
-            self.data['autogen'] = True
+
         except Exception as e:
             self.console_print(f"Fatal Err: Plot aborted{e}")
 
@@ -152,9 +117,8 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
 
     def finish(self):
         # Add name, data and device type to the dataset before exiting
-        self.data['name'] = self.nameEdit.text()
-        self.data['date'] = datetime.datetime.now().strftime("%d_%m_%Y")
-        self.data['device'] = self.dataTypeCombo.currentText()
+        self.fileset.set_name(self.nameEdit.text())
+        self.fileset.set_device(self.dataTypeCombo.currentText())
         self.done(1)
 
 

@@ -14,22 +14,23 @@ class Fileset:
     _allowed_structure_types = ("flat", "structured", "semi_structured")
     _accepted_extensions = ("xlsx", "xls", "csv", "txt")
 
-    def __init__(self, name, date, device):
-        assert isinstance(name, str)
+    def __init__(self, date):
         assert isinstance(date, str)
-        assert isinstance(device, str)
 
-        self.name = name
+        self.name = ""
         self.date = date
-        self.device = device
+        self.device = ""
         self.notes = ""
         self.console = ""
         self.structure_type = ""
         self.filepaths = {}
 
-    # All defined during initialisation
     def get_name(self):
         return self.name
+
+    def set_name(self, name):
+        assert isinstance(name, str)
+        self.name = name
 
     def get_date(self):
         return self.date
@@ -37,10 +38,14 @@ class Fileset:
     def get_device(self):
         return self.device
 
+    def set_device(self, device):
+        assert isinstance(device, str)
+        self.device = device
+
     def get_structure_type(self):
         return self.structure_type
 
-    def _set_structure_type(self, current_type):
+    def _determine_structure_type(self, current_type):
         """
         Set the structure type if it has not been set yet. Otherwise, check whether the type differs from the previous
         one. If they do differ then the structure is always semi_structured.
@@ -52,7 +57,10 @@ class Fileset:
             if self.structure_type != current_type:
                 self.structure_type = "semi_structured"
 
-    # These can be added later
+    def set_structure_type(self, desired_type):
+        assert desired_type in self._allowed_structure_types
+        self.structure_type = desired_type
+
     def set_notes(self, notes_content):
         assert isinstance(notes_content, str)
         self.notes = notes_content
@@ -76,15 +84,8 @@ class Fileset:
             # Add the file to the dataset and update the GUI
             self.filepaths[label] = path
 
-        self._set_structure_type("flat")
+        self._determine_structure_type("flat")
         return ""
-
-    def construct_flat_filepaths(self, root_dir):
-        """
-        This smells
-        Meant to add an entire directory in one go but without needing the structure.
-        """
-        pass
 
     def construct_structured_filepaths(self, root_dir):
         """
@@ -111,23 +112,44 @@ class Fileset:
                 for file in natsort.natsorted(os.listdir(path)):
                     # Only append to dataset if file is actually a file with an accepted extension
                     filepath = f"{path}/{file}"
-                    if os.path.exists(filepath) and os.path.isfile(filepath):
-                        if file.endswith(self._accepted_extensions):
-                            self.filepaths[item][file] = filepath
-                        else:
-                            errors += f"Ignored {item}/{file}: extension not allowed\n"
-
-                    # Ignore items that are not actually files
-                    elif os.path.isfile(filepath):
-                        errors += f"Ignored {item}/{file}: not a file\n"
-
-                    # Filesystem issues can result in os.path.exists() returning false
+                    is_path_valid, error_msg = self._check_valid_path(filepath, self._accepted_extensions)
+                    if is_path_valid:
+                        self.filepaths[item][file] = filepath
                     else:
-                        errors += f"Ignored {item}/{file}: filesystem error\n"
+                        errors += error_msg
 
-        self._set_structure_type("structured")
+        self._determine_structure_type("structured")
 
         return errors
 
     def get_filepaths(self):
         return self.filepaths
+
+    def get_labels(self):
+        return self.filepaths.keys()
+
+    def set_filepaths(self, filepaths):
+        assert isinstance(filepaths, dict)
+        self.filepaths = filepaths
+
+    # Checks are needed before paths are added to the fileset
+    @staticmethod
+    def _check_valid_path(path, accepted_extensions):
+        assert isinstance(path, str)
+        # Check whether the path exists and points to a file
+        if os.path.exists(path) and os.path.isfile(path):
+            # Check if the file has the proper extension
+            if path.endswith(accepted_extensions):
+                return True, ""
+            else:
+                return False, f"Forbidden Extension: Ignored {path}\n"
+        elif os.path.exists(path) and not os.path.isfile(path):
+            return False, f"Not a File: Ignored {path}\n"
+        else:
+            return False, f"Filesystem Error: Ignored {path}\n"
+
+    def __eq__(self, other):
+        if type(other) is type(self):
+            return self.__dict__ == other.__dict__
+        return False
+
