@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>848</width>
-    <height>620</height>
+    <height>678</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,10 +32,13 @@
       <x>10</x>
       <y>12</y>
       <width>825</width>
-      <height>551</height>
+      <height>611</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinAndMaxSize</enum>
+     </property>
      <item>
       <layout class="QHBoxLayout" name="headerLayout">
        <item>
@@ -140,7 +143,7 @@
           <locale language="English" country="Belgium"/>
          </property>
          <property name="text">
-          <string>Data</string>
+          <string>Raw Fileset</string>
          </property>
         </widget>
        </item>
@@ -488,11 +491,24 @@
       </layout>
      </item>
      <item>
+      <widget class="QProgressBar" name="progressBar">
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPlainTextEdit" name="notesPlainText">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>77</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
-         <height>77</height>
+         <height>124</height>
         </size>
        </property>
        <property name="font">
@@ -513,6 +529,13 @@
        </property>
        <property name="text">
         <string>Add notes to set</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>
@@ -1041,13 +1064,6 @@
         </widget>
        </item>
       </layout>
-     </item>
-     <item>
-      <widget class="QProgressBar" name="progressBar">
-       <property name="value">
-        <number>0</number>
-       </property>
-      </widget>
      </item>
     </layout>
    </widget>

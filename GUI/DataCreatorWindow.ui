@@ -528,7 +528,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Done</string>
+         <string>Finish &amp; Save</string>
         </property>
         <property name="icon">
          <iconset theme="application-exit">

@@ -14,38 +14,38 @@ class Fileset:
     _allowed_structure_types = ("flat", "structured", "semi_structured")
     _accepted_extensions = ("xlsx", "xls", "csv", "txt")
 
-    def __init__(self, date):
+    def __init__(self, date: str):
         assert isinstance(date, str)
 
         self.name = ""
         self.date = date
         self.device = ""
         self.notes = ""
-        self.console = ""
+        self.console = {}
         self.structure_type = ""
         self.filepaths = {}
 
-    def get_name(self):
+    def get_name(self) -> str:
         return self.name
 
-    def set_name(self, name):
+    def set_name(self, name: str):
         assert isinstance(name, str)
         self.name = name
 
-    def get_date(self):
+    def get_date(self) -> str:
         return self.date
 
-    def get_device(self):
+    def get_device(self) -> str:
         return self.device
 
-    def set_device(self, device):
+    def set_device(self, device: str):
         assert isinstance(device, str)
         self.device = device
 
-    def get_structure_type(self):
+    def get_structure_type(self) -> str:
         return self.structure_type
 
-    def _determine_structure_type(self, current_type):
+    def _determine_structure_type(self, current_type: str):
         """
         Set the structure type if it has not been set yet. Otherwise, check whether the type differs from the previous
         one. If they do differ then the structure is always semi_structured.
@@ -57,26 +57,35 @@ class Fileset:
             if self.structure_type != current_type:
                 self.structure_type = "semi_structured"
 
-    def set_structure_type(self, desired_type):
+    def set_structure_type(self, desired_type: str):
         assert desired_type in self._allowed_structure_types
         self.structure_type = desired_type
 
-    def set_notes(self, notes_content):
+    def add_notes(self, additional_notes: str):
+        assert isinstance(additional_notes, str)
+        self.notes += additional_notes
+
+    def set_notes(self, notes_content: str):
         assert isinstance(notes_content, str)
         self.notes = notes_content
 
-    def get_notes(self):
+    def get_notes(self) -> str:
         return self.notes
 
-    def set_console(self, console_content):
-        assert isinstance(console_content, str)
+    def add_console(self, datetime: str, additional_console: str):
+        assert isinstance(datetime, str)
+        assert isinstance(additional_console, str)
+        self.console[datetime] = additional_console
+
+    def set_console(self, console_content: dict):
+        assert isinstance(console_content, dict)
         self.console = console_content
 
-    def get_console(self):
+    def get_console(self) -> dict:
         return self.console
 
     # Path management
-    def add_filepath(self, path, label):
+    def add_filepath(self, path: str, label: str):
         # Check for duplicate label
         if label in self.filepaths.keys():
             return "Duplicate label found in fileset"
@@ -87,7 +96,7 @@ class Fileset:
         self._determine_structure_type("flat")
         return ""
 
-    def construct_structured_filepaths(self, root_dir):
+    def construct_structured_filepaths(self, root_dir: str) -> str:
         """
         Will generate a structured file set and add it to the current filepaths. This will seek all files and
             subdirectories of the giver root_dir and append all data files to the filepaths attribute. Note that
@@ -112,7 +121,7 @@ class Fileset:
                 for file in natsort.natsorted(os.listdir(path)):
                     # Only append to dataset if file is actually a file with an accepted extension
                     filepath = f"{path}/{file}"
-                    is_path_valid, error_msg = self._check_valid_path(filepath, self._accepted_extensions)
+                    is_path_valid, error_msg = self._check_valid_path(filepath)
                     if is_path_valid:
                         self.filepaths[item][file] = filepath
                     else:
@@ -122,24 +131,23 @@ class Fileset:
 
         return errors
 
-    def get_filepaths(self):
+    def get_filepaths(self) -> dict:
         return self.filepaths
 
     def get_labels(self):
         return self.filepaths.keys()
 
-    def set_filepaths(self, filepaths):
+    def set_filepaths(self, filepaths: dict):
         assert isinstance(filepaths, dict)
         self.filepaths = filepaths
 
     # Checks are needed before paths are added to the fileset
-    @staticmethod
-    def _check_valid_path(path, accepted_extensions):
+    def _check_valid_path(self, path: str):
         assert isinstance(path, str)
         # Check whether the path exists and points to a file
         if os.path.exists(path) and os.path.isfile(path):
             # Check if the file has the proper extension
-            if path.endswith(accepted_extensions):
+            if path.endswith(self._accepted_extensions):
                 return True, ""
             else:
                 return False, f"Forbidden Extension: Ignored {path}\n"

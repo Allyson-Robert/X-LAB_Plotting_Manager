@@ -15,18 +15,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
     """
     def __init__(self):
         super(UiMainWindow, self).__init__()
-
-        # Create empty dataset and copy it to the current dataset
-        self.init_data = {
-            'name': '',
-            'date': '',
-            'device': '',
-            'autogen': False,
-            'notes': '',
-            'console': {},
-            'files': {}
-        }
-        self.data = self.init_data.copy()
+        self.fileset = None
+        self.fileset_location = None
 
         # Define device indices corresponding to stackedWidget definition (see QtDesigner)
         self.devices = {
@@ -49,8 +39,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             'Generic': ['plot', 'plot_distribution']
         }
 
-        # Load the UI,
-        # Note that loadUI adds objects to 'self' using objectName
+        # Load the UI, Note that loadUI adds objects to 'self' using objectName
         self.dataWindow = None
         uic.loadUi("MainWindow.ui", self)
 
@@ -91,32 +80,43 @@ class UiMainWindow(QtWidgets.QMainWindow):
             # If the window was properly closed (Done button) then creation was successful
             #     Copy data and print to console
             self.clear_data()
-            self.data = self.dataWindow.data.copy()
-            self.console_print(f"Dataset created")
-            self.console_print("Warning: Dataset must be saved")
+            self.fileset = self.dataWindow.fileset
+            self.console_print(f"Fileset created")
             self.load_data()
             self.update_header()
+            self.save_data()
         else:
             # Warn user that window was improperly closed and that no data was created
             self.console_print("No data was created")
 
+    def autosave(self):
+        file_name = self.fileset_location
+        if file_name is None:
+            return self.console_print("Cannot autosave, no file location known. Open or create dataset first")
+
+        with open(file_name, "w") as json_file:
+            json.dump(self.fileset, json_file, cls=fs.FilesetJSONEncoder)
+        json_file.close()
+        return self.console_print(f"Saved data to {file_name}")
+
     def save_data(self):
         # Make sure there is data to save
-        if not self.data:
-            self.console_print("Err: Must first load data")
-            return 1
+        if self.fileset is None:
+            return self.console_print("Err: Must first load data")
 
         # Run the file dialog
         file_name = QtWidgets.QFileDialog.getSaveFileName(self, "Save file to disk")[0]
         if file_name != "":
-            # Dump the data into a json file
+            # Dump the data into a json file and remember the location
+            self.fileset_location = file_name
             with open(file_name, "w") as json_file:
-                json.dump(self.data, json_file)
+                json.dump(self.fileset, json_file, cls=fs.FilesetJSONEncoder)
             json_file.close()
-            self.console_print(f"Saved data to {file_name}")
+
+            return self.console_print(f"Saved data to {file_name}")
         else:
             # File dialog was exited without choosing a file
-            self.console_print(f"No file selected")
+            return self.console_print(f"No file selected")
 
     def open_data_file(self):
         # Reset
@@ -126,11 +126,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Choose file
         file_name = QtWidgets.QFileDialog.getOpenFileName(self, "Open Files")[0]
         if file_name != '':
-            # Open then load the json file and update GUI
+            # Open then load the json file, remember the location and update GUI
+            self.fileset_location = file_name
             with open(file_name) as json_file:
-                self.data = json.load(json_file)
+                self.fileset = json.load(json_file, cls=fs.FilesetJSONDecoder)
                 self.console_print(f"Opened {file_name}")
-            self.notesPlainText.setPlainText(self.data['notes'])
+            self.notesPlainText.setPlainText(self.fileset.get_notes())
             self.load_data()
             self.update_header()
         else:
@@ -139,70 +140,72 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
     def load_data(self):
         # Add all top level keys to the selection list of the GUI
-        for file in self.data['files']:
-            self.selectedFilesList.addItem(file)
+        for label in self.fileset.get_labels():
+            self.selectedFilesList.addItem(label)
+
+        # Some changes depend on the type of device
+        device = self.fileset.get_device()
 
         # For lbic plot type set selection to first item, otherwise preselect all items
-        if self.data['device'] == "LBIC":
+        if device == "LBIC":
             self.selectedFilesList.setCurrentRow(0)
         else:
             self.selectedFilesList.selectAll()
 
         # Edit combobox to show all available plot types
-        for plot_type in self.plot_types[self.data['device']]:
+        for plot_type in self.plot_types[device]:
             self.plotTypeCombo.addItem(plot_type)
-        self.console_print("Dataset opened")
+
+        self.console_print("Fileset loaded")
 
     def display_data(self):
         # TODO: This should probably be changed from QMessagebox to something else
         #     The width is insufficient and it needs a scrollbar
         # Abort if no data was loaded
-        if not self.data:
-            self.console_print("Err: Must first load data")
-            return 1
+        if self.fileset is None:
+            return self.console_print("Err: Must first load data")
+
         # Pretty print the data in a simple dialog
         pretty_json = json.dumps(
-            self.data,
+            self.fileset,
             indent=4,
-            separators=(',', ': ')
+            separators=(',', ': '),
+            cls=fs.FilesetJSONEncoder
         )
         msg = QtWidgets.QMessageBox()
-        msg.setWindowTitle(f"Dataset: {self.data['name']}")
+        msg.setWindowTitle(f"Fileset: {self.fileset.get_name()}")
         msg.setText(pretty_json)
         msg.exec_()
 
     def display_history(self):
         # TODO: This should probably be changed from QMessagebox to something else
         #     The width is insufficient and it needs a scrollbar
-        if not self.data:
-            self.console_print("Err: Must first load data")
-            return 1
+        if self.fileset is None:
+            return self.console_print("Err: Must first load data")
 
         # Prints only the console history to a simple dialog
         pretty_history = ""
-        for k, v in sorted(self.data['console'].items()):
+        for k, v in sorted(self.fileset.get_console().items()):
             line = f"{v}\n"
             pretty_history += line
         msg = QtWidgets.QMessageBox()
-        msg.setWindowTitle(f"Dataset: {self.data['name']}")
+        msg.setWindowTitle(f"Fileset: {self.fileset.get_name()}")
         msg.setText(pretty_history)
         msg.exec_()
 
     def add_notes(self):
-        # Add any notes to the dataset
-        self.data['notes'] = self.notesPlainText.toPlainText()
-        self.console_print("Notes added to dataset")
-        self.console_print("Warning: Changes must be saved")
+        # Add any notes to the fileset
+        self.fileset.add_notes(self.notesPlainText.toPlainText())
+        self.console_print("Notes added to fileset")
+        self.autosave()
 
     def update_header(self):
         # Header should reflect opened data
-        self.currSetNameLineEdit.setText(self.data['name'])
-        self.currDeviceLineEdit.setText(self.data['device'])
-        self.update_stacked_widget()
+        self.currSetNameLineEdit.setText(self.fileset.get_name())
+        self.currDeviceLineEdit.setText(self.fileset.get_device())
 
-    def update_stacked_widget(self):
         # Stacked widget should show the correct widget for the opened data
-        new_page = self.stackedWidget.widget(self.devices[self.data['device']])
+        new_page = self.stackedWidget.widget(self.devices[self.fileset.get_device()])
         self.stackedWidget.setCurrentWidget(new_page)
 
     def plot_manager(self):
@@ -359,15 +362,17 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.consolePlainText.appendPlainText(now.strftime("%d/%m/%Y %H.%M.%S: ") + fstring)
 
     def append_console_to_set(self):
-        # Append console contents to the dataset
+        # Append console contents to the fileset
         console_text = self.consolePlainText.toPlainText()
         now = datetime.datetime.now()
-        self.data['console'][now.strftime("%d%m%Y_%H%M%S")] = console_text
+        self.fileset.add_console(now.strftime("%d%m%Y_%H%M%S"), console_text)
         self.console_print("Added console contents to set")
+        self.autosave()
 
     def clear_data(self):
         # Reset fields and properties related to data
-        self.data = self.init_data.copy()
+        self.fileset = None
+        self.fileset_location = None
 
         self.currSetNameLineEdit.clear()
         self.currDeviceLineEdit.clear()
