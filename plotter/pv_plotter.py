@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 from utils.plot_preppers.scatter_prep import scatter_prepper
 
 
-class IVPlotter(Plotter):
+class PVPlotter(Plotter):
     def __init__(self, title, legend_title):
         self.title = title
         self.legend_title = legend_title
@@ -26,9 +26,10 @@ class IVPlotter(Plotter):
         data = collection.get_data()
         for lbl in data:
             iv_scatter = data[lbl]
+            iv_scatter.get_data('power')
             self.fig.add_trace(go.Scatter(
                 x=iv_scatter.get_data('voltage'),
-                y=iv_scatter.get_data('current'),
+                y=iv_scatter.get_data('power'),
                 mode='lines',
                 name=iv_scatter.get_data('label')
             ))

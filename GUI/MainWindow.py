@@ -18,7 +18,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.fileset = None
         self.fileset_location = None
 
-        # Define device indices corresponding to stackedWidget definition (see QtDesigner)
+        # Define experiment indices corresponding to stackedWidget definition (see QtDesigner)
         self.devices = {
             '': 0,
             'Sunbrick': 1,
@@ -29,7 +29,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             'Generic': 6
         }
 
-        # Define possible plot types to show to the user for each device
+        # Define possible plot types to show to the user for each experiment
         self.plot_types = {
             'Sunbrick': ['plot_iv', 'plot_fulliv', 'plot_pv', 'plot_stability', 'print'],
             'DW2000': ['plot', 'plot_rainbow'],
@@ -143,7 +143,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         for label in self.fileset.get_labels():
             self.selectedFilesList.addItem(label)
 
-        # Some changes depend on the type of device
+        # Some changes depend on the type of experiment
         device = self.fileset.get_device()
 
         # For lbic plot type set selection to first item, otherwise preselect all items
@@ -216,8 +216,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
             lbl = item.text()
             selected_files[lbl] = self.data['files'][lbl]
 
-        # Try plotting the data using the proper device (delegate to dedicated plotting function)
-        device = self.data['device']
+        # Try plotting the data using the proper experiment (delegate to dedicated plotting function)
+        device = self.data['experiment']
         plot_type = self.plotTypeCombo.currentText()
         self.console_print(f"Producing {device}-{plot_type} plot for {self.data['name']}")
         try:
@@ -234,7 +234,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             elif device == "Generic":
                 return_str = self.plot_generic(plot_type, selected_files)
             else:
-                return_str = "Err: Unknown device type"
+                return_str = "Err: Unknown experiment type"
 
             self.console_print(return_str)
         except Exception as e:

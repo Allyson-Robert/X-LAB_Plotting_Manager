@@ -116,7 +116,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         self.button_state()
 
     def finish(self):
-        # Add name, data and device type to the dataset before exiting
+        # Add name, data and experiment type to the dataset before exiting
         self.fileset.set_name(self.nameEdit.text())
         self.fileset.set_device(self.dataTypeCombo.currentText())
         self.done(1)
