@@ -17,7 +17,7 @@ def test_pv_plotter(test_collection):
     return True
 
 
-test_data = {'test': 'G:\\My Drive\\Data\\Sunbrick\\2023\\01-January\\20_12_2022_Long-term_IV\\Position_1\\IV_2023_01_05_14_41_07.txt'}
+test_data = {'test': 'G:\\My Drive\\Data\\Sunbrick\\2023\\01-January\\20_12_2022_Long-term_IV\\Position_1\\IV_2023_01_02_22_40_50.txt'}
 test_collection = IVScatterCollection(test_data)
 print(test_iv_plotter(test_collection))
 print(test_pv_plotter(test_collection))

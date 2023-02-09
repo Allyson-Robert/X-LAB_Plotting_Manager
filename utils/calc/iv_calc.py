@@ -2,18 +2,19 @@ import numpy as np
 
 
 def get_forward(input: list) -> list:
-    half_len = len(input)/2
-    return input[:half_len + 1]
+    half_len = int(len(input)/2)
+    return input[:half_len]
 
 
 def get_reverse(input: list) -> list:
-    half_len = len(input)/2
-    return input[half_len + 1:]
+    half_len = int(len(input)/2)
+    return input[half_len:]
 
 
-def truncate_list(input: list, lower: float, upper: float) -> list:
+def contiguous_trimmed_sublist(input: list, lower: float, upper: float) -> list:
     """
-        Will return a list that starts right before the 'lower' value and ends right after the 'upper' value
+        Will return a list that starts right before the 'lower' value and ends right after the 'upper' value.
+        List must increase/decrease monotonically
     """
     output = []
     # Catch lower edge
@@ -30,19 +31,48 @@ def truncate_list(input: list, lower: float, upper: float) -> list:
         output.append(input[-1])
     return output
 
+
+def contiguous_sub_list(input: list, threshold: float, above: bool) -> list:
+    """
+        Get all values of a list above or below a certain threshold. Powered by ChatGPT
+    """
+    start = None
+    end = None
+
+    for i, num in enumerate(input):
+        # If above is True then num must be above threshold, if not it must be below
+        if (above and num >= threshold) or (not above and num <= threshold):
+            # Mark the start if the sub_list as soon as the threshold is reached
+            if start is None:
+                start = i
+        # Once threshold has been reached and we dip back below (or rise above) the threshold, mark the end
+        elif start is not None and end is None:
+            end = i
+
+    # If a start has been found return sublist
+    if start is not None:
+        end = len(input)
+        return input[start:end]
+
+    # If no start was found, raise error
+    raise ValueError(f"Input list has no elements crossing the threshold: {threshold}")
+
+
 def find_crossing(x: list, y:list) -> float:
     """
         Determine interpolated y-crossing for a given numerical plot.
     """
-    # To find the y-crossing we seek the point where the current turns positive
-    index_before = 0
-    index_after = len(y)
-    for index in range(len(y)):
-        if y[index + 1] > 0:
-            index_before = index
-            index_after = index + 1
+    # To find the y-crossing we seek the point where the x-data turns positive
+    for index in range(len(x)):
+        if x[index + 1] > 0:
             break
-
-    # Once the numerical y-crossing has been found: determine the interpolated y-crossing (V = 0)
-    crossing = np.interp(0, x[index_before:index_after], y[index_before:index_after])
+    # Once the numerical y-crossing has been found: determine the interpolated y-crossing (x = 0)
+    crossing = np.interp(0, x[index:index+2], y[index:index+2])
     return crossing
+
+
+def find_local_slope(x: list, y: list, value: float) -> float:
+    for i, v in enumerate(y):
+        if y[i] < value < y[i + 1]:
+            break
+    return (y[i] - y[i+1])/(x[i] - x[i+1])

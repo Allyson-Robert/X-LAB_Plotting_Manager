@@ -37,6 +37,9 @@ class IVScatterDataProcessor(ScatterDataProcessor):
 
         self._processed_observables = self.processed_data.keys()
 
+    def get_allowed_observables(self):
+        return self._processed_observables
+
     def get_data(self, observable: str):
         # Return raw data
         if observable in self.data.get_allowed_observables():
@@ -85,28 +88,35 @@ class IVScatterDataProcessor(ScatterDataProcessor):
 
     def get_truncated_voltage(self) -> list:
         voc = self.get_data("voc")
-        return iv_calc.truncate_list(self.get_data("voltage"), 0, voc)
+        voltage = self.get_data("forward_voltage")
+        return iv_calc.contiguous_trimmed_sublist(voltage, 0, voc)
 
     def get_truncated_current(self) -> list:
         # TODO: Check signs, this might not work as intended
         isc = self.get_data("isc")
-        return iv_calc.truncate_list(self.get_data("current"), -isc, 0)
+        current = self.get_data("forward_current")
+        return iv_calc.contiguous_trimmed_sublist(current, -isc, 0)
 
     def get_truncated_power(self) -> list:
-        return []
+        power = self.get_data("forward_power")
+        return iv_calc.contiguous_sub_list(power, threshold=0, above=True)
 
     def get_current_difference(self) -> list:
-        return []
+        fw_current = self.get_data("forward_current")
+        rv_current = self.get_data("reverse_current")
+        return [i - j for i, j in zip(fw_current, rv_current[::-1])]
 
     def get_power_difference(self) -> list:
-        return []
+        fw_power = self.get_data("forward_power")
+        rv_power = self.get_data("reverse_power")
+        return [p - q for p, q in zip(fw_power, rv_power[::-1])]
 
     def find_isc(self) -> float:
         """
         The short-circuit current is the current at zero voltage. This is the y-crossing in an IV curve
         """
-        current = self.data.get_data("current")
-        voltage = self.data.get_data("voltage")
+        current = self.get_data("forward_current")
+        voltage = self.get_data("forward_voltage")
         return abs(iv_calc.find_crossing(voltage, current))
 
     def find_voc(self) -> float:
@@ -114,33 +124,45 @@ class IVScatterDataProcessor(ScatterDataProcessor):
         The open-circuit voltage is the voltage where there is no current. This is the x-crossing in an IV curve.
         Equivalently one can find the y-crossing in a VI curve,
         """
-        current = self.data.get_data("current")
-        voltage = self.data.get_data("voltage")
+        current = self.get_data("forward_current")
+        voltage = self.get_data("forward_voltage")
         return abs(iv_calc.find_crossing(current, voltage))
 
     def calculate_mpp_power(self) -> float:
-        return 0.0
+        power = self.get_data("truncated_power")
+        return max(power)
 
     def calculate_mpp_voltage(self) -> float:
-        return 0.0
+        max_power = self.get_data("mpp_power")
+        power = self.get_data("power")
+        voltage = self.get_data("voltage")
+
+        return voltage[power.index(max_power)]
 
     def calculate_mpp_current(self) -> float:
-        return 0.0
+        max_power = self.get_data("mpp_power")
+        power = self.get_data("power")
+        current = self.get_data("current")
+
+        return abs(current[power.index(max_power)])
 
     def calculate_mpp_resistance(self) -> float:
-        return 0.0
-
-    def truncate_forward_iv(self):
-        pass
-
-    def find_mpp(self) -> dict:
-        pass
+        mpp_current = self.get_data("mpp_current")
+        mpp_voltage = self.get_data("mpp_voltage")
+        return mpp_voltage/mpp_current
 
     def calculate_fill_factor(self) -> float:
-        pass
+        voc = self.get_data("voc")
+        isc = self.get_data("isc")
+        max_power = self.get_data("mpp_power")
+        return max_power/(voc * isc)
 
     def calculate_series_resistance(self) -> dict:
-        pass
+        current = self.get_data("current")
+        voltage = self.get_data("voltage")
+        return iv_calc.find_local_slope(voltage, current, 0)
 
-    def calculate_series_resistance(self) -> dict:
-        pass
+    def calculate_shunt_resistance(self) -> dict:
+        current = self.get_data("current")
+        voltage = self.get_data("voltage")
+        return 1/iv_calc.find_local_slope(current, voltage, 0)
