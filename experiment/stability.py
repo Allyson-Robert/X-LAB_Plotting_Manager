@@ -1,5 +1,6 @@
 from fileset.fileset import Fileset
-from data.collections.scatter_collections.iv_scatter_collection import IVScatterCollection
+from data.collections.scatter_collections.iv_structured_collection import IVStructuredCollection
+from plotter.iv_stability_plotter import IVStabilityPlotter
 
 
 class Stability:
@@ -8,5 +9,9 @@ class Stability:
 
     def set_data(self, fileset: Fileset):
         assert fileset.get_structure_type() == "structured"
-        self.scatter_collection = IVScatterCollection(fileset.get_filepaths())
+        self.scatter_collection = IVStructuredCollection(fileset.get_filepaths())
 
+    def plot_four(self, title, legend):
+        plotter = IVStabilityPlotter(title)
+        plotter.ready_plot(self.scatter_collection, legend)
+        plotter.draw_plot()

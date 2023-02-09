@@ -1,6 +1,7 @@
 from fileset import Fileset, FilesetJSONEncoder, FilesetJSONDecoder
 import json
 
+
 def create_fileset() -> Fileset:
     path = "G:\\My Drive\\Data\\Sunbrick\\2023\\01-January\\20_12_2022_Long-term_IV\\Position_1\\IV_2023_01_02_22_40_50.txt"
     label = "test curve"

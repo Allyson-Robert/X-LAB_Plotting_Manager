@@ -104,13 +104,9 @@ class Fileset:
                     errors += f"Ignored {item}: duplicate label \n"
                     continue
 
-                # If the item is a file add it directly
-                path = f"{root_dir}/{item}"
-                if os.path.isfile(path):
-                    self.filepaths[item] = path
-
                 # Create nested dict for subdirectories
-                else:
+                path = f"{root_dir}/{item}"
+                if not os.path.isfile(path):
                     self.filepaths[item] = {}
                     for file in natsort.natsorted(os.listdir(path)):
                         # Only append to dataset if file is actually a file with an accepted extension
@@ -159,4 +155,3 @@ class Fileset:
         if type(other) is type(self):
             return self.__dict__ == other.__dict__
         return False
-

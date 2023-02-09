@@ -7,6 +7,8 @@ class Sunbrick:
     def __init__(self):
         self.scatter_collection = None
 
+    # FIXME: Not sure that Sunbrick should be the one to deal with the fileset.
+    #   Possibly the ScatterCollection should be the one to deal with it.
     def set_data(self, fileset: Fileset):
         assert fileset.get_structure_type() == "flat"
         self.scatter_collection = IVScatterCollection(fileset.get_filepaths())

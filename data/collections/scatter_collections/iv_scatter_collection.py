@@ -19,4 +19,3 @@ class IVScatterCollection(ScatterCollection):
         if self.collection is None:
             raise ValueError("Cannot get data before reading. Call read_data first")
         return self.collection
-

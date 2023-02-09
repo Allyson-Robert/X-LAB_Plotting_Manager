@@ -27,6 +27,6 @@ class IVScatterData(ScatterData):
     def read_file(self, filepath: str):
         data = read_csv(filepath)
         if self.raw_data['voltage'] is None:
-            self.raw_data['voltage'] = {"units": "Voltage (V)", "data": data[0]}
+            self.raw_data['voltage'] = {"units": "Voltage ~(V)", "data": data[0]}
         if self.raw_data['current'] is None:
-            self.raw_data['current'] = {"units": "Current (I)", "data": data[1]}
+            self.raw_data['current'] = {"units": "Current ~(I)", "data": data[1]}
