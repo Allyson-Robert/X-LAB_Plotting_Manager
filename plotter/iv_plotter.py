@@ -19,12 +19,6 @@ class IVScatterDataPlotter(Plotter):
             title={'text': self.title},
             legend_title=legend_title,
         )
-
-        self.fig.update_layout(
-            xaxis_title="Voltage (V)",
-            yaxis_title="Current (A)",
-        )
-
         self.collection = collection
 
     def draw_plot(self):
@@ -37,4 +31,9 @@ class IVScatterDataPlotter(Plotter):
                 mode='lines',
                 name=iv_scatter.get_data('label')
             ))
+        # Grab axis titles from last IVScatterData
+        self.fig.update_layout(
+            xaxis_title=iv_scatter.get_units(self.x_observable),
+            yaxis_title=iv_scatter.get_units(self.y_observable),
+        )
         self.fig.show()

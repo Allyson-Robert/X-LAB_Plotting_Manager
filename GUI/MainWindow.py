@@ -233,7 +233,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         plot_type = getattr(experiment_instance, plot_type)
         plot_type(title=self.fileset.get_name(), legend="Some title")
 
-"""
+    """
     def plot_sunbrick(self, plot_type: str, fileset: fs.Fileset):
         # Initialise sunbrick with files and grab relevant parameters
         device = Sunbrick()
@@ -342,8 +342,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             return device.plot_distribution(selected_files, presentation=p)
         else:
             return "Unknown plot type, skipped action."
-"""
-
+    """
     def console_print(self, fstring):
         # Print a message to the GUI console
         now = datetime.datetime.now()

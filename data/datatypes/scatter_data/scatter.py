@@ -11,3 +11,7 @@ class ScatterData(ABC):
     def get_data(self, observable: str) -> list:
         pass
 
+    @abstractmethod
+    def get_units(self, observable: str) -> str:
+        pass
+
