@@ -1,7 +1,6 @@
 from data.data_processors.data_processors import ScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
 import utils.calc.iv_calc as iv_calc
-import numpy as np
 
 
 class IVScatterDataProcessor(ScatterDataProcessor):
@@ -29,7 +28,8 @@ class IVScatterDataProcessor(ScatterDataProcessor):
             "mpp_resistance": self.calculate_mpp_resistance,
             "fill_factor": self.calculate_fill_factor,
             "series_resistance": self.calculate_series_resistance,
-            "shunt_resistance": self.calculate_shunt_resistance
+            "shunt_resistance": self.calculate_shunt_resistance,
+            "parameters": self.get_parameters
         }
         self.processed_data = {}
         for key in self._processing_functions:
@@ -157,12 +157,26 @@ class IVScatterDataProcessor(ScatterDataProcessor):
         max_power = self.get_data("mpp_power")
         return max_power/(voc * isc)
 
-    def calculate_series_resistance(self) -> dict:
+    def calculate_series_resistance(self) -> float:
         current = self.get_data("current")
         voltage = self.get_data("voltage")
         return iv_calc.find_local_slope(voltage, current, 0)
 
-    def calculate_shunt_resistance(self) -> dict:
+    def calculate_shunt_resistance(self) -> float:
         current = self.get_data("current")
         voltage = self.get_data("voltage")
         return 1/iv_calc.find_local_slope(current, voltage, 0)
+
+    def get_parameters(self) -> dict:
+        return {
+            "label": self.get_data("label"),
+            "isc": self.get_data("isc"),
+            "voc": self.get_data("voc"),
+            "fill_factor": self.get_data("fill_factor"),
+            "mpp_power": self.get_data("mpp_power"),
+            "mpp_voltage": self.get_data("mpp_voltage"),
+            "mpp_current": self.get_data("mpp_current"),
+            "mpp_resistance": self.get_data("mpp_resistance"),
+            "rsh": self.get_data("shunt_resistance"),
+            "rs": self.get_data("series_resistance")
+        }

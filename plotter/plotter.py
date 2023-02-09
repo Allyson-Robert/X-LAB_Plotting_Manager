@@ -4,9 +4,9 @@ from data.collections.scatter_collections.scatter_collection import ScatterColle
 
 class Plotter(ABC):
     @abstractmethod
-    def ready_plot(self):
+    def ready_plot(self, collection: ScatterCollection, legend_title: str):
         pass
 
     @abstractmethod
-    def draw_plot(self, collection: ScatterCollection):
+    def draw_plot(self):
         pass

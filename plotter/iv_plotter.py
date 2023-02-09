@@ -1,20 +1,23 @@
 from plotter.plotter import Plotter
-from data.collections.scatter_collections.scatter_collection import ScatterCollection
+from data.collections.scatter_collections.iv_scatter_collection import IVScatterCollection
 import plotly.graph_objects as go
 from utils.plot_preppers.scatter_prep import scatter_prepper
 
 
-class IVPlotter(Plotter):
-    def __init__(self, title, legend_title):
+class IVScatterDataPlotter(Plotter):
+    def __init__(self, title, x_observable: str, y_observable: str):
         self.title = title
-        self.legend_title = legend_title
         self.fig = go.Figure()
+        self.x_observable = x_observable
+        self.y_observable = y_observable
 
-    def ready_plot(self):
+        self.collection = None
+
+    def ready_plot(self, collection: IVScatterCollection, legend_title: str):
         self.fig = scatter_prepper(self.fig)
         self.fig.update_layout(
             title={'text': self.title},
-            legend_title=self.legend_title,
+            legend_title=legend_title,
         )
 
         self.fig.update_layout(
@@ -22,13 +25,15 @@ class IVPlotter(Plotter):
             yaxis_title="Current (A)",
         )
 
-    def draw_plot(self, collection: ScatterCollection):
-        data = collection.get_data()
+        self.collection = collection
+
+    def draw_plot(self):
+        data = self.collection.get_data()
         for lbl in data:
             iv_scatter = data[lbl]
             self.fig.add_trace(go.Scatter(
-                x=iv_scatter.get_data('voltage'),
-                y=iv_scatter.get_data('current'),
+                x=iv_scatter.get_data(self.x_observable),
+                y=iv_scatter.get_data(self.y_observable),
                 mode='lines',
                 name=iv_scatter.get_data('label')
             ))

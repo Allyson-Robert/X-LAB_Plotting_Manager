@@ -6,6 +6,9 @@ import sys
 import Devices as Dev
 import fileset as fs
 import DataCreatorWindow
+import experiment
+from experiment import *
+from utils.get_class_methods import get_class_methods
 
 
 class UiMainWindow(QtWidgets.QMainWindow):
@@ -31,7 +34,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Define possible plot types to show to the user for each experiment
         self.plot_types = {
-            'Sunbrick': ['plot_iv', 'plot_fulliv', 'plot_pv', 'plot_stability', 'print'],
+            'Sunbrick': get_class_methods(Sunbrick),
             'DW2000': ['plot', 'plot_rainbow'],
             'LBIC': ['show_image', 'show_3d', 'plot_intensities', 'plot_horiz_profile'],
             'PDS': ['plot'],
@@ -209,55 +212,39 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.setCurrentWidget(new_page)
 
     def plot_manager(self):
-        # Manage plotting
         # Grab the selected files for plotting
-        selected_files = {}
+        selected_fileset = fs.Fileset(datetime.datetime.now().strftime("%d%m%Y_%H%M%S"))
         for item in self.selectedFilesList.selectedItems():
             lbl = item.text()
-            selected_files[lbl] = self.data['files'][lbl]
+            path = self.fileset.get_filepath(lbl)
+            selected_fileset.add_filepath(path, lbl)
+        selected_fileset.set_device(self.fileset.get_device())
+        selected_fileset.set_name(self.fileset.get_name())
 
-        # Try plotting the data using the proper experiment (delegate to dedicated plotting function)
-        device = self.data['experiment']
+        # Instantiate proper device class and set the data
+        device = self.fileset.get_device()
+        experiment_cls = getattr(experiment, device)
+        experiment_instance = experiment_cls()
+        experiment_instance.set_data(selected_fileset)
+
+        # Grab the correct plotting function and pass all options to it
         plot_type = self.plotTypeCombo.currentText()
-        self.console_print(f"Producing {device}-{plot_type} plot for {self.data['name']}")
-        try:
-            if device == "Sunbrick":
-                return_str = self.plot_sunbrick(plot_type, selected_files)
-            elif device == "DW2000":
-                return_str = self.plot_dw2000(plot_type, selected_files)
-            elif device == "LBIC":
-                return_str = self.plot_lbic(plot_type, selected_files)
-            elif device == "PDS":
-                return_str = self.plot_pds(plot_type, selected_files)
-            elif device == "PTI":
-                return_str = self.plot_pti(plot_type, selected_files)
-            elif device == "Generic":
-                return_str = self.plot_generic(plot_type, selected_files)
-            else:
-                return_str = "Err: Unknown experiment type"
+        self.console_print(f"Producing {device}-{plot_type} plot for {self.fileset.get_name()}")
+        plot_type = getattr(experiment_instance, plot_type)
+        plot_type(title=self.fileset.get_name(), legend="Some title")
 
-            self.console_print(return_str)
-        except Exception as e:
-            self.console_print(f"Fatal Err: Plot aborted: {e}")
-
-    def plot_sunbrick(self, plot_type, selected_files):
+"""
+    def plot_sunbrick(self, plot_type: str, fileset: fs.Fileset):
         # Initialise sunbrick with files and grab relevant parameters
-        device = Dev.Sunbrick(selected_files)
+        device = Sunbrick()
+        device.set_data(fileset)
         p = self.presentationCheckBox.isChecked()
 
-        # Call the corresponding plot function with the needed parameters
-        if plot_type == "plot_iv":
-            return device.plot_iv(title=self.data['name'], presentation=p)
-        elif plot_type == "plot_fulliv":
-            return device.plot_fulliv(title=self.data['name'])
-        elif plot_type == "plot_pv":
-            return device.plot_pv(title=self.data['name'])
-        elif plot_type == 'plot_stability':
-            return device.plot_stability(title=self.data['name'])
-        elif plot_type == 'print':
-            return device.print()
-        else:
-            return "Unknown plot type, skipped action."
+        # Grab the callable method for the desired plot type and call it
+        chosen_plot = getattr(device, plot_type)
+        chosen_plot(title=self.fileset.get_name(), legend="Some title")
+
+        return "success"
 
     def plot_dw2000(self, plot_type, selected_files):
         # Initialise DW2000 with a title
@@ -355,6 +342,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             return device.plot_distribution(selected_files, presentation=p)
         else:
             return "Unknown plot type, skipped action."
+"""
 
     def console_print(self, fstring):
         # Print a message to the GUI console

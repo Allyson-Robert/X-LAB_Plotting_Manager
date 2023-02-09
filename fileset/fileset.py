@@ -131,6 +131,9 @@ class Fileset:
 
         return errors
 
+    def get_filepath(self, label: str) -> str:
+        return self.filepaths[label]
+
     def get_filepaths(self) -> dict:
         return self.filepaths
 
