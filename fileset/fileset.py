@@ -7,11 +7,10 @@ class Fileset:
     This class collects paths to files containing relevant data. The exact contents of the files does not matter as
     only the locations are relevant for this class.
     Paths can be added by construction in which case the structure type is said to be 'structured'. Paths can also be
-    added manually one by one, in this case the structure type is 'flat'. Should a Fileset instance add files manually
-    as well as by construction then the structure type is 'semi-structured' and the Fileset will need to be pruned later
-    on.
+    added manually one by one, in this case the structure type is 'flat'.
+    Flat and structured construction cannot be mixed
     """
-    _allowed_structure_types = ("flat", "structured", "semi_structured")
+    _allowed_structure_types = ("flat", "structured")
     _accepted_extensions = ("xlsx", "xls", "csv", "txt")
 
     def __init__(self, date: str):
@@ -22,7 +21,7 @@ class Fileset:
         self.device = ""
         self.notes = ""
         self.console = {}
-        self.structure_type = ""
+        self.structure_type = None
         self.filepaths = {}
 
     def get_name(self) -> str:
@@ -45,26 +44,16 @@ class Fileset:
     def get_structure_type(self) -> str:
         return self.structure_type
 
-    def _determine_structure_type(self, current_type: str):
-        """
-        Set the structure type if it has not been set yet. Otherwise, check whether the type differs from the previous
-        one. If they do differ then the structure is always semi_structured.
-        """
-        assert current_type in self._allowed_structure_types
-        if self.structure_type is None:
-            self.structure_type = current_type
-        else:
-            if self.structure_type != current_type:
-                self.structure_type = "semi_structured"
-
     def set_structure_type(self, desired_type: str):
         assert desired_type in self._allowed_structure_types
-        self.structure_type = desired_type
+        if self.structure_type is None:
+            self.structure_type = desired_type
 
     def add_notes(self, additional_notes: str):
         assert isinstance(additional_notes, str)
         self.notes += additional_notes
 
+    # TODO: this is probably redundant
     def set_notes(self, notes_content: str):
         assert isinstance(notes_content, str)
         self.notes = notes_content
@@ -77,6 +66,7 @@ class Fileset:
         assert isinstance(additional_console, str)
         self.console[datetime] = additional_console
 
+    # TODO: This could also be redundant
     def set_console(self, console_content: dict):
         assert isinstance(console_content, dict)
         self.console = console_content
@@ -86,14 +76,18 @@ class Fileset:
 
     # Path management
     def add_filepath(self, path: str, label: str):
-        # Check for duplicate label
-        if label in self.filepaths.keys():
-            return "Duplicate label found in fileset"
-        else:
-            # Add the file to the dataset and update the GUI
-            self.filepaths[label] = path
+        if self.get_structure_type() != 'structured':
+            # Check for duplicate label
+            if label in self.filepaths.keys():
+                return "Duplicate label found in fileset"
+            else:
+                # Add the file to the dataset and update the GUI
+                self.filepaths[label] = path
 
-        self._determine_structure_type("flat")
+            self.set_structure_type("flat")
+        else:
+            return "Constructed structure cannot be appended manually"
+
         return ""
 
     def construct_structured_filepaths(self, root_dir: str) -> str:
@@ -102,32 +96,34 @@ class Fileset:
             subdirectories of the giver root_dir and append all data files to the filepaths attribute. Note that
             root_dir should be an absolute path.
         """
+        if self.get_structure_type() != "flat":
+            errors = ""
+            items = natsort.natsorted(os.listdir(root_dir))
+            for item in items:
+                if item in self.filepaths.keys():
+                    errors += f"Ignored {item}: duplicate label \n"
+                    continue
 
-        errors = ""
-        items = natsort.natsorted(os.listdir(root_dir))
-        for item in items:
-            if item in self.filepaths.keys():
-                errors += f"Ignored {item}: duplicate label \n"
-                continue
+                # If the item is a file add it directly
+                path = f"{root_dir}/{item}"
+                if os.path.isfile(path):
+                    self.filepaths[item] = path
 
-            # If the item is a file add it directly
-            path = f"{root_dir}/{item}"
-            if os.path.isfile(path):
-                self.filepaths[item] = path
+                # Create nested dict for subdirectories
+                else:
+                    self.filepaths[item] = {}
+                    for file in natsort.natsorted(os.listdir(path)):
+                        # Only append to dataset if file is actually a file with an accepted extension
+                        filepath = f"{path}/{file}"
+                        is_path_valid, error_msg = self._check_valid_path(filepath)
+                        if is_path_valid:
+                            self.filepaths[item][file] = filepath
+                        else:
+                            errors += error_msg
 
-            # Create nested dict for subdirectories
-            else:
-                self.filepaths[item] = {}
-                for file in natsort.natsorted(os.listdir(path)):
-                    # Only append to dataset if file is actually a file with an accepted extension
-                    filepath = f"{path}/{file}"
-                    is_path_valid, error_msg = self._check_valid_path(filepath)
-                    if is_path_valid:
-                        self.filepaths[item][file] = filepath
-                    else:
-                        errors += error_msg
-
-        self._determine_structure_type("structured")
+            self.set_structure_type("structured")
+        else:
+            errors = "Flat fileset cannot use structured construction"
 
         return errors
 
