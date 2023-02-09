@@ -8,27 +8,28 @@ class Sunbrick:
         self.scatter_collection = None
 
     def set_data(self, fileset: Fileset):
+        assert fileset.get_structure_type() == "flat"
         self.scatter_collection = IVScatterCollection(fileset.get_filepaths())
 
     def plot_fulliv(self, title, legend):
-        test_plot = IVScatterDataPlotter(title, "voltage", "current")
-        test_plot.ready_plot(self.scatter_collection, legend)
-        test_plot.draw_plot()
+        plotter = IVScatterDataPlotter(title, "voltage", "current")
+        self._scatter_plot(plotter, legend)
 
     def plot_iv(self, title, legend):
-        test_plot = IVScatterDataPlotter(title, "forward_voltage", "forward_current")
-        test_plot.ready_plot(self.scatter_collection, legend)
-        test_plot.draw_plot()
+        plotter = IVScatterDataPlotter(title, "forward_voltage", "forward_current")
+        self._scatter_plot(plotter, legend)
 
     def plot_fullpv(self, title, legend):
-        test_plot = IVScatterDataPlotter(title, "voltage", "power")
-        test_plot.ready_plot(self.scatter_collection, legend)
-        test_plot.draw_plot()
+        plotter = IVScatterDataPlotter(title, "voltage", "power")
+        self._scatter_plot(plotter, legend)
 
     def plot_pv(self, title, legend):
-        test_plot = IVScatterDataPlotter(title, "forward_voltage", "forward_power")
-        test_plot.ready_plot(self.scatter_collection, legend)
-        test_plot.draw_plot()
+        plotter = IVScatterDataPlotter(title, "forward_voltage", "forward_power")
+        self._scatter_plot(plotter, legend)
+
+    def _scatter_plot(self, plotter: IVScatterDataPlotter, legend: str):
+        plotter.ready_plot(self.scatter_collection, legend)
+        plotter.draw_plot()
 
     def print_parameters(self, *args, **kwargs):
         data = self.scatter_collection.get_data()
