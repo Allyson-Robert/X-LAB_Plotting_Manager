@@ -258,13 +258,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
         else:
             return "Unknown plot type, skipped action."
 
-    def toggle_lbic_profile(self):
-        # Allow the profile position to be selected (LBIC specific)
-        if self.lbicProfilesCheckBox.isChecked():
-            self.lbicProfilesSpinBox.setEnabled(True)
-        else:
-            self.lbicProfilesSpinBox.setDisabled(True)
-
     def plot_lbic(self, plot_type, selected_files):
         if len(selected_files) != 1:
             # TODO: batch production should be possible now using the label as a title
@@ -343,6 +336,13 @@ class UiMainWindow(QtWidgets.QMainWindow):
         else:
             return "Unknown plot type, skipped action."
     """
+    def toggle_lbic_profile(self):
+        # Allow the profile position to be selected (LBIC specific)
+        if self.lbicProfilesCheckBox.isChecked():
+            self.lbicProfilesSpinBox.setEnabled(True)
+        else:
+            self.lbicProfilesSpinBox.setDisabled(True)
+
     def console_print(self, fstring):
         # Print a message to the GUI console
         now = datetime.datetime.now()
