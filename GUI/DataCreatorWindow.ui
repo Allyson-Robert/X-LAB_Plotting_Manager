@@ -123,6 +123,11 @@
             </item>
             <item>
              <property name="text">
+              <string>Stability</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>DW2000</string>
              </property>
             </item>

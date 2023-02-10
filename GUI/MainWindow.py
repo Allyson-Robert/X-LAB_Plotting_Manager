@@ -25,16 +25,18 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.devices = {
             '': 0,
             'Sunbrick': 1,
-            'DW2000': 2,
-            'LBIC': 3,
-            'PDS': 4,
-            'PTI': 5,
-            'Generic': 6
+            'Stability': 2,
+            'DW2000': 3,
+            'LBIC': 4,
+            'PDS': 5,
+            'PTI': 6,
+            'Generic': 7
         }
 
         # Define possible plot types to show to the user for each experiment
         self.plot_types = {
             'Sunbrick': get_class_methods(Sunbrick),
+            'Stability': get_class_methods(Stability),
             'DW2000': ['plot', 'plot_rainbow'],
             'LBIC': ['show_image', 'show_3d', 'plot_intensities', 'plot_horiz_profile'],
             'PDS': ['plot'],
@@ -219,6 +221,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             path = self.fileset.get_filepath(lbl)
             selected_fileset.add_filepath(path, lbl)
         selected_fileset.set_device(self.fileset.get_device())
+        selected_fileset.set_structure_type(self.fileset.get_structure_type())
         selected_fileset.set_name(self.fileset.get_name())
 
         # Instantiate proper device class and set the data

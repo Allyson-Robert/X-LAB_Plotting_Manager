@@ -57,9 +57,10 @@ class IVScatterDataProcessor(ScatterDataProcessor):
         # Return raw data
         if observable in self.data.get_allowed_observables():
             return self.data.get_units(observable)
-
-        self.get_data(observable)
-        return self.processed_data[observable]["units"]
+        elif observable in self._processed_observables:
+            return self.processed_data[observable]["units"]
+        else:
+            raise ValueError(f"IVScatterData does not contain {observable} data")
 
     def calculate_power(self):
         current = self.data.get_data("current")

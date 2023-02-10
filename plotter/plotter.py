@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
-from data.collections.scatter_collections.scatter_collection import ScatterCollection
+from data.data_processors.data_processors import ScatterDataProcessor
 
 
 class Plotter(ABC):
     @abstractmethod
-    def ready_plot(self, collection: ScatterCollection, legend_title: str):
+    def ready_plot(self, processors: ScatterDataProcessor, legend_title: str):
         pass
 
     @abstractmethod

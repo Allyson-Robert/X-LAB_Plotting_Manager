@@ -206,10 +206,11 @@
             <enum>QFrame::Plain</enum>
            </property>
            <property name="currentIndex">
-            <number>3</number>
+            <number>0</number>
            </property>
-           <widget class="QWidget" name="emptyPage"/>
+           <widget class="QWidget" name="stabilityPage"/>
            <widget class="QWidget" name="sunbrickPage"/>
+           <widget class="QWidget" name="page"/>
            <widget class="QWidget" name="dw2000Page"/>
            <widget class="QWidget" name="lbicPage">
             <widget class="QWidget" name="layoutWidget">

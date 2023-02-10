@@ -1,7 +1,7 @@
-from plotter.plotter import Plotter
-from data.collections.scatter_collections.iv_scatter_collection import IVScatterCollection
-import plotly.graph_objects as go
+from data.data_processors.iv_data_processor import IVScatterDataProcessor
 from utils.plot_preppers.scatter_prep import scatter_prepper
+from plotter.plotter import Plotter
+import plotly.graph_objects as go
 
 
 class IVScatterDataPlotter(Plotter):
@@ -11,20 +11,19 @@ class IVScatterDataPlotter(Plotter):
         self.x_observable = x_observable
         self.y_observable = y_observable
 
-        self.collection = None
+        self.iv_data_processors = None
 
-    def ready_plot(self, collection: IVScatterCollection, legend_title: str):
+    def ready_plot(self, iv_data_processors: dict[str, IVScatterDataProcessor], legend_title: str):
         self.fig = scatter_prepper(self.fig)
         self.fig.update_layout(
             title={'text': self.title},
             legend_title=legend_title,
         )
-        self.collection = collection
+        self.iv_data_processors = iv_data_processors
 
     def draw_plot(self):
-        data = self.collection.get_data()
-        for lbl in data:
-            iv_scatter = data[lbl]
+        for lbl in self.iv_data_processors:
+            iv_scatter = self.iv_data_processors[lbl]
             self.fig.add_trace(go.Scatter(
                 x=iv_scatter.get_data(self.x_observable),
                 y=iv_scatter.get_data(self.y_observable),

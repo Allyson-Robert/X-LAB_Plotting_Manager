@@ -6,7 +6,6 @@ def read_csv(path):
     with open(path) as csvfile:
         dialect = csv.Sniffer().sniff(csvfile.read())
         sep = dialect.delimiter
-    print(sep)
 
     # Actually start reading the file
     with open(path) as csvfile:
