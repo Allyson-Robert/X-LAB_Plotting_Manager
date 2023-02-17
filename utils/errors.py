@@ -1,0 +1,2 @@
+class DarkMeasurementError(ValueError):
+    pass

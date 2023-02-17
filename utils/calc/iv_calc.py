@@ -1,6 +1,15 @@
 import numpy as np
 
 
+def is_illuminated(input_currents: list) -> bool:
+    # Check the first quarter of the list
+    sample = input_currents[:int(len(input_currents) / 4)]
+    average_current = np.average(sample)
+    # TODO: Check this cutoff, not sure that -0.1 uA is sufficiently low
+    # return average_current < -10**(-7)
+    return True
+
+
 def get_forward(input: list) -> list:
     half_len = int(len(input)/2)
     return input[:half_len]

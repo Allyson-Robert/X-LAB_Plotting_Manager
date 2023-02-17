@@ -1,6 +1,7 @@
 from data.data_processors.data_processors import ScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
 import utils.calc.iv_calc as iv_calc
+from utils.errors import DarkMeasurementError
 
 
 class IVScatterDataProcessor(ScatterDataProcessor):
@@ -8,29 +9,100 @@ class IVScatterDataProcessor(ScatterDataProcessor):
         self.data = iv_data
 
         self._processing_functions = {
-            "power": self.calculate_power,
-            "forward_voltage": self.get_forward_voltage,
-            "forward_current": self.get_forward_current,
-            "forward_power": self.get_forward_power,
-            "reverse_voltage": self.get_reverse_voltage,
-            "reverse_current": self.get_reverse_current,
-            "reverse_power": self.get_reverse_power,
-            "truncated_voltage": self.get_truncated_voltage,
-            "truncated_current": self.get_truncated_current,
-            "truncated_power": self.get_truncated_power,
-            "current_difference": self.get_current_difference,
-            "power_difference": self.get_power_difference,
-            "isc": self.find_isc,
-            "voc": self.find_voc,
-            "mpp_power": self.calculate_mpp_power,
-            "mpp_voltage": self.calculate_mpp_voltage,
-            "mpp_current": self.calculate_mpp_current,
-            "mpp_resistance": self.calculate_mpp_resistance,
-            "fill_factor": self.calculate_fill_factor,
-            "series_resistance": self.calculate_series_resistance,
-            "shunt_resistance": self.calculate_shunt_resistance,
-            "parameters": self.get_parameters
+            "is_illuminated": {
+                "function": self.is_illuminated,
+                "is_illuminated": False
+            },
+            "power": {
+                "function": self.calculate_power,
+                "is_illuminated": False
+            },
+            "forward_voltage": {
+                "function": self.get_forward_voltage,
+                "is_illuminated": False
+            },
+            "forward_current": {
+                "function": self.get_forward_current,
+                "is_illuminated": False
+            },
+            "forward_power": {
+                "function": self.get_forward_power,
+                "is_illuminated": False
+            },
+            "reverse_voltage": {
+                "function": self.get_reverse_voltage,
+                "is_illuminated": False
+            },
+            "reverse_current": {
+                "function": self.get_reverse_current,
+                "is_illuminated": False
+            },
+            "reverse_power": {
+                "function": self.get_reverse_power,
+                "is_illuminated": False
+            },
+            "truncated_voltage": {
+                "function": self.get_truncated_voltage,
+                "is_illuminated": True
+            },
+            "truncated_current": {
+                "function": self.get_truncated_current,
+                "is_illuminated": True
+            },
+            "truncated_power": {
+                "function": self.get_truncated_power,
+                "is_illuminated": False
+            },
+            "current_difference": {
+                "function": self.get_current_difference,
+                "is_illuminated": False
+            },
+            "power_difference": {
+                "function": self.get_power_difference,
+                "is_illuminated": False
+            },
+            "isc": {
+                "function": self.find_isc,
+                "is_illuminated": True
+            },
+            "voc": {
+                "function": self.find_voc,
+                "is_illuminated": True
+            },
+            "mpp_power": {
+                "function": self.calculate_mpp_power,
+                "is_illuminated": True
+            },
+            "mpp_voltage": {
+                "function": self.calculate_mpp_voltage,
+                "is_illuminated": True
+            },
+            "mpp_current": {
+                "function": self.calculate_mpp_current,
+                "is_illuminated": True
+            },
+            "mpp_resistance": {
+                "function": self.calculate_mpp_resistance,
+                "is_illuminated": True
+            },
+            "fill_factor": {
+                "function": self.calculate_fill_factor,
+                "is_illuminated": True
+            },
+            "series_resistance": {
+                "function": self.calculate_series_resistance,
+                "is_illuminated": True
+            },
+            "shunt_resistance": {
+                "function": self.calculate_shunt_resistance,
+                "is_illuminated": True
+            },
+            "parameters": {
+                "function": self.get_parameters,
+                "is_illuminated": True
+            }
         }
+
         self.processed_data = {}
         for key in self._processing_functions:
             self.processed_data[key] = None
@@ -48,7 +120,7 @@ class IVScatterDataProcessor(ScatterDataProcessor):
         # Compute processed data if needed
         elif observable in self._processed_observables:
             if self.processed_data[observable] is None:
-                self.processed_data[observable] = self._processing_functions[observable]()
+                self.processed_data[observable] = self._processing_functions[observable]["function"]()
             return self.processed_data[observable]['data']
         else:
             raise ValueError(f"IVScatterData does not contain {observable} data")
@@ -61,6 +133,10 @@ class IVScatterDataProcessor(ScatterDataProcessor):
             return self.processed_data[observable]["units"]
         else:
             raise ValueError(f"IVScatterData does not contain {observable} data")
+
+    def is_illuminated(self):
+        current = self.get_data("forward_current")
+        return {"units": None,"data": iv_calc.is_illuminated(current)}
 
     def calculate_power(self):
         current = self.data.get_data("current")
