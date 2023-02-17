@@ -28,7 +28,7 @@ class IVStabilityPlotter(Plotter):
             voltages = self.iv_stability_processors[label].get_data('voc')
             fill_factors = self.iv_stability_processors[label].get_data('fill_factor')
             max_powers = self.iv_stability_processors[label].get_data('mpp_power')
-            times = [i for i in range(len(currents))]
+            times = self.iv_stability_processors[label].get_data('time_differences')
 
             self.fig.add_trace(
                 go.Scatter(

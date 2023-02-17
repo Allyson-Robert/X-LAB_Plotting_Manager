@@ -15,13 +15,13 @@ class Stability:
 
         filepaths = fileset.get_filepaths()
         self.iv_stability_processors = {}
-        for key in filepaths:
+        for solar_cell in filepaths:
             processors_list = []
-            for label in filepaths[key]:
-                iv_data = IVScatterData(label)
-                iv_data.read_file(filepaths[key][label])
+            for iv_curve in filepaths[solar_cell]:
+                iv_data = IVScatterData(iv_curve)
+                iv_data.read_file(filepaths[solar_cell][iv_curve])
                 processors_list.append(iv_data)
-            self.iv_stability_processors[key] = IVStabilityDataProcessor(processors_list)
+            self.iv_stability_processors[solar_cell] = IVStabilityDataProcessor(processors_list)
 
     def plot_four(self, title, legend):
         plotter = IVStabilityPlotter(title)
