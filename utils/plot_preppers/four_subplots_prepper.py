@@ -17,7 +17,7 @@ def four_subplots_prepper() -> go.Figure:
     fig['layout']['yaxis2']['title'] = '$V_{oc} ~(V)$'
 
     fig['layout']['xaxis3']['title'] = '$Time ~(hrs)$'
-    fig['layout']['yaxis3']['title'] = '$Fill Factor$'
+    fig['layout']['yaxis3']['title'] = '$Fill ~Factor$'
 
     fig['layout']['xaxis4']['title'] = '$Time ~(hrs)$'
     fig['layout']['yaxis4']['title'] = '$P_{max}$'
