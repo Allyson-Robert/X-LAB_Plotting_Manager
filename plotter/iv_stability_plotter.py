@@ -23,7 +23,10 @@ class IVStabilityPlotter(Plotter):
 
     def draw_plot(self):
         # Grab the values for Isc, Voc, FF and eff from the data
+        counter = 0
         for label in self.iv_stability_processors:
+            # TODO: Bodge, time_differences should also be checked
+            self.iv_stability_processors[label].validate_observables('isc', 'voc', 'fill_factor', 'mpp_power')
             currents = self.iv_stability_processors[label].get_data('isc')
             voltages = self.iv_stability_processors[label].get_data('voc')
             fill_factors = self.iv_stability_processors[label].get_data('fill_factor')
@@ -36,7 +39,7 @@ class IVStabilityPlotter(Plotter):
                     y=currents,
                     legendgroup=label,
                     name=label,
-                    # marker=dict(color=self.colours[index % len(self.colours)])
+                    marker=dict(color=self.colours[counter % len(self.colours)])
                 ),
                 row=1, col=1
             )
@@ -47,7 +50,7 @@ class IVStabilityPlotter(Plotter):
                     legendgroup=label,
                     name=label,
                     showlegend=False,
-                    # marker=dict(color=self.colours[index % len(self.colours)])
+                    marker=dict(color=self.colours[counter % len(self.colours)])
                 ),
                 row=1, col=2
             )
@@ -58,7 +61,7 @@ class IVStabilityPlotter(Plotter):
                     legendgroup=label,
                     name=label,
                     showlegend=False,
-                    # marker=dict(color=self.colours[index % len(self.colours)])
+                    marker=dict(color=self.colours[counter % len(self.colours)])
                 ),
                 row=2, col=1
             )
@@ -69,8 +72,9 @@ class IVStabilityPlotter(Plotter):
                     legendgroup=label,
                     name=label,
                     showlegend=False,
-                    # marker=dict(color=self.colours[index % len(self.colours)])
+                    marker=dict(color=self.colours[counter % len(self.colours)])
                 ),
                 row=2, col=2
             )
+            counter += 1
         self.fig.show()

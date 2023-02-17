@@ -1,7 +1,7 @@
 from data.data_processors.iv_data_processor import IVScatterDataProcessor
 from data.data_processors.data_processors import ScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
-from utils.errors import VocNotFound, IscNotFound
+from utils.errors import VocNotFoundError, IscNotFoundError, ObservableNotComputableError
 
 
 class IVStabilityDataProcessor(ScatterDataProcessor):
@@ -13,7 +13,7 @@ class IVStabilityDataProcessor(ScatterDataProcessor):
         This should contain the entire time evolution of a solar cell and so needs a list of IVScatterData to process.
     """
     def __init__(self, iv_data_list: list[IVScatterData]):
-        self.data = iv_data_list
+        self.processors = [IVScatterDataProcessor(iv_data) for iv_data in iv_data_list]
 
         self._processing_functions = {
             "time_differences": self.get_time_differences,
@@ -29,18 +29,23 @@ class IVStabilityDataProcessor(ScatterDataProcessor):
         for key in self._processing_functions:
             self.processed_data[key] = None
 
-        # Check illumination status of all files immediately -> further data cannot be made available for dark meas.
-        self.illuminated = self.get_time_evolved("is_illuminated")
+    def validate_observables(self, *args):
+        rejected_processors = []
+        for processor in self.processors:
+            try:
+                processor.validate_observables(*args)
+            except ObservableNotComputableError:
+                # TODO: Inform user that this processor could not compute one of the observables
+                rejected_processors.append(processor)
+        for processor in rejected_processors:
+            self.processors.remove(processor)
 
     def get_data(self, observable: str):
         # Compute processed data if needed
         if observable in self.processed_data.keys():
-            if self.illuminated:
-                if self.processed_data[observable] is None:
-                    self.processed_data[observable] = self._processing_functions[observable](observable)
-                return self.processed_data[observable]['data']
-            else:
-                raise ValueError(f"IVScatterDataProcessor contains dark measurements")
+            if self.processed_data[observable] is None:
+                self.processed_data[observable] = self._processing_functions[observable](observable)
+            return self.processed_data[observable]['data']
         else:
             raise ValueError(f"IVScatterDataProcessor does not contain {observable} data")
 
@@ -51,19 +56,20 @@ class IVStabilityDataProcessor(ScatterDataProcessor):
         else:
             raise ValueError(f"IVScatterDataProcessor does not contain {observable} data")
 
+    # TODO: Type hint using TypedDict https://peps.python.org/pep-0589/
     def get_time_evolved(self, observable):
         # TODO: Inform caller on skipped files
         measurements = []
-        for iv_data in self.data:
-            processor = IVScatterDataProcessor(iv_data)
+        units = ""
+        for processor in self.processors:
             # Ignore data when either Voc or Isc cannot be found
             try:
                 measurements.append(processor.get_data(observable))
                 units = processor.get_units(observable)
             # TODO: boo!
-            except VocNotFound:
+            except VocNotFoundError:
                 continue
-            except IscNotFound:
+            except IscNotFoundError:
                 continue
 
         return {"units": units, "data": measurements}
@@ -71,5 +77,6 @@ class IVStabilityDataProcessor(ScatterDataProcessor):
     def get_time_differences(self, *args, **kwargs):
         # Ignore *args, **kwargs, only needed to remain compatible with get_data
         datetimes = self.get_time_evolved("datetime")["data"]
+        # TODO: There needs to be a better way to detect the initial time, currently first success is taken as start time
         time_diff_list = [(dt - datetimes[0]).total_seconds()/3600 for dt in datetimes]
         return {"units": "Elapsed time (hrs)", "data": time_diff_list}

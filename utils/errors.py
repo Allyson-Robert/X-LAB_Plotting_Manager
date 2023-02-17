@@ -2,9 +2,13 @@ class DarkMeasurementError(ValueError):
     pass
 
 
-class VocNotFound(ValueError):
+class VocNotFoundError(ValueError):
     pass
 
 
-class IscNotFound(ValueError):
+class IscNotFoundError(ValueError):
+    pass
+
+
+class ObservableNotComputableError(ValueError):
     pass
