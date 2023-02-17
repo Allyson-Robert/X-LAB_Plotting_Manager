@@ -22,6 +22,17 @@ def four_subplots_prepper() -> go.Figure:
     fig['layout']['xaxis4']['title'] = '$Time ~(hrs)$'
     fig['layout']['yaxis4']['title'] = '$P_{max}$'
 
-    fig.update_layout(legend_tracegroupgap=0)
+    yaxis_format = dict(
+            tickformat=".2s",
+            showexponent='all',
+            exponentformat='SI'
+        )
+    fig.update_layout(
+        legend_tracegroupgap=0,
+        yaxis=yaxis_format,
+        yaxis2=yaxis_format,
+        yaxis3=yaxis_format,
+        yaxis4=yaxis_format
+    )
 
     return fig
