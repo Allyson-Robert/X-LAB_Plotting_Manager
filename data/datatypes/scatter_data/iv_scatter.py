@@ -40,5 +40,4 @@ class IVScatterData(ScatterData):
         if self.raw_data['datetime'] is None:
             filename = os.path.basename(filepath)
             datetime_str = re.search(self.dt_pattern, filename)
-            self.raw_data['datetime'] = {"units": None, "data": datetime.strptime(datetime_str.group(),
-                                                                                  self.label_format)}
+            self.raw_data['datetime'] = {"units": None, "data": datetime.strptime(datetime_str.group(), self.label_format)}

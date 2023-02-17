@@ -1,6 +1,7 @@
 from data.data_processors.iv_data_processor import IVScatterDataProcessor
 from data.data_processors.data_processors import ScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
+from utils.errors import VocNotFound, IscNotFound
 
 
 class IVStabilityDataProcessor(ScatterDataProcessor):
@@ -51,12 +52,20 @@ class IVStabilityDataProcessor(ScatterDataProcessor):
             raise ValueError(f"IVScatterDataProcessor does not contain {observable} data")
 
     def get_time_evolved(self, observable):
-        # TODO: Skip the dark measurements
+        # TODO: Inform caller on skipped files
         measurements = []
         for iv_data in self.data:
             processor = IVScatterDataProcessor(iv_data)
-            measurements.append(processor.get_data(observable))
-        units = processor.get_units(observable)
+            # Ignore data when either Voc or Isc cannot be found
+            try:
+                measurements.append(processor.get_data(observable))
+                units = processor.get_units(observable)
+            # TODO: boo!
+            except VocNotFound:
+                continue
+            except IscNotFound:
+                continue
+
         return {"units": units, "data": measurements}
 
     def get_time_differences(self, *args, **kwargs):

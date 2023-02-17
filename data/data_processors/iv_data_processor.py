@@ -1,7 +1,7 @@
 from data.data_processors.data_processors import ScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
 import utils.calc.iv_calc as iv_calc
-from utils.errors import DarkMeasurementError
+from utils.errors import VocNotFound, IscNotFound
 
 
 class IVScatterDataProcessor(ScatterDataProcessor):
@@ -126,6 +126,7 @@ class IVScatterDataProcessor(ScatterDataProcessor):
             raise ValueError(f"IVScatterData does not contain {observable} data")
 
     def get_units(self, observable: str) -> str:
+        self.get_data(observable)
         # Return raw data
         if observable in self.data.get_allowed_observables():
             return self.data.get_units(observable)
@@ -136,7 +137,7 @@ class IVScatterDataProcessor(ScatterDataProcessor):
 
     def is_illuminated(self):
         current = self.get_data("forward_current")
-        return {"units": None,"data": iv_calc.is_illuminated(current)}
+        return {"units": None, "data": iv_calc.is_illuminated(current)}
 
     def calculate_power(self):
         current = self.data.get_data("current")
@@ -171,13 +172,13 @@ class IVScatterDataProcessor(ScatterDataProcessor):
         power = self.get_data("power")
         return {"units": "Power (W)", "data": iv_calc.get_reverse(power)}
 
+    # TODO: These truncations are not guaranteed to be aligned. All of these should truncate between Isc and Voc
     def get_truncated_voltage(self) -> dict:
         voc = self.get_data("voc")
         voltage = self.get_data("forward_voltage")
         return {"units": "Voltage (V)", "data": iv_calc.contiguous_trimmed_sublist(voltage, 0, voc)}
 
     def get_truncated_current(self) -> dict:
-        # TODO: Check signs, this might not work as intended
         isc = self.get_data("isc")
         current = self.get_data("forward_current")
         return {"units": "Current (A)", "data": iv_calc.contiguous_trimmed_sublist(current, -isc, 0)}
@@ -202,7 +203,10 @@ class IVScatterDataProcessor(ScatterDataProcessor):
         """
         current = self.get_data("forward_current")
         voltage = self.get_data("forward_voltage")
-        return {"units": "Current (A)", "data": abs(iv_calc.find_crossing(voltage, current))}
+        try:
+            return {"units": "Current (A)", "data": abs(iv_calc.find_crossing(voltage, current))}
+        except IndexError as ie:
+            raise IscNotFound
 
     def find_voc(self) -> dict:
         """
@@ -211,7 +215,10 @@ class IVScatterDataProcessor(ScatterDataProcessor):
         """
         current = self.get_data("forward_current")
         voltage = self.get_data("forward_voltage")
-        return {"units": "Voltage (V)", "data": iv_calc.find_crossing(current, voltage)}
+        try:
+            return {"units": "Voltage (V)", "data": iv_calc.find_crossing(current, voltage)}
+        except IndexError as ie:
+            raise VocNotFound
 
     def calculate_mpp_power(self) -> dict:
         power = self.get_data("truncated_power")
