@@ -25,7 +25,6 @@ class IVStabilityPlotter(Plotter):
         # Grab the values for Isc, Voc, FF and eff from the data
         counter = 0
         for label in self.iv_stability_processors:
-            # TODO: Bodge, time_differences should also be checked
             self.iv_stability_processors[label].validate_observables('isc', 'voc', 'fill_factor', 'mpp_power')
             currents = self.iv_stability_processors[label].get_data('isc')
             voltages = self.iv_stability_processors[label].get_data('voc')

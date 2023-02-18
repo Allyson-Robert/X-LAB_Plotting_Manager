@@ -89,8 +89,6 @@ class Fileset:
             else:
                 # Add the file to the dataset and update the GUI
                 self.filepaths[label] = path
-
-            self.set_structure_type("flat")
         else:
             return "Constructed structure cannot be appended manually"
 
@@ -122,8 +120,6 @@ class Fileset:
                             self.filepaths[item][file] = filepath
                         else:
                             errors += error_msg
-
-            self.set_structure_type("structured")
         else:
             errors = "Flat fileset cannot use structured construction"
 

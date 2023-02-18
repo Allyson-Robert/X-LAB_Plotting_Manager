@@ -2,19 +2,20 @@ from data.data_processors.iv_data_processor import IVScatterDataProcessor
 from data.data_processors.data_processors import ScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
 from utils.errors import VocNotFoundError, IscNotFoundError, ObservableNotComputableError
+from datetime import datetime
 
 
 class IVStabilityDataProcessor(ScatterDataProcessor):
     """
-        This class will utilise the ScatterDataProcessor in order to compute physical quantities related to stability
-            measurements.
-            This class therefore needs access to IVScatterDataProcessor in order to obtain the quantities from
-            IVScatterData.
-        This should contain the entire time evolution of a solar cell and so needs a list of IVScatterData to process.
+    This class will utilise the ScatterDataProcessor in order to compute physical quantities related to stability
+        measurements. These are fundamentally about the time evolution of IV parameters.
+        This class defers the computation of all observables to IVScatterDataProcessor with the notable exception
+        being the elapsed time between any IV curve and the start of the experiment.
     """
-    def __init__(self, iv_data_list: list[IVScatterData]):
+    def __init__(self, iv_data_list: list[IVScatterData], start_time: datetime):
         self.processors = [IVScatterDataProcessor(iv_data) for iv_data in iv_data_list]
 
+        # Keep track of the function required to gather the data for the following observables
         self._processing_functions = {
             "time_differences": self.get_time_differences,
             "isc": self.get_time_evolved,
@@ -25,11 +26,20 @@ class IVStabilityDataProcessor(ScatterDataProcessor):
             "shunt_resistance": self.get_time_evolved,
             "parameters": self.get_time_evolved
         }
+
+        # Hold the data
         self.processed_data = {}
         for key in self._processing_functions:
             self.processed_data[key] = None
 
+        # Hold experiment start time
+        self.start_time = start_time
+
     def validate_observables(self, *args):
+        """
+        Check if any of the observables generates a non-crucial error. If it does the processor is excluded and the data
+        is effectively ignored.
+        """
         rejected_processors = []
         for processor in self.processors:
             try:
@@ -37,6 +47,7 @@ class IVStabilityDataProcessor(ScatterDataProcessor):
             except ObservableNotComputableError:
                 # TODO: Inform user that this processor could not compute one of the observables
                 rejected_processors.append(processor)
+
         for processor in rejected_processors:
             self.processors.remove(processor)
 
@@ -58,25 +69,18 @@ class IVStabilityDataProcessor(ScatterDataProcessor):
 
     # TODO: Type hint using TypedDict https://peps.python.org/pep-0589/
     def get_time_evolved(self, observable):
-        # TODO: Inform caller on skipped files
         measurements = []
         units = ""
         for processor in self.processors:
             # Ignore data when either Voc or Isc cannot be found
-            try:
-                measurements.append(processor.get_data(observable))
-                units = processor.get_units(observable)
-            # TODO: boo!
-            except VocNotFoundError:
-                continue
-            except IscNotFoundError:
-                continue
+            measurements.append(processor.get_data(observable))
+            units = processor.get_units(observable)
 
         return {"units": units, "data": measurements}
 
-    def get_time_differences(self, *args, **kwargs):
+    def get_time_differences(self, *args, **kwargs) -> dict:
         # Ignore *args, **kwargs, only needed to remain compatible with get_data
-        datetimes = self.get_time_evolved("datetime")["data"]
-        # TODO: There needs to be a better way to detect the initial time, currently first success is taken as start time
-        time_diff_list = [(dt - datetimes[0]).total_seconds()/3600 for dt in datetimes]
+        datetime_list = self.get_time_evolved("datetime")["data"]
+        time_diff_list = [(dt - self.start_time).total_seconds()/3600 for dt in datetime_list]
+
         return {"units": "Elapsed time (hrs)", "data": time_diff_list}

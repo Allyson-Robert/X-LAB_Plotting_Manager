@@ -43,11 +43,11 @@ class IVScatterDataProcessor(ScatterDataProcessor):
         return self._processed_observables
 
     def validate_observables(self, *args):
+        print(*args)
         # Checks whether all desired observables can be obtained for this data
         try:
             for observable in args:
                 self.get_data(observable)
-        # TODO: Not supposed to catch all according to PEP but I think I need it here anyway
         except VocNotFoundError:
             raise ObservableNotComputableError
 

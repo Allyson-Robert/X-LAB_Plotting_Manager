@@ -11,9 +11,10 @@ class Stability:
         self.iv_stability_processors = None
 
     def set_data(self, fileset: Fileset):
-        # assert fileset.get_structure_type() == "structured"
+        assert fileset.get_structure_type() == "structured"
 
         filepaths = fileset.get_filepaths()
+        start_date = fileset.get_experiment_date()
         self.iv_stability_processors = {}
         for solar_cell in filepaths:
             processors_list = []
@@ -21,7 +22,7 @@ class Stability:
                 iv_data = IVScatterData(iv_curve)
                 iv_data.read_file(filepaths[solar_cell][iv_curve])
                 processors_list.append(iv_data)
-            self.iv_stability_processors[solar_cell] = IVStabilityDataProcessor(processors_list)
+            self.iv_stability_processors[solar_cell] = IVStabilityDataProcessor(processors_list, start_date)
 
     def plot_four(self, title, legend):
         plotter = IVStabilityPlotter(title)
