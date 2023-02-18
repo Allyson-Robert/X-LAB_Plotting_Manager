@@ -215,7 +215,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
     def plot_manager(self):
         # Grab the selected files for plotting
-        selected_fileset = fs.Fileset(datetime.datetime.now().strftime("%d%m%Y_%H%M%S"))
+        fileset_time = datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S")
+        experiment_time = self.fileset.get_experiment_date().strftime("%Y.%m.%d_%H.%M.%S")
+        selected_fileset = fs.Fileset(fileset_time, experiment_time)
         for item in self.selectedFilesList.selectedItems():
             lbl = item.text()
             path = self.fileset.get_filepath(lbl)

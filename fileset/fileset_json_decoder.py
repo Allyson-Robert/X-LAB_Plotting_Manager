@@ -11,7 +11,7 @@ class FilesetJSONDecoder(JSONDecoder):
     @staticmethod
     def object_hook(dct):
         try:
-            fileset = Fileset(dct['date'])
+            fileset = Fileset(dct['creation_date'], dct['experiment_date_time'])
             fileset.set_name(dct['name'])
             fileset.set_device(dct['device'])
             fileset.set_notes(dct['notes'])

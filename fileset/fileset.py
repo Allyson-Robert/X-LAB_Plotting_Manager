@@ -1,5 +1,6 @@
 import os
 import natsort
+from datetime import datetime
 
 
 class Fileset:
@@ -13,11 +14,13 @@ class Fileset:
     _allowed_structure_types = ("flat", "structured")
     _accepted_extensions = ("xlsx", "xls", "csv", "txt")
 
-    def __init__(self, date: str):
-        assert isinstance(date, str)
+    def __init__(self, creation_date: str, experiment_date_time: str):
+        assert isinstance(creation_date, str)
+        assert isinstance(experiment_date_time, str)
 
         self.name = ""
-        self.date = date
+        self.creation_date = datetime.strptime(creation_date, "%Y.%m.%d_%H.%M.%S")
+        self.experiment_date_time = datetime.strptime(experiment_date_time, "%Y.%m.%d_%H.%M.%S")
         self.device = ""
         self.notes = ""
         self.console = {}
@@ -31,8 +34,11 @@ class Fileset:
         assert isinstance(name, str)
         self.name = name
 
-    def get_date(self) -> str:
-        return self.date
+    def get_creation_date(self) -> str:
+        return self.creation_date
+
+    def get_experiment_date(self) -> str:
+        return self.experiment_date_time
 
     def get_device(self) -> str:
         return self.device
