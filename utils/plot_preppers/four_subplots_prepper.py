@@ -22,10 +22,12 @@ def four_subplots_prepper() -> go.Figure:
     fig['layout']['xaxis4']['title'] = '$Time ~(hrs)$'
     fig['layout']['yaxis4']['title'] = '$P_{max}$'
 
+    # TODO: hoverformat needs to be reset to default
     yaxis_format = dict(
             tickformat=".2s",
             showexponent='all',
-            exponentformat='SI'
+            exponentformat='SI',
+            hoverformat=''
         )
     fig.update_layout(
         legend_tracegroupgap=0,
