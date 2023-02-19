@@ -1,7 +1,7 @@
-from data.data_processors.iv_data_processor import IVScatterDataProcessor
-from data.data_processors.data_processors import ScatterDataProcessor
+from data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
+from data.data_processors.scatter_data.data_processors import ScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
-from utils.errors import VocNotFoundError, IscNotFoundError, ObservableNotComputableError
+from utils.errors import ObservableNotComputableError
 from datetime import datetime
 
 

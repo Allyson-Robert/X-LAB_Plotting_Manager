@@ -1,15 +1,15 @@
-from plotter.iv_plotter import IVScatterDataPlotter
+from plotter.scatter_data_plotter import ScatterDataPlotter
 
 
 def test_iv_plotter(test_collection):
-    test_plot = IVScatterDataPlotter("Test title", "voltage", "current")
+    test_plot = ScatterDataPlotter("Test title", "voltage", "current")
     test_plot.ready_plot(test_collection, legend_title="Sample")
     test_plot.draw_plot()
     return True
 
 
 def test_pv_plotter(test_collection):
-    test_plot = IVScatterDataPlotter("Test title", "voltage", "power")
+    test_plot = ScatterDataPlotter("Test title", "voltage", "power")
     test_plot.ready_plot(test_collection, legend_title="Sample")
     test_plot.draw_plot()
     return True

@@ -1,4 +1,4 @@
-from data.data_processors.iv_data_processor import IVScatterDataProcessor
+from data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
 import traceback
 
