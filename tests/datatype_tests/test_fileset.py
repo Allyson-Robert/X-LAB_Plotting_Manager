@@ -26,7 +26,7 @@ def open_fileset(path: str) -> Fileset:
     return fileset
 
 
-path = "test_json.json"
+path = "../test_json.json"
 test_fs = create_fileset()
 save_fileset(test_fs, path)
 opened_fs = open_fileset(path)
