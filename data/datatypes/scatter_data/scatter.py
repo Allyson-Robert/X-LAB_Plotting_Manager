@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class ScatterData(ABC):
 
     @abstractmethod
-    def read_file(self, filepath: str):
+    def read_file(self, filepath: str) -> None:
         pass
 
     @abstractmethod
@@ -15,3 +15,6 @@ class ScatterData(ABC):
     def get_units(self, observable: str) -> str:
         pass
 
+    @abstractmethod
+    def get_allowed_observables(self):
+        pass
