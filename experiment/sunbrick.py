@@ -1,10 +1,11 @@
-from data.data_processors.iv_data_processor import IVScatterDataProcessor
+from data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
-from plotter.iv_plotter import IVScatterDataPlotter
+from experiment.experiment import Experiment
+from plotter.scatter_data_plotter import ScatterDataPlotter
 from fileset.fileset import Fileset
 
 
-class Sunbrick:
+class Sunbrick(Experiment):
     def __init__(self):
         self.iv_data_processor = None
 
@@ -19,22 +20,22 @@ class Sunbrick:
             self.iv_data_processor[key] = IVScatterDataProcessor(iv_data)
 
     def plot_fulliv(self, title, legend):
-        plotter = IVScatterDataPlotter(title, "voltage", "current")
+        plotter = ScatterDataPlotter(title, "voltage", "current")
         self._scatter_plot(plotter, legend)
 
     def plot_iv(self, title, legend):
-        plotter = IVScatterDataPlotter(title, "forward_voltage", "forward_current")
+        plotter = ScatterDataPlotter(title, "forward_voltage", "forward_current")
         self._scatter_plot(plotter, legend)
 
     def plot_fullpv(self, title, legend):
-        plotter = IVScatterDataPlotter(title, "voltage", "power")
+        plotter = ScatterDataPlotter(title, "voltage", "power")
         self._scatter_plot(plotter, legend)
 
     def plot_pv(self, title, legend):
-        plotter = IVScatterDataPlotter(title, "forward_voltage", "forward_power")
+        plotter = ScatterDataPlotter(title, "forward_voltage", "forward_power")
         self._scatter_plot(plotter, legend)
 
-    def _scatter_plot(self, plotter: IVScatterDataPlotter, legend: str):
+    def _scatter_plot(self, plotter: ScatterDataPlotter, legend: str):
         plotter.ready_plot(self.iv_data_processor, legend)
         plotter.draw_plot()
 
