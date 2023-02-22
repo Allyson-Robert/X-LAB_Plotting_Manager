@@ -541,7 +541,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPlainTextEdit" name="consolePlainText">
+      <widget class="QTextEdit" name="consoleTextEdit">
        <property name="enabled">
         <bool>true</bool>
        </property>
@@ -1001,9 +1001,6 @@
        </property>
        <property name="locale">
         <locale language="English" country="Belgium"/>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
        </property>
       </widget>
      </item>

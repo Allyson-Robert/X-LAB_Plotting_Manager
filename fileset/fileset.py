@@ -14,13 +14,12 @@ class Fileset:
     _allowed_structure_types = ("flat", "structured")
     _accepted_extensions = ("xlsx", "xls", "csv", "txt")
 
-    def __init__(self, creation_date: str, experiment_date_time: str):
+    def __init__(self, creation_date: str):
         assert isinstance(creation_date, str)
-        assert isinstance(experiment_date_time, str)
 
         self.name = ""
         self.creation_date = datetime.strptime(creation_date, "%Y.%m.%d_%H.%M.%S")
-        self.experiment_date_time = datetime.strptime(experiment_date_time, "%Y.%m.%d_%H.%M.%S")
+        self.experiment_date_time = None
         self.device = ""
         self.notes = ""
         self.console = {}
@@ -34,10 +33,14 @@ class Fileset:
         assert isinstance(name, str)
         self.name = name
 
-    def get_creation_date(self) -> str:
+    def get_creation_date(self) -> datetime:
         return self.creation_date
 
-    def get_experiment_date(self) -> str:
+    def set_experiment_date(self, experiment_date_time: str):
+        assert isinstance(experiment_date_time, str)
+        self.experiment_date_time = datetime.strptime(experiment_date_time, "%Y.%m.%d_%H.%M.%S")
+
+    def get_experiment_date(self) -> datetime:
         return self.experiment_date_time
 
     def get_device(self) -> str:
@@ -67,10 +70,10 @@ class Fileset:
     def get_notes(self) -> str:
         return self.notes
 
-    def add_console(self, datetime: str, additional_console: str):
-        assert isinstance(datetime, str)
+    def add_console(self, date_and_time: str, additional_console: str):
+        assert isinstance(date_and_time, str)
         assert isinstance(additional_console, str)
-        self.console[datetime] = additional_console
+        self.console[date_and_time] = additional_console
 
     # TODO: This could also be redundant
     def set_console(self, console_content: dict):

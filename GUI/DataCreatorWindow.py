@@ -18,7 +18,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         # Note that loadUI adds objects to 'self' using objectName
         uic.loadUi("DataCreatorWindow.ui", self)
 
-        self.fileset = fs.Fileset(datetime.datetime.now().strftime("%d_%m_%Y"))
+        self.fileset = fs.Fileset(datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S"))
 
         # Set starting tab to manual data creation
         self.tabWidget.setCurrentIndex(0)
@@ -116,9 +116,12 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         self.button_state()
 
     def finish(self):
-        # Add name, data and experiment type to the dataset before exiting
+        # Add name, experiment type, date and time, and data to the dataset before exiting
         self.fileset.set_name(self.nameEdit.text())
         self.fileset.set_device(self.dataTypeCombo.currentText())
+        experiment_date_time = self.dateTimeEdit.dateTime().toPyDateTime().strftime("%Y.%m.%d_%H.%M.%S")
+        self.fileset.set_experiment_date(experiment_date_time)
+
         self.done(1)
 
 

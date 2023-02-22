@@ -91,22 +91,9 @@
              </font>
             </property>
             <property name="text">
-             <string>Data type</string>
+             <string>Experiment</string>
             </property>
            </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
           </item>
           <item>
            <widget class="QComboBox" name="dataTypeCombo">
@@ -151,6 +138,42 @@
               <string>Generic</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="dateTimeLabel">
+            <property name="text">
+             <string>Date</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDateTimeEdit" name="dateTimeEdit">
+            <property name="locale">
+             <locale language="English" country="Belgium"/>
+            </property>
+            <property name="wrapping">
+             <bool>true</bool>
+            </property>
+            <property name="displayFormat">
+             <string>yyyy/MM/d HH:mm</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
          </layout>

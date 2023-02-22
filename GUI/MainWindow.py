@@ -9,6 +9,9 @@ import DataCreatorWindow
 import experiment
 from experiment import *
 from utils.get_class_methods import get_class_methods
+from utils.console_colours import ConsoleColours
+from utils.class_utils import decorate_class_callables
+from utils.logging import with_default_logging
 
 
 class UiMainWindow(QtWidgets.QMainWindow):
@@ -107,7 +110,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
     def save_data(self):
         # Make sure there is data to save
         if self.fileset is None:
-            return self.console_print("Err: Must first load data")
+            return self.console_print("Err: Must first load data", level="warning")
 
         # Run the file dialog
         file_name = QtWidgets.QFileDialog.getSaveFileName(self, "Save file to disk")[0]
@@ -126,7 +129,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
     def open_data_file(self):
         # Reset
         self.clear_data()
-        self.consolePlainText.clear()
+        self.consoleTextEdit.clear()
 
         # Choose file
         file_name = QtWidgets.QFileDialog.getOpenFileName(self, "Open Files")[0]
@@ -141,7 +144,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             self.update_header()
         else:
             # File not chosen
-            self.console_print(f"Err: No file loaded")
+            self.console_print(f"Err: No file loaded", level="warning")
 
     def load_data(self):
         # Add all top level keys to the selection list of the GUI
@@ -168,7 +171,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         #     The width is insufficient and it needs a scrollbar
         # Abort if no data was loaded
         if self.fileset is None:
-            return self.console_print("Err: Must first load data")
+            return self.console_print("Err: Must first load data", level="warning")
 
         # Pretty print the data in a simple dialog
         pretty_json = json.dumps(
@@ -186,7 +189,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # TODO: This should probably be changed from QMessagebox to something else
         #     The width is insufficient and it needs a scrollbar
         if self.fileset is None:
-            return self.console_print("Err: Must first load data")
+            return self.console_print("Err: Must first load data", level="warning")
 
         # Prints only the console history to a simple dialog
         pretty_history = ""
@@ -199,6 +202,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
         msg.exec_()
 
     def add_notes(self):
+        if self.fileset is None:
+            return self.console_print("Err: Must first load data", level="warning")
+
         # Add any notes to the fileset
         self.fileset.add_notes(self.notesPlainText.toPlainText())
         self.console_print("Notes added to fileset")
@@ -217,7 +223,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Grab the selected files for plotting
         fileset_time = datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S")
         experiment_time = self.fileset.get_experiment_date().strftime("%Y.%m.%d_%H.%M.%S")
-        selected_fileset = fs.Fileset(fileset_time, experiment_time)
+        selected_fileset = fs.Fileset(fileset_time)
+        selected_fileset.set_experiment_date(experiment_time)
         for item in self.selectedFilesList.selectedItems():
             lbl = item.text()
             path = self.fileset.get_filepath(lbl)
@@ -348,14 +355,23 @@ class UiMainWindow(QtWidgets.QMainWindow):
         else:
             self.lbicProfilesSpinBox.setDisabled(True)
 
-    def console_print(self, fstring):
+    def console_print(self, fstring, level="normal"):
         # Print a message to the GUI console
         now = datetime.datetime.now()
-        self.consolePlainText.appendPlainText(now.strftime("%d/%m/%Y %H.%M.%S: ") + fstring)
+        fstring_to_print = now.strftime("%d/%m/%Y %H.%M.%S: ") + fstring
+
+        c = ConsoleColours()
+
+        self.consoleTextEdit.setTextColor(c.get_colour(level))
+        self.consoleTextEdit.append(fstring_to_print)
+        self.consoleTextEdit.setTextColor(c.get_colour("normal"))
 
     def append_console_to_set(self):
+        if self.fileset is None:
+            return self.console_print("Err: Must first load data", level="warning")
+
         # Append console contents to the fileset
-        console_text = self.consolePlainText.toPlainText()
+        console_text = self.consoleTextEdit.toPlainText()
         now = datetime.datetime.now()
         self.fileset.add_console(now.strftime("%d%m%Y_%H%M%S"), console_text)
         self.console_print("Added console contents to set")
@@ -378,7 +394,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
     def clear_all(self):
         # Reset complete GUI
         self.clear_data()
-        self.consolePlainText.clear()
+        self.consoleTextEdit.clear()
         self.console_print("Cleared memory")
 
     def show_about(self):
