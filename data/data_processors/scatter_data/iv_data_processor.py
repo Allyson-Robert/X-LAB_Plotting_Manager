@@ -1,7 +1,7 @@
 from data.data_processors.scatter_data.data_processors import ScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
 import utils.calc.iv_calc as iv_calc
-from utils.errors import VocNotFoundError, IscNotFoundError, ObservableNotComputableError
+from utils.errors.errors import VocNotFoundError, IscNotFoundError, ObservableNotComputableError
 
 
 class IVScatterDataProcessor(ScatterDataProcessor):
@@ -39,12 +39,11 @@ class IVScatterDataProcessor(ScatterDataProcessor):
 
         self._processed_observables = self.processed_data.keys()
 
-    # TODO: Is this really necessary?  Ignores Datatype observables
-    def get_allowed_observables(self):
-        return self._processed_observables
+    # # TODO: Is this really necessary?  Ignores Datatype observables
+    # def get_allowed_observables(self):
+    #     return self._processed_observables
 
     def validate_observables(self, *args):
-        print(*args)
         # Checks whether all desired observables can be obtained for this data
         try:
             for observable in args:

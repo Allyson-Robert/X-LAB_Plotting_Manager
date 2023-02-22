@@ -1,7 +1,7 @@
 from data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
 from data.data_processors.scatter_data.data_processors import ScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
-from utils.errors import ObservableNotComputableError
+from utils.errors.errors import ObservableNotComputableError
 from datetime import datetime
 
 
@@ -50,6 +50,8 @@ class IVStabilityDataProcessor(ScatterDataProcessor):
 
         for processor in rejected_processors:
             self.processors.remove(processor)
+
+        return [processor.get_data("label") for processor in rejected_processors]
 
     def get_data(self, observable: str):
         # Compute processed data if needed

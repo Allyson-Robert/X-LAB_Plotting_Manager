@@ -1,4 +1,4 @@
-from data.data_processors.scatter_data.iv_stability_dataprocessor import IVStabilityDataProcessor
+from data.data_processors.scatter_data.iv_stability_data_processor import IVStabilityDataProcessor
 from utils.plot_preppers.four_subplots_prepper import four_subplots_prepper
 from plotter.plotter import Plotter
 import plotly.graph_objects as go

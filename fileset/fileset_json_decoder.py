@@ -18,7 +18,7 @@ class FilesetJSONDecoder(JSONDecoder):
             fileset.set_notes(dct['notes'])
             fileset.set_console(dct['console'])
             fileset.set_structure_type(dct['structure_type'])
-            fileset.set_filepa1ths(dct['filepaths'])
+            fileset.set_filepaths(dct['filepaths'])
 
             return fileset
 
