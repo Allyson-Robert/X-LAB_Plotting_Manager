@@ -1,8 +1,9 @@
-from data.data_processors.scatter_data.iv_stability_dataprocessor import IVStabilityDataProcessor
+from data.data_processors.scatter_data.iv_stability_data_processor import IVStabilityDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
 from plotter.iv_stability_plotter import IVStabilityPlotter
 from experiment.experiment import Experiment
 from fileset.fileset import Fileset
+from utils.class_utils import decorate_class_callables
 
 
 class Stability(Experiment):

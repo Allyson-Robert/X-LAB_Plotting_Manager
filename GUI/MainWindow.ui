@@ -206,7 +206,7 @@
             <enum>QFrame::Plain</enum>
            </property>
            <property name="currentIndex">
-            <number>4</number>
+            <number>3</number>
            </property>
            <widget class="QWidget" name="emptyPage"/>
            <widget class="QWidget" name="sunbrickPage"/>
@@ -541,10 +541,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QTextEdit" name="consoleTextEdit">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
+      <widget class="QTextEditConsole" name="consoleTextEdit">
        <property name="maximumSize">
         <size>
          <width>16777215</width>
@@ -1002,6 +999,9 @@
        <property name="locale">
         <locale language="English" country="Belgium"/>
        </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -1136,6 +1136,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QTextEditConsole</class>
+   <extends>QTextEdit</extends>
+   <header>qtexteditconsole</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

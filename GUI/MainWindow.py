@@ -2,16 +2,17 @@
 from PyQt5 import QtWidgets, uic
 import datetime
 import json
+import logging
+import inspect
 import sys
-import Devices as Dev
 import fileset as fs
 import DataCreatorWindow
 import experiment
 from experiment import *
 from utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
-from utils.class_utils import decorate_class_callables
-from utils.logging import with_default_logging
+from utils.logging import with_logging
+from utils.class_utils import with_logging_on_all_methods
 
 
 class UiMainWindow(QtWidgets.QMainWindow):
@@ -50,6 +51,21 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Load the UI, Note that loadUI adds objects to 'self' using objectName
         self.dataWindow = None
         uic.loadUi("MainWindow.ui", self)
+
+        # Create a logger with the desired settings
+        self.logger = logging.getLogger("my_logger")
+        self.consoleTextEdit.setFormatter(
+            logging.Formatter(
+                "%(asctime)s [%(levelname)8.8s] %(message)s",
+                datefmt='"%d/%m/%Y %H.%M.%S: '
+            )
+        )
+        self.logger.addHandler(self.consoleTextEdit)
+        self.logger.setLevel(logging.DEBUG)
+
+        # Decorate methods with the with_logging decorator
+        self.load_data = with_logging(self.load_data, self.logger)
+        # TODO: Perhaps pass this logger to an external thing?
 
         # Reset stacked widget to empty page
         self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
