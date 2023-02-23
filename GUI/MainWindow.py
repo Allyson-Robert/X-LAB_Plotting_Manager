@@ -1,20 +1,19 @@
 # Main.py
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets, uic, QtCore
 import datetime
 import json
 import logging
-import inspect
 import sys
 import fileset as fs
 import DataCreatorWindow
-import experiment
 from experiment import *
 from utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
 from utils.logging import with_logging
-from utils.class_utils import with_logging_on_all_methods
+import experiment
 
 
+# TODO: ESC should close the window safely
 class UiMainWindow(QtWidgets.QMainWindow):
     """
         GUI for automated plotting of various types of data.
@@ -22,6 +21,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
     """
     def __init__(self):
         super(UiMainWindow, self).__init__()
+        self.thread = None
+        self.experiment_worker = None
         self.fileset = None
         self.fileset_location = None
 
@@ -57,15 +58,15 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.consoleTextEdit.setFormatter(
             logging.Formatter(
                 "%(asctime)s [%(levelname)8.8s] %(message)s",
-                datefmt='"%d/%m/%Y %H.%M.%S: '
+                datefmt='%d/%m/%Y %H.%M.%S: '
             )
         )
         self.logger.addHandler(self.consoleTextEdit)
         self.logger.setLevel(logging.DEBUG)
 
+        # TODO: Perhaps pass this logger to an external thing?
         # Decorate methods with the with_logging decorator
         self.load_data = with_logging(self.load_data, self.logger)
-        # TODO: Perhaps pass this logger to an external thing?
 
         # Reset stacked widget to empty page
         self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
@@ -91,6 +92,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Define stackedWidget widget actions
         self.lbicProfilesCheckBox.stateChanged.connect(self.toggle_lbic_profile)
         self.plotBtn.clicked.connect(self.plot_manager)
+
+        # Make sure the progress bar is cleared
+        self.progressBar.setValue(0)
 
         # Show the app
         self.show()
@@ -235,7 +239,15 @@ class UiMainWindow(QtWidgets.QMainWindow):
         new_page = self.stackedWidget.widget(self.devices[self.fileset.get_device()])
         self.stackedWidget.setCurrentWidget(new_page)
 
+    def report_progress(self, progress: int):
+        assert isinstance(progress, int)
+        assert 0 <= progress <= 100
+        self.progressBar.setValue(progress)
+
     def plot_manager(self):
+        """
+        This can last a long time and will therefore instantiate a QThread to leave the GUI responsive.
+        """
         # Grab the selected files for plotting
         fileset_time = datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S")
         experiment_time = self.fileset.get_experiment_date().strftime("%Y.%m.%d_%H.%M.%S")
@@ -252,14 +264,37 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Instantiate proper device class and set the data
         device = self.fileset.get_device()
         experiment_cls = getattr(experiment, device)
-        experiment_instance = experiment_cls()
-        experiment_instance.set_data(selected_fileset)
-
-        # Grab the correct plotting function and pass all options to it
+        # experiment_instance = experiment_cls(device, selected_fileset, plot_type, legend="fuck off")
+        # experiment_instance.set_data(selected_fileset)
+        #
+        # # Grab the correct plotting function and pass all options to it
         plot_type = self.plotTypeCombo.currentText()
         self.console_print(f"Producing {device}-{plot_type} plot for {self.fileset.get_name()}")
-        plot_type = getattr(experiment_instance, plot_type)
-        plot_type(title=self.fileset.get_name(), legend="Some title")
+        # plot_type = getattr(experiment_instance, plot_type)
+        # plot_type(title=self.fileset.get_name(), legend="Some title")
+
+        # Create a new thread for the experiment class to run in
+        self.thread = QtCore.QThread()
+        self.experiment_worker = experiment_cls(device, selected_fileset, plot_type, legend="fuck off")
+        self.experiment_worker.moveToThread(self.thread)
+
+        # Connect signals and slots for the worker thread
+        self.thread.started.connect(self.experiment_worker.run)
+        self.experiment_worker.finished.connect(self.thread.quit)
+        self.experiment_worker.finished.connect(self.experiment_worker.deleteLater)
+        self.thread.finished.connect(self.thread.deleteLater)
+        self.experiment_worker.progress.connect(self.report_progress)
+        # Step 6: Start the thread
+        self.thread.start()
+
+        # Final resets
+        # self.longRunningBtn.setEnabled(False)
+        # self.thread.finished.connect(
+        #     lambda: self.longRunningBtn.setEnabled(True)
+        # )
+        # self.thread.finished.connect(
+        #     lambda: self.stepLabel.setText("Long-Running Step: 0")
+        # )
 
     """
     def plot_sunbrick(self, plot_type: str, fileset: fs.Fileset):

@@ -1,11 +1,11 @@
 from data.data_processors.scatter_data.absorbance_data_processor import AbsorbanceScatterDataProcessor
 from data.datatypes.scatter_data.absorbance_scatter import AbsorbanceScatterData
 from plotter.scatter_data_plotter import ScatterDataPlotter
-from experiment.experiment import Experiment
+from experiment.experimentworker import ExperimentWorker
 from fileset.fileset import Fileset
 
 
-class DW2000(Experiment):
+class DW2000(ExperimentWorker):
     def __init__(self):
         self.absorbance_processor = None
 

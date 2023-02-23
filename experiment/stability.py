@@ -1,14 +1,30 @@
 from data.data_processors.scatter_data.iv_stability_data_processor import IVStabilityDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
 from plotter.iv_stability_plotter import IVStabilityPlotter
-from experiment.experiment import Experiment
+from experiment.experimentworker import ExperimentWorker
+from PyQt5.QtCore import QObject, pyqtSignal
 from fileset.fileset import Fileset
-from utils.class_utils import decorate_class_callables
 
 
-class Stability(Experiment):
-    def __init__(self):
+class Stability(ExperimentWorker):
+    def __init__(self,  device, fileset, plot_type, legend):
+        # super() delegates method calls to a parent
+        super(Stability, self).__init__()
+
+        self.device = device
+        self.fileset = fileset
+        self.plot_type = plot_type
+        self.legend = legend
+
         self.iv_stability_processors = None
+
+    def run(self):
+        # Set the data
+        self.set_data(self.fileset)
+
+        # Grab the correct plot and execute it
+        plot_type = getattr(self, self.plot_type)
+        plot_type(title=self.fileset.get_name(), legend=self.legend)
 
     def set_data(self, fileset: Fileset):
         assert fileset.get_structure_type() == "structured"

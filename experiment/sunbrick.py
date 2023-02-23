@@ -1,11 +1,11 @@
 from data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
-from experiment.experiment import Experiment
+from experiment.experimentworker import ExperimentWorker
 from plotter.scatter_data_plotter import ScatterDataPlotter
 from fileset.fileset import Fileset
 
 
-class Sunbrick(Experiment):
+class Sunbrick(ExperimentWorker):
     def __init__(self):
         self.iv_data_processor = None
 
