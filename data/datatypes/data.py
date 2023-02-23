@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class ScatterData(ABC):
+class Data(ABC):
 
     @abstractmethod
     def read_file(self, filepath: str) -> None:

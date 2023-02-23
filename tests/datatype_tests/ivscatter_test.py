@@ -1,4 +1,4 @@
-from data.datatypes.scatter_data.iv_scatter import IVScatterData
+from data.datatypes.scatter_data.iv_scatter import IVData
 from tests.datatype_tests.scatterdata_test import ScatterDataTest
 
 
@@ -7,7 +7,7 @@ label = "test label"
 observables = ['label', 'wavelength', 'absorbance']
 
 test = ScatterDataTest()
-test.test_init(label, IVScatterData)
+test.test_init(label, IVData)
 test.test_readfile(path)
 test.test_data(observables)
 test.test_units(observables)

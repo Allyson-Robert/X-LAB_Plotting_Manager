@@ -1,9 +1,9 @@
-from data.data_processors.scatter_data.data_processors import ScatterDataProcessorCore
-from data.datatypes.scatter_data.fluorescence_scatter import FluorescenceScatterData
+from data.data_processors.data_processors import DataProcessorCore
+from data.datatypes.scatter_data.fluorescence_scatter import FluorescenceData
 
 
-class FluorescenceScatterDataProcessor(ScatterDataProcessorCore):
-    def __init__(self, absorbance_data: FluorescenceScatterData):
+class FluorescenceScatterDataProcessor(DataProcessorCore):
+    def __init__(self, absorbance_data: FluorescenceData):
         self.data = absorbance_data
 
         self._processing_functions = {

@@ -1,11 +1,11 @@
-from data.datatypes.scatter_data.scatter import ScatterData
+from data.datatypes.data import Data
 from utils.file_readers.read_pti_file import read_pti_file
 from datetime import datetime
 import re
 import os
 
 
-class FluorescenceScatterData(ScatterData):
+class FluorescenceData(Data):
     def __init__(self, label):
         self.raw_data = {
             "label": {"units": "N/A", "data": label},
@@ -21,7 +21,7 @@ class FluorescenceScatterData(ScatterData):
         if observable in self._allowed_observables:
             return self.raw_data[observable]['data']
         else:
-            raise ValueError(f"FluorescenceScatterData does not contain {observable} data")
+            raise ValueError(f"FluorescenceData does not contain {observable} data")
 
     def get_units(self, observable: str) -> str:
         self.get_data(observable)

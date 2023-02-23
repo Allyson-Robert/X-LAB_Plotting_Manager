@@ -1,5 +1,5 @@
 from data.data_processors.scatter_data.absorbance_data_processor import AbsorbanceScatterDataProcessor
-from data.datatypes.scatter_data.absorbance_scatter import AbsorbanceScatterData
+from data.datatypes.scatter_data.absorbance_scatter import AbsorbanceData
 from experiment.experiment_worker import ExperimentWorkerCore
 from plotter.scatter_data_plotter import ScatterDataPlotter
 from fileset.fileset import Fileset
@@ -24,7 +24,7 @@ class DW2000(ExperimentWorkerCore):
         filepaths = fileset.get_filepaths()
         self.absorbance_processor = {}
         for key in filepaths:
-            data = AbsorbanceScatterData(key)
+            data = AbsorbanceData(key)
             data.read_file(filepaths[key])
             self.absorbance_processor[key] = AbsorbanceScatterDataProcessor(data)
 

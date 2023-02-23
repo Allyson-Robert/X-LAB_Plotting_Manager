@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
-from data.datatypes.scatter_data.scatter import ScatterData
+from data.datatypes.data import Data
 
 
-class ScatterDataProcessor(ABC):
+class DataProcessor(ABC):
     @abstractmethod
     def get_data(self, observable: str):
         pass
@@ -16,9 +16,9 @@ class ScatterDataProcessor(ABC):
         pass
 
 
-class ScatterDataProcessorCore(ScatterDataProcessor):
+class DataProcessorCore(DataProcessor):
 
-    def __init__(self, data: ScatterData):
+    def __init__(self, data: Data):
         self.data = data
 
         self._processing_functions = {
@@ -31,7 +31,7 @@ class ScatterDataProcessorCore(ScatterDataProcessor):
         self._processed_observables = self.processed_data.keys()
 
     def get_data(self, observable: str):
-        # If observable is from raw data delegate to ScatterData
+        # If observable is from raw data delegate to Data
         if observable in self.data.get_allowed_observables():
             return self.data.get_data(observable)
 

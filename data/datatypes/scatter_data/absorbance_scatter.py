@@ -1,12 +1,9 @@
-from data.datatypes.scatter_data.scatter import ScatterData
+from data.datatypes.data import Data
 from utils.file_readers.read_csv import read_csv
 import pandas as pd
-from datetime import datetime
-import re
-import os
 
 
-class AbsorbanceScatterData(ScatterData):
+class AbsorbanceData(Data):
     def __init__(self, label):
         # TODO: Datetime should be added, time resolved measurements will be needed, such as DPBF experiments
         self.raw_data = {
@@ -34,7 +31,7 @@ class AbsorbanceScatterData(ScatterData):
             if observable in self._allowed_observables:
                 return self.raw_data[observable]['data']
             else:
-                raise ValueError(f"AbsorbanceScatterData does not contain {observable} data")
+                raise ValueError(f"AbsorbanceData does not contain {observable} data")
         else:
             raise ValueError(f"Data has not been read from file for {self}")
 

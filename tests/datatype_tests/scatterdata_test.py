@@ -1,4 +1,3 @@
-from data.datatypes.scatter_data.scatter import ScatterData
 from typing import Callable
 
 

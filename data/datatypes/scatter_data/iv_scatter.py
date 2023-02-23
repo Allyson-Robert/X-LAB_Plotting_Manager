@@ -1,11 +1,11 @@
-from data.datatypes.scatter_data.scatter import ScatterData
+from data.datatypes.data import Data
 from utils.file_readers.read_csv import read_csv
 from datetime import datetime
 import re
 import os
 
 
-class IVScatterData(ScatterData):
+class IVData(Data):
     def __init__(self, label):
         self.raw_data = {
             "label": {"units": "N/A", "data": label},
@@ -21,7 +21,7 @@ class IVScatterData(ScatterData):
         if observable in self._allowed_observables:
             return self.raw_data[observable]['data']
         else:
-            raise ValueError(f"IVScatterData does not contain {observable} data")
+            raise ValueError(f"IVData does not contain {observable} data")
 
     def get_units(self, observable: str) -> str:
         self.get_data(observable)
@@ -31,7 +31,6 @@ class IVScatterData(ScatterData):
         return self._allowed_observables
 
     def read_file(self, filepath: str):
-        # Do not read the file twice
         data = read_csv(filepath)
         if self.raw_data['voltage'] is None:
             self.raw_data['voltage'] = {"units": "Voltage ~(V)", "data": data[0]}

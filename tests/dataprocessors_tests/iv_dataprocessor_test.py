@@ -1,9 +1,9 @@
 from data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
-from data.datatypes.scatter_data.iv_scatter import IVScatterData
+from data.datatypes.scatter_data.iv_scatter import IVData
 import traceback
 
 
-def test_init(iv_data: IVScatterData):
+def test_init(iv_data: IVData):
     return IVScatterDataProcessor(iv_data)
 
 
@@ -17,7 +17,7 @@ def test_get_data(iv_processor, observable):
 
 path = "G:\\My Drive\\Data\\Sunbrick\\2023\\01-January\\20_12_2022_Long-term_IV\\Position_1\\IV_2023_01_02_22_40_50.txt"
 label = "test curve"
-test_data = IVScatterData(label)
+test_data = IVData(label)
 test_data.read_file(path)
 
 processor = test_init(test_data)

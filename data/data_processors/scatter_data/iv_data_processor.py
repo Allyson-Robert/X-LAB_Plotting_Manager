@@ -1,11 +1,11 @@
-from data.data_processors.scatter_data.data_processors import ScatterDataProcessorCore
-from data.datatypes.scatter_data.iv_scatter import IVScatterData
+from data.data_processors.data_processors import DataProcessorCore
+from data.datatypes.scatter_data.iv_scatter import IVData
 import utils.calc.iv_calc as iv_calc
 from utils.errors.errors import VocNotFoundError, IscNotFoundError, ObservableNotComputableError
 
 
-class IVScatterDataProcessor(ScatterDataProcessorCore):
-    def __init__(self, iv_data: IVScatterData):
+class IVScatterDataProcessor(DataProcessorCore):
+    def __init__(self, iv_data: IVData):
         self.data = iv_data
 
         self._processing_functions = {
@@ -62,7 +62,7 @@ class IVScatterDataProcessor(ScatterDataProcessorCore):
     #             self.processed_data[observable] = self._processing_functions[observable]()
     #         return self.processed_data[observable]['data']
     #     else:
-    #         raise ValueError(f"IVScatterData does not contain {observable} data")
+    #         raise ValueError(f"IVData does not contain {observable} data")
     #
     # def get_units(self, observable: str) -> str:
     #     self.get_data(observable)
@@ -72,7 +72,7 @@ class IVScatterDataProcessor(ScatterDataProcessorCore):
     #     elif observable in self._processed_observables:
     #         return self.processed_data[observable]["units"]
     #     else:
-    #         raise ValueError(f"IVScatterData does not contain {observable} data")
+    #         raise ValueError(f"IVData does not contain {observable} data")
 
     def is_illuminated(self):
         current = self.get_data("forward_current")

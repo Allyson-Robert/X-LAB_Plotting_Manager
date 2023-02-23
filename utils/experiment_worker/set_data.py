@@ -1,11 +1,11 @@
 from typing import Type
 from fileset.fileset import Fileset
-from data.datatypes.scatter_data.scatter import ScatterData
-from data.data_processors.scatter_data.data_processors import ScatterDataProcessor
+from data.datatypes.data import Data
+from data.data_processors.data_processors import DataProcessor
 
 
-def set_data(fileset: Fileset, scatter_data: Type[ScatterData], scatter_data_processor: Type[ScatterDataProcessor]) \
-        -> dict[str, ScatterDataProcessor]:
+def set_data(fileset: Fileset, scatter_data: Type[Data], scatter_data_processor: Type[DataProcessor]) \
+        -> dict[str, DataProcessor]:
     assert fileset.get_structure_type() == "flat"
 
     filepaths = fileset.get_filepaths()

@@ -1,4 +1,4 @@
-from data.data_processors.scatter_data.data_processors import ScatterDataProcessor
+from data.data_processors.data_processors import DataProcessor
 from utils.plot_preppers.scatter_prep import scatter_prepper
 from plotter.plotter import Plotter
 import plotly.graph_objects as go
@@ -13,7 +13,7 @@ class ScatterDataPlotter(Plotter):
 
         self.data_processors = None
 
-    def ready_plot(self, iv_data_processors: dict[str, ScatterDataProcessor], legend_title: str):
+    def ready_plot(self, iv_data_processors: dict[str, DataProcessor], legend_title: str):
         self.fig = scatter_prepper(self.fig)
         self.fig.update_layout(
             title={'text': self.title},
@@ -30,7 +30,7 @@ class ScatterDataPlotter(Plotter):
                 mode='lines',
                 name=scatter.get_data('label')
             ))
-        # Grab axis titles from last IVScatterData
+        # Grab axis titles from last IVData
         self.fig.update_layout(
             xaxis_title=scatter.get_units(self.x_observable),
             yaxis_title=scatter.get_units(self.y_observable),

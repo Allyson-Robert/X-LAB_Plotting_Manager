@@ -1,5 +1,5 @@
 from data.data_processors.scatter_data.iv_stability_data_processor import IVStabilityDataProcessor
-from data.datatypes.scatter_data.iv_scatter import IVScatterData
+from data.datatypes.scatter_data.iv_scatter import IVData
 from experiment.experiment_worker import ExperimentWorkerCore
 from plotter.iv_stability_plotter import IVStabilityPlotter
 from fileset.fileset import Fileset
@@ -33,7 +33,7 @@ class Stability(ExperimentWorkerCore):
         for solar_cell in filepaths:
             processors_list = []
             for iv_curve in filepaths[solar_cell]:
-                iv_data = IVScatterData(iv_curve)
+                iv_data = IVData(iv_curve)
                 iv_data.read_file(filepaths[solar_cell][iv_curve])
                 processors_list.append(iv_data)
 

@@ -1,5 +1,5 @@
 from data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
-from data.datatypes.scatter_data.iv_scatter import IVScatterData
+from data.datatypes.scatter_data.iv_scatter import IVData
 from experiment.experiment_worker import ExperimentWorkerCore
 from plotter.scatter_data_plotter import ScatterDataPlotter
 from fileset.fileset import Fileset
@@ -29,7 +29,7 @@ class Sunbrick(ExperimentWorkerCore):
 
         # Read the data and instantiate a processor for each file
         for key in filepaths:
-            iv_data = IVScatterData(key)
+            iv_data = IVData(key)
             iv_data.read_file(filepaths[key])
             self.iv_data_processor[key] = IVScatterDataProcessor(iv_data)
 

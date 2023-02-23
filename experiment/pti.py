@@ -1,5 +1,5 @@
 from data.data_processors.scatter_data.fluorescence_data_processor import FluorescenceScatterDataProcessor
-from data.datatypes.scatter_data.fluorescence_scatter import FluorescenceScatterData
+from data.datatypes.scatter_data.fluorescence_scatter import FluorescenceData
 from experiment.experiment_worker import ExperimentWorkerCore
 from plotter.scatter_data_plotter import ScatterDataPlotter
 from fileset.fileset import Fileset
@@ -22,7 +22,7 @@ class PTI(ExperimentWorkerCore):
         filepaths = fileset.get_filepaths()
         self.fluo_data_processor = {}
         for key in filepaths:
-            fluo_data = FluorescenceScatterData(key)
+            fluo_data = FluorescenceData(key)
             fluo_data.read_file(filepaths[key])
             self.fluo_data_processor[key] = FluorescenceScatterDataProcessor(fluo_data)
 

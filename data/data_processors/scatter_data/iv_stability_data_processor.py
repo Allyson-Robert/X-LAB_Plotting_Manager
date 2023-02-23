@@ -1,18 +1,18 @@
 from data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
-from data.data_processors.scatter_data.data_processors import ScatterDataProcessor
-from data.datatypes.scatter_data.iv_scatter import IVScatterData
+from data.data_processors.data_processors import DataProcessor
+from data.datatypes.scatter_data.iv_scatter import IVData
 from utils.errors.errors import ObservableNotComputableError
 from datetime import datetime
 
 
-class IVStabilityDataProcessor(ScatterDataProcessor):
+class IVStabilityDataProcessor(DataProcessor):
     """
-    This class will utilise the ScatterDataProcessor in order to compute physical quantities related to stability
+    This class will utilise the DataProcessor in order to compute physical quantities related to stability
         measurements. These are fundamentally about the time evolution of IV parameters.
         This class defers the computation of all observables to IVScatterDataProcessor with the notable exception
         being the elapsed time between any IV curve and the start of the experiment.
     """
-    def __init__(self, iv_data_list: list[IVScatterData], start_time: datetime):
+    def __init__(self, iv_data_list: list[IVData], start_time: datetime):
         self.processors = [IVScatterDataProcessor(iv_data) for iv_data in iv_data_list]
 
         # Keep track of the function required to gather the data for the following observables
