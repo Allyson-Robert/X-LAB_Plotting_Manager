@@ -1,15 +1,11 @@
 from data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
+from experiment.experiment_worker import ExperimentWorkerCore
 from plotter.scatter_data_plotter import ScatterDataPlotter
-from experiment.experiment_worker import ExperimentWorker
 from fileset.fileset import Fileset
-from PyQt5 import QtCore
 
 
-class Sunbrick(ExperimentWorker):
-    finished = QtCore.pyqtSignal()
-    progress = QtCore.pyqtSignal(int)
-
+class Sunbrick(ExperimentWorkerCore):
     def __init__(self,  device, fileset, plot_type, legend):
         super(Sunbrick, self).__init__()
 
@@ -20,23 +16,26 @@ class Sunbrick(ExperimentWorker):
 
         self.iv_data_processor = None
 
-    def run(self):
-        # Set the data
-        self.set_data(self.fileset)
-
-        # Grab the correct plot and execute it
-        plot_type = getattr(self, self.plot_type)
-        plot_type(title=self.fileset.get_name(), legend=self.legend)
-
     def set_data(self, fileset: Fileset):
         assert fileset.get_structure_type() == "flat"
 
-        filepaths = fileset.get_filepaths()
+        # Initialise an empty dict and get the required filepaths
         self.iv_data_processor = {}
+        filepaths = fileset.get_filepaths()
+
+        # Progress housekeeping
+        nr_of_files = len(filepaths)
+        counter = 0
+
+        # Read the data and instantiate a processor for each file
         for key in filepaths:
             iv_data = IVScatterData(key)
             iv_data.read_file(filepaths[key])
             self.iv_data_processor[key] = IVScatterDataProcessor(iv_data)
+
+            # Emit progress signal
+            self.progress.emit(int(100*counter/nr_of_files))
+            counter += 1
 
     def plot_fulliv(self, title, legend):
         plotter = ScatterDataPlotter(title, "voltage", "current")
