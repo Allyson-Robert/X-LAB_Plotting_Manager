@@ -265,14 +265,10 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Instantiate proper device class and set the data
         device = self.fileset.get_device()
         experiment_cls = getattr(experiment, device)
-        # experiment_instance = experiment_cls(device, selected_fileset, plot_type, legend="fuck off")
-        # experiment_instance.set_data(selected_fileset)
-        #
+
         # # Grab the correct plotting function and pass all options to it
         plot_type = self.plotTypeCombo.currentText()
         self.console_print(f"Producing {device}-{plot_type} plot for {self.fileset.get_name()}")
-        # plot_type = getattr(experiment_instance, plot_type)
-        # plot_type(title=self.fileset.get_name(), legend="Some title")
 
         # Create a new thread for the experiment class to run in
         self.thread = QtCore.QThread()
@@ -285,7 +281,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.experiment_worker.finished.connect(self.experiment_worker.deleteLater)
         self.thread.finished.connect(self.thread.deleteLater)
         self.experiment_worker.progress.connect(self.report_progress)
-        # Step 6: Start the thread
+
+        # Start the thread
         self.thread.start()
 
         # Final resets
@@ -297,109 +294,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
         #     lambda: self.stepLabel.setText("Long-Running Step: 0")
         # )
 
-    """
-    def plot_sunbrick(self, plot_type: str, fileset: fs.Fileset):
-        # Initialise sunbrick with files and grab relevant parameters
-        device = Sunbrick()
-        device.set_data(fileset)
-        p = self.presentationCheckBox.isChecked()
-
-        # Grab the callable method for the desired plot type and call it
-        chosen_plot = getattr(device, plot_type)
-        chosen_plot(title=self.fileset.get_name(), legend="Some title")
-
-        return "success"
-
-    def plot_dw2000(self, plot_type, selected_files):
-        # Initialise DW2000 with a title
-        device = Dev.DW2000(self.data['name'])
-
-        # Call the corresponding plot function
-        if plot_type == "plot":
-            return device.plot(selected_files)
-        elif plot_type == "plot_rainbow":
-            return device.plot_rainbow(selected_files)
-        else:
-            return "Unknown plot type, skipped action."
-
-    def plot_lbic(self, plot_type, selected_files):
-        if len(selected_files) != 1:
-            # TODO: batch production should be possible now using the label as a title
-            return "LBIC only produces one image at a time"
-
-        # Initialise LBIC with a title
-        device = Dev.LBIC(self.data['name'])
-        profiles = self.lbicProfilesCheckBox.isChecked()
-
-        # Call the corresponding plot function with the needed parameters
-        if plot_type == "show_image" or plot_type == "show_3d":
-            # Intensity range is required for this type of plot
-            intensities = [
-                self.intRangeLowSpinBox.value() * 10**(-6),
-                self.intRangeUpSpinBox.value() * 10**(-6)
-            ]
-            self.console_print(f"Range set to {intensities} A")
-
-            if plot_type == "show_image":
-                return device.show_image(selected_files, range=intensities, profiles=profiles)
-            else:
-                return device.show_3d(selected_files, range=intensities)
-
-        elif plot_type == "plot_intensities":
-            return device.plot_intensities(selected_files)
-
-        elif plot_type == "plot_horiz_profile":
-            # Only plot if profiles were enabled in the GUI
-            if profiles:
-                ycoord = self.lbicProfilesSpinBox.value()
-                return device.plot_horiz_profile(selected_files, ycoord)
-            else:
-                return "Must enable profile for this plot"
-        else:
-            return "Unknown plot type, skipped action."
-
-    def plot_pds(self, plot_type, selected_files):
-        # Initialise PDS with a title and grab parameters
-        device = Dev.PDS(self.data['name'])
-        n = self.pdsNormCheckBox.isChecked()
-        p = self.presentationCheckBox.isChecked()
-
-        # Call the corresponding plot function with the needed parameters
-        if plot_type == "plot":
-            return device.plot(selected_files, normalised=n, presentation=p)
-        else:
-            return "Unknown plot type, skipped action."
-
-    def plot_pti(self, plot_type, selected_files):
-        # Initialise PDS with a title
-        device = Dev.PtiText(self.data['name'])
-
-        # Call the corresponding plot function
-        if plot_type == "plot":
-            return device.plot(selected_files)
-        else:
-            return "Unknown plot type, skipped action."
-
-    def plot_generic(self, plot_type, selected_files):
-        x_title = self.xTitleLineEdit.text()
-        y_title = self.yTitleLineEdit.text()
-        l_title = self.lTitleLineEdit.text()
-        device = Dev.Generic(
-            title=self.data['name'],
-            x_title=x_title,
-            y_title=y_title,
-            l_title=l_title
-        )
-
-        n = self.genericNormCheckBox.isChecked()
-        p = self.presentationCheckBox.isChecked()
-        if plot_type == "plot":
-            return device.plot(selected_files, presentation=p)
-        elif plot_type == "plot_distribution":
-            return device.plot_distribution(selected_files, presentation=p)
-        else:
-            return "Unknown plot type, skipped action."
-    """
     def toggle_lbic_profile(self):
         # Allow the profile position to be selected (LBIC specific)
         if self.lbicProfilesCheckBox.isChecked():
