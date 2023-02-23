@@ -1,15 +1,12 @@
 from data.data_processors.scatter_data.absorbance_data_processor import AbsorbanceScatterDataProcessor
 from data.datatypes.scatter_data.absorbance_scatter import AbsorbanceScatterData
+from experiment.experiment_worker import ExperimentWorkerCore
 from plotter.scatter_data_plotter import ScatterDataPlotter
-from experiment.experiment_worker import ExperimentWorker
 from fileset.fileset import Fileset
 from PyQt5 import QtCore
 
 
-class DW2000(ExperimentWorker):
-    finished = QtCore.pyqtSignal()
-    progress = QtCore.pyqtSignal(int)
-
+class DW2000(ExperimentWorkerCore):
     def __init__(self,  device, fileset, plot_type, legend):
         # super() delegates method calls to a parent
         super(DW2000, self).__init__()
@@ -20,14 +17,6 @@ class DW2000(ExperimentWorker):
         self.legend = legend
 
         self.absorbance_processor = None
-
-    def run(self):
-        # Set the data
-        self.set_data(self.fileset)
-
-        # Grab the correct plot and execute it
-        plot_type = getattr(self, self.plot_type)
-        plot_type(title=self.fileset.get_name(), legend=self.legend)
 
     def set_data(self,  fileset: Fileset):
         assert fileset.get_structure_type() == "flat"
