@@ -1,15 +1,16 @@
 from experiment.experiment_worker import ExperimentWorker
+from utils.experiment_worker.set_data import set_data
 from fileset.fileset import Fileset
 from PyQt5 import QtCore
 
 
-class PDS(ExperimentWorker):
+class PTI(ExperimentWorker):
     finished = QtCore.pyqtSignal()
     progress = QtCore.pyqtSignal(int)
 
     def __init__(self,  device, fileset, plot_type, legend):
         # super() delegates method calls to a parent
-        super(PDS, self).__init__()
+        super(PTI, self).__init__()
 
         self.device = device
         self.fileset = fileset
@@ -27,10 +28,18 @@ class PDS(ExperimentWorker):
         plot_type(title=self.fileset.get_name(), legend=self.legend)
 
     def set_data(self,  fileset: Fileset):
-        raise NotImplementedError
+        self.fluo_data_processor = set_data(fileset, )
+        assert fileset.get_structure_type() == "flat"
+
+        filepaths = fileset.get_filepaths()
+        self.fluo_data_processor = {}
+        for key in filepaths:
+            fluo_data = IVScatterData(key)
+            fluo_data.read_file(filepaths[key])
+            self.fluo_data_processor[key] = IVScatterDataProcessor(iv_data)
 
     def plot(self):
         """
-        Show the absorbance spectrum
+        Show the fluorescence spectrum
         """
         raise NotImplementedError

@@ -43,10 +43,10 @@ class UiMainWindow(QtWidgets.QMainWindow):
             'Sunbrick': get_class_methods(Sunbrick, ignore=["run"]),
             'Stability': get_class_methods(Stability, ignore=["run"]),
             'DW2000': get_class_methods(DW2000, ignore=["run"]),
-            'LBIC': ['show_image', 'show_3d', 'plot_intensities', 'plot_horiz_profile'],
-            'PDS': ['plot'],
-            'PTI': ['plot'],
-            'Generic': ['plot', 'plot_distribution']
+            'LBIC': get_class_methods(LBIC, ignore=["run"]),
+            'PDS': get_class_methods(PDS, ignore=["run"]),
+            'PTI': get_class_methods(PTI, ignore=["run"]),
+            'Generic': get_class_methods(Generic, ignore=["run"])
         }
 
         # Load the UI, Note that loadUI adds objects to 'self' using objectName

@@ -46,4 +46,4 @@ class DW2000(ExperimentWorker):
 
     def rainbow_plot(self, title, legend):
         # TODO: Add a rainbow plotting thing for a single file
-        pass
+        raise NotImplementedError

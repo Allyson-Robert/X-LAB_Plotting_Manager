@@ -28,7 +28,6 @@ class Sunbrick(ExperimentWorker):
         plot_type = getattr(self, self.plot_type)
         plot_type(title=self.fileset.get_name(), legend=self.legend)
 
-
     def set_data(self, fileset: Fileset):
         assert fileset.get_structure_type() == "flat"
 
