@@ -1,13 +1,11 @@
-from experiment.experiment_worker import ExperimentWorker
-from utils.experiment_worker.set_data import set_data
+from data.data_processors.scatter_data.fluorescence_data_processor import FluorescenceScatterDataProcessor
+from data.datatypes.scatter_data.fluorescence_scatter import FluorescenceScatterData
+from experiment.experiment_worker import ExperimentWorkerCore
+from plotter.scatter_data_plotter import ScatterDataPlotter
 from fileset.fileset import Fileset
-from PyQt5 import QtCore
 
 
-class PTI(ExperimentWorker):
-    finished = QtCore.pyqtSignal()
-    progress = QtCore.pyqtSignal(int)
-
+class PTI(ExperimentWorkerCore):
     def __init__(self,  device, fileset, plot_type, legend):
         # super() delegates method calls to a parent
         super(PTI, self).__init__()
@@ -17,29 +15,21 @@ class PTI(ExperimentWorker):
         self.plot_type = plot_type
         self.legend = legend
 
-        self.iv_stability_processors = None
-
-    def run(self):
-        # Set the data
-        self.set_data(self.fileset)
-
-        # Grab the correct plot and execute it
-        plot_type = getattr(self, self.plot_type)
-        plot_type(title=self.fileset.get_name(), legend=self.legend)
-
+        self.fluo_data_processor = None
     def set_data(self,  fileset: Fileset):
-        self.fluo_data_processor = set_data(fileset, )
         assert fileset.get_structure_type() == "flat"
 
         filepaths = fileset.get_filepaths()
         self.fluo_data_processor = {}
         for key in filepaths:
-            fluo_data = IVScatterData(key)
+            fluo_data = FluorescenceScatterData(key)
             fluo_data.read_file(filepaths[key])
-            self.fluo_data_processor[key] = IVScatterDataProcessor(iv_data)
+            self.fluo_data_processor[key] = FluorescenceScatterDataProcessor(fluo_data)
 
-    def plot(self):
+    def plot(self, title, legend):
         """
         Show the fluorescence spectrum
         """
-        raise NotImplementedError
+        plotter = ScatterDataPlotter(title, "wavelength", "fluorescence")
+        plotter.ready_plot(self.fluo_data_processor, legend)
+        plotter.draw_plot()

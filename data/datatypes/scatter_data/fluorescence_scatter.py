@@ -1,5 +1,5 @@
 from data.datatypes.scatter_data.scatter import ScatterData
-from utils.file_readers.read_csv import read_csv
+from utils.file_readers.read_pti_file import read_pti_file
 from datetime import datetime
 import re
 import os
@@ -32,7 +32,7 @@ class FluorescenceScatterData(ScatterData):
 
     def read_file(self, filepath: str):
         # Do not read the file twice
-        data = read_csv(filepath)
+        data = read_pti_file(filepath)
         if self.raw_data['wavelength'] is None:
             self.raw_data['wavelength'] = {"units": "Wavelength ~(nm)", "data": data[0]}
 
@@ -42,4 +42,8 @@ class FluorescenceScatterData(ScatterData):
         if self.raw_data['datetime'] is None:
             filename = os.path.basename(filepath)
             datetime_str = re.search(self.dt_pattern, filename)
-            self.raw_data['datetime'] = {"units": None, "data": datetime.strptime(datetime_str.group(), self.label_format)}
+            try:
+                date_and_time = datetime.strptime(datetime_str.group(), self.label_format)
+            except AttributeError:
+                date_and_time = datetime.now()
+            self.raw_data['datetime'] = {"units": None, "data": date_and_time}
