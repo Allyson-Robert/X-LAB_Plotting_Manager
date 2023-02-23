@@ -1,9 +1,9 @@
 from data.data_processors.scatter_data.data_processors import ScatterDataProcessorCore
-from data.datatypes.scatter_data.absorbance_scatter import AbsorbanceScatterData
+from data.datatypes.scatter_data.fluorescence_scatter import FluorescenceScatterData
 
 
-class AbsorbanceScatterDataProcessor(ScatterDataProcessorCore):
-    def __init__(self, absorbance_data: AbsorbanceScatterData):
+class FluorescenceScatterDataProcessor(ScatterDataProcessorCore):
+    def __init__(self, absorbance_data: FluorescenceScatterData):
         self.data = absorbance_data
 
         self._processing_functions = {
@@ -23,4 +23,4 @@ class AbsorbanceScatterDataProcessor(ScatterDataProcessorCore):
                 self.get_data(observable)
         # TODO: Catchall try-except
         except:
-            raise ObservableNotComputableError
+            raise

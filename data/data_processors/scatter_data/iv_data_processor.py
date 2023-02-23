@@ -1,10 +1,10 @@
-from data.data_processors.scatter_data.data_processors import ScatterDataProcessor
+from data.data_processors.scatter_data.data_processors import ScatterDataProcessorCore
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
 import utils.calc.iv_calc as iv_calc
 from utils.errors.errors import VocNotFoundError, IscNotFoundError, ObservableNotComputableError
 
 
-class IVScatterDataProcessor(ScatterDataProcessor):
+class IVScatterDataProcessor(ScatterDataProcessorCore):
     def __init__(self, iv_data: IVScatterData):
         self.data = iv_data
 
@@ -51,28 +51,28 @@ class IVScatterDataProcessor(ScatterDataProcessor):
         except VocNotFoundError:
             raise ObservableNotComputableError
 
-    def get_data(self, observable: str):
-        # Returns the requested raw data
-        if observable in self.data.get_allowed_observables():
-            return self.data.get_data(observable)
-
-        # Compute processed data if needed
-        elif observable in self._processed_observables:
-            if self.processed_data[observable] is None:
-                self.processed_data[observable] = self._processing_functions[observable]()
-            return self.processed_data[observable]['data']
-        else:
-            raise ValueError(f"IVScatterData does not contain {observable} data")
-
-    def get_units(self, observable: str) -> str:
-        self.get_data(observable)
-        # Return raw data
-        if observable in self.data.get_allowed_observables():
-            return self.data.get_units(observable)
-        elif observable in self._processed_observables:
-            return self.processed_data[observable]["units"]
-        else:
-            raise ValueError(f"IVScatterData does not contain {observable} data")
+    # def get_data(self, observable: str):
+    #     # Returns the requested raw data
+    #     if observable in self.data.get_allowed_observables():
+    #         return self.data.get_data(observable)
+    #
+    #     # Compute processed data if needed
+    #     elif observable in self._processed_observables:
+    #         if self.processed_data[observable] is None:
+    #             self.processed_data[observable] = self._processing_functions[observable]()
+    #         return self.processed_data[observable]['data']
+    #     else:
+    #         raise ValueError(f"IVScatterData does not contain {observable} data")
+    #
+    # def get_units(self, observable: str) -> str:
+    #     self.get_data(observable)
+    #     # Return raw data
+    #     if observable in self.data.get_allowed_observables():
+    #         return self.data.get_units(observable)
+    #     elif observable in self._processed_observables:
+    #         return self.processed_data[observable]["units"]
+    #     else:
+    #         raise ValueError(f"IVScatterData does not contain {observable} data")
 
     def is_illuminated(self):
         current = self.get_data("forward_current")
