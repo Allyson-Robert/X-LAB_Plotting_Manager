@@ -1,7 +1,7 @@
 import csv
 
 
-def read_csv(path):
+def read_csv(path, skip_lines=0):
     # Retrieve the delimiter by sniffing the file
     with open(path) as csvfile:
         dialect = csv.Sniffer().sniff(csvfile.read())
@@ -10,6 +10,11 @@ def read_csv(path):
     # Actually start reading the file
     with open(path) as csvfile:
         reader = csv.reader(csvfile, delimiter=sep)
+
+        # Skip lines
+        for i in range(skip_lines):
+            next(reader)
+
         data = [[], []]
         for [x, y] in reader:
             if x and y:
