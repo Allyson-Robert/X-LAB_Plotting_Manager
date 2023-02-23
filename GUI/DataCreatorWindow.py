@@ -70,6 +70,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
                 )
             )
             self.browseFilesText.clear()
+            self.fileset.set_structure_type("flat")
 
         # Empty label widget
         self.labelEdit.clear()
@@ -94,6 +95,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
                     separators=(',', ': ')
                 )
             )
+            self.fileset.set_structure_type("structured")
 
         except Exception as e:
             self.console_print(f"Fatal Err: Plot aborted{e}")

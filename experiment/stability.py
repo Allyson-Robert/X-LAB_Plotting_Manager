@@ -1,12 +1,15 @@
 from data.data_processors.scatter_data.iv_stability_data_processor import IVStabilityDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
 from plotter.iv_stability_plotter import IVStabilityPlotter
-from experiment.experimentworker import ExperimentWorker
-from PyQt5.QtCore import QObject, pyqtSignal
+from experiment.experiment_worker import ExperimentWorker
 from fileset.fileset import Fileset
+from PyQt5 import QtCore
 
 
 class Stability(ExperimentWorker):
+    finished = QtCore.pyqtSignal()
+    progress = QtCore.pyqtSignal(int)
+
     def __init__(self,  device, fileset, plot_type, legend):
         # super() delegates method calls to a parent
         super(Stability, self).__init__()

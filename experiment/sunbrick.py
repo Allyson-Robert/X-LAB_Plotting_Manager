@@ -1,13 +1,33 @@
 from data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVScatterData
-from experiment.experimentworker import ExperimentWorker
 from plotter.scatter_data_plotter import ScatterDataPlotter
+from experiment.experiment_worker import ExperimentWorker
 from fileset.fileset import Fileset
+from PyQt5 import QtCore
 
 
 class Sunbrick(ExperimentWorker):
-    def __init__(self):
+    finished = QtCore.pyqtSignal()
+    progress = QtCore.pyqtSignal(int)
+
+    def __init__(self,  device, fileset, plot_type, legend):
+        super(Sunbrick, self).__init__()
+
+        self.device = device
+        self.fileset = fileset
+        self.plot_type = plot_type
+        self.legend = legend
+
         self.iv_data_processor = None
+
+    def run(self):
+        # Set the data
+        self.set_data(self.fileset)
+
+        # Grab the correct plot and execute it
+        plot_type = getattr(self, self.plot_type)
+        plot_type(title=self.fileset.get_name(), legend=self.legend)
+
 
     def set_data(self, fileset: Fileset):
         assert fileset.get_structure_type() == "flat"

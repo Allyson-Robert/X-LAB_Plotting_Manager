@@ -40,9 +40,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Define possible plot types to show to the user for each experiment
         self.plot_types = {
-            'Sunbrick': get_class_methods(Sunbrick),
-            'Stability': get_class_methods(Stability),
-            'DW2000': ['plot', 'plot_rainbow'],
+            'Sunbrick': get_class_methods(Sunbrick, ignore=["run"]),
+            'Stability': get_class_methods(Stability, ignore=["run"]),
+            'DW2000': get_class_methods(DW2000, ignore=["run"]),
             'LBIC': ['show_image', 'show_3d', 'plot_intensities', 'plot_horiz_profile'],
             'PDS': ['plot'],
             'PTI': ['plot'],
@@ -167,6 +167,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             self.console_print(f"Err: No file loaded", level="warning")
 
     def load_data(self):
+        # TODO: Cancelling now clears the data, should only be cleared after selection
         # Add all top level keys to the selection list of the GUI
         for label in self.fileset.get_labels():
             self.selectedFilesList.addItem(label)
