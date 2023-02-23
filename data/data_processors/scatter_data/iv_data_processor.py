@@ -51,29 +51,6 @@ class IVScatterDataProcessor(DataProcessorCore):
         except VocNotFoundError:
             raise ObservableNotComputableError
 
-    # def get_data(self, observable: str):
-    #     # Returns the requested raw data
-    #     if observable in self.data.get_allowed_observables():
-    #         return self.data.get_data(observable)
-    #
-    #     # Compute processed data if needed
-    #     elif observable in self._processed_observables:
-    #         if self.processed_data[observable] is None:
-    #             self.processed_data[observable] = self._processing_functions[observable]()
-    #         return self.processed_data[observable]['data']
-    #     else:
-    #         raise ValueError(f"IVData does not contain {observable} data")
-    #
-    # def get_units(self, observable: str) -> str:
-    #     self.get_data(observable)
-    #     # Return raw data
-    #     if observable in self.data.get_allowed_observables():
-    #         return self.data.get_units(observable)
-    #     elif observable in self._processed_observables:
-    #         return self.processed_data[observable]["units"]
-    #     else:
-    #         raise ValueError(f"IVData does not contain {observable} data")
-
     def is_illuminated(self):
         current = self.get_data("forward_current")
         return {"units": None, "data": iv_calc.is_illuminated(current)}
