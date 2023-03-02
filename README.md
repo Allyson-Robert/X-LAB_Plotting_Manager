@@ -1,4 +1,4 @@
-Allyson Plotting GUI v1.1.2
+X-Lab Plotting v2.0.0
 ===========================
 Last update: 2023/01/20
 
