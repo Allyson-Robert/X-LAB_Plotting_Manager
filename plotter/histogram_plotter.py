@@ -4,12 +4,11 @@ from plotter.plotter import Plotter
 import plotly.graph_objects as go
 
 
-class ScatterDataPlotter(Plotter):
-    def __init__(self, title, x_observable: str, y_observable: str):
+class HistogramPlotter(Plotter):
+    def __init__(self, title, observable: str):
         self.title = title
         self.fig = go.Figure()
-        self.x_observable = x_observable
-        self.y_observable = y_observable
+        self.observable = observable
 
         self.data_processors = None
 
@@ -23,16 +22,15 @@ class ScatterDataPlotter(Plotter):
 
     def draw_plot(self):
         for lbl in self.data_processors:
-            scatter = self.data_processors[lbl]
-            self.fig.add_trace(go.Scatter(
-                x=scatter.get_data(self.x_observable),
-                y=scatter.get_data(self.y_observable),
-                mode='lines',
-                name=scatter.get_data('label')
-            ))
+            processor = self.data_processors[lbl]
+
+            self.fig.add_trace(
+                go.Histogram(x=processor.get_data(self.observable))
+            )
+
         # Grab axis titles from last IVData
         self.fig.update_layout(
-            xaxis_title=scatter.get_units(self.x_observable),
-            yaxis_title=scatter.get_units(self.y_observable),
+            xaxis_title=processor.get_units(self.observable),
+            yaxis_title="$Counts$",
         )
         self.fig.show()
