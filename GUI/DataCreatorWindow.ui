@@ -91,7 +91,7 @@
              </font>
             </property>
             <property name="text">
-             <string>ExperimentWorker</string>
+             <string>Experiment</string>
             </property>
            </widget>
           </item>

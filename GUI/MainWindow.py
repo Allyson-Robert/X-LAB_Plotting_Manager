@@ -272,7 +272,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Create a new thread for the experiment class to run in
         self.thread = QtCore.QThread()
-        self.experiment_worker = experiment_cls(device, selected_fileset, plot_type, legend="fuck off")
+        # TODO: Get legend title from GUI
+        self.experiment_worker = experiment_cls(device, selected_fileset, plot_type, legend="Legend title")
         self.experiment_worker.moveToThread(self.thread)
 
         # Connect signals and slots for the worker thread
@@ -344,6 +345,10 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.console_print("Cleared memory")
 
     def show_about(self):
+        """
+            Shows a simple window with licence, authorship and build information
+            # TODO: Make it so it can contain the X-Lab Logo
+        """
         # Grab the "about" info from about.txt
         with open("about.txt") as about_file:
             about_contents = about_file.read()

@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Allyson Plotting</string>
+   <string>X-Lab Plotting</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="font">
