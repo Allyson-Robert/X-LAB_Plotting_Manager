@@ -6,16 +6,21 @@ from fileset.fileset import Fileset
 
 
 class Stability(ExperimentWorkerCore):
-    def __init__(self,  device, fileset, plot_type, legend):
+    def __init__(self,  device, fileset, plot_type, legend, options):
         # super() delegates method calls to a parent
         super(Stability, self).__init__()
 
+        self.export = None
         self.device = device
         self.fileset = fileset
         self.plot_type = plot_type
         self.legend = legend
+        self.options = options
 
         self.iv_stability_processors = None
+
+    def set_options(self, export: bool, *args, **kwargs):
+        self.export = export
 
     def set_data(self, fileset: Fileset):
         assert fileset.get_structure_type() == "structured"
@@ -40,10 +45,12 @@ class Stability(ExperimentWorkerCore):
             self.iv_stability_processors[solar_cell] = IVStabilityDataProcessor(processors_list, start_date)
 
             # Emit progress signal
-            self.progress.emit(int(100*counter/nr_of_files))
             counter += 1
+            self.progress.emit(int(100*counter/nr_of_files))
 
     def plot_four(self, title, legend):
         plotter = IVStabilityPlotter(title)
         plotter.ready_plot(self.iv_stability_processors, legend)
-        plotter.draw_plot()
+        plotter.draw_plot(export=self.export)
+        # if self.export:
+        #     plotter.export()

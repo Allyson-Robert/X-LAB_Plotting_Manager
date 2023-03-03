@@ -1,8 +1,10 @@
 from data.data_processors.scatter_data.iv_stability_data_processor import IVStabilityDataProcessor
 from utils.plot_preppers.four_subplots_prepper import four_subplots_prepper
+from utils.plot_preppers.export_to_svg import get_svg_config
 from plotter.plotter import Plotter
 import plotly.graph_objects as go
 import plotly.express as px
+from utils.export_to_csv import export_to_csv
 
 
 class IVStabilityPlotter(Plotter):
@@ -21,7 +23,7 @@ class IVStabilityPlotter(Plotter):
         )
         self.iv_stability_processors = iv_stability_processors
 
-    def draw_plot(self):
+    def draw_plot(self, export):
         # Grab the values for Isc, Voc, FF and eff from the data
         counter = 0
         for label in self.iv_stability_processors:
@@ -76,4 +78,9 @@ class IVStabilityPlotter(Plotter):
                 row=2, col=2
             )
             counter += 1
-        self.fig.show()
+            if export:
+                # TODO: Get filename from GUI
+                export_to_csv(filename=f"temp{counter}.csv", list_of_lists=[times, currents, voltages, fill_factors,
+                                                                            max_powers])
+
+        self.fig.show(config=get_svg_config())

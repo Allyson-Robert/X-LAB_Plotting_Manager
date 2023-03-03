@@ -11,6 +11,7 @@ from utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
 from utils.logging import with_logging
 import experiment
+from utils.get_qwidget_value import get_qwidget_value
 
 
 # TODO: ESC should close the window safely
@@ -252,20 +253,27 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
     def plot_manager(self):
         """
-        This can last a long time and will therefore instantiate a QThread to leave the GUI responsive.
+            This can last a long time and will therefore instantiate a QThread to leave the GUI responsive.
         """
         # Grab the selected files for plotting
         fileset_time = datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S")
         experiment_time = self.fileset.get_experiment_date().strftime("%Y.%m.%d_%H.%M.%S")
         selected_fileset = fs.Fileset(fileset_time)
         selected_fileset.set_experiment_date(experiment_time)
+
         for item in self.selectedFilesList.selectedItems():
             lbl = item.text()
             path = self.fileset.get_filepath(lbl)
             selected_fileset.add_filepath(path, lbl)
+
         selected_fileset.set_device(self.fileset.get_device())
         selected_fileset.set_structure_type(self.fileset.get_structure_type())
         selected_fileset.set_name(self.fileset.get_name())
+
+        # Collect the values of all options
+        options_dict = {}
+        for option in self.stackedWidget.currentWidget().children():
+            options_dict[option.property("alias")] = get_qwidget_value(option)
 
         # Instantiate proper device class and set the data
         device = self.fileset.get_device()
@@ -278,7 +286,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Create a new thread for the experiment class to run in
         self.thread = QtCore.QThread()
         # TODO: Get legend title from GUI
-        self.experiment_worker = experiment_cls(device, selected_fileset, plot_type, legend="Legend title")
+        self.experiment_worker = experiment_cls(device, selected_fileset, plot_type, legend="Legend title", options=options_dict)
         self.experiment_worker.moveToThread(self.thread)
 
         # Connect signals and slots for the worker thread
@@ -291,7 +299,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Start the thread
         self.thread.start()
 
-        # Final resets
+        # TODO: Final resets
         # self.longRunningBtn.setEnabled(False)
         # self.thread.finished.connect(
         #     lambda: self.longRunningBtn.setEnabled(True)
