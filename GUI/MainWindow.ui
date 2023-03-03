@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>848</width>
-    <height>678</height>
+    <width>853</width>
+    <height>679</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -31,7 +31,7 @@
      <rect>
       <x>10</x>
       <y>12</y>
-      <width>825</width>
+      <width>836</width>
       <height>611</height>
      </rect>
     </property>
@@ -205,11 +205,25 @@
             <enum>QFrame::Plain</enum>
            </property>
            <property name="currentIndex">
-            <number>3</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="emptyPage"/>
            <widget class="QWidget" name="sunbrickPage"/>
-           <widget class="QWidget" name="stabilityPage"/>
+           <widget class="QWidget" name="stabilityPage">
+            <widget class="QCheckBox" name="stabilityExportAfterPlot">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>141</width>
+               <height>25</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Export after plot</string>
+             </property>
+            </widget>
+           </widget>
            <widget class="QWidget" name="dw2000Page"/>
            <widget class="QWidget" name="lbicPage">
             <widget class="QWidget" name="layoutWidget">
@@ -436,7 +450,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Present</string>
+              <string>Presentation</string>
              </property>
             </widget>
            </item>
@@ -1004,8 +1018,14 @@
          <pointsize>9</pointsize>
         </font>
        </property>
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <property name="locale">
         <locale language="English" country="Belgium"/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
        </property>
        <property name="readOnly">
         <bool>true</bool>
@@ -1079,7 +1099,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>848</width>
+     <width>853</width>
      <height>27</height>
     </rect>
    </property>
@@ -1087,24 +1107,35 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionCreate_Set"/>
+    <addaction name="actionLoad_Set"/>
+    <addaction name="actionSave_Set"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
-   </widget>
-   <widget class="QMenu" name="menuData">
-    <property name="title">
-     <string>Data</string>
-    </property>
-    <addaction name="actionCreate"/>
-    <addaction name="actionLoad"/>
-    <addaction name="actionSave"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionDocumentation"/>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuPlot_Config">
+    <property name="font">
+     <font>
+      <family>Open Sans</family>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="title">
+     <string>Plot Config</string>
+    </property>
+    <addaction name="actionSave_format"/>
+    <addaction name="actionColour_scheme"/>
+    <addaction name="actionLine_width"/>
+   </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuData"/>
+   <addaction name="menuPlot_Config"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -1122,25 +1153,120 @@
    <property name="text">
     <string>Quit</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+    </font>
+   </property>
   </action>
   <action name="actionCreate">
    <property name="text">
     <string>Create</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+    </font>
    </property>
   </action>
   <action name="actionLoad">
    <property name="text">
     <string>Load</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+    </font>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+    </font>
+   </property>
   </action>
   <action name="actionSave">
    <property name="text">
     <string>Save</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionSave_format">
+   <property name="text">
+    <string>Save format</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionColour_scheme">
+   <property name="text">
+    <string>Colour scheme</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionLine_width">
+   <property name="text">
+    <string>Line width</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionCreate_Set">
+   <property name="text">
+    <string>Create Set</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionLoad_Set">
+   <property name="text">
+    <string>Load Set</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionSave_Set">
+   <property name="text">
+    <string>Save Set</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionDocumentation">
+   <property name="text">
+    <string>Documentation</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+    </font>
    </property>
   </action>
  </widget>
@@ -1151,6 +1277,32 @@
    <header>qtexteditconsole</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>currSetNameLineEdit</tabstop>
+  <tabstop>currDeviceLineEdit</tabstop>
+  <tabstop>showDataBtn</tabstop>
+  <tabstop>showHistoryBtn</tabstop>
+  <tabstop>selectedFilesList</tabstop>
+  <tabstop>presentationCheckBox</tabstop>
+  <tabstop>plotTypeCombo</tabstop>
+  <tabstop>plotBtn</tabstop>
+  <tabstop>notesPlainText</tabstop>
+  <tabstop>addNotesBtn</tabstop>
+  <tabstop>consoleTextEdit</tabstop>
+  <tabstop>appendBtn</tabstop>
+  <tabstop>clearBtn</tabstop>
+  <tabstop>clearAllBtn</tabstop>
+  <tabstop>quitBtn</tabstop>
+  <tabstop>lbicProfilesCheckBox</tabstop>
+  <tabstop>lbicProfilesSpinBox</tabstop>
+  <tabstop>intRangeLowSpinBox</tabstop>
+  <tabstop>intRangeUpSpinBox</tabstop>
+  <tabstop>pdsNormCheckBox</tabstop>
+  <tabstop>genericNormCheckBox</tabstop>
+  <tabstop>xTitleLineEdit</tabstop>
+  <tabstop>yTitleLineEdit</tabstop>
+  <tabstop>lTitleLineEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -71,15 +71,20 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Reset stacked widget to empty page
         self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
 
-        # Define widget action
+        # Define menubar actions
+        self.actionCreate_Set.triggered.connect(self.create_data)
+        self.actionSave_Set.triggered.connect(self.save_data)
+        self.actionLoad_Set.triggered.connect(self.open_data_file)
         self.actionQuit.triggered.connect(self.quit)
 
-        self.actionCreate.triggered.connect(self.create_data)
-        self.actionSave.triggered.connect(self.save_data)
-        self.actionLoad.triggered.connect(self.open_data_file)
+        self.actionSave_format.triggered.connect(self.not_implemented)
+        self.actionColour_scheme.triggered.connect(self.not_implemented)
+        self.actionLine_width.triggered.connect(self.not_implemented)
 
+        self.actionDocumentation.triggered.connect(self.not_implemented)
         self.actionAbout.triggered.connect(self.show_about)
 
+        # Define GUI button actions
         self.showDataBtn.clicked.connect(self.display_data)
         self.showHistoryBtn.clicked.connect(self.display_history)
         self.addNotesBtn.clicked.connect(self.add_notes)
@@ -358,6 +363,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
         msg.setWindowTitle("About")
         msg.setText(about_contents)
         msg.exec_()
+
+    def not_implemented(self):
+        """
+            Shows the user a message that the current feature is planned but not yet implemented.
+        """
+        self.console_print("Feature not implemented", level='warning')
 
     @staticmethod
     def quit():
