@@ -1,7 +1,7 @@
 import plotly.graph_objects as go
 
 
-def heatmap_prep(self, fig: go.Figure) -> go.Figure:
+def heatmap_prep(fig: go.Figure) -> go.Figure:
     fig.update_layout(
         yaxis_scaleanchor="x",
         width=800,
