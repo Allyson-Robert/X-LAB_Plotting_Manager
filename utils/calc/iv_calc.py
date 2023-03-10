@@ -30,7 +30,7 @@ def trim_iv(voltages: list, currents: list, to_trim: list, isc: float, voc: floa
         a the to_trim list is sublisted between the two indices.
     """
     # Find the index of the last negative voltage, this will have been the one used for Isc
-    low = voltages.index([v for v in voltages if v < 0][0])
+    low = voltages.index([v for v in voltages if v < 0][-1])
     # Find all voltage values above voc and return the index of the first
     high = voltages.index([v for v in voltages if v > voc][0]) + 1
 
