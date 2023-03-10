@@ -35,7 +35,7 @@ class DataCore(Data):
         if observable in self._allowed_observables:
             return self.raw_data[observable]['data']
         else:
-            raise ValueError(f"PDSData does not contain {observable} data")
+            raise ValueError(f"{self.__class__.__name__} does not contain {observable} data")
 
     def get_units(self, observable: str) -> str:
         self.get_data(observable)
