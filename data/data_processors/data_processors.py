@@ -20,10 +20,7 @@ class DataProcessorCore(DataProcessor):
 
     def __init__(self, data: Data):
         self.data = data
-
-        self._processing_functions = {
-        }
-
+        self._processing_functions = {}
         self.processed_data = {}
         for key in self._processing_functions:
             self.processed_data[key] = None
