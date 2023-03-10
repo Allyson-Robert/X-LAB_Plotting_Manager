@@ -4,7 +4,10 @@ Last update: **2023/03/10**
 
 Plotting software written while pursuing a PhD at Hasselt University. 
 This program can be used to create filesets and plot the contents of the files therein.
-For installation information see the ![Installation](https://github.com/Allyson-Robert/Plotting_Tool/edit/master/README.md#installation) section.
+* ![Installation](#Installation) section.
+* ![General Use](#General-Use)
+* ![How to Expand](#How-to-Expand)
+
 
 Installation
 ============
