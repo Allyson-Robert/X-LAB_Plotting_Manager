@@ -90,18 +90,35 @@ class IVScatterDataProcessor(DataProcessorCore):
 
     # TODO: These truncations are not guaranteed to be aligned. All of these should truncate between Isc and Voc
     def get_truncated_voltage(self) -> dict:
+        isc = self.get_data("isc")
         voc = self.get_data("voc")
         voltage = self.get_data("forward_voltage")
-        return {"units": "Voltage (V)", "data": iv_calc.contiguous_trimmed_sublist(voltage, 0, voc)}
+        current = self.get_data("forward_current")
+
+        trimmed_voltage = iv_calc.trim_iv(voltage, current, voltage, isc, voc)
+        return {"units": "Voltage (V)", "data": trimmed_voltage}
 
     def get_truncated_current(self) -> dict:
         isc = self.get_data("isc")
+        voc = self.get_data("voc")
+        voltage = self.get_data("forward_voltage")
         current = self.get_data("forward_current")
-        return {"units": "Current (A)", "data": iv_calc.contiguous_trimmed_sublist(current, -isc, 0)}
+
+        trimmed_current = iv_calc.trim_iv(voltage, current, current, isc, voc)
+        return {"units": "Current (A)", "data": trimmed_current}
 
     def get_truncated_power(self) -> dict:
+        isc = self.get_data("isc")
+        voc = self.get_data("voc")
+        voltage = self.get_data("forward_voltage")
+        current = self.get_data("forward_current")
         power = self.get_data("forward_power")
-        return {"units": "Power (W)", "data": iv_calc.contiguous_sub_list(power, threshold=0, above=True)}
+        try:
+            trimmed_power = iv_calc.trim_iv(voltage, current, power, isc, voc)
+        except IndexError:
+            raise ObservableNotComputableError("Error in power truncation, issue probably related to dark measurement")
+
+        return {"units": "Power (W)", "data": trimmed_power}
 
     def get_current_difference(self) -> dict:
         fw_current = self.get_data("forward_current")
@@ -120,7 +137,9 @@ class IVScatterDataProcessor(DataProcessorCore):
         current = self.get_data("forward_current")
         voltage = self.get_data("forward_voltage")
         try:
-            return {"units": "Current (A)", "data": abs(iv_calc.find_crossing(voltage, current))}
+            isc = iv_calc.find_crossing(voltage, current)
+            # TODO: Is there any physical check that can be placed on Isc?
+            return {"units": "Current (A)", "data": abs(isc)}
         except IndexError as ie:
             raise IscNotFoundError
 
@@ -132,12 +151,17 @@ class IVScatterDataProcessor(DataProcessorCore):
         current = self.get_data("forward_current")
         voltage = self.get_data("forward_voltage")
         try:
-            return {"units": "Voltage (V)", "data": iv_calc.find_crossing(current, voltage)}
+            voc = iv_calc.find_crossing(current, voltage)
+            if voc < 0:
+                raise VocNotFoundError("Voc was found to be negative")
+            return {"units": "Voltage (V)", "data": voc}
         except IndexError as ie:
-            raise VocNotFoundError
+            raise VocNotFoundError("Voc could not be determined from the data")
 
     def calculate_mpp_power(self) -> dict:
         power = self.get_data("truncated_power")
+        if len(power) < 1:
+            raise ObservableNotComputableError("Truncated power is empty")
         return {"units": "Power (W)", "data": max(power)}
 
     def calculate_mpp_voltage(self) -> dict:
@@ -163,7 +187,11 @@ class IVScatterDataProcessor(DataProcessorCore):
         voc = self.get_data("voc")
         isc = self.get_data("isc")
         max_power = self.get_data("mpp_power")
-        return {"units": "Fill ~factor", "data": max_power/(voc * isc)}
+        try:
+            ff = max_power/(voc * isc)
+        except ZeroDivisionError:
+            raise ObservableNotComputableError("Voc or Isc are too small throwing a div by zero error")
+        return {"units": "Fill ~factor", "data": ff}
 
     def calculate_series_resistance(self) -> dict:
         current = self.get_data("current")

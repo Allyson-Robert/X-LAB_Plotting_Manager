@@ -1,6 +1,7 @@
 import numpy as np
 
 
+# TODO: Deprecate?
 def is_illuminated(input_currents: list) -> bool:
     # Check the first quarter of the list
     sample = input_currents[:int(len(input_currents) / 4)]
@@ -20,56 +21,26 @@ def get_reverse(input: list) -> list:
     return input[half_len:]
 
 
-def contiguous_trimmed_sublist(input: list, lower: float, upper: float) -> list:
+def trim_iv(voltages: list, currents: list, to_trim: list, isc: float, voc: float) -> list:
     """
-        Will return a list that starts right before the 'lower' value and ends right after the 'upper' value.
-        List must increase/decrease monotonically
+        Will return a list that is trimmed based on the IV curve, Voc and Isc.
+
+        This function assumes a monotonic increase of voltage (independent var -> ok) and current (noise -> not sure).
+        The last current value below Isc and the first voltage value above Voc are searched, their indexes found and
+        a the to_trim list is sublisted between the two indices.
     """
-    output = []
-    # Catch lower edge
-    if lower < input[1]:
-        output.append(input[0])
+    # Find the index of the last negative voltage, this will have been the one used for Isc
+    low = voltages.index([v for v in voltages if v < 0][0])
+    # Find all voltage values above voc and return the index of the first
+    high = voltages.index([v for v in voltages if v > voc][0]) + 1
 
-    # Walk through input from 'second' to 'second-to-last' elements
-    for index in range(1, len(input) - 1):
-        if lower < input[index + 1] and input[index - 1] < upper:
-            output.append(input[index])
-
-    # Catch upper edge
-    if upper > input[-2]:
-        output.append(input[-1])
-    return output
-
-
-def contiguous_sub_list(input: list, threshold: float, above: bool) -> list:
-    """
-        Get all values of a list above or below a certain threshold. Powered by ChatGPT
-    """
-    start = None
-    end = None
-
-    for i, num in enumerate(input):
-        # If above is True then num must be above threshold, if not it must be below
-        if (above and num >= threshold) or (not above and num <= threshold):
-            # Mark the start if the sub_list as soon as the threshold is reached
-            if start is None:
-                start = i
-        # Once threshold has been reached and we dip back below (or rise above) the threshold, mark the end
-        elif start is not None and end is None:
-            end = i
-
-    # If a start has been found return sublist
-    if start is not None:
-        end = len(input)
-        return input[start:end]
-
-    # If no start was found, raise error
-    raise ValueError(f"Input list has no elements crossing the threshold: {threshold}")
+    # Return all powers inbetween, note slicing goes up to but not including 'high'
+    return to_trim[low:high]
 
 
 def find_crossing(x: list, y:list) -> float:
     """
-        Determine interpolated y-crossing for a given numerical plot.
+        Determine interpolated y-crossing for a given numerical plot. Could be confused by excessively noisy x-data.
     """
     # To find the y-crossing we seek the point where the x-data turns positive
     for index in range(len(x)):
