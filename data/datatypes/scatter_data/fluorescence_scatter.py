@@ -1,12 +1,13 @@
-from data.datatypes.data import Data
+from data.datatypes.data import DataCore
 from utils.file_readers.read_pti_file import read_pti_file
 from datetime import datetime
 import re
 import os
 
 
-class FluorescenceData(Data):
+class FluorescenceData(DataCore):
     def __init__(self, label):
+        super().__init__()
         self.raw_data = {
             "label": {"units": "N/A", "data": label},
             "wavelength": None,
@@ -17,18 +18,18 @@ class FluorescenceData(Data):
         self.label_format = "%Y_%m_%d_%H_%M_%S"
         self.dt_pattern = '\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2}'
 
-    def get_data(self, observable: str):
-        if observable in self._allowed_observables:
-            return self.raw_data[observable]['data']
-        else:
-            raise ValueError(f"FluorescenceData does not contain {observable} data")
-
-    def get_units(self, observable: str) -> str:
-        self.get_data(observable)
-        return self.raw_data[observable]["units"]
-
-    def get_allowed_observables(self):
-        return self._allowed_observables
+    # def get_data(self, observable: str):
+    #     if observable in self._allowed_observables:
+    #         return self.raw_data[observable]['data']
+    #     else:
+    #         raise ValueError(f"FluorescenceData does not contain {observable} data")
+    #
+    # def get_units(self, observable: str) -> str:
+    #     self.get_data(observable)
+    #     return self.raw_data[observable]["units"]
+    #
+    # def get_allowed_observables(self):
+    #     return self._allowed_observables
 
     def read_file(self, filepath: str):
         # Do not read the file twice

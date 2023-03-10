@@ -7,6 +7,7 @@ import os
 
 class IVData(DataCore):
     def __init__(self, label):
+        super().__init__()
         self.raw_data = {
             "label": {"units": "N/A", "data": label},
             "voltage": None,

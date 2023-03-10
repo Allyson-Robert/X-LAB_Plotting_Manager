@@ -1,11 +1,11 @@
-from data.datatypes.data import Data
+from data.datatypes.data import DataCore
 from utils.file_readers.read_csv import read_csv
 import pandas as pd
 
 
-class AbsorbanceData(Data):
+class AbsorbanceData(DataCore):
     def __init__(self, label):
-        # TODO: Datetime should be added, time resolved measurements will be needed, such as DPBF experiments
+        super().__init__()
         self.raw_data = {
             "label": {"units": "N/A", "data": label},
             "wavelength": None,
@@ -13,6 +13,7 @@ class AbsorbanceData(Data):
             # "datetime": None,
         }
         self._allowed_observables = self.raw_data.keys()
+        # TODO: Datetime should be added, time resolved measurements will be needed, such as DPBF experiments
         # self.label_format = "%Y_%m_%d_%H_%M_%S"
         # self.dt_pattern = '\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2}'
 
@@ -26,18 +27,18 @@ class AbsorbanceData(Data):
             self.raw_data['wavelength'] = {"units": "$Wavelength ~(nm)$", "data": data[0][1:]}
             self.raw_data['absorbance'] = {"units": "$Absorbance ~(a.u.)$", "data": data[1][1:]}
 
-    def get_data(self, observable: str) -> list:
-        if self.raw_data[observable] is not None:
-            if observable in self._allowed_observables:
-                return self.raw_data[observable]['data']
-            else:
-                raise ValueError(f"AbsorbanceData does not contain {observable} data")
-        else:
-            raise ValueError(f"Data has not been read from file for {self}")
-
-    def get_units(self, observable: str) -> str:
-        self.get_data(observable)
-        return self.raw_data[observable]['units']
-
-    def get_allowed_observables(self):
-        return self._allowed_observables
+    # def get_data(self, observable: str) -> list:
+    #     if self.raw_data[observable] is not None:
+    #         if observable in self._allowed_observables:
+    #             return self.raw_data[observable]['data']
+    #         else:
+    #             raise ValueError(f"AbsorbanceData does not contain {observable} data")
+    #     else:
+    #         raise ValueError(f"Data has not been read from file for {self}")
+    #
+    # def get_units(self, observable: str) -> str:
+    #     self.get_data(observable)
+    #     return self.raw_data[observable]['units']
+    #
+    # def get_allowed_observables(self):
+    #     return self._allowed_observables
