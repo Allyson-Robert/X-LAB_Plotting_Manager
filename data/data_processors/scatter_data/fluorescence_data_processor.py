@@ -3,17 +3,8 @@ from data.datatypes.scatter_data.fluorescence_scatter import FluorescenceData
 
 
 class FluorescenceScatterDataProcessor(DataProcessorCore):
-    def __init__(self, absorbance_data: FluorescenceData):
-        self.data = absorbance_data
-
-        self._processing_functions = {
-        }
-
-        self.processed_data = {}
-        for key in self._processing_functions:
-            self.processed_data[key] = None
-
-        self._processed_observables = self.processed_data.keys()
+    def __init__(self, fluorescence_data: FluorescenceData):
+        super().__init__(fluorescence_data)
 
     def validate_observables(self, *args):
         print(*args)

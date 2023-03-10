@@ -5,16 +5,7 @@ from utils.errors.errors import ObservableNotComputableError
 
 class ScatterDataProcessor(DataProcessorCore):
     def __init__(self, absorbance_data: GenericData):
-        self.data = absorbance_data
-
-        self._processing_functions = {
-        }
-
-        self.processed_data = {}
-        for key in self._processing_functions:
-            self.processed_data[key] = None
-
-        self._processed_observables = self.processed_data.keys()
+        super().__init__(absorbance_data)
 
     def validate_observables(self, *args):
         print(*args)
