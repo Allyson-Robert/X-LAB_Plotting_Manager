@@ -51,6 +51,7 @@ class IVScatterDataProcessor(DataProcessorCore):
         except VocNotFoundError:
             raise ObservableNotComputableError
 
+    # TODO: Deprecate?
     def is_illuminated(self):
         current = self.get_data("forward_current")
         return {"units": None, "data": iv_calc.is_illuminated(current)}
