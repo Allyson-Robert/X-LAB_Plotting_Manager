@@ -6,18 +6,12 @@ from fileset.fileset import Fileset
 
 
 class Sunbrick(ExperimentWorkerCore):
-    def __init__(self,  device, fileset, plot_type, legend):
-        super(Sunbrick, self).__init__()
-
-        self.device = device
-        self.fileset = fileset
-        self.plot_type = plot_type
-        self.legend = legend
-
-        self.iv_data_processor = None
-
-    def set_data(self, fileset: Fileset):
-        assert fileset.get_structure_type() == "flat"
+    """
+         Implements the plotting function for the Sunbrick experiment.
+         Relevant data types and processors are IVData and IVScatterDataProcessor.
+    """
+    def __init__(self, device, fileset, plot_type, legend):
+        super().__init__(device, fileset, plot_type, legend)
 
         # Initialise an empty dict and get the required filepaths
         self.iv_data_processor = {}

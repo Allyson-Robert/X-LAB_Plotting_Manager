@@ -6,15 +6,11 @@ from fileset.fileset import Fileset
 
 
 class Stability(ExperimentWorkerCore):
-    def __init__(self,  device, fileset, plot_type, legend, options):
+    def __init__(self, device, fileset, plot_type, legend, options):
         # super() delegates method calls to a parent
-        super(Stability, self).__init__()
+        super().__init__(device, fileset, plot_type, legend)
 
         self.export = None
-        self.device = device
-        self.fileset = fileset
-        self.plot_type = plot_type
-        self.legend = legend
         self.options = options
 
         self.iv_stability_processors = None

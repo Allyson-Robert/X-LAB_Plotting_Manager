@@ -1,18 +1,17 @@
+from data.data_processors.lbic_image_processor import LBICImageProcessor
 from experiment.experiment_worker import ExperimentWorkerCore
+from data.datatypes.lbic_image import LBICImage
 from fileset.fileset import Fileset
 
 
 class LBIC(ExperimentWorkerCore):
-    def __init__(self,  device, fileset, plot_type, legend):
+    def __init__(self, device, fileset, plot_type, legend):
         # super() delegates method calls to a parent
-        super(LBIC, self).__init__()
-
-        self.device = device
-        self.fileset = fileset
-        self.plot_type = plot_type
-        self.legend = legend
+        super().__init__(device, fileset, plot_type, legend)
 
         self.iv_stability_processors = None
+        self.set_data_type(LBICImage)
+        self.set_processor_type(LBICImageProcessor)
 
     def set_data(self,  fileset: Fileset):
         raise NotImplementedError
