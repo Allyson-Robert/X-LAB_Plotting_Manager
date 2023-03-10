@@ -16,6 +16,7 @@ class PTI(ExperimentWorkerCore):
         self.legend = legend
 
         self.fluo_data_processor = None
+
     def set_data(self,  fileset: Fileset):
         assert fileset.get_structure_type() == "flat"
 

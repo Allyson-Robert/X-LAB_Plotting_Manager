@@ -1,7 +1,7 @@
 import csv
 
 
-def read_csv(path, skip_lines=0):
+def read_csv(path, skip_lines=0) -> list:
     # Retrieve the delimiter by sniffing the file
     with open(path) as csvfile:
         dialect = csv.Sniffer().sniff(csvfile.read())
