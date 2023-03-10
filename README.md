@@ -82,38 +82,127 @@ How to Expand
 =============
 The structure of the software loosely follows the schema below.
 The GUI calls an ExperimentWorker class and initialises it with the required plot type, options and fileset.
-This worker is passed to a separate thread where it can perform computations.
-The worker must be aware of the type of data and dataprocessor to be used.
+This worker is passed to a separate thread where it can perform computations without freezing the GUI which is then free
+to display progress.
+
+The ExperimentWorker must be aware of the type of data and dataprocessor to be used to initialise them.
 Once the data is set (i.e. the processors are initialised and the data has been read from the files) the 
 ExperimentWorker will call an appropriate plotter depending on the specific plot type.
 This plotter requires the processors and will retrieve data from them.
 
+Cores are available for: ExperimentWorker, DataProcessor and Data.
+These contain default implementation that do not need to know much about the internals of the Data to function.
+These Cores can be subclassed for quick/common additions.
+If more control is required then subclass the abstract base classes directly.
+
 ```mermaid
 classDiagram
 GUI --> ExperimentWorker: Calls
-ExperimentWorker: DataProcessor processors
-ExperimentWorker: set_data()
-ExperimentWorker: set_options()
-ExperimentWorker: set_data_type()
-ExperimentWorker: set_processor_type()
-ExperimentWorker: run()
+class ExperimentWorker{
+    DataProcessor processors
+    set_data()
+    set_options()
+    set_data_type()
+    set_processor_type()
+    run()
+}
+class Plotter{
+    DataProcessor processors
+    ready_plot()
+    draw_plot()
+}
+class DataProcessor{
+    Data data
+    get_data()
+    get_units()
+    validate_observables()
+    _compute_derived_observable()
+}
+class Data{
+    data
+    label
+    read_file()
+    get_data()
+    get_units()
+    get_allowed_observables()
+}
+
 ExperimentWorker --> Data: Initialises
-Data: data
-Data: label
-Data: read_file()
-Data: get_data()
-Data: get_units()
-Data: get_allowed_observables()
 ExperimentWorker --> Plotter: Calls
-Plotter: DataProcessor processors
-Plotter: ready_plot()
-Plotter: draw_plot()
 ExperimentWorker --> DataProcessor: Initialises
-DataProcessor: Data data
-DataProcessor: get_data()
-DataProcessor: get_units()
-DataProcessor: validate_observables()
-DataProcessor: _compute_derived_observable()
 Plotter --> DataProcessor: Calls
 DataProcessor --> Data: Calls
+```
+
+### ExperimentWorker
+```mermaid
+classDiagram
+class ExperimentWorker{
+    DataProcessor processors
+    set_data()
+    set_options()
+    set_data_type()
+    set_processor_type()
+    run()
+}
+<<Abstract>> ExperimentWorker
+
+
+class ExperimentWorkerCore{
+    set_data()
+    set_data_type()
+    set_processor_type()
+    run()
+}
+```
+
+### Plotter
+```mermaid
+classDiagram
+class Plotter{
+    DataProcessor processors
+    ready_plot()
+    draw_plot()
+}
+<<Abstract>> Plotter
+
+```
+
+### DataProcessor
+```mermaid
+classDiagram
+class DataProcessor{
+    Data data
+    get_data()
+    get_units()
+    validate_observables()
+    _compute_derived_observable()
+}
+<<Abstract>> DataProcessor
+
+class DataProcessorCore{
+    get_data()
+    get_units()
+    _compute_derived_observable()
+}
+```
+
+### Data
+```mermaid
+classDiagram
+class Data{
+    data
+    label
+    read_file()
+    get_data()
+    get_units()
+    get_allowed_observables()
+}
+<<Abstract>> Data
+
+class DataCore{
+    get_data()
+    get_units()
+    get_allowed_observables()
+}
 ```
