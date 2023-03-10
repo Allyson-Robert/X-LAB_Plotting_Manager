@@ -13,23 +13,32 @@ class Sunbrick(ExperimentWorkerCore):
     def __init__(self, device, fileset, plot_type, legend):
         super().__init__(device, fileset, plot_type, legend)
 
-        # Initialise an empty dict and get the required filepaths
-        self.iv_data_processor = {}
-        filepaths = fileset.get_filepaths()
+        self.set_data_type(IVData)
+        self.set_processor_type(IVScatterDataProcessor)
 
-        # Progress housekeeping
-        nr_of_files = len(filepaths)
-        counter = 0
+    def set_options(self, *args, **kwargs):
+        pass
 
-        # Read the data and instantiate a processor for each file
-        for key in filepaths:
-            iv_data = IVData(key)
-            iv_data.read_file(filepaths[key])
-            self.iv_data_processor[key] = IVScatterDataProcessor(iv_data)
-
-            # Emit progress signal
-            self.progress.emit(int(100*counter/nr_of_files))
-            counter += 1
+    # def set_data(self, fileset: Fileset):
+    #     assert fileset.get_structure_type() == "flat"
+    #
+    #     # Initialise an empty dict and get the required filepaths
+    #     self.data_processors = {}
+    #     filepaths = fileset.get_filepaths()
+    #
+    #     # Progress housekeeping
+    #     nr_of_files = len(filepaths)
+    #     counter = 0
+    #
+    #     # Read the data and instantiate a processor for each file
+    #     for key in filepaths:
+    #         iv_data = IVData(key)
+    #         iv_data.read_file(filepaths[key])
+    #         self.data_processors[key] = IVScatterDataProcessor(iv_data)
+    #
+    #         # Emit progress signal
+    #         self.progress.emit(int(100*counter/nr_of_files))
+    #         counter += 1
 
     def plot_fulliv(self, title, legend):
         plotter = ScatterDataPlotter(title, "voltage", "current")
@@ -48,9 +57,9 @@ class Sunbrick(ExperimentWorkerCore):
         self._scatter_plot(plotter, legend)
 
     def _scatter_plot(self, plotter: ScatterDataPlotter, legend: str):
-        plotter.ready_plot(self.iv_data_processor, legend)
+        plotter.ready_plot(self.data_processors, legend)
         plotter.draw_plot()
 
     def print_parameters(self, *args, **kwargs):
-        for lbl in self.iv_data_processor:
-            print(self.iv_data_processor[lbl].get_data("parameters"))
+        for lbl in self.data_processors:
+            print(self.data_processors[lbl].get_data("parameters"))
