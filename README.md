@@ -53,7 +53,7 @@ Do not forget to select the correct Experiment Type at this step.
 Adding datafiles can be done manually by browsing to the proper file and labelling each.
 It is also possible to generate a set of datafiles automatically by navigating to the *"Automatic"* tab and choosing a directory.
 Each file is then added and labelled with its name.
-By default the Data Creation Window is opened on the *"Manual"* tab.
+By default, the Data Creation Window is opened on the *"Manual"* tab.
 
 Filesets are saved after creation and by navigating *"File -> Save Set"*. 
 Do not forget to append the *".json"* file extension to the name when saving.
@@ -105,6 +105,7 @@ class ExperimentWorker{
     set_data_type()
     set_processor_type()
     run()
+    plot_*()
 }
 class Plotter{
     DataProcessor processors
