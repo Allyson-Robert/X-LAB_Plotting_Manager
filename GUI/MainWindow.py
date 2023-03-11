@@ -270,9 +270,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
         selected_fileset.set_structure_type(self.fileset.get_structure_type())
         selected_fileset.set_name(self.fileset.get_name())
 
-        # Collect the values of all options
+        # Recursively search for QWidget children with an alias to collect options and get their values
         options_dict = {}
-        for option in self.stackedWidget.currentWidget().children():
+        for option in self.stackedWidget.currentWidget().findChildren(QtWidgets.QWidget):
             alias = option.property("alias")
             if alias is not None:
                 options_dict[alias] = get_qwidget_value(option)
