@@ -9,6 +9,8 @@ def get_qwidget_value(widget):
 
     if isinstance(widget, QtWidgets.QSpinBox):
         return widget.value()
+    elif isinstance(widget, QtWidgets.QDoubleSpinBox):
+        return widget.value()
     elif isinstance(widget, QtWidgets.QCheckBox):
         return widget.isChecked()
     elif isinstance(widget, QtWidgets.QLineEdit):
