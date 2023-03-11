@@ -1,8 +1,7 @@
 from data.data_processors.lbic_image_processor import LBICImageProcessor
 from experiment.experiment_worker import ExperimentWorkerCore
 from data.datatypes.lbic_image import LBICImage
-from plotter.heatmap_plotter import HeatmapPlotter
-from plotter.histogram_plotter import HistogramPlotter
+import plotter as plt
 
 
 class LBIC(ExperimentWorkerCore):
@@ -33,7 +32,7 @@ class LBIC(ExperimentWorkerCore):
         """
         Heatmap/Image plot of the measured intensities at each position
         """
-        plotter = HeatmapPlotter(title)
+        plotter = plt.HeatmapPlotter(title)
         plotter.ready_plot(self.data_processors, legend)
         plotter.set_options(zrange=[self.lower_bound, self.upper_bound], profiles=self.enable_profiles)
         plotter.draw_plot()
@@ -48,7 +47,7 @@ class LBIC(ExperimentWorkerCore):
         """
         Scatter plot of all measured intensities
         """
-        plotter = HistogramPlotter(title, "current_list")
+        plotter = plt.HistogramPlotter(title, "current_list")
         plotter.ready_plot(self.data_processors, legend)
         plotter.draw_plot()
 
@@ -56,11 +55,19 @@ class LBIC(ExperimentWorkerCore):
         """
         Scatter plot of the measured intensities along a horizontal profile
         """
-        raise NotImplementedError
+        plotter = plt.ScatterDataPlotter(title, "x_axis", "horizontal_profile")
+        plotter.ready_plot(self.data_processors, legend)
+        plotter.draw_plot(y_position=self.profile_position)
 
     def plot_vert_profile(self, title, legend):
         """
         Scatter plot of the measured intensities along a vertical profile
+        """
+        raise NotImplementedError
+
+    def plot_diagonal_profile(self, title, legend):
+        """
+        Scatter plot of the measured intensities along a diagonal profile.
         """
         raise NotImplementedError
 
