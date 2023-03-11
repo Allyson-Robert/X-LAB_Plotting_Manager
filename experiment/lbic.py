@@ -41,7 +41,10 @@ class LBIC(ExperimentWorkerCore):
         """
         Surface plot of the measured intensities at each position
         """
-        raise NotImplementedError
+        plotter = plt.SurfacePlotter(title)
+        plotter.ready_plot(self.data_processors, legend)
+        plotter.set_options(zrange=[self.lower_bound, self.upper_bound])
+        plotter.draw_plot()
 
     def plot_intensities(self, title, legend):
         """

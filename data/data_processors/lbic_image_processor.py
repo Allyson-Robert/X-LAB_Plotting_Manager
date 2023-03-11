@@ -49,7 +49,7 @@ class LBICImageProcessor(DataProcessorCore):
         return {"units": "$Current ~(A)$", "data": data}
 
     def get_vertical_profile(self, *args, **kwargs):
-        pass
+        raise NotImplementedError
 
     def get_diagonal_profile(self, *args, **kwargs):
-        pass
+        raise NotImplementedError
