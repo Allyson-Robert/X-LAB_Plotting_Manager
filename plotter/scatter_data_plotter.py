@@ -21,12 +21,12 @@ class ScatterDataPlotter(Plotter):
         )
         self.data_processors = data_processors
 
-    def draw_plot(self):
+    def draw_plot(self, *args, **kwargs):
         for lbl in self.data_processors:
             scatter = self.data_processors[lbl]
             self.fig.add_trace(go.Scatter(
-                x=scatter.get_data(self.x_observable),
-                y=scatter.get_data(self.y_observable),
+                x=scatter.get_data(self.x_observable, *args, **kwargs),
+                y=scatter.get_data(self.y_observable, *args, **kwargs),
                 mode='lines',
                 name=scatter.get_data('label')
             ))

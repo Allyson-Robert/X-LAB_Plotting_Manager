@@ -53,7 +53,7 @@ class IVStabilityDataProcessor(DataProcessor):
 
         return [processor.get_data("label") for processor in rejected_processors]
 
-    def get_data(self, observable: str):
+    def get_data(self, observable: str, *args, **kwargs):
         # Compute processed data if needed
         if observable in self.processed_data.keys():
             if self.processed_data[observable] is None:
@@ -70,7 +70,7 @@ class IVStabilityDataProcessor(DataProcessor):
             raise ValueError(f"IVScatterDataProcessor does not contain {observable} data")
 
     # TODO: Type hint using TypedDict https://peps.python.org/pep-0589/
-    def get_time_evolved(self, observable):
+    def get_time_evolved(self, observable: str):
         measurements = []
         units = ""
         for processor in self.processors:

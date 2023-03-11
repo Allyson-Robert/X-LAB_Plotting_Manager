@@ -27,7 +27,7 @@ class DataProcessorCore(DataProcessor):
 
         self._processed_observables = self.processed_data.keys()
 
-    def get_data(self, observable: str):
+    def get_data(self, observable: str, *args, **kwargs):
         # If observable is from raw data delegate to Data
         if observable in self.data.get_allowed_observables():
             return self.data.get_data(observable)
