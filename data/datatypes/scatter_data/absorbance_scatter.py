@@ -18,27 +18,19 @@ class AbsorbanceData(DataCore):
         # self.dt_pattern = '\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2}'
 
     def read_file(self, filepath: str):
-        # TODO: Maybe there is a better way to do this?
         if 'xls' in filepath.split('.')[-1]:
-            return pd.read_excel(filepath)
+            data = pd.read_excel(filepath, header=None)
+            x_data = data[data.keys()[0]]
+            y_data = data[data.keys()[1]]
         else:
             data = read_csv(filepath)
-            # TODO: Some files have the first row removed, others do not
-            self.raw_data['wavelength'] = {"units": "$Wavelength ~(nm)$", "data": data[0][1:]}
-            self.raw_data['absorbance'] = {"units": "$Absorbance ~(a.u.)$", "data": data[1][1:]}
+            x_data = data[0][1:]
+            y_data = data[1][1:]
 
-    # def get_data(self, observable: str) -> list:
-    #     if self.raw_data[observable] is not None:
-    #         if observable in self._allowed_observables:
-    #             return self.raw_data[observable]['data']
-    #         else:
-    #             raise ValueError(f"AbsorbanceData does not contain {observable} data")
-    #     else:
-    #         raise ValueError(f"Data has not been read from file for {self}")
-    #
-    # def get_units(self, observable: str) -> str:
-    #     self.get_data(observable)
-    #     return self.raw_data[observable]['units']
-    #
-    # def get_allowed_observables(self):
-    #     return self._allowed_observables
+        # If the very first element of the first column is a 0 then there's a headewr t
+        if x_data[0] == 0:
+            x_data = x_data[1:]
+            y_data = y_data[1:]
+
+        self.raw_data['wavelength'] = {"units": "$Wavelength ~(nm)$", "data": x_data}
+        self.raw_data['absorbance'] = {"units": "$Absorbance ~(a.u.)$", "data": y_data}

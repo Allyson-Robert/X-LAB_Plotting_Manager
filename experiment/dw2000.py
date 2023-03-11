@@ -7,30 +7,20 @@ from PyQt5 import QtCore
 
 
 class DW2000(ExperimentWorkerCore):
-    def __init__(self,  device, fileset, plot_type, legend):
+    def __init__(self, device, fileset, plot_type, legend, options):
         # super() delegates method calls to a parent
-        super(DW2000, self).__init__()
+        super().__init__(device, fileset, plot_type, legend)
 
-        self.device = device
-        self.fileset = fileset
-        self.plot_type = plot_type
-        self.legend = legend
+        self.options = options
+        self.set_data_type(AbsorbanceData)
+        self.set_processor_type(AbsorbanceScatterDataProcessor)
 
-        self.absorbance_processor = None
-
-    def set_data(self,  fileset: Fileset):
-        assert fileset.get_structure_type() == "flat"
-
-        filepaths = fileset.get_filepaths()
-        self.absorbance_processor = {}
-        for key in filepaths:
-            data = AbsorbanceData(key)
-            data.read_file(filepaths[key])
-            self.absorbance_processor[key] = AbsorbanceScatterDataProcessor(data)
+    def set_options(self, *args, **kwargs):
+        pass
 
     def normal_plot(self, title, legend):
         plotter = ScatterDataPlotter(title, "wavelength", "absorbance")
-        plotter.ready_plot(self.absorbance_processor, legend)
+        plotter.ready_plot(self.data_processors, legend)
         plotter.draw_plot()
 
     def rainbow_plot(self, title, legend):
