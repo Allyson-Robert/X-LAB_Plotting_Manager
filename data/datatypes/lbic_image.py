@@ -16,8 +16,8 @@ class LBICImage(DataCore):
     def read_file(self, filepath: str) -> None:
         data = read_lbic(filepath)
         if self.raw_data['x_axis'] is None:
-            self.raw_data['x_axis'] = {"units": "$X-Position ~(mm)$", "data": data[0]}
+            self.raw_data['x_axis'] = {"units": "X-Position (mm)", "data": data[0]}
         if self.raw_data['y_axis'] is None:
-            self.raw_data['y_axis'] = {"units": "Y-position ~(mm)$", "data": data[1]}
+            self.raw_data['y_axis'] = {"units": "Y-position (mm)", "data": data[1]}
         if self.raw_data['current'] is None:
-            self.raw_data['current'] = {"units": "Current ~(A)$", "data": data[2]}
+            self.raw_data['current'] = {"units": "Current (A)", "data": data[2]}
