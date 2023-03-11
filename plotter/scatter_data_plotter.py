@@ -31,6 +31,7 @@ class ScatterDataPlotter(Plotter):
         self.titles_set = True
 
     def draw_plot(self, *args, **kwargs):
+        # TODO: Draw plots with errors
         for lbl in self.data_processors:
             scatter = self.data_processors[lbl]
             self.fig.add_trace(go.Scatter(
