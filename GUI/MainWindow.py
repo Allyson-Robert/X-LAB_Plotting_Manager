@@ -273,7 +273,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Collect the values of all options
         options_dict = {}
         for option in self.stackedWidget.currentWidget().children():
-            options_dict[option.property("alias")] = get_qwidget_value(option)
+            alias = option.property("alias")
+            if alias is not None:
+                options_dict[alias] = get_qwidget_value(option)
 
         # Instantiate proper device class and set the data
         device = self.fileset.get_device()
