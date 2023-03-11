@@ -13,6 +13,8 @@ class ScatterDataPlotter(Plotter):
 
         self.data_processors = None
 
+        self.titles_set = False
+
     def ready_plot(self, data_processors: dict[str, DataProcessor], legend_title: str):
         self.fig = scatter_prepper(self.fig)
         self.fig.update_layout(
@@ -20,6 +22,13 @@ class ScatterDataPlotter(Plotter):
             legend_title=legend_title,
         )
         self.data_processors = data_processors
+
+    def set_axes_titles(self, x_title, y_title):
+        self.fig.update_layout(
+            xaxis_title=x_title,
+            yaxis_title=y_title,
+        )
+        self.titles_set = True
 
     def draw_plot(self, *args, **kwargs):
         for lbl in self.data_processors:
@@ -30,9 +39,10 @@ class ScatterDataPlotter(Plotter):
                 mode='lines',
                 name=scatter.get_data('label')
             ))
-        # Grab axis titles from last IVData
-        self.fig.update_layout(
-            xaxis_title=scatter.get_units(self.x_observable),
-            yaxis_title=scatter.get_units(self.y_observable),
-        )
+        # Grab axis titles from last IVData if they have not yet been externally set
+        if not self.titles_set:
+            self.set_axes_titles(
+                scatter.get_units(self.x_observable),
+                scatter.get_units(self.y_observable)
+            )
         self.fig.show()
