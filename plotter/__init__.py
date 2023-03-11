@@ -5,4 +5,11 @@ from .scatter_data_plotter import ScatterDataPlotter
 from .iv_stability_plotter import IVStabilityPlotter
 from .surface_plotter import SurfacePlotter
 
-__all__ = ["Plotter", "HistogramPlotter", "HeatmapPlotter", "ScatterDataPlotter", "IVStabilityPlotter"]
+__all__ = [
+    "Plotter",
+    "HistogramPlotter",
+    "HeatmapPlotter",
+    "ScatterDataPlotter",
+    "IVStabilityPlotter",
+    "SurfacePlotter"
+]
