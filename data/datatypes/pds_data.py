@@ -1,10 +1,11 @@
 from data.datatypes.data import Data
-from utils.file_readers.read_csv import read_csv
+from utils.file_readers.read_pds_file import read_pds_file
 
 
 class PDSData(Data):
     def __init__(self, label):
         self.raw_data = {
+            "header": None,
             "label": {"units": "N/A", "data": label},
             "time": None,
             "energy": None,
@@ -21,41 +22,43 @@ class PDSData(Data):
         self._allowed_observables = self.raw_data.keys()
 
     def read_file(self, filepath: str) -> None:
-        # TODO: File header should also be read from the file, not just skipped
-        data = read_csv(filepath, skip_lines=10)
+        data = read_pds_file(filepath)
+
+        if self.raw_data["header"] is None:
+            self.raw_data["header"] = {"units": "", "data": data[0]}
 
         if self.raw_data["time"] is None:
-            self.raw_data["time"] = {"units": "", "data": data[0]}
+            self.raw_data["time"] = {"units": "", "data": data[1]}
 
         if self.raw_data["energy"] is None:
-            self.raw_data["energy"] = {"units": "", "data": float(data[1])}
+            self.raw_data["energy"] = {"units": "$Energy ~(eV)$", "data": [float(x) for x in data[2]]}
 
         if self.raw_data["wavelength"] is None:
-            self.raw_data["wavelength"] = {"units": "", "data": float(data[2])}
+            self.raw_data["wavelength"] = {"units": "$Wavelength ~(nm)$", "data": [float(x) for x in data[3]]}
 
         if self.raw_data["b_sig"] is None:
-            self.raw_data["b_sig"] = {"units": "", "data": float(data[3])}
+            self.raw_data["b_sig"] = {"units": "$Lock-In B Amplitude ~(V)$", "data": [float(x) for x in data[4]]}
 
         if self.raw_data["b_sig_err"] is None:
-            self.raw_data["b_sig_err"] = {"units": "", "data": float(data[4])}
+            self.raw_data["b_sig_err"] = {"units": "$Lock-In B Amplitude Error ~(V)$", "data": [float(x) for x in data[5]]}
 
         if self.raw_data["b_deg"] is None:
-            self.raw_data["b_deg"] = {"units": "", "data": float(data[5])}
+            self.raw_data["b_deg"] = {"units": "$Lock-In B Phase ~(^circ)$", "data": [float(x) for x in data[6]]}
 
         if self.raw_data["b_deg_error"] is None:
-            self.raw_data["b_deg_error"] = {"units": "", "data": float(data[6])}
+            self.raw_data["b_deg_error"] = {"units": "$Lock-In B Phase Error ~(^circ)$", "data": [float(x) for x in data[7]]}
 
         if self.raw_data["a_sig"] is None:
-            self.raw_data["a_sig"] = {"units": "", "data": float(data[7])}
+            self.raw_data["a_sig"] = {"units": "Lock-In A Amplitude ~(V)", "data": [float(x) for x in data[8]]}
 
         if self.raw_data["a_sig_err"] is None:
-            self.raw_data["a_sig_err"] = {"units": "", "data": float(data[8])}
+            self.raw_data["a_sig_err"] = {"units": "Lock-In A Amplitude Error ~(V)", "data": [float(x) for x in data[9]]}
 
         if self.raw_data["a_deg"] is None:
-            self.raw_data["a_deg"] = {"units": "", "data": float(data[9])}
+            self.raw_data["a_deg"] = {"units": "$Lock-In A Phase ~(^circ)$", "data": [float(x) for x in data[10]]}
 
         if self.raw_data["a_deg_error"] is None:
-            self.raw_data["a_deg_error"] = {"units": "", "data": float(data[11])}
+            self.raw_data["a_deg_error"] = {"units": "$Lock-In A Phase Error ~(^circ)$", "data": [float(x) for x in data[11]]}
 
     def get_data(self, observable: str):
         if observable in self._allowed_observables:

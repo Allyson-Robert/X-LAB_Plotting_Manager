@@ -17,13 +17,20 @@ class PDSDataProcessor(DataProcessorCore):
 
         self._processed_observables = self.processed_data.keys()
 
-    def validate_observables(self, *args) -> None:
-        raise NotImplementedError
+    def validate_observables(self, *args):
+        # Checks whether all desired observables can be obtained for this data and catches relevant errors
+        for observable in args:
+            self.get_data(observable)
 
     def compute_signal(self):
         detector_a = self.get_data("a_sig")
         detector_b = self.get_data("b_sig")
-        return {"units": "", "data": detector_b/detector_a}
+
+        signal = []
+        for i in range(len(detector_a)):
+            signal.append(detector_b[i]/detector_a[i])
+
+        return {"units": "Signal (unitless)", "data": signal}
 
     def compute_signal_error(self):
         detector_a = self.get_data("a_sig")
@@ -32,6 +39,8 @@ class PDSDataProcessor(DataProcessorCore):
         detector_b_err = self.get_data("b_sig_err")
         signal = self.get_data("signal")
 
-        signal_err = signal*(detector_b_err/detector_b + detector_a_err/detector_a)
+        signal_err = []
+        for i in range(len(detector_a)):
+            signal_err.append(signal[i]*(detector_b_err[i]/detector_b[i] + detector_a_err[i]/detector_a[i]))
 
-        return {"units": "", "data": signal_err}
+        return {"units": "Signal error (unitless)", "data": signal_err}
