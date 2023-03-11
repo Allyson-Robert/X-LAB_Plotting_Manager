@@ -256,15 +256,20 @@
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="suffix">
+                   <string>mm</string>
+                  </property>
                   <property name="profile_position" stdset="0">
                    <string/>
                   </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="mmUnitLabel">
-                  <property name="text">
-                   <string>mm</string>
+                  <property name="alias" stdset="0">
+                   <string>profile_position</string>
                   </property>
                  </widget>
                 </item>
@@ -294,6 +299,18 @@
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <item>
                  <widget class="QDoubleSpinBox" name="intRangeLowSpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="suffix">
+                   <string>uA</string>
+                  </property>
+                  <property name="singleStep">
+                   <double>0.500000000000000</double>
+                  </property>
                   <property name="value">
                    <double>2.000000000000000</double>
                   </property>
@@ -303,14 +320,16 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="uALowerUnitLabel">
-                  <property name="text">
+                 <widget class="QDoubleSpinBox" name="intRangeUpSpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="suffix">
                    <string>uA</string>
                   </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QDoubleSpinBox" name="intRangeUpSpinBox">
                   <property name="singleStep">
                    <double>0.500000000000000</double>
                   </property>
@@ -319,13 +338,6 @@
                   </property>
                   <property name="alias" stdset="0">
                    <string>upper_bound</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="uAUpperUnitLabel">
-                  <property name="text">
-                   <string>uA</string>
                   </property>
                  </widget>
                 </item>
