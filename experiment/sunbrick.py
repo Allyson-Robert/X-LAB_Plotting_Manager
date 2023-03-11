@@ -10,9 +10,10 @@ class Sunbrick(ExperimentWorkerCore):
          Implements the plotting function for the Sunbrick experiment.
          Relevant data types and processors are IVData and IVScatterDataProcessor.
     """
-    def __init__(self, device, fileset, plot_type, legend):
+    def __init__(self, device, fileset, plot_type, legend, options):
         super().__init__(device, fileset, plot_type, legend)
 
+        self.options = options
         self.set_data_type(IVData)
         self.set_processor_type(IVScatterDataProcessor)
 
