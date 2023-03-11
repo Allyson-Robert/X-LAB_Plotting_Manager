@@ -18,27 +18,14 @@ class FluorescenceData(DataCore):
         self.label_format = "%Y_%m_%d_%H_%M_%S"
         self.dt_pattern = '\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2}'
 
-    # def get_data(self, observable: str):
-    #     if observable in self._allowed_observables:
-    #         return self.raw_data[observable]['data']
-    #     else:
-    #         raise ValueError(f"FluorescenceData does not contain {observable} data")
-    #
-    # def get_units(self, observable: str) -> str:
-    #     self.get_data(observable)
-    #     return self.raw_data[observable]["units"]
-    #
-    # def get_allowed_observables(self):
-    #     return self._allowed_observables
-
     def read_file(self, filepath: str):
         # Do not read the file twice
         data = read_pti_file(filepath)
         if self.raw_data['wavelength'] is None:
-            self.raw_data['wavelength'] = {"units": "Wavelength ~(nm)", "data": data[0]}
+            self.raw_data['wavelength'] = {"units": "$Wavelength ~(nm)$", "data": data[0]}
 
         if self.raw_data['fluorescence'] is None:
-            self.raw_data['fluorescence'] = {"units": "Fluorescence ~(a.u.)", "data": data[1]}
+            self.raw_data['fluorescence'] = {"units": "$Fluorescence ~(a.u.)$", "data": data[1]}
 
         if self.raw_data['datetime'] is None:
             filename = os.path.basename(filepath)

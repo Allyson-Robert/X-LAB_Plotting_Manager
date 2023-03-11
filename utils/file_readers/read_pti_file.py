@@ -7,9 +7,10 @@ def read_pti_file(filename):
     with open(filename) as csvfile:
         reader = csv.reader(csvfile, delimiter='\t')
         line = next(reader)
+        print(line)
         # If two columns: straight up data
         if len(line) == 2:
-            return read_csv(filename)
+            return read_csv(filename, delimiter = '\t')
 
         # If four columns: additional metadata in the first column
         elif len(line) == 4:

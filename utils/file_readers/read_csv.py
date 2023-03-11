@@ -1,15 +1,16 @@
 import csv
 
 
-def read_csv(path, skip_lines=0) -> list:
+def read_csv(path, skip_lines=0, delimiter=None) -> list:
     # Retrieve the delimiter by sniffing the file
-    with open(path) as csvfile:
-        dialect = csv.Sniffer().sniff(csvfile.read())
-        sep = dialect.delimiter
+    if delimiter is None:
+        with open(path) as csvfile:
+            dialect = csv.Sniffer().sniff(csvfile.read())
+            delimiter = dialect.delimiter
 
     # Actually start reading the file
     with open(path) as csvfile:
-        reader = csv.reader(csvfile, delimiter=sep)
+        reader = csv.reader(csvfile, delimiter=delimiter)
 
         # Skip lines
         for i in range(skip_lines):
