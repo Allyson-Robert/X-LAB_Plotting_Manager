@@ -73,8 +73,8 @@ class ExperimentWorkerCore(ExperimentWorker):
             self.data_processors[key] = self.processor_type(data)
 
             # Emit progress signal
-            self.progress.emit(int(100*counter/nr_of_files))
             counter += 1
+            self.progress.emit(int(100*counter/nr_of_files))
 
     def run(self):
         # Set the data
