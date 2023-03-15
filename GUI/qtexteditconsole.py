@@ -10,8 +10,9 @@ class QTextEditConsole(logging.Handler, QtWidgets.QTextEdit):
     appendTextEdit = QtCore.pyqtSignal(str)
 
     def __init__(self, parent):
-        super().__init__()
+        logging.Handler.__init__(self)
         super(QtWidgets.QTextEdit, self).__init__(parent)
+
         self.setReadOnly(True)
         self.appendTextEdit.connect(self.append)
 

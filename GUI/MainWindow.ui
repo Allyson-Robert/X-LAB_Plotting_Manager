@@ -205,26 +205,106 @@
             <enum>QFrame::Plain</enum>
            </property>
            <property name="currentIndex">
-            <number>4</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="emptyPage"/>
            <widget class="QWidget" name="sunbrickPage"/>
            <widget class="QWidget" name="stabilityPage">
-            <widget class="QCheckBox" name="stabilityExportAfterPlot">
+            <widget class="QWidget" name="">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>141</width>
-               <height>25</height>
+               <width>321</width>
+               <height>95</height>
               </rect>
              </property>
-             <property name="text">
-              <string>Export after plot</string>
-             </property>
-             <property name="alias" stdset="0">
-              <string>export</string>
-             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <widget class="QCheckBox" name="stabilityExportAfterPlot">
+                <property name="text">
+                 <string>Export after plot</string>
+                </property>
+                <property name="alias" stdset="0">
+                 <string>export</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <item>
+                 <widget class="QLabel" name="label_3">
+                  <property name="text">
+                   <string>Cell Area</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+                  <property name="prefix">
+                   <string/>
+                  </property>
+                  <property name="suffix">
+                   <string>mm^2</string>
+                  </property>
+                  <property name="alias" stdset="0">
+                   <string>cell_area</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <widget class="QLabel" name="label_2">
+                  <property name="text">
+                   <string>Irradiance</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="doubleSpinBox">
+                  <property name="prefix">
+                   <string/>
+                  </property>
+                  <property name="suffix">
+                   <string>W/m^2</string>
+                  </property>
+                  <property name="alias" stdset="0">
+                   <string>irradiance</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+             </layout>
             </widget>
            </widget>
            <widget class="QWidget" name="dw2000Page"/>
