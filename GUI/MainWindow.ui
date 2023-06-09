@@ -210,13 +210,13 @@
            <widget class="QWidget" name="emptyPage"/>
            <widget class="QWidget" name="sunbrickPage"/>
            <widget class="QWidget" name="stabilityPage">
-            <widget class="QWidget" name="">
+            <widget class="QWidget" name="layoutWidget">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>321</width>
-               <height>95</height>
+               <width>340</width>
+               <height>157</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -227,6 +227,26 @@
                 </property>
                 <property name="alias" stdset="0">
                  <string>export</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="log_time">
+                <property name="text">
+                 <string>Log scale</string>
+                </property>
+                <property name="alias" stdset="0">
+                 <string>log_time</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="relative">
+                <property name="text">
+                 <string>Relative y scale</string>
+                </property>
+                <property name="alias" stdset="0">
+                 <string>relative</string>
                 </property>
                </widget>
               </item>
@@ -576,6 +596,9 @@
              </property>
              <property name="text">
               <string>Presentation</string>
+             </property>
+             <property name="alias" stdset="0">
+              <string>presentation</string>
              </property>
             </widget>
            </item>

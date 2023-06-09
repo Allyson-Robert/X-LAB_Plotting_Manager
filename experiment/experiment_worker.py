@@ -57,7 +57,7 @@ class ExperimentWorkerCore(ExperimentWorker):
         self.processor_type = processor_type
 
     def set_data(self, fileset: Fileset):
-        # TODO: Check that data and processor types have been set
+        # CHECK: Check that data and processor types have been set
         # Initialise an empty dict and get the required filepaths
         self.data_processors = {}
         filepaths = fileset.get_filepaths()

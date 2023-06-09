@@ -37,7 +37,7 @@ class IVStabilityDataProcessor(DataProcessor):
 
     def validate_observables(self, *args):
         """
-        Check if any of the observables generates a non-crucial error. If it does the processor is excluded and the data
+        Checks if any of the observables generates a non-crucial error. If it does the processor is excluded and the data
         is effectively ignored.
         """
         rejected_processors = []
@@ -45,7 +45,7 @@ class IVStabilityDataProcessor(DataProcessor):
             try:
                 processor.validate_observables(*args)
             except ObservableNotComputableError:
-                # TODO: Inform user that this processor could not compute one of the observables
+                # FEATURE REQUEST: Inform user that this processor could not compute one of the observables
                 rejected_processors.append(processor)
 
         for processor in rejected_processors:
@@ -69,7 +69,7 @@ class IVStabilityDataProcessor(DataProcessor):
         else:
             raise ValueError(f"IVScatterDataProcessor does not contain {observable} data")
 
-    # TODO: Type hint using TypedDict https://peps.python.org/pep-0589/
+    # FIXME: Type hint using TypedDict https://peps.python.org/pep-0589/
     def get_time_evolved(self, observable: str):
         measurements = []
         units = ""

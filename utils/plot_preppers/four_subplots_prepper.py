@@ -2,11 +2,13 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
 
-def four_subplots_prepper() -> go.Figure:
+def four_subplots_prepper(subplots_titles=("A", "B", "C", "D")) -> go.Figure:
     fig = make_subplots(
         rows=2,
         cols=2,
-        subplot_titles=("A", "B", "C", "D")
+        subplot_titles=subplots_titles,
+        horizontal_spacing=0.05,
+        vertical_spacing=0.125
     )
 
     # edit axis labels
@@ -22,7 +24,7 @@ def four_subplots_prepper() -> go.Figure:
     fig['layout']['xaxis4']['title'] = '$Time ~(hrs)$'
     fig['layout']['yaxis4']['title'] = '$P_{max}$'
 
-    # TODO: hoverformat needs to be reset to default
+    # FIXME: hoverformat needs to be reset to default
     yaxis_format = dict(
             tickformat=".2s",
             showexponent='all',

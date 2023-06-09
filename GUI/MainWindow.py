@@ -4,6 +4,8 @@ import datetime
 import json
 import logging
 import sys
+
+sys.path.append("..")
 import fileset as fs
 import DataCreatorWindow
 from experiment import *
@@ -14,7 +16,8 @@ import experiment
 from utils.get_qwidget_value import get_qwidget_value
 
 
-# TODO: ESC should close the window safely
+
+# GUI FEATURE REQUEST: ESC should close the window safely
 class UiMainWindow(QtWidgets.QMainWindow):
     """
         GUI for automated plotting of various types of data.
@@ -65,7 +68,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.logger.addHandler(self.consoleTextEdit)
         self.logger.setLevel(logging.DEBUG)
 
-        # TODO: Perhaps pass this logger to an external thing?
+        # FEATURE REQUEST: Perhaps pass this logger to an external thing?
         # Decorate methods with the with_logging decorator
         self.load_data = with_logging(self.load_data, self.logger)
 
@@ -153,13 +156,14 @@ class UiMainWindow(QtWidgets.QMainWindow):
             return self.console_print(f"No file selected")
 
     def open_data_file(self):
-        # Reset
-        self.clear_data()
-        self.consoleTextEdit.clear()
 
         # Choose file
         file_name = QtWidgets.QFileDialog.getOpenFileName(self, "Open Files")[0]
         if file_name != '':
+            # Reset data
+            self.clear_data()
+            self.consoleTextEdit.clear()
+
             # Open then load the json file, remember the location and update GUI
             self.fileset_location = file_name
             with open(file_name) as json_file:
@@ -173,7 +177,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
             self.console_print(f"Err: No file loaded", level="warning")
 
     def load_data(self):
-        # TODO: Cancelling now clears the data, should only be cleared after selection
         # Add all top level keys to the selection list of the GUI
         for label in self.fileset.get_labels():
             self.selectedFilesList.addItem(label)
@@ -194,7 +197,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.console_print("Fileset loaded")
 
     def display_data(self):
-        # TODO: This should probably be changed from QMessagebox to something else
+        # GUI FEATURE REQUEST: This should probably be changed from QMessagebox to something else
         #     The width is insufficient and it needs a scrollbar
         # Abort if no data was loaded
         if self.fileset is None:
@@ -213,7 +216,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         msg.exec_()
 
     def display_history(self):
-        # TODO: This should probably be changed from QMessagebox to something else
+        # GUI FEATURE REQUEST: This should probably be changed from QMessagebox to something else
         #     The width is insufficient and it needs a scrollbar
         if self.fileset is None:
             return self.console_print("Err: Must first load data", level="warning")
@@ -276,6 +279,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
             alias = option.property("alias")
             if alias is not None:
                 options_dict[alias] = get_qwidget_value(option)
+        options_dict["presentation"] = get_qwidget_value(self.presentationCheckBox)
+        print(options_dict)
 
         # Instantiate proper device class and set the data
         device = self.fileset.get_device()
@@ -287,7 +292,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Create a new thread for the experiment class to run in
         self.thread = QtCore.QThread()
-        # TODO: Get legend title from GUI
+        # GUI FEATURE REQUEST: Get legend title from GUI/fileset
         self.experiment_worker = experiment_cls(device, selected_fileset, plot_type, legend="Legend title",
                                                 options=options_dict)
         self.experiment_worker.moveToThread(self.thread)
@@ -302,7 +307,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Start the thread
         self.thread.start()
 
-        # TODO: Final resets
+        # FIXME: Final resets
         # self.longRunningBtn.setEnabled(False)
         # self.thread.finished.connect(
         #     lambda: self.longRunningBtn.setEnabled(True)
@@ -363,7 +368,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
     def show_about(self):
         """
             Shows a simple window with licence, authorship and build information
-            # TODO: Make it so it can contain the X-Lab Logo
+            # GUI FEATURE REQUEST: Make it so it can contain the X-Lab Logo
         """
         # Grab the "about" info from about.txt
         with open("about.txt") as about_file:

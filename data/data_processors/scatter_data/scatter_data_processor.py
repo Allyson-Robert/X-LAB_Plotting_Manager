@@ -13,6 +13,6 @@ class ScatterDataProcessor(DataProcessorCore):
         try:
             for observable in args:
                 self.get_data(observable)
-        # TODO: Catchall try-except
+        # FIXME: Catchall try-except
         except:
             raise ObservableNotComputableError

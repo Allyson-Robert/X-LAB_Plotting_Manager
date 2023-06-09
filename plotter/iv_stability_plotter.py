@@ -15,7 +15,7 @@ class IVStabilityPlotter(Plotter):
         self.colours = None
 
     def ready_plot(self, iv_stability_processors: dict[str, IVStabilityDataProcessor], legend_title: str):
-        self.fig = four_subplots_prepper()
+        self.fig = four_subplots_prepper(subplots_titles=("Short-Circuit Current", "Open Circuit Voltage", "Fill Factor", "Maximum Power"))
         self.colours = px.colors.qualitative.Plotly
         self.fig.update_layout(
             title={'text': self.title},
@@ -23,7 +23,7 @@ class IVStabilityPlotter(Plotter):
         )
         self.iv_stability_processors = iv_stability_processors
 
-    def draw_plot(self, export):
+    def draw_plot(self, export: bool, relative: bool, log_time: bool, cell_area: float = 0.0):
         # Grab the values for Isc, Voc, FF and eff from the data
         counter = 0
         for label in self.iv_stability_processors:
@@ -33,6 +33,22 @@ class IVStabilityPlotter(Plotter):
             fill_factors = self.iv_stability_processors[label].get_data('fill_factor')
             max_powers = self.iv_stability_processors[label].get_data('mpp_power')
             times = self.iv_stability_processors[label].get_data('time_differences')
+
+            if cell_area != 0.0:
+                currents = [c / (cell_area / 100) for c in currents]
+                max_powers = [mpp / (cell_area / 100) for mpp in max_powers]
+                self.fig['layout']['yaxis']['title'] = '$I_{sc} ~(A / cm^2)$'
+                self.fig['layout']['yaxis4']['title'] = '$P_{max} ~(W / cm^2)$'
+
+            if relative:
+                currents = [c/currents[0] for c in currents]
+                voltages = [v/voltages[0] for v in voltages]
+                fill_factors = [ff/fill_factors[0] for ff in fill_factors]
+                max_powers = [mpp/max_powers[0] for mpp in max_powers]
+                self.fig['layout']['yaxis']['title'] = '$I_{sc}/I_{sc, 0} ~(dimensionless)$'
+                self.fig['layout']['yaxis2']['title'] = '$V_{oc}/V_{oc, 0} ~(dimensionless)$'
+                self.fig['layout']['yaxis3']['title'] = '$Rel. Fill~factor ~(dimensionless)$'
+                self.fig['layout']['yaxis4']['title'] = '$P_{max}/P_{max, 0} ~(dimensionless)$'
 
             self.fig.add_trace(
                 go.Scatter(
@@ -77,10 +93,21 @@ class IVStabilityPlotter(Plotter):
                 ),
                 row=2, col=2
             )
+            self.fig.update_layout(margin=dict(l=0, r=0, t=50, b=0),
+                              xaxis=dict(title=dict(standoff=10)),
+                              yaxis=dict(title=dict(standoff=10)))
             counter += 1
             if export:
-                # TODO: Get filename from GUI
-                export_to_csv(filename=f"temp{counter}.csv", list_of_lists=[times, currents, voltages, fill_factors,
-                                                                            max_powers])
+                # GUI FEATURE REQUEST: Get filename from GUI
+                # FEATURE REQUEST: Filename might be useful
+                export_to_csv(
+                    filename=f"position_{counter}_stability.csv",
+                    list_of_lists=[times, currents, voltages, fill_factors, max_powers],
+                    header=["time (hrs)", "current (A)", "voltage (V)", "Fill factor (a.u.)", "Max power (W)"]
+                )
+            if log_time:
+                for i in range(1, 3):
+                    for j in range(1, 3):
+                        self.fig.update_xaxes(type="log", row=i, col=j)
 
         self.fig.show(config=get_svg_config())

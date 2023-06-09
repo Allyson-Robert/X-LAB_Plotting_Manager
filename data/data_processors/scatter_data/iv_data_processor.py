@@ -39,7 +39,7 @@ class IVScatterDataProcessor(DataProcessorCore):
 
         self._processed_observables = self.processed_data.keys()
 
-    # # TODO: Is this really necessary?  Ignores Datatype observables
+    # CHECK: Is this really necessary?  Ignores Datatype observables
     # def get_allowed_observables(self):
     #     return self._processed_observables
 
@@ -51,7 +51,7 @@ class IVScatterDataProcessor(DataProcessorCore):
         except VocNotFoundError:
             raise ObservableNotComputableError
 
-    # TODO: Deprecate?
+    # CHECK: Deprecate?
     def is_illuminated(self):
         current = self.get_data("forward_current")
         return {"units": None, "data": iv_calc.is_illuminated(current)}
@@ -89,7 +89,6 @@ class IVScatterDataProcessor(DataProcessorCore):
         power = self.get_data("power")
         return {"units": "Power (W)", "data": iv_calc.get_reverse(power)}
 
-    # TODO: These truncations are not guaranteed to be aligned. All of these should truncate between Isc and Voc
     def get_truncated_voltage(self) -> dict:
         isc = self.get_data("isc")
         voc = self.get_data("voc")
@@ -139,7 +138,7 @@ class IVScatterDataProcessor(DataProcessorCore):
         voltage = self.get_data("forward_voltage")
         try:
             isc = iv_calc.find_crossing(voltage, current)
-            # TODO: Is there any physical check that can be placed on Isc?
+            # CHECK: Is there any physical check that can be placed on Isc?
             return {"units": "Current (A)", "data": abs(isc)}
         except IndexError as ie:
             raise IscNotFoundError
@@ -192,6 +191,9 @@ class IVScatterDataProcessor(DataProcessorCore):
             ff = max_power/(voc * isc)
         except ZeroDivisionError:
             raise ObservableNotComputableError("Voc or Isc are too small throwing a div by zero error")
+        if ff < 0.0 or 1.0 < ff:
+            raise ObservableNotComputableError(f"Fill factor is {ff} and should be in the [0, 1] interval")
+
         return {"units": "Fill ~factor", "data": ff}
 
     def calculate_series_resistance(self) -> dict:

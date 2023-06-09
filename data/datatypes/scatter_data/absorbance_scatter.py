@@ -13,7 +13,7 @@ class AbsorbanceData(DataCore):
             # "datetime": None,
         }
         self._allowed_observables = self.raw_data.keys()
-        # TODO: Datetime should be added, time resolved measurements will be needed, such as DPBF experiments
+        # FEATURE REQUEST: Datetime should be added, time resolved measurements will be needed, such as DPBF experiments
         # self.label_format = "%Y_%m_%d_%H_%M_%S"
         # self.dt_pattern = '\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2}'
 

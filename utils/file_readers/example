@@ -1,0 +1,18 @@
+data = {
+    "0h": {
+        "filename": "ccc.txt",
+        "label": "0h",
+        "position": [0, 0]
+    },
+    "1h": {
+        "filename": "ddd.txt",
+        "label": "1h",
+        "position": [0, 1]
+    }
+}
+
+def doe_alles(data):
+    for datum in data:
+        current = data[datum]
+        read_txt_file(current["filename"])
+        axs[current["position"]] = blablab

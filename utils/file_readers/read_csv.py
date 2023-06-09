@@ -17,7 +17,12 @@ def read_csv(path, skip_lines=0, delimiter=None) -> list:
             next(reader)
 
         data = [[], []]
-        for [x, y] in reader:
+        print(delimiter, next(reader))
+        for line in reader:
+            print(line)
+            x = line[0]
+            y = line[1]
+
             if x and y:
                 data[0].append(float(x.replace(',', '.')))
                 data[1].append(float(y.replace(',', '.')))

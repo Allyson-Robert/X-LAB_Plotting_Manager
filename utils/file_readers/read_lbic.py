@@ -17,7 +17,7 @@ def read_lbic(path: str) -> list:
             # Data contained in the rest of the row
             row = [float(intensity.replace(',', '.')) for intensity in line[1:]]
 
-            # TODO: Check why this was necessary
+            # CHECK: Check why this was necessary
             if np.count_nonzero(row):
                 z.append(row)
     return [x, y, z]

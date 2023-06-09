@@ -1,5 +1,6 @@
 from data.data_processors.data_processors import DataProcessor
 from utils.plot_preppers.heatmap_prepper import heatmap_prepper, add_profiles
+from utils.plot_preppers.export_to_svg import get_svg_config
 from plotter.plotter import Plotter
 import plotly.graph_objects as go
 
@@ -60,4 +61,4 @@ class HeatmapPlotter(Plotter):
                 hovertemplate='x (mm): %{x}<br>y (mm): %{y}<br>I (A): %{z}<extra></extra>'
             )
         )
-        self.fig.show()
+        self.fig.show(config=get_svg_config())

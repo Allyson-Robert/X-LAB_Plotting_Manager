@@ -62,7 +62,7 @@ class Fileset:
         assert isinstance(additional_notes, str)
         self.notes += additional_notes
 
-    # TODO: this is probably redundant
+    # CHECK: this is probably redundant
     def set_notes(self, notes_content: str):
         assert isinstance(notes_content, str)
         self.notes = notes_content
@@ -75,7 +75,7 @@ class Fileset:
         assert isinstance(additional_console, str)
         self.console[date_and_time] = additional_console
 
-    # TODO: This could also be redundant
+    # CHECK: This could also be redundant
     def set_console(self, console_content: dict):
         assert isinstance(console_content, dict)
         self.console = console_content
@@ -86,7 +86,7 @@ class Fileset:
     # Path management
     def add_filepath(self, path: str, label: str):
         if self.get_structure_type() != 'structured':
-            # Check for duplicate label
+            # Checks for duplicate label
             if label in self.filepaths.keys():
                 return "Duplicate label found in fileset"
             else:
@@ -144,9 +144,9 @@ class Fileset:
     # Checks are needed before paths are added to the fileset
     def _check_valid_path(self, path: str):
         assert isinstance(path, str)
-        # Check whether the path exists and points to a file
+        # Checks whether the path exists and points to a file
         if os.path.exists(path) and os.path.isfile(path):
-            # Check if the file has the proper extension
+            # Checks if the file has the proper extension
             if path.endswith(self._accepted_extensions):
                 return True, ""
             else:
