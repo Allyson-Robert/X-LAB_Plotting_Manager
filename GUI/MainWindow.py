@@ -6,13 +6,13 @@ import logging
 import sys
 
 sys.path.append("..")
+import device
+from device import *
 import fileset as fs
 import DataCreatorWindow
-from experiment import *
 from utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
 from utils.logging import with_logging
-import experiment
 from utils.get_qwidget_value import get_qwidget_value
 
 
@@ -30,7 +30,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.fileset = None
         self.fileset_location = None
 
-        # Define experiment indices corresponding to stackedWidget definition (see QtDesigner)
+        # Define device indices corresponding to stackedWidget definition (see QtDesigner)
         self.devices = {
             '': 0,
             'Sunbrick': 1,
@@ -42,7 +42,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             'Generic': 7
         }
 
-        # Define possible plot types to show to the user for each experiment
+        # Define possible plot types to show to the user for each device
         self.plot_types = {
             'Sunbrick': get_class_methods(Sunbrick, ignore=["run"]),
             'Stability': get_class_methods(Stability, ignore=["run"]),
@@ -181,17 +181,17 @@ class UiMainWindow(QtWidgets.QMainWindow):
         for label in self.fileset.get_labels():
             self.selectedFilesList.addItem(label)
 
-        # Some changes depend on the type of experiment
-        device = self.fileset.get_device()
+        # Some changes depend on the type of device
+        current_device = self.fileset.get_device()
 
         # For lbic plot type set selection to first item, otherwise preselect all items
-        if device == "LBIC":
+        if current_device == "LBIC":
             self.selectedFilesList.setCurrentRow(0)
         else:
             self.selectedFilesList.selectAll()
 
         # Edit combobox to show all available plot types
-        for plot_type in self.plot_types[device]:
+        for plot_type in self.plot_types[current_device]:
             self.plotTypeCombo.addItem(plot_type)
 
         self.console_print("Fileset loaded")
@@ -283,17 +283,17 @@ class UiMainWindow(QtWidgets.QMainWindow):
         print(options_dict)
 
         # Instantiate proper device class and set the data
-        device = self.fileset.get_device()
-        experiment_cls = getattr(experiment, device)
+        current_device = self.fileset.get_device()
+        experiment_cls = getattr(device, current_device)
 
         # # Grab the correct plotting function and pass all options to it
         plot_type = self.plotTypeCombo.currentText()
-        self.console_print(f"Producing {device}-{plot_type} plot for {self.fileset.get_name()}")
+        self.console_print(f"Producing {current_device}-{plot_type} plot for {self.fileset.get_name()}")
 
-        # Create a new thread for the experiment class to run in
+        # Create a new thread for the device class to run in
         self.thread = QtCore.QThread()
         # GUI FEATURE REQUEST: Get legend title from GUI/fileset
-        self.experiment_worker = experiment_cls(device, selected_fileset, plot_type, legend="Legend title",
+        self.experiment_worker = experiment_cls(current_device, selected_fileset, plot_type, legend="Legend title",
                                                 options=options_dict)
         self.experiment_worker.moveToThread(self.thread)
 

@@ -1,12 +1,12 @@
 from data.data_processors.scatter_data.absorbance_data_processor import AbsorbanceScatterDataProcessor
 from data.datatypes.scatter_data.absorbance_scatter import AbsorbanceData
-from experiment.experiment_worker import ExperimentWorkerCore
+from device.device_worker import DeviceWorkerCore
 from plotter.scatter_data_plotter import ScatterDataPlotter
 from fileset.fileset import Fileset
 from PyQt5 import QtCore
 
 
-class DW2000(ExperimentWorkerCore):
+class DW2000(DeviceWorkerCore):
     def __init__(self, device, fileset, plot_type, legend, options):
         # super() delegates method calls to a parent
         super().__init__(device, fileset, plot_type, legend)

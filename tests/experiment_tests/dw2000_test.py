@@ -1,4 +1,4 @@
-from experiment.dw2000 import DW2000
+from device.dw2000 import DW2000
 from fileset.fileset import Fileset
 
 test_fileset = Fileset("2023.02.07_11.09.12", "2023.02.07_11.09.12")

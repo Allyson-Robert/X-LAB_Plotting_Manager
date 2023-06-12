@@ -1,10 +1,10 @@
 from data.data_processors.lbic_image_processor import LBICImageProcessor
-from experiment.experiment_worker import ExperimentWorkerCore
+from device.device_worker import DeviceWorkerCore
 from data.datatypes.lbic_image import LBICImage
 import plotter as plt
 
 
-class LBIC(ExperimentWorkerCore):
+class LBIC(DeviceWorkerCore):
     def __init__(self, device, fileset, plot_type, legend, options):
         # super() delegates method calls to a parent
         super().__init__(device, fileset, plot_type, legend)

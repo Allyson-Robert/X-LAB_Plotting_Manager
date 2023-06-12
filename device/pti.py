@@ -1,10 +1,10 @@
 from data.data_processors.scatter_data.fluorescence_data_processor import FluorescenceScatterDataProcessor
 from data.datatypes.scatter_data.fluorescence_scatter import FluorescenceData
-from experiment.experiment_worker import ExperimentWorkerCore
+from device.device_worker import DeviceWorkerCore
 from plotter.scatter_data_plotter import ScatterDataPlotter
 
 
-class PTI(ExperimentWorkerCore):
+class PTI(DeviceWorkerCore):
     def __init__(self, device, fileset, plot_type, legend, options):
         # super() delegates method calls to a parent
         super().__init__(device, fileset, plot_type, legend)

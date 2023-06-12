@@ -1,11 +1,11 @@
 from data.data_processors.scatter_data.iv_stability_data_processor import IVStabilityDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVData
-from experiment.experiment_worker import ExperimentWorkerCore
+from device.device_worker import DeviceWorkerCore
 from plotter.iv_stability_plotter import IVStabilityPlotter
 from fileset.fileset import Fileset
 
 
-class Stability(ExperimentWorkerCore):
+class Stability(DeviceWorkerCore):
     def __init__(self, device, fileset, plot_type, legend, options):
         # super() delegates method calls to a parent
         super().__init__(device, fileset, plot_type, legend)

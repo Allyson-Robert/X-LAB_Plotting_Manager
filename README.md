@@ -65,7 +65,7 @@ The contents of each data file references in this fileset will only be loaded wh
 ### Experiment
 The experiment type is selected when a fileset is created and will alter some UI elements to reflect the type of 
 analysis required for the device.
-Any number of new experiments can be defined and included as needed by subclassing ExperimentWorker and adding it to the GUI.
+Any number of new experiments can be defined and included as needed by subclassing DeviceWorker and adding it to the GUI.
 See ![here](#How-to-Expand) for more information
 A number of experiments are included by default: Generic, Sunbrick, Stability, DW2000, LBIC, PDS, PTI.
 
@@ -81,24 +81,24 @@ This way plots can be easily reproduced manually by reading the console output.
 How to Expand
 =============
 The structure of the software loosely follows the schema below.
-The GUI calls an ExperimentWorker class and initialises it with the required plot type, options and fileset.
+The GUI calls an DeviceWorker class and initialises it with the required plot type, options and fileset.
 This worker is passed to a separate thread where it can perform computations without freezing the GUI which is then free
 to display progress.
 
-The ExperimentWorker must be aware of the type of data and dataprocessor to be used to initialise them.
+The DeviceWorker must be aware of the type of data and dataprocessor to be used to initialise them.
 Once the data is set (i.e. the processors are initialised and the data has been read from the files) the 
-ExperimentWorker will call an appropriate plotter depending on the specific plot type.
+DeviceWorker will call an appropriate plotter depending on the specific plot type.
 This plotter requires the processors and will retrieve data from them.
 
-Cores are available for: ExperimentWorker, DataProcessor and Data.
+Cores are available for: DeviceWorker, DataProcessor and Data.
 These contain default implementation that do not need to know much about the internals of the Data to function.
 These Cores can be subclassed for quick/common additions.
 If more control is required then subclass the abstract base classes directly.
 
 ```mermaid
 classDiagram
-GUI --> ExperimentWorker: Calls
-class ExperimentWorker{
+GUI --> DeviceWorker: Calls
+class DeviceWorker{
     DataProcessor processors
     set_data()
     set_options()
@@ -128,17 +128,17 @@ class Data{
     get_allowed_observables()
 }
 
-ExperimentWorker --> Data: Initialises
-ExperimentWorker --> Plotter: Calls
-ExperimentWorker --> DataProcessor: Initialises
+DeviceWorker --> Data: Initialises
+DeviceWorker --> Plotter: Calls
+DeviceWorker --> DataProcessor: Initialises
 Plotter --> DataProcessor: Calls
 DataProcessor --> Data: Calls
 ```
 
-### ExperimentWorker
+### DeviceWorker
 ```mermaid
 classDiagram
-class ExperimentWorker{
+class DeviceWorker{
     DataProcessor processors
     set_data()
     set_options()
@@ -146,10 +146,10 @@ class ExperimentWorker{
     set_processor_type()
     run()
 }
-<<Abstract>> ExperimentWorker
+<<Abstract>> DeviceWorker
 
 
-class ExperimentWorkerCore{
+class DeviceWorkerCore{
     set_data()
     set_data_type()
     set_processor_type()

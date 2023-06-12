@@ -7,7 +7,7 @@ class WorkerMeta(type(ABC), type(QtCore.QObject)):
     pass
 
 
-class ExperimentWorker(ABC, QtCore.QObject, metaclass=WorkerMeta):
+class DeviceWorker(ABC, QtCore.QObject, metaclass=WorkerMeta):
     @abstractmethod
     def set_data(self,  fileset: Fileset):
         pass
@@ -29,7 +29,7 @@ class ExperimentWorker(ABC, QtCore.QObject, metaclass=WorkerMeta):
         pass
 
 
-class ExperimentWorkerCore(ExperimentWorker):
+class DeviceWorkerCore(DeviceWorker):
     finished = QtCore.pyqtSignal()
     progress = QtCore.pyqtSignal(int)
 

@@ -1,10 +1,10 @@
-from experiment.experiment_worker import ExperimentWorkerCore
+from device.device_worker import DeviceWorkerCore
 from plotter.scatter_data_plotter import ScatterDataPlotter
 from data.datatypes.pds_data import PDSData
 from data.data_processors.pds_data_processor import PDSDataProcessor
 
 
-class PDS(ExperimentWorkerCore):
+class PDS(DeviceWorkerCore):
     def __init__(self, device, fileset, plot_type, legend, options):
         # super() delegates method calls to a parent
         super().__init__(device, fileset, plot_type, legend)

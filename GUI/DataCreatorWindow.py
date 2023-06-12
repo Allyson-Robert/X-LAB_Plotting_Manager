@@ -118,7 +118,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         self.button_state()
 
     def finish(self):
-        # Add name, experiment type, date and time, and data to the dataset before exiting
+        # Add name, device type, date and time, and data to the dataset before exiting
         self.fileset.set_name(self.nameEdit.text())
         self.fileset.set_device(self.dataTypeCombo.currentText())
         experiment_date_time = self.dateTimeEdit.dateTime().toPyDateTime().strftime("%Y.%m.%d_%H.%M.%S")

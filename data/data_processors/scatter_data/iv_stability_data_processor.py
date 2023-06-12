@@ -10,7 +10,7 @@ class IVStabilityDataProcessor(DataProcessor):
     This class will utilise the DataProcessor in order to compute physical quantities related to stability
         measurements. These are fundamentally about the time evolution of IV parameters.
         This class defers the computation of all observables to IVScatterDataProcessor with the notable exception
-        being the elapsed time between any IV curve and the start of the experiment.
+        being the elapsed time between any IV curve and the start of the device.
     """
     def __init__(self, iv_data_list: list[IVData], start_time: datetime):
         self.processors = [IVScatterDataProcessor(iv_data) for iv_data in iv_data_list]
@@ -32,7 +32,7 @@ class IVStabilityDataProcessor(DataProcessor):
         for key in self._processing_functions:
             self.processed_data[key] = None
 
-        # Hold experiment start time
+        # Hold device start time
         self.start_time = start_time
 
     def validate_observables(self, *args):

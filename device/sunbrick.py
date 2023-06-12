@@ -1,13 +1,13 @@
 from data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
 from data.datatypes.scatter_data.iv_scatter import IVData
-from experiment.experiment_worker import ExperimentWorkerCore
+from device.device_worker import DeviceWorkerCore
 from plotter.scatter_data_plotter import ScatterDataPlotter
 from fileset.fileset import Fileset
 
 
-class Sunbrick(ExperimentWorkerCore):
+class Sunbrick(DeviceWorkerCore):
     """
-         Implements the plotting function for the Sunbrick experiment.
+         Implements the plotting function for the Sunbrick device.
          Relevant data types and processors are IVData and IVScatterDataProcessor.
     """
     def __init__(self, device, fileset, plot_type, legend, options):

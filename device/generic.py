@@ -1,10 +1,10 @@
 from data.data_processors.scatter_data.scatter_data_processor import ScatterDataProcessor
 from data.datatypes.scatter_data.generic_scatter import GenericScatterData
-from experiment.experiment_worker import ExperimentWorkerCore
+from device.device_worker import DeviceWorkerCore
 import plotter as plt
 
 
-class Generic(ExperimentWorkerCore):
+class Generic(DeviceWorkerCore):
 
     def __init__(self, device, fileset, plot_type, legend, options):
         # super() delegates method calls to a parent
