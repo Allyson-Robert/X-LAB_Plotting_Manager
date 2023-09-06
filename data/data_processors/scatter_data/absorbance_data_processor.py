@@ -1,5 +1,6 @@
 from data.data_processors.data_processors import DataProcessorCore
 from data.datatypes.scatter_data.absorbance_scatter import AbsorbanceData
+from utils.errors.errors import ObservableNotComputableError
 
 
 class AbsorbanceScatterDataProcessor(DataProcessorCore):
@@ -16,7 +17,6 @@ class AbsorbanceScatterDataProcessor(DataProcessorCore):
         self._processed_observables = self.processed_data.keys()
 
     def validate_observables(self, *args):
-        print(*args)
         # Checks whether all desired observables can be obtained for this data
         try:
             for observable in args:

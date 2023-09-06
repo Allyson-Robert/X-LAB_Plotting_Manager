@@ -14,14 +14,25 @@ class IVStabilityPlotter(Plotter):
         self.fig = None
         self.colours = None
 
-    def ready_plot(self, iv_stability_processors: dict[str, IVStabilityDataProcessor], legend_title: str):
+    def ready_plot(self, iv_stability_processors: dict[str, IVStabilityDataProcessor], legend_title: str, colours: dict):
         self.fig = four_subplots_prepper(subplots_titles=("Short-Circuit Current", "Open Circuit Voltage", "Fill Factor", "Maximum Power"))
-        self.colours = px.colors.qualitative.Plotly
+
         self.fig.update_layout(
             title={'text': self.title},
             legend_title=legend_title,
         )
         self.iv_stability_processors = iv_stability_processors
+
+        # Trying to allow the colours to be manually set
+        if colours is None:
+            self.colours = {}
+            counter = 0
+            for label in self.iv_stability_processors:
+                self.colours[label] = px.colors.qualitative.Plotly[counter % len(px.colors.qualitative.Plotly)]
+                counter += 1
+        else:
+            self.colours = colours
+        print(self.colours)
 
     def draw_plot(self, export: bool, relative: bool, log_time: bool, cell_area: float = 0.0):
         # Grab the values for Isc, Voc, FF and eff from the data
@@ -56,7 +67,7 @@ class IVStabilityPlotter(Plotter):
                     y=currents,
                     legendgroup=label,
                     name=label,
-                    marker=dict(color=self.colours[counter % len(self.colours)])
+                    marker=dict(color=self.colours[label])
                 ),
                 row=1, col=1
             )
@@ -67,7 +78,7 @@ class IVStabilityPlotter(Plotter):
                     legendgroup=label,
                     name=label,
                     showlegend=False,
-                    marker=dict(color=self.colours[counter % len(self.colours)])
+                    marker=dict(color=self.colours[label])
                 ),
                 row=1, col=2
             )
@@ -78,7 +89,7 @@ class IVStabilityPlotter(Plotter):
                     legendgroup=label,
                     name=label,
                     showlegend=False,
-                    marker=dict(color=self.colours[counter % len(self.colours)])
+                    marker=dict(color=self.colours[label])
                 ),
                 row=2, col=1
             )
@@ -89,7 +100,7 @@ class IVStabilityPlotter(Plotter):
                     legendgroup=label,
                     name=label,
                     showlegend=False,
-                    marker=dict(color=self.colours[counter % len(self.colours)])
+                    marker=dict(color=self.colours[label])
                 ),
                 row=2, col=2
             )

@@ -14,12 +14,14 @@ class Sunbrick(DeviceWorkerCore):
         super().__init__(device, fileset, plot_type, legend)
 
         self.presentation = None
+        self.time_evolved = None
         self.options = options
         self.set_data_type(IVData)
         self.set_processor_type(IVScatterDataProcessor)
 
-    def set_options(self, presentation: bool, *args, **kwargs):
+    def set_options(self, presentation: bool, time_evolved: bool, *args, **kwargs):
         self.presentation = presentation
+        self.time_evolved = time_evolved
 
     def plot_fulliv(self, title, legend):
         plotter = ScatterDataPlotter(title, "voltage", "current")
@@ -39,7 +41,7 @@ class Sunbrick(DeviceWorkerCore):
 
     def _scatter_plot(self, plotter: ScatterDataPlotter, legend: str):
         plotter.ready_plot(self.data_processors, legend)
-        plotter.draw_plot(presentation=self.presentation)
+        plotter.draw_plot(presentation=self.presentation, time_evolved=self.time_evolved)
 
     def print_parameters(self, *args, **kwargs):
         for lbl in self.data_processors:

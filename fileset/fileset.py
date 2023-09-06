@@ -25,6 +25,7 @@ class Fileset:
         self.console = {}
         self.structure_type = None
         self.filepaths = {}
+        self.colours = {}
 
     def get_name(self) -> str:
         return self.name
@@ -97,6 +98,16 @@ class Fileset:
 
         return ""
 
+    def add_colour(self, colour: str, label: str):
+        # No need to check for structured, will be depracated
+        # Checks for duplicate label
+        if label in self.colours.keys():
+            return "Duplicate label found in colours"
+        else:
+            # Add the file to the dataset and update the GUI
+            self.colours[label] = colour
+
+
     def construct_structured_filepaths(self, root_dir: str) -> str:
         """
         Will generate a structured file set and add it to the current filepaths. This will seek all files and
@@ -134,12 +145,26 @@ class Fileset:
     def get_filepaths(self) -> dict:
         return self.filepaths
 
+    def get_colour(self, label: str) -> str:
+        if label in self.colours.keys():
+            return self.colours[label]
+        return None
+
+    def get_colours(self) -> dict:
+        if len(self.colours) == 0:
+            return None
+        return self.colours
+
     def get_labels(self):
         return self.filepaths.keys()
 
     def set_filepaths(self, filepaths: dict):
         assert isinstance(filepaths, dict)
         self.filepaths = filepaths
+
+    def set_colours(self, colours: dict):
+        assert isinstance(colours, dict)
+        self.colours = colours
 
     # Checks are needed before paths are added to the fileset
     def _check_valid_path(self, path: str):

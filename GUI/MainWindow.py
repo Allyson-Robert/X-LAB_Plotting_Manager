@@ -118,7 +118,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             #     Copy data and print to console
             self.clear_data()
             self.fileset = self.dataWindow.fileset
-            self.console_print(f"Fileset created")
+            self.console_print(f"ExperimentDB created")
             self.load_data()
             self.update_header()
             self.save_data()
@@ -194,7 +194,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         for plot_type in self.plot_types[current_device]:
             self.plotTypeCombo.addItem(plot_type)
 
-        self.console_print("Fileset loaded")
+        self.console_print("ExperimentDB loaded")
 
     def display_data(self):
         # GUI FEATURE REQUEST: This should probably be changed from QMessagebox to something else
@@ -211,7 +211,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             cls=fs.FilesetJSONEncoder
         )
         msg = QtWidgets.QMessageBox()
-        msg.setWindowTitle(f"Fileset: {self.fileset.get_name()}")
+        msg.setWindowTitle(f"ExperimentDB: {self.fileset.get_name()}")
         msg.setText(pretty_json)
         msg.exec_()
 
@@ -227,7 +227,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             line = f"{v}\n"
             pretty_history += line
         msg = QtWidgets.QMessageBox()
-        msg.setWindowTitle(f"Fileset: {self.fileset.get_name()}")
+        msg.setWindowTitle(f"ExperimentDB: {self.fileset.get_name()}")
         msg.setText(pretty_history)
         msg.exec_()
 
@@ -268,6 +268,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
             lbl = item.text()
             path = self.fileset.get_filepath(lbl)
             selected_fileset.add_filepath(path, lbl)
+            colour = self.fileset.get_colour(lbl)
+            selected_fileset.add_colour(colour, lbl)
 
         selected_fileset.set_device(self.fileset.get_device())
         selected_fileset.set_structure_type(self.fileset.get_structure_type())
@@ -280,7 +282,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
             if alias is not None:
                 options_dict[alias] = get_qwidget_value(option)
         options_dict["presentation"] = get_qwidget_value(self.presentationCheckBox)
-        print(options_dict)
 
         # Instantiate proper device class and set the data
         current_device = self.fileset.get_device()

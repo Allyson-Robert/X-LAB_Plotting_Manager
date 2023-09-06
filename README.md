@@ -9,6 +9,7 @@ This program can be used to create filesets and plot the contents of the files t
 * ![Installation](#Installation)
 * ![General Use](#General-Use)
 * ![How to Expand](#How-to-Expand)
+* ![Upcoming Features](#Upcoming-Features)
 
 
 Installation
@@ -44,10 +45,10 @@ The *"Plot Config"* is currently under construction and is not yet functional.
 #### Help
 The *"Help"* links to a basic about window and to this documentation (not yet implemented).
 
-### Fileset creation
+### ExperimentDB creation
 ![Main Window](./IMG/DataCreationWindow.png)
 
-Fileset are created by opening the Data Creation Window by navigating the menu bar *"File -> Create Set"*.
+ExperimentDB are created by opening the Data Creation Window by navigating the menu bar *"File -> Create Set"*.
 Filesets must always be named and contain paths to datafiles.
 Do not forget to select the correct Experiment Type at this step.
 Adding datafiles can be done manually by browsing to the proper file and labelling each.
@@ -207,3 +208,19 @@ class DataCore{
     get_allowed_observables()
 }
 ```
+
+# Upcoming features
+Here I will keep a list of features I need for the program to work well.
+
+## Database storage
+Currently, everything is recomputed every time when a dataset is loaded into the program.
+Dataset functionality will be expanded to include the current json as well as SQL databases.
+JSON datasets will keep functioning as they do now but database datasets will be able to save computed values for future use.
+
+## HTML Autosave
+The plots currently open in the browser, but sometimes you might need many plots for large datasets. 
+An option will allow you to choose between drawing the plots in the browser or saving them to a local folder.
+
+## ExperimentDB Creation redesign
+The current implementation is rather clunky and independent of the type of data that is selected.
+The automatic feature should be aware of the type of data it is aggregating in order to adjust how it works.

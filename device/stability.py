@@ -15,6 +15,7 @@ class Stability(DeviceWorkerCore):
         self.log_time = None
         self.export = None
         self.options = options
+        self.colours = None
 
         self.iv_stability_processors = None
 
@@ -50,9 +51,11 @@ class Stability(DeviceWorkerCore):
             counter += 1
             self.progress.emit(int(100*counter/nr_of_files))
 
+        self.colours = fileset.get_colours()
+
     def plot_four(self, title, legend):
         plotter = IVStabilityPlotter(title)
-        plotter.ready_plot(self.iv_stability_processors, legend)
+        plotter.ready_plot(self.iv_stability_processors, legend, colours=self.colours)
         plotter.draw_plot(export=self.export, log_time=self.log_time, relative=self.relative, cell_area=self.cell_area)
 
     def plot_isc(self, title, legend):
@@ -70,7 +73,7 @@ class Stability(DeviceWorkerCore):
     def plot_mpp(self, title, legend):
         raise NotImplementedError
 
-    def plot_isc_voc_scatte(self, title, legend):
+    def plot_isc_voc_scatter(self, title, legend):
         raise NotImplementedError
 
     def plot_eff(self, title, legend):

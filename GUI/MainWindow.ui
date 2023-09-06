@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>X-Lab Plotting</string>
+   <string>X-LAB Plotting</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="font">
@@ -142,7 +142,7 @@
           <locale language="English" country="Belgium"/>
          </property>
          <property name="text">
-          <string>Raw Fileset</string>
+          <string>Raw ExperimentDB</string>
          </property>
         </widget>
        </item>
@@ -205,10 +205,43 @@
             <enum>QFrame::Plain</enum>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="emptyPage"/>
-           <widget class="QWidget" name="sunbrickPage"/>
+           <widget class="QWidget" name="sunbrickPage">
+            <widget class="QCheckBox" name="sunbricktimeEvolvedCheckBox">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>309</width>
+               <height>25</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Normalised</string>
+             </property>
+             <property name="alias" stdset="0">
+              <string>normalise</string>
+             </property>
+            </widget>
+            <widget class="QCheckBox" name="sunbrickNormCheckBox">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>30</y>
+               <width>309</width>
+               <height>25</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Time Evolved</string>
+             </property>
+             <property name="alias" stdset="0">
+              <string>time_evolved</string>
+             </property>
+            </widget>
+           </widget>
            <widget class="QWidget" name="stabilityPage">
             <widget class="QWidget" name="layoutWidget">
              <property name="geometry">

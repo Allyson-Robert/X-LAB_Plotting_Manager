@@ -3,8 +3,12 @@ import natsort
 from datetime import datetime
 from experimentdb.measurement import Measurement
 
+from sqlalchemy import create_engine, Column, Integer, String, update, ForeignKey, Table, DateTime
+from sqlalchemy.orm import sessionmaker, relationship, DeclarativeBase
+from sqlalchemy.ext.declarative import declarative_base
 
-class Fileset:
+
+class ExperimentDB:
     """
     This class collects paths to files containing relevant data. The exact contents of the files does not matter as
     only the locations are relevant for this class.
@@ -13,8 +17,15 @@ class Fileset:
     Flat and structured construction cannot be mixed
     """
     _accepted_extensions = ("xlsx", "xls", "csv", "txt")
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    creation_date = Column(DateTime)
+    experiment_date_time = None
+    device = Column(String)
+    notes = Column(String)
+    console = {}
 
-    def __init__(self, creation_date: str):
+    def __init__(self, creation_date: str, association_table: Table):
         assert isinstance(creation_date, str)
 
         self.name = ""
@@ -23,7 +34,7 @@ class Fileset:
         self.device = ""
         self.notes = ""
         self.console = {}
-        self.measurements = {}
+        self.measurements = relationship("Measurement", secondary=association_table, back_populates="experimentDB")
 
     def get_name(self) -> str:
         return self.name
@@ -51,7 +62,7 @@ class Fileset:
 
     def add_notes(self, additional_notes: str):
         assert isinstance(additional_notes, str)
-        self.notes += additional_notes
+        self.notes += ("\n" + additional_notes)
 
     # CHECK: this is probably redundant
     def set_notes(self, notes_content: str):
@@ -74,22 +85,25 @@ class Fileset:
     def get_console(self) -> dict:
         return self.console
 
-    def add_measurement(self, path: str, label: str):
+    # TODO: This should not create a Measurement, just check that it is valid
+    def add_measurement(self, measurement: Measurement):
+        label = measurement.get_label()
         # Checks for duplicate label
         if label in self.get_labels():
             raise ValueError(f"Measurement with this label ({label}) already exists")
         else:
             # Add the file to the dataset and update the GUI
-            self.measurements = Measurement(path, label)
+            self.measurements[label] = measurement
 
-    def set_all_measurements(self):
-        pass
+    def set_all_measurements(self, measurement_list: list[Measurement]):
+        for measurement in measurement_list:
+            self.add_measurement(measurement)
 
     def get_measurements(self):
-        pass
+        return self.measurements
 
     def get_labels(self):
-        return [measurement.get_label() for measurement in self.measurements]
+        return [label for label in self.measurements]
 
     def __eq__(self, other):
         if type(other) is type(self):

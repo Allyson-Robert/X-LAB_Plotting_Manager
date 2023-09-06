@@ -11,12 +11,17 @@ class Measurement:
         self._check_valid_path(filepath)
         self.location = filepath
 
-        self.label = ""
+        self.label = label
 
         self.datetime = None
         self.set_datetime()
 
         self.colour = None
+
+    def get_label(self):
+        if self.label is None:
+            raise AttributeError("Initialisation failed, no label set for instance")
+        return self.label
 
     def set_datetime(self):
         dt_pattern = '\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2}'

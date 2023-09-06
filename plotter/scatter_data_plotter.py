@@ -2,7 +2,9 @@ from data.data_processors.data_processors import DataProcessor
 from utils.plot_preppers.scatter_prep import scatter_prepper
 from utils.plot_preppers.export_to_svg import get_svg_config
 from plotter.plotter import Plotter
+from utils.get_colour import get_colour
 import plotly.graph_objects as go
+import plotly.colors
 
 
 class ScatterDataPlotter(Plotter):
@@ -31,15 +33,22 @@ class ScatterDataPlotter(Plotter):
         )
         self.titles_set = True
 
-    def draw_plot(self, presentation: bool, *args, **kwargs):
+    def draw_plot(self, presentation: bool, time_evolved: bool, *args, **kwargs):
+        line = None
+        if presentation or time_evolved:
+            line = dict()
         if presentation:
-            line = go.Scatter.Line(width=5)
-        else:
-            line = None
+            line["width"] = 5
 
         # FEATURE REQUEST: Draw plots with errors
+        dumb_counter = 0
         for lbl in self.data_processors:
             scatter = self.data_processors[lbl]
+            if time_evolved:
+                colorscale = plotly.colors.get_colorscale("Magenta")
+                line["color"] = get_colour(colorscale, dumb_counter/len(self.data_processors))
+                dumb_counter += 1
+
             self.fig.add_trace(go.Scatter(
                 x=scatter.get_data(self.x_observable, *args, **kwargs),
                 y=scatter.get_data(self.y_observable, *args, **kwargs),

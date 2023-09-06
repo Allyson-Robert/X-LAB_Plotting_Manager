@@ -17,9 +17,9 @@ def read_csv(path, skip_lines=0, delimiter=None) -> list:
             next(reader)
 
         data = [[], []]
-        print(delimiter, next(reader))
+        # print(delimiter, next(reader))
         for line in reader:
-            print(line)
+            # print(line)
             x = line[0]
             y = line[1]
 
