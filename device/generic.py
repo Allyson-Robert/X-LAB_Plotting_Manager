@@ -1,7 +1,7 @@
-from plugins.data.data_processors.scatter_data.scatter_data_processor import ScatterDataProcessor
-from plugins.data.data_types.scatter_data.generic_scatter import GenericScatterData
-from plugins.devices.device_worker import DeviceWorkerCore
-from plugins import plotter as plt
+from data.data_processors.scatter_data.scatter_data_processor import ScatterDataProcessor
+from data.datatypes.scatter_data.generic_scatter import GenericScatterData
+from device.device_worker import DeviceWorkerCore
+import plotter as plt
 
 
 class Generic(DeviceWorkerCore):
