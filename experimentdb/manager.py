@@ -1,6 +1,6 @@
 """
     Responsible for managing the experiment database.
-    This loads, saves and updates the database as required by the GUI/user.
+    This loads, saves and updates the database as required by the gui/user.
 """
 from experimentdb import ExperimentDB
 from sqlalchemy import create_engine, Column, Integer, String, update, ForeignKey, Table

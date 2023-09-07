@@ -91,7 +91,7 @@ class Fileset:
             if label in self.filepaths.keys():
                 return "Duplicate label found in fileset"
             else:
-                # Add the file to the dataset and update the GUI
+                # Add the file to the dataset and update the gui
                 self.filepaths[label] = path
         else:
             return "Constructed structure cannot be appended manually"
@@ -104,7 +104,7 @@ class Fileset:
         if label in self.colours.keys():
             return "Duplicate label found in colours"
         else:
-            # Add the file to the dataset and update the GUI
+            # Add the file to the dataset and update the gui
             self.colours[label] = colour
 
 
