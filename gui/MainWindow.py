@@ -4,10 +4,6 @@ import datetime
 import json
 import logging
 import sys
-
-sys.path.append("..")
-import device
-from device import *
 import fileset as fs
 import DataCreatorWindow
 from utils.get_class_methods import get_class_methods
@@ -15,7 +11,19 @@ from utils.console_colours import ConsoleColours
 from utils.logging import with_logging
 from utils.get_qwidget_value import get_qwidget_value
 
+# Read the JSON file
+with open('config.json') as f:
+    data = json.load(f)
 
+# Get the module path
+analysis_path = data['analysis_path']
+
+# Add the module path to the system path
+sys.path.insert(0, analysis_path)
+sys.path.append("..")
+# from analysis import device
+import analysis
+from analysis.device import *
 
 # gui FEATURE REQUEST: ESC should close the window safely
 class UiMainWindow(QtWidgets.QMainWindow):
@@ -285,7 +293,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Instantiate proper device class and set the data
         current_device = self.fileset.get_device()
-        experiment_cls = getattr(device, current_device)
+        experiment_cls = getattr(analysis.device, current_device)
 
         # # Grab the correct plotting function and pass all options to it
         plot_type = self.plotTypeCombo.currentText()
