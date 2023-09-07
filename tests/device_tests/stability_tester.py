@@ -1,4 +1,4 @@
-from device.stability import Stability
+from plugins.devices import Stability
 from fileset.fileset import Fileset
 
 print("Building fileset")

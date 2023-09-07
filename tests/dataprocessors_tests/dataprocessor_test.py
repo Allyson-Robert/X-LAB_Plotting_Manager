@@ -1,5 +1,5 @@
-from data.data_processors.data_processors import DataProcessor
-from data.datatypes.data import Data
+from plugins.data.data_processors.data_processors import DataProcessor
+from plugins.data.data_types import Data
 
 
 class ScatterDataProcessorTest:

@@ -1,5 +1,5 @@
-from data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
-from data.datatypes.scatter_data.iv_scatter import IVData
+from plugins.data.data_processors.scatter_data.iv_data_processor import IVScatterDataProcessor
+from plugins.data.data_types.scatter_data.iv_scatter import IVData
 import traceback
 
 

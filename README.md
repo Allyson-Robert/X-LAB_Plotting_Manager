@@ -79,6 +79,24 @@ The program is moderately verbose and will offer warnings, errors and other runt
 It can be useful to add the contents of the console to the fileset in order to save a particularly interesting sequence of plots.
 This way plots can be easily reproduced manually by reading the console output.
 
+Program Structure
+=================
+```mermaid
+X-LAB Plot Manager
+├── experimentdb
+├── fileset
+├── gui
+│   ├── main
+│   ├── data_creator
+│   └── about.txt
+├── plugins
+│   ├── data
+│   │   ├── data_processors
+│   │   ├── data_types
+│   ├── devices
+│   └── plotter
+```
+
 How to Expand
 =============
 The structure of the software loosely follows the schema below.

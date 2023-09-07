@@ -1,4 +1,4 @@
-from data.datatypes.scatter_data.iv_scatter import IVData
+from plugins.data.data_types.scatter_data.iv_scatter import IVData
 from tests.datatype_tests.scatterdata_test import ScatterDataTest
 
 
