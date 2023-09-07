@@ -1,4 +1,4 @@
-from plugins.devices import Sunbrick
+from device.sunbrick import Sunbrick
 from fileset.fileset import Fileset
 
 test_fileset = Fileset("2023-02-07")

@@ -92,7 +92,7 @@ class ExperimentDB:
         if label in self.get_labels():
             raise ValueError(f"Measurement with this label ({label}) already exists")
         else:
-            # Add the file to the dataset and update the gui
+            # Add the file to the dataset and update the GUI
             self.measurements[label] = measurement
 
     def set_all_measurements(self, measurement_list: list[Measurement]):

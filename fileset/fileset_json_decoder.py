@@ -13,7 +13,7 @@ class FilesetJSONDecoder(JSONDecoder):
         try:
             fileset = Fileset(dct['creation_date'])
             fileset.set_name(dct['name'])
-            fileset.set_device(dct['devices'])
+            fileset.set_device(dct['device'])
             fileset.set_experiment_date(dct['experiment_date_time'])
             fileset.set_notes(dct['notes'])
             fileset.set_console(dct['console'])

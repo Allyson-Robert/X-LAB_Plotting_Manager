@@ -1,4 +1,4 @@
-from plugins.data.data_types.scatter_data.absorbance_scatter import AbsorbanceData
+from data.datatypes.scatter_data.absorbance_scatter import AbsorbanceData
 from tests.datatype_tests.scatterdata_test import ScatterDataTest
 
 path = "G:\\My Drive\\Data\\DW2000 - UVvis\\2022\\05-May\\2022-05-03_Aluminum_cuvettes_AB.csv"

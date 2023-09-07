@@ -1,4 +1,4 @@
-from plugins.plotter import ScatterDataPlotter
+from plotter.scatter_data_plotter import ScatterDataPlotter
 
 
 def test_iv_plotter(test_collection):
