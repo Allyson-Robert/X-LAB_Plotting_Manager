@@ -1,4 +1,6 @@
 # Main.py
+import os
+
 from PyQt5 import QtWidgets, uic, QtCore
 import datetime
 import json
@@ -13,10 +15,10 @@ from utils.get_qwidget_value import get_qwidget_value
 
 # Read the JSON file
 with open('config.json') as f:
-    data = json.load(f)
+    config = json.load(f)
 
 # Get the module path
-analysis_path = data['analysis_path']
+analysis_path = config['analysis_path']
 
 # Add the module path to the system path
 sys.path.insert(0, analysis_path)
@@ -79,6 +81,11 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # FEATURE REQUEST: Perhaps pass this logger to an external thing?
         # Decorate methods with the with_logging decorator
         self.load_data = with_logging(self.load_data, self.logger)
+
+        #   Load custom widgets (size w324 x h155) into stackedwidget
+        for file in os.listdir(config["widgets_path"]):
+            extra_widget = uic.loadUi(config["widgets_path"] + file)
+            self.stackedWidget.addWidget(extra_widget)
 
         # Reset stacked widget to empty page
         self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
