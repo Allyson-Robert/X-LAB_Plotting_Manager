@@ -40,6 +40,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.fileset = None
         self.fileset_location = None
 
+        # TODO: This needs to be dynamic based on the analysis package
         # Define device indices corresponding to stackedWidget definition (see QtDesigner)
         self.devices = {
             '': 0,
@@ -52,6 +53,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             'Generic': 7
         }
 
+        # TODO: This needs to be dynamic based on the analysis package
         # Define possible plot types to show to the user for each device
         self.plot_types = {
             'Sunbrick': get_class_methods(Sunbrick, ignore=["run"]),
