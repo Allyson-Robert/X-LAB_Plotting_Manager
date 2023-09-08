@@ -1,5 +1,4 @@
 # Main.py
-import os
 import importlib
 from PyQt5 import QtWidgets, uic, QtCore
 import datetime
@@ -13,19 +12,18 @@ from utils.console_colours import ConsoleColours
 from utils.logging import with_logging
 from utils.get_qwidget_value import get_qwidget_value
 
-# Read the JSON file
+# Read the JSON config file
 with open('config.json') as f:
     config = json.load(f)
 
-# Get the module path
+# Get the analysis package path
 analysis_path = config['analysis_path']
 
-# Add the module path to the system path
+# Add the analysis package path to the system path and import it
 sys.path.insert(0, analysis_path)
 sys.path.append("..")
 import analysis.devices
 
-# gui FEATURE REQUEST: ESC should close the window safely
 class UiMainWindow(QtWidgets.QMainWindow):
     """
         gui for automated plotting of various types of data.
@@ -184,11 +182,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Some changes depend on the type of device
         current_device = self.fileset.get_device()
 
-        # For lbic plot type set selection to first item, otherwise preselect all items
-        if current_device == "LBIC":
-            self.selectedFilesList.setCurrentRow(0)
-        else:
-            self.selectedFilesList.selectAll()
+        # TODO: Remove
+        # # For lbic plot type set selection to first item, otherwise preselect all items
+        # if current_device == "LBIC":
+        #     self.selectedFilesList.setCurrentRow(0)
+        # else:
+        #     self.selectedFilesList.selectAll()
 
         # Edit combobox to show all available plot types
         for plot_type in self.plot_types[current_device]:
@@ -388,6 +387,14 @@ class UiMainWindow(QtWidgets.QMainWindow):
         """
         self.console_print("Feature not implemented", level='warning')
 
+    # ESC now triggers a program exit
+    def keyPressEvent(self, event) -> None:
+        if event.key() == QtCore.Qt.Key.Key_Escape:
+            self.quit()
+        else:
+            super(UiMainWindow, self).keyPressEvent(event)
+
+    # CHECK: Program exit is not safe
     @staticmethod
     def quit():
         # Terminate the application
