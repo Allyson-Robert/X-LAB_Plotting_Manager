@@ -40,31 +40,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.fileset = None
         self.fileset_location = None
 
-        # TODO: This needs to be dynamic based on the analysis package
-        # Define device indices corresponding to stackedWidget definition (see QtDesigner)
-        self.devices = {
-            '': 0,
-            'Sunbrick': 1,
-            'Stability': 2,
-            'DW2000': 3,
-            'LBIC': 4,
-            'PDS': 5,
-            'PTI': 6,
-            'Generic': 7
-        }
-
-        # TODO: This needs to be dynamic based on the analysis package
-        # Define possible plot types to show to the user for each device
-        self.plot_types = {
-            'Sunbrick': get_class_methods(Sunbrick, ignore=["run"]),
-            'Stability': get_class_methods(Stability, ignore=["run"]),
-            'DW2000': get_class_methods(DW2000, ignore=["run"]),
-            'LBIC': get_class_methods(LBIC, ignore=["run"]),
-            'PDS': get_class_methods(PDS, ignore=["run"]),
-            'PTI': get_class_methods(PTI, ignore=["run"]),
-            'Generic': get_class_methods(Generic, ignore=["run"])
-        }
-
         # Load the UI, Note that loadUI adds objects to 'self' using objectName
         self.dataWindow = None
         uic.loadUi("MainWindow.ui", self)
@@ -84,10 +59,17 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Decorate methods with the with_logging decorator
         self.load_data = with_logging(self.load_data, self.logger)
 
-        #   Load custom widgets (size w324 x h155) into stackedwidget
-        for file in os.listdir(config["widgets_path"]):
-            extra_widget = uic.loadUi(config["widgets_path"] + file)
-            self.stackedWidget.addWidget(extra_widget)
+        # Grab widgets and corresponding plot types from the analysis package
+        self.plot_types = {}
+        self.devices = {}
+        for entry in analysis.device.__all__:
+            entry_ui_file = entry.lower() + ".ui"
+            entry_widget = uic.loadUi(config["widgets_path"] + entry_ui_file)
+            entry_index = self.stackedWidget.addWidget(entry_widget)
+            self.devices[entry] = entry_index
+
+            entry_cls = getattr(analysis.device, entry)
+            self.plot_types[entry] = get_class_methods(entry_cls, ignore=["run"])
 
         # Reset stacked widget to empty page
         self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
