@@ -1,6 +1,6 @@
 # Main.py
 import os
-
+import importlib
 from PyQt5 import QtWidgets, uic, QtCore
 import datetime
 import json
@@ -23,9 +23,7 @@ analysis_path = config['analysis_path']
 # Add the module path to the system path
 sys.path.insert(0, analysis_path)
 sys.path.append("..")
-# from analysis import device
-import analysis
-from analysis.device import *
+import analysis.devices
 
 # gui FEATURE REQUEST: ESC should close the window safely
 class UiMainWindow(QtWidgets.QMainWindow):
@@ -59,16 +57,19 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Decorate methods with the with_logging decorator
         self.load_data = with_logging(self.load_data, self.logger)
 
-        # Grab widgets and corresponding plot types from the analysis package
         self.plot_types = {}
         self.devices = {}
-        for entry in analysis.device.__all__:
+        # Get list of devices as defined manually in the analysis.devices __init__.py file
+        for entry in analysis.devices.__all__:
+            # Find and load the widget for any given device and add it to the stackedWidget
             entry_ui_file = entry.lower() + ".ui"
             entry_widget = uic.loadUi(config["widgets_path"] + entry_ui_file)
             entry_index = self.stackedWidget.addWidget(entry_widget)
             self.devices[entry] = entry_index
 
-            entry_cls = getattr(analysis.device, entry)
+            # Import the corresponding module and get the class methods to add to the plot_types combobox when needed
+            module = importlib.import_module(f"{analysis.devices.workers.__name__}.{entry.lower()}")
+            entry_cls = getattr(module, entry)
             self.plot_types[entry] = get_class_methods(entry_cls, ignore=["run"])
 
         # Reset stacked widget to empty page
@@ -283,17 +284,18 @@ class UiMainWindow(QtWidgets.QMainWindow):
         options_dict["presentation"] = get_qwidget_value(self.presentationCheckBox)
 
         # Instantiate proper device class and set the data
-        current_device = self.fileset.get_device()
-        experiment_cls = getattr(analysis.device, current_device)
+        current_device_class = self.fileset.get_device()
+        device_module = getattr(analysis.devices.workers, current_device_class.lower())
+        experiment_cls = getattr(device_module, current_device_class)
 
         # # Grab the correct plotting function and pass all options to it
         plot_type = self.plotTypeCombo.currentText()
-        self.console_print(f"Producing {current_device}-{plot_type} plot for {self.fileset.get_name()}")
+        self.console_print(f"Producing {current_device_class}-{plot_type} plot for {self.fileset.get_name()}")
 
         # Create a new thread for the device class to run in
         self.thread = QtCore.QThread()
         # gui FEATURE REQUEST: Get legend title from gui/fileset
-        self.experiment_worker = experiment_cls(current_device, selected_fileset, plot_type, legend="Legend title",
+        self.experiment_worker = experiment_cls(current_device_class, selected_fileset, plot_type, legend="Legend title",
                                                 options=options_dict)
         self.experiment_worker.moveToThread(self.thread)
 
