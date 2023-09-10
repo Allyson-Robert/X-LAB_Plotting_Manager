@@ -63,7 +63,6 @@ class Fileset:
         assert isinstance(additional_notes, str)
         self.notes += additional_notes
 
-    # CHECK: this is probably redundant
     def set_notes(self, notes_content: str):
         assert isinstance(notes_content, str)
         self.notes = notes_content
@@ -76,7 +75,6 @@ class Fileset:
         assert isinstance(additional_console, str)
         self.console[date_and_time] = additional_console
 
-    # CHECK: This could also be redundant
     def set_console(self, console_content: dict):
         assert isinstance(console_content, dict)
         self.console = console_content
