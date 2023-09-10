@@ -1,13 +1,11 @@
 X-Lab Plotting Tool v2.0.0
-Last update: 2023/03/02
+Last update: 2023/09/10
 Author: Allyson Robert (https://github.com/Allyson-Robert)
 
 Licence: CC BY-NC-SA
-This license allows reusers to distribute, remix, adapt, and build upon the material in any medium or format for
-noncommercial purposes only, and only so long as attribution is given to the creator. If you remix, adapt, or build
-upon the material, you must license the modified material under identical terms.
+This license allows reusers to distribute, remix, adapt, and build upon the material in any medium or format for noncommercial purposes only, and only so long as attribution is given to the creator. If you remix, adapt, or build upon the material, you must license the modified material under identical terms.
 
-Written using: Python 3.9
+Written using: Python 3.10
 Python Dependencies:
     Data processing and plotting:
         plotly 5.11.0

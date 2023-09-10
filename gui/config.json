@@ -1,4 +1,5 @@
 {
-  "analysis_path": "G:\\My Drive\\Data\\Python\\X-LAB_Plotting_Manager_Analysis",
-  "widgets_path": "G:\\My Drive\\Data\\Python\\X-LAB_Plotting_Manager_Analysis\\analysis\\devices\\widgets\\"
+  "analysis_path": "/home/allyson/PycharmProjects/X-LAB_Plotting_Manager_Analysis_Example",
+  "widgets_path": "/home/allyson/PycharmProjects/X-LAB_Plotting_Manager_Analysis_Example/analysis/devices/widgets/",
+  "logos_path": "/home/allyson/PycharmProjects/X-LAB_Plotting_Manager_GUI/gui/logos/"
 }

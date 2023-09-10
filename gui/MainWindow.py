@@ -1,6 +1,6 @@
 # Main.py
 import importlib
-from PyQt5 import QtWidgets, uic, QtCore
+from PyQt5 import QtWidgets, uic, QtCore, QtGui
 import datetime
 import json
 import logging
@@ -396,17 +396,38 @@ class UiMainWindow(QtWidgets.QMainWindow):
     def show_about(self):
         """
             Shows a simple window with licence, authorship and build information
-            # gui FEATURE REQUEST: Make it so it can contain the X-Lab Logo
         """
         # Grab the "about" info from about.txt
         with open("about.txt") as about_file:
             about_contents = about_file.read()
 
-        # Show a basic about message
-        msg = QtWidgets.QMessageBox(self.centralwidget)
-        msg.setWindowTitle("About")
-        msg.setText(about_contents)
-        msg.exec_()
+        # Create a custom QDialog for the about information
+        about_dialog = QtWidgets.QDialog(self.centralwidget)
+        about_dialog.setWindowTitle("About")
+
+        # Set the fixed size of the dialog
+        about_dialog.setFixedSize(650, 700)  # Adjust the dimensions as needed
+
+        # Load and set the image using QPixmap (make sure the path is correct)
+        pixmap = QtGui.QPixmap(config["logos_path"] + "X_logo_x-lab_baseline_KL.png")
+        pixmap = pixmap.scaled(600, 200, QtCore.Qt.KeepAspectRatio)
+        image_label = QtWidgets.QLabel(about_dialog)
+        image_label.setPixmap(pixmap)
+
+        # Create a QLabel for the text (using HTML formatting)
+        text_label = QtWidgets.QLabel(about_dialog)
+        text_label.setWordWrap(True)
+        text_label.setText(about_contents)
+
+        # Create a QVBoxLayout for the dialog and add the image and text labels
+        layout = QtWidgets.QVBoxLayout(about_dialog)
+        layout.addWidget(image_label)
+        layout.addWidget(text_label)
+
+        about_dialog.setLayout(layout)
+
+        # Show the about dialog
+        about_dialog.exec_()
 
     def not_implemented(self):
         """
