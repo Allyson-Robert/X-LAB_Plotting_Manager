@@ -274,7 +274,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # # Grab the correct plotting function and pass all options to it
         plot_type = self.plotTypeCombo.currentText()
-        self.console_print(f"Producing {current_device_class}-{plot_type} plot for {self.fileset.get_name()}")
+        self.console_print(f"Producing {current_device_class}-{plot_type} plot for {self.fileset.get_name()} with options {options_dict}")
 
         # Create a new thread for the device class to run in
         self.thread = QtCore.QThread()
