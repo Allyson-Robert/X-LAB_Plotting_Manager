@@ -190,8 +190,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.console_print("ExperimentDB loaded")
 
     def display_data(self):
-        # gui FEATURE REQUEST: This should probably be changed from QMessagebox to something else
-        #     The width is insufficient and it needs a scrollbar
         # Abort if no data was loaded
         if self.fileset is None:
             return self.console_print("Err: Must first load data", level="warning")
@@ -206,8 +204,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.dialog_print(title=f"ExperimentDB RAW: {self.fileset.get_name()}", contents=pretty_json)
 
     def display_history(self):
-        # gui FEATURE REQUEST: This should probably be changed from QMessagebox to something else
-        #     The width is insufficient and it needs a scrollbar
         if self.fileset is None:
             return self.console_print("Err: Must first load data", level="warning")
 
