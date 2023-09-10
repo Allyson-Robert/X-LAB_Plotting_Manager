@@ -605,14 +605,14 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_9">
            <item>
-            <widget class="QLabel" name="lTitleLabel_2">
+            <widget class="QLabel" name="legendTitleLabel">
              <property name="text">
               <string>Legend Title</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lTitleLineEdit_2">
+            <widget class="QLineEdit" name="legendTitleLineEdit">
              <property name="alias" stdset="0">
               <string>legend_title</string>
              </property>
