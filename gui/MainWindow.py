@@ -179,18 +179,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
         for label in self.fileset.get_labels():
             self.selectedFilesList.addItem(label)
 
-        # Some changes depend on the type of device
-        current_device = self.fileset.get_device()
-
-        # TODO: Remove
-        # # For lbic plot type set selection to first item, otherwise preselect all items
-        # if current_device == "LBIC":
-        #     self.selectedFilesList.setCurrentRow(0)
-        # else:
-        #     self.selectedFilesList.selectAll()
+        # FEATURE REQUEST: Make this a setting
+        # Select all items by default
+        self.selectedFilesList.selectAll()
 
         # Edit combobox to show all available plot types
-        for plot_type in self.plot_types[current_device]:
+        for plot_type in self.plot_types[self.fileset.get_device()]:
             self.plotTypeCombo.addItem(plot_type)
 
         self.console_print("ExperimentDB loaded")
