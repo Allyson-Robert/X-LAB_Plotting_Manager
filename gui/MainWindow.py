@@ -278,7 +278,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Create a new thread for the device class to run in
         self.thread = QtCore.QThread()
-        # gui FEATURE REQUEST: Get legend title from gui/fileset
         self.experiment_worker = experiment_cls(current_device_class, selected_fileset, plot_type, options=options_dict)
         self.experiment_worker.moveToThread(self.thread)
 
