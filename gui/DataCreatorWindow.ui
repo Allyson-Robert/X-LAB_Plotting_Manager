@@ -49,7 +49,7 @@
          <x>10</x>
          <y>10</y>
          <width>501</width>
-         <height>61</height>
+         <height>62</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -103,41 +103,6 @@
               <pointsize>11</pointsize>
              </font>
             </property>
-            <item>
-             <property name="text">
-              <string>Sunbrick</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Stability</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DW2000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LBIC</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PDS</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PTI</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Generic</string>
-             </property>
-            </item>
            </widget>
           </item>
           <item>
