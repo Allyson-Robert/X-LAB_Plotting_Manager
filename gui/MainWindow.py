@@ -97,7 +97,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.quitBtn.clicked.connect(self.quit)
 
         # Define stackedWidget widget actions
-        self.lbicProfilesCheckBox.stateChanged.connect(self.toggle_lbic_profile)
         self.plotBtn.clicked.connect(self.plot_manager)
 
         # Make sure the progress bar is cleared
@@ -266,6 +265,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             if alias is not None:
                 options_dict[alias] = get_qwidget_value(option)
         options_dict["presentation"] = get_qwidget_value(self.presentationCheckBox)
+        options_dict["legend_title"] = get_qwidget_value(self.legendTitleLineEdit)
 
         # Instantiate proper device class and set the data
         current_device_class = self.fileset.get_device()
@@ -301,12 +301,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
         #     lambda: self.stepLabel.setText("Long-Running Step: 0")
         # )
 
-    def toggle_lbic_profile(self):
-        # Allow the profile position to be selected (LBIC specific)
-        if self.lbicProfilesCheckBox.isChecked():
-            self.lbicProfilesSpinBox.setEnabled(True)
-        else:
-            self.lbicProfilesSpinBox.setDisabled(True)
+    # def toggle_lbic_profile(self):
+    #     # Allow the profile position to be selected (LBIC specific)
+    #     if self.lbicProfilesCheckBox.isChecked():
+    #         self.lbicProfilesSpinBox.setEnabled(True)
+    #     else:
+    #         self.lbicProfilesSpinBox.setDisabled(True)
 
     def dialog_print(self, title, contents):
         # Prepare a text edit widget to host the contents
