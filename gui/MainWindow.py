@@ -108,7 +108,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
     def create_data(self):
         # Run the DataCreatorWindow
-        self.dataWindow = DataCreatorWindow.UiDataCreatorWindow()
+        self.dataWindow = DataCreatorWindow.UiDataCreatorWindow(devices = [k for k in self.devices])
         self.dataWindow.show()
 
         if self.dataWindow.exec() == 1:
