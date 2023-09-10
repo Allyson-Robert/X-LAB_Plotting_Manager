@@ -205,7 +205,7 @@
             <enum>QFrame::Plain</enum>
            </property>
            <property name="currentIndex">
-            <number>5</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="emptyPage"/>
            <widget class="QWidget" name="sunbrickPage">
@@ -367,8 +367,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>301</width>
-               <height>151</height>
+               <width>371</width>
+               <height>201</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="lbicLayout">
@@ -582,22 +582,7 @@
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
-                <item>
-                 <widget class="QLabel" name="lTitleLabel">
-                  <property name="text">
-                   <string>Legend Title</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="lTitleLineEdit">
-                  <property name="alias" stdset="0">
-                   <string>legend_title</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               <layout class="QHBoxLayout" name="horizontalLayout_5"/>
               </item>
               <item>
                <spacer name="verticalSpacer_2">
@@ -616,6 +601,24 @@
             </widget>
            </widget>
           </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <item>
+            <widget class="QLabel" name="lTitleLabel_2">
+             <property name="text">
+              <string>Legend Title</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lTitleLineEdit_2">
+             <property name="alias" stdset="0">
+              <string>legend_title</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -1494,7 +1497,6 @@
   <tabstop>genericNormCheckBox</tabstop>
   <tabstop>xTitleLineEdit</tabstop>
   <tabstop>yTitleLineEdit</tabstop>
-  <tabstop>lTitleLineEdit</tabstop>
  </tabstops>
  <resources/>
  <connections/>
