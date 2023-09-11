@@ -16,7 +16,7 @@ class Fileset:
 
     def __init__(self, creation_date: str):
         assert isinstance(creation_date, str)
-
+        # FEATURE REQUEST: Fileset should be aware of its own location
         self.name = ""
         self.creation_date = datetime.strptime(creation_date, "%Y.%m.%d_%H.%M.%S")
         self.experiment_date_time = None

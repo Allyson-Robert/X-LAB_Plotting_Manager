@@ -11,6 +11,7 @@ from utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
 from utils.logging import with_logging
 from utils.get_qwidget_value import get_qwidget_value
+from utils.errors.errors import IncompatibleDeviceTypeFound
 
 # Read the JSON config file
 with open('config.json') as f:
@@ -166,9 +167,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
             with open(file_name) as json_file:
                 self.fileset = json.load(json_file, cls=fs.FilesetJSONDecoder)
                 self.console_print(f"Opened {file_name}")
-            self.notesPlainText.setPlainText(self.fileset.get_notes())
-            self.load_data()
-            self.update_header()
+            try:
+                self.notesPlainText.setPlainText(self.fileset.get_notes())
+                self.load_data()
+                self.update_header()
+            except IncompatibleDeviceTypeFound:
+                self.clear_data()
         else:
             # File not chosen
             self.console_print(f"Err: No file loaded", level="warning")
@@ -183,8 +187,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.selectedFilesList.selectAll()
 
         # Edit combobox to show all available plot types
-        for plot_type in self.plot_types[self.fileset.get_device()]:
-            self.plotTypeCombo.addItem(plot_type)
+        try:
+            for plot_type in self.plot_types[self.fileset.get_device()]:
+                self.plotTypeCombo.addItem(plot_type)
+        except KeyError:
+            self.console_print(f"Incompatible device type [{self.fileset.get_device()}] found in {self.fileset.get_name()}, select another fileset or implement the device type. Fileset path: N/A")
+            raise IncompatibleDeviceTypeFound
 
         self.console_print("ExperimentDB loaded")
 

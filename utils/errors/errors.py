@@ -12,3 +12,7 @@ class IscNotFoundError(ValueError):
 
 class ObservableNotComputableError(ValueError):
     pass
+
+
+class IncompatibleDeviceTypeFound(KeyError):
+    pass
