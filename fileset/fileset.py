@@ -20,6 +20,7 @@ class Fileset:
         self.name = ""
         self.creation_date = datetime.strptime(creation_date, "%Y.%m.%d_%H.%M.%S")
         self.experiment_date_time = None
+        # FEATURE REQUEST: Allow multiple device types to be compatible with the same set
         self.device = ""
         self.notes = ""
         self.console = {}
