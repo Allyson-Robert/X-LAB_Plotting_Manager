@@ -16,7 +16,7 @@ def with_logging(func: Callable[..., Any], log_level: int = 10) -> Callable[...,
     @functools.wraps(func)
     def wrapper(*args: Any, **kwargs: Any) -> Any:
         # FIXME: Logger name is magic string
-        logger = logging.getLogger("my_logger")
+        logger = logging.getLogger(constants.LOG_NAME)
 
         logger.log(log_level, f"Calling {func.__qualname__}")
         value = func(*args, **kwargs)
