@@ -3,12 +3,26 @@ import functools
 from typing import Callable, Any
 
 
-def with_logging(func: Callable[..., Any], logger: logging.Logger) -> Callable[..., Any]:
+class MyLogging:
+    # FIXME: Logger name is magic string
+    def __init__(self):
+        self.logger = logging.getLogger("my_logger")
+
+    def log(self, level=10, message=None):
+        self.logger.log(level, message)
+
+
+def with_logging(func: Callable[..., Any], log_level: int = 10) -> Callable[..., Any]:
     @functools.wraps(func)
     def wrapper(*args: Any, **kwargs: Any) -> Any:
-        logger.info(f"Calling {func.__name__}")
+        # FIXME: Logger name is magic string
+        logger = logging.getLogger("my_logger")
+
+        logger.log(log_level, f"Calling {func.__qualname__}")
         value = func(*args, **kwargs)
-        logger.info(f"Finished calling {func.__name__}")
+        logger.log(log_level, f"Finished calling {func.__qualname__}")
 
         return value
     return wrapper
+
+
