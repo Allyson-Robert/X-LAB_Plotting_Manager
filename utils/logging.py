@@ -1,12 +1,12 @@
 import logging
 import functools
 from typing import Callable, Any
-
+from utils import constants
 
 class MyLogging:
     # FIXME: Logger name is magic string
     def __init__(self):
-        self.logger = logging.getLogger("my_logger")
+        self.logger = logging.getLogger(constants.LOG_NAME)
 
     def log(self, level=10, message=None):
         self.logger.log(level, message)
