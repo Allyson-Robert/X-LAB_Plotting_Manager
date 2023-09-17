@@ -25,4 +25,10 @@ def with_logging(func: Callable[..., Any], log_level: int = 10) -> Callable[...,
         return value
     return wrapper
 
-
+def decorate_abc_with_debug_logging(cls, list_of_methods):
+    for function_to_wrap in list_of_methods:
+        setattr(
+            cls,
+            function_to_wrap,
+            with_logging(cls.__dict__[function_to_wrap], log_level=logging.DEBUG)
+        )
