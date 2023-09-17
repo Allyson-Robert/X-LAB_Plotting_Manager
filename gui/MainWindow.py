@@ -12,6 +12,7 @@ from utils.console_colours import ConsoleColours
 from utils.logging import with_logging
 from utils.get_qwidget_value import get_qwidget_value
 from utils.errors.errors import IncompatibleDeviceTypeFound
+from utils import constants
 
 # Read the JSON config file
 with open('config.json') as f:
@@ -42,11 +43,11 @@ class UiMainWindow(QtWidgets.QMainWindow):
         uic.loadUi("MainWindow.ui", self)
 
         # Create/Get a logger with the desired settings
-        self.logger = logging.getLogger("my_logger")
+        self.logger = logging.getLogger(constants.LOG_NAME)
         self.consoleTextEdit.setFormatter(
             logging.Formatter(
                 "%(asctime)s [%(levelname)8.8s] %(message)s",
-                datefmt='%d/%m/%Y %H.%M.%S: '
+                datefmt=f'{constants.DATETIME_FORMAT}: '
             )
         )
         self.logger.addHandler(self.consoleTextEdit)
@@ -252,8 +253,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
             This can last a long time and will therefore instantiate a QThread to leave the gui responsive.
         """
         # Grab the selected files for plotting
-        fileset_time = datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S")
-        experiment_time = self.fileset.get_experiment_date().strftime("%Y.%m.%d_%H.%M.%S")
+        fileset_time = datetime.datetime.now().strftime(constants.DATETIME_FORMAT)
+        experiment_time = self.fileset.get_experiment_date().strftime(constants.DATETIME_FORMAT)
         selected_fileset = fs.Fileset(fileset_time)
         selected_fileset.set_experiment_date(experiment_time)
 
@@ -362,7 +363,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
     def console_print(self, fstring, level="normal"):
         # Print a message to the gui console
         now = datetime.datetime.now()
-        fstring_to_print = now.strftime("%d/%m/%Y %H.%M.%S: ") + fstring
+        fstring_to_print = now.strftime(f"{constants.DATETIME_FORMAT}: ") + fstring
 
         c = ConsoleColours()
 
@@ -377,7 +378,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Append console contents to the fileset
         console_text = self.consoleTextEdit.toPlainText()
         now = datetime.datetime.now()
-        self.fileset.add_console(now.strftime("%d%m%Y_%H%M%S"), console_text)
+        self.fileset.add_console(now.strftime(constants.DATETIME_FORMAT), console_text)
         self.console_print("Added console contents to set")
         self.autosave()
 
