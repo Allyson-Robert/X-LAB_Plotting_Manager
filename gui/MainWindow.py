@@ -81,6 +81,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.actionCreate_Set.triggered.connect(self.create_data)
         self.actionSave_Set.triggered.connect(self.save_data)
         self.actionLoad_Set.triggered.connect(self.open_data_file)
+        self.actionPreferences.triggered.connect(self.not_implemented)
         self.actionQuit.triggered.connect(self.quit)
 
         self.actionSave_format.triggered.connect(self.not_implemented)

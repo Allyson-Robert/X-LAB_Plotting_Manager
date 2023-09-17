@@ -909,6 +909,8 @@
     <addaction name="actionLoad_Set"/>
     <addaction name="actionSave_Set"/>
     <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -1071,6 +1073,11 @@
     <font>
      <family>Open Sans</family>
     </font>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences</string>
    </property>
   </action>
  </widget>
