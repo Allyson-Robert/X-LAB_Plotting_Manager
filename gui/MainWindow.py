@@ -7,6 +7,7 @@ import logging
 import sys
 import fileset as fs
 import DataCreatorWindow
+import utils
 from utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
 from utils.logging import with_logging
@@ -51,7 +52,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             )
         )
         self.logger.addHandler(self.consoleTextEdit)
-        log_level = getattr(logging, config["log_level"])
+        log_level = getattr(utils.logging, config["log_level"])
         self.logger.setLevel(log_level)
 
         # FEATURE REQUEST: Perhaps pass this logger to an external thing?
