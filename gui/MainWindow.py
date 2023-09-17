@@ -41,7 +41,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.dataWindow = None
         uic.loadUi("MainWindow.ui", self)
 
-        # Create a logger with the desired settings
+        # Create/Get a logger with the desired settings
         self.logger = logging.getLogger("my_logger")
         self.consoleTextEdit.setFormatter(
             logging.Formatter(
@@ -50,11 +50,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
             )
         )
         self.logger.addHandler(self.consoleTextEdit)
-        self.logger.setLevel(logging.DEBUG)
+        log_level = getattr(logging, config["log_level"])
+        self.logger.setLevel(log_level)
 
         # FEATURE REQUEST: Perhaps pass this logger to an external thing?
         # Decorate methods with the with_logging decorator
-        self.load_data = with_logging(self.load_data, self.logger)
+        self.load_data = with_logging(self.load_data)
 
         self.plot_types = {}
         self.devices = {}
@@ -105,6 +106,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Show the app
         self.show()
+        self.console_print("Program Started")
 
     def create_data(self):
         # Run the DataCreatorWindow
