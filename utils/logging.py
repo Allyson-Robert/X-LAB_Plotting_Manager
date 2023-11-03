@@ -10,12 +10,12 @@ DEBUG_PLOTTER = 13
 DEBUG_WORKER = 14
 DEBUG_GUI = 15
 
-class MyLogging:
+class ConsoleLogging:
     # FIXME: Logger name is magic string
     def __init__(self):
         self.logger = logging.getLogger(constants.LOG_NAME)
 
-    def log(self, level=10, message=None):
+    def console_print(self, level=10, message=None):
         self.logger.log(level, message)
 
 
