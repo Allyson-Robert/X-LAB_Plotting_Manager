@@ -19,7 +19,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
 
         # Load the UI,
         # Note that loadUI adds objects to 'self' using objectName
-        uic.loadUi("DataCreatorWindow.ui", self)
+        uic.loadUi("windows/DataCreatorWindow.ui", self)
 
         self.fileset = fs.Fileset(datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S"))
 
