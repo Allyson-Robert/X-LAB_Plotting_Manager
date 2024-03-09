@@ -9,7 +9,6 @@ import fileset as fs
 import utils
 from utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
-from utils.get_qwidget_value import get_qwidget_value
 from utils import constants
 
 from gui.dialogs.generate_about_dialog import generate_about_dialog
@@ -21,6 +20,8 @@ from gui.data.save_data import save_data
 from gui.data.create_data import create_data
 
 from gui.dialogs.dialog_print import dialog_print
+
+from gui.plot_manager import plot_manager
 
 from functools import partial
 
@@ -108,7 +109,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.quitBtn.clicked.connect(self.quit)
 
         # Define stackedWidget widget actions
-        self.plotBtn.clicked.connect(self.plot_manager)
+        self.plotBtn.clicked.connect(partial(plot_manager, self, config))
 
         # Make sure the progress bar is cleared
         self.progressBar.setValue(0)
@@ -175,76 +176,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
         assert isinstance(progress, int)
         assert 0 <= progress <= 100
         self.progressBar.setValue(progress)
-
-    def plot_manager(self):
-        """
-            This can last a long time and will therefore instantiate a QThread to leave the gui responsive.
-        """
-        # Grab the selected files for plotting
-        fileset_time = datetime.datetime.now().strftime(constants.DATETIME_FORMAT)
-        experiment_time = self.fileset.get_experiment_date().strftime(constants.DATETIME_FORMAT)
-        selected_fileset = fs.Fileset(fileset_time)
-        selected_fileset.set_experiment_date(experiment_time)
-
-        for item in self.selectedFilesList.selectedItems():
-            lbl = item.text()
-            path = self.fileset.get_filepath(lbl)
-            selected_fileset.add_filepath(path, lbl)
-            colour = self.fileset.get_colour(lbl)
-            selected_fileset.add_colour(colour, lbl)
-
-        selected_fileset.set_device(self.fileset.get_device())
-        selected_fileset.set_structure_type(self.fileset.get_structure_type())
-        selected_fileset.set_name(self.fileset.get_name())
-
-        # Recursively search for QWidget children with an alias to collect options and get their values
-        options_dict = {}
-        for option in self.stackedWidget.currentWidget().findChildren(QtWidgets.QWidget):
-            alias = option.property("alias")
-            if alias is not None:
-                options_dict[alias] = get_qwidget_value(option)
-        options_dict["presentation"] = get_qwidget_value(self.presentationCheckBox)
-        options_dict["legend_title"] = get_qwidget_value(self.legendTitleLineEdit)
-
-        # Instantiate proper device class and set the data
-        current_device_class = self.fileset.get_device()
-        device_module = getattr(analysis.devices.workers, current_device_class.lower())
-        experiment_cls = getattr(device_module, current_device_class)
-
-        # # Grab the correct plotting function and pass all options to it
-        plot_type = self.plotTypeCombo.currentText()
-        self.console_print(f"Producing {current_device_class}-{plot_type} plot for {self.fileset.get_name()} with options {options_dict}")
-
-        # Create a new thread for the device class to run in
-        self.thread = QtCore.QThread()
-        self.experiment_worker = experiment_cls(current_device_class, selected_fileset, plot_type, options=options_dict)
-        self.experiment_worker.moveToThread(self.thread)
-
-        # Connect signals and slots for the worker thread
-        self.thread.started.connect(self.experiment_worker.run)
-        self.experiment_worker.finished.connect(self.thread.quit)
-        self.experiment_worker.finished.connect(self.experiment_worker.deleteLater)
-        self.thread.finished.connect(self.thread.deleteLater)
-        self.experiment_worker.progress.connect(self.report_progress)
-
-        # Start the thread
-        self.thread.start()
-
-        # FIXME: Final resets
-        # self.longRunningBtn.setEnabled(False)
-        # self.thread.finished.connect(
-        #     lambda: self.longRunningBtn.setEnabled(True)
-        # )
-        # self.thread.finished.connect(
-        #     lambda: self.stepLabel.setText("Long-Running Step: 0")
-        # )
-
-    # def toggle_lbic_profile(self):
-    #     # Allow the profile position to be selected (LBIC specific)
-    #     if self.lbicProfilesCheckBox.isChecked():
-    #         self.lbicProfilesSpinBox.setEnabled(True)
-    #     else:
-    #         self.lbicProfilesSpinBox.setDisabled(True)
 
     def save_to_file(self, plaintext: str):
         file_dialog = QtWidgets.QFileDialog.getSaveFileName(self, "Save File", "", "Text Files (*.txt);;All Files (*)")
