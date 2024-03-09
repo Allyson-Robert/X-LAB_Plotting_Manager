@@ -36,6 +36,9 @@ sys.path.insert(0, analysis_path)
 sys.path.append("../..")
 import analysis.devices
 
+
+# Added a comment
+
 class UiMainWindow(QtWidgets.QMainWindow):
     """
         gui for automated plotting of various types of data.
