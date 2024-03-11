@@ -4,6 +4,7 @@ from PyQt5 import QtWidgets, uic, QtCore, QtGui
 import datetime
 import json
 import logging
+import os
 import sys
 import fileset as fs
 import DataCreatorWindow
@@ -16,7 +17,12 @@ from utils.errors.errors import IncompatibleDeviceTypeFound
 from utils import constants
 
 # Read the JSON config file
-with open('config.json') as f:
+if os.name == "nt":
+    config_file = 'config_win.json'
+else:
+    config_file = 'config_linux.json'
+
+with open(config_file) as f:
     config = json.load(f)
 
 # Get the analysis package path
@@ -26,6 +32,7 @@ analysis_path = config['analysis_path']
 sys.path.insert(0, analysis_path)
 sys.path.append("..")
 import analysis.devices
+
 
 class UiMainWindow(QtWidgets.QMainWindow):
     """
@@ -442,9 +449,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
     def reload_preferences(self):
         # Read the JSON config file
-        with open('config.json') as f:
+        with open('config_linux.json') as f:
             config = json.load(f)
-        self.console_print("Preferences loaded from config.json")
+        self.console_print("Preferences loaded from config_linux.json")
 
     def not_implemented(self):
         """
