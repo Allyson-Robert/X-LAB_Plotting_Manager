@@ -1,0 +1,3 @@
+[submodule "analysis"]
+	path = analysis
+	url = ../X-LAB_Plotting_Manager_Analysis
