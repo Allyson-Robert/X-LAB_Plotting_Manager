@@ -5,3 +5,5 @@
 /gui/jeroen_shit.json
 /gui/tmp.json
 /gui/tmp_smol.json
+*.pyc
+*.pyo
