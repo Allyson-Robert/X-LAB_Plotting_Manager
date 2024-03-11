@@ -1,0 +1,6 @@
+[submodule "analysis"]
+	path = analysis
+	url = https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Analysis
+[submodule "analysis_example"]
+	path = analysis_example
+	url = https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Analysis_Example

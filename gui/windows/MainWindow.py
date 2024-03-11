@@ -5,6 +5,7 @@ import datetime
 import json
 import logging
 import sys
+import os
 import fileset as fs
 import utils
 from utils.get_class_methods import get_class_methods
@@ -26,16 +27,24 @@ from gui.plot_manager import plot_manager
 from functools import partial
 
 # Read the JSON config file
-with open('config.json') as f:
+if os.name == "nt":
+    config_file = 'config_win.json'
+else:
+    config_file = 'config_linux.json'
+
+with open(config_file) as f:
     config = json.load(f)
 
 # Get the analysis package path
 analysis_path = config['analysis_path']
 
-# Add the analysis package path to the system path and import it
-sys.path.insert(0, analysis_path)
-sys.path.append("../..")
-import analysis.devices
+# # Add the analysis package path to the system path and import it
+# sys.path.insert(0, analysis_path)
+# sys.path.append("../..")
+import analysis.devices as devices
+
+
+# Added a comment
 
 class UiMainWindow(QtWidgets.QMainWindow):
     """
@@ -218,6 +227,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Show the about dialog
         about_dialog.exec_()
+
+    def reload_preferences(self):
+        # Read the JSON config file
+        with open(config_file) as f:
+            config = json.load(f)
+        self.console_print("Preferences loaded from config file")
 
     def not_implemented(self):
         """
