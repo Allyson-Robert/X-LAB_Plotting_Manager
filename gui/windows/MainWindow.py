@@ -1,28 +1,31 @@
 # Main.py
 import importlib
-from PyQt5 import QtWidgets, uic, QtCore, QtGui
+from PyQt5 import QtWidgets, uic, QtCore
 import datetime
 import json
 import logging
-import os
 import sys
 import fileset as fs
-import DataCreatorWindow
 import utils
 from utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
-from utils.logging import with_logging
 from utils.get_qwidget_value import get_qwidget_value
-from utils.errors.errors import IncompatibleDeviceTypeFound
 from utils import constants
 
-# Read the JSON config file
-if os.name == "nt":
-    config_file = 'config_win.json'
-else:
-    config_file = 'config_linux.json'
+from gui.dialogs.generate_about_dialog import generate_about_dialog
+from gui.clear.clear_data import clear_data
+from gui.clear.clear_all import clear_all
 
-with open(config_file) as f:
+from gui.data.load_data import open_data_file
+from gui.data.save_data import save_data
+from gui.data.create_data import create_data
+
+from gui.dialogs.dialog_print import dialog_print
+
+from functools import partial
+
+# Read the JSON config file
+with open('config.json') as f:
     config = json.load(f)
 
 # Get the analysis package path
@@ -30,9 +33,11 @@ analysis_path = config['analysis_path']
 
 # Add the analysis package path to the system path and import it
 sys.path.insert(0, analysis_path)
-sys.path.append("..")
+sys.path.append("../..")
 import analysis.devices
 
+
+# Added a comment
 
 class UiMainWindow(QtWidgets.QMainWindow):
     """
@@ -48,7 +53,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Load the UI, Note that loadUI adds objects to 'self' using objectName
         self.dataWindow = None
-        uic.loadUi("MainWindow.ui", self)
+        uic.loadUi("windows/MainWindow.ui", self)
 
         # Create/Get a logger with the desired settings
         self.logger = logging.getLogger(constants.LOG_NAME)
@@ -62,12 +67,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
         log_level = getattr(utils.logging, config["log_level"])
         self.logger.setLevel(log_level)
 
-        # FEATURE REQUEST: Perhaps pass this logger to an external thing?
-        # Decorate methods with the with_logging decorator
-        self.load_data = with_logging(self.load_data)
-
         self.plot_types = {}
         self.devices = {}
+
         # Get list of devices as defined manually in the analysis.devices __init__.py file
         for entry in analysis.devices.__all__:
             # Find and load the widget for any given device and add it to the stackedWidget
@@ -85,10 +87,10 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
 
         # Define menubar actions
-        self.actionCreate_Set.triggered.connect(self.create_data)
-        self.actionSave_Set.triggered.connect(self.save_data)
-        self.actionLoad_Set.triggered.connect(self.open_data_file)
-        self.actionPreferences.triggered.connect(self.reload_preferences)
+        self.actionCreate_Set.triggered.connect(partial(create_data, self))
+        self.actionSave_Set.triggered.connect(partial(save_data, self))
+        self.actionLoad_Set.triggered.connect(partial(open_data_file, self))
+        self.actionPreferences.triggered.connect(self.not_implemented)
         self.actionQuit.triggered.connect(self.quit)
 
         self.actionSave_format.triggered.connect(self.not_implemented)
@@ -104,8 +106,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.addNotesBtn.clicked.connect(self.add_notes)
 
         self.appendBtn.clicked.connect(self.append_console_to_set)
-        self.clearBtn.clicked.connect(self.clear_data)
-        self.clearAllBtn.clicked.connect(self.clear_all)
+        self.clearBtn.clicked.connect(partial(clear_data, self))
+        self.clearAllBtn.clicked.connect(partial(clear_all, self))
         self.quitBtn.clicked.connect(self.quit)
 
         # Define stackedWidget widget actions
@@ -116,25 +118,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Show the app
         self.show()
-        self.console_print(f"Program Started with {[k for k in self.devices.keys()]} experiment types")
-
-    def create_data(self):
-        # Run the DataCreatorWindow
-        self.dataWindow = DataCreatorWindow.UiDataCreatorWindow(devices = [k for k in self.devices])
-        self.dataWindow.show()
-
-        if self.dataWindow.exec() == 1:
-            # If the window was properly closed (Done button) then creation was successful
-            #     Copy data and print to console
-            self.clear_data()
-            self.fileset = self.dataWindow.fileset
-            self.console_print(f"ExperimentDB created")
-            self.load_data()
-            self.update_header()
-            self.save_data()
-        else:
-            # Warn user that window was improperly closed and that no data was created
-            self.console_print("No data was created")
+        self.console_print("Program Started")
 
     def autosave(self):
         file_name = self.fileset_location
@@ -145,68 +129,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
             json.dump(self.fileset, json_file, cls=fs.FilesetJSONEncoder)
         json_file.close()
         return self.console_print(f"Saved data to {file_name}")
-
-    def save_data(self):
-        # Make sure there is data to save
-        if self.fileset is None:
-            return self.console_print("Err: Must first load data", level="warning")
-
-        # Run the file dialog
-        file_name = QtWidgets.QFileDialog.getSaveFileName(self, "Save file to disk")[0]
-        if file_name != "":
-            # Dump the data into a json file and remember the location
-            self.fileset_location = file_name
-            with open(file_name, "w") as json_file:
-                json.dump(self.fileset, json_file, cls=fs.FilesetJSONEncoder)
-            json_file.close()
-
-            return self.console_print(f"Saved data to {file_name}")
-        else:
-            # File dialog was exited without choosing a file
-            return self.console_print(f"No file selected")
-
-    def open_data_file(self):
-
-        # Choose file
-        file_name = QtWidgets.QFileDialog.getOpenFileName(self, "Open Files")[0]
-        if file_name != '':
-            # Reset data
-            self.clear_data()
-            self.consoleTextEdit.clear()
-
-            # Open then load the json file, remember the location and update gui
-            self.fileset_location = file_name
-            with open(file_name) as json_file:
-                self.fileset = json.load(json_file, cls=fs.FilesetJSONDecoder)
-                self.console_print(f"Opened {file_name}")
-            try:
-                self.notesPlainText.setPlainText(self.fileset.get_notes())
-                self.load_data()
-                self.update_header()
-            except IncompatibleDeviceTypeFound:
-                self.clear_data()
-        else:
-            # File not chosen
-            self.console_print(f"Err: No file loaded", level="warning")
-
-    def load_data(self):
-        # Add all top level keys to the selection list of the gui
-        for label in self.fileset.get_labels():
-            self.selectedFilesList.addItem(label)
-
-        # FEATURE REQUEST: Make this a setting
-        # Select all items by default
-        self.selectedFilesList.selectAll()
-
-        # Edit combobox to show all available plot types
-        try:
-            for plot_type in self.plot_types[self.fileset.get_device()]:
-                self.plotTypeCombo.addItem(plot_type)
-        except KeyError:
-            self.console_print(f"Incompatible device type [{self.fileset.get_device()}] found in {self.fileset.get_name()}, select another fileset or implement the device type. Fileset path: N/A")
-            raise IncompatibleDeviceTypeFound
-
-        self.console_print("ExperimentDB loaded")
 
     def display_data(self):
         # Abort if no data was loaded
@@ -220,7 +142,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             separators=(',', ': '),
             cls=fs.FilesetJSONEncoder
         )
-        self.dialog_print(title=f"ExperimentDB RAW: {self.fileset.get_name()}", contents=pretty_json)
+        dialog_print(window=self, title=f"ExperimentDB RAW: {self.fileset.get_name()}", contents=pretty_json)
 
     def display_history(self):
         if self.fileset is None:
@@ -232,7 +154,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             line = f"{v}\n"
             pretty_history += line
 
-        self.dialog_print(title=f"ExperimentDB History: {self.fileset.get_name()}", contents=pretty_history)
+        dialog_print(window=self, title=f"ExperimentDB History: {self.fileset.get_name()}", contents=pretty_history)
 
     def add_notes(self):
         if self.fileset is None:
@@ -327,41 +249,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
     #     else:
     #         self.lbicProfilesSpinBox.setDisabled(True)
 
-    def dialog_print(self, title, contents):
-        # Prepare a text edit widget to host the contents
-        history_text_edit = QtWidgets.QTextEdit(self)
-        history_text_edit.setPlainText(contents)
-
-        # Initialise the window
-        dialog = QtWidgets.QDialog(self)
-        dialog.setWindowTitle(title)
-
-        # Set a default width and minimum height for the dialog
-        dialog.resize(600, 400)
-
-        # Create a QVBoxLayout for the dialog
-        layout = QtWidgets.QVBoxLayout(dialog)
-
-        # Add the QTextEdit widget to the layout
-        layout.addWidget(history_text_edit)
-
-        # Create a QHBoxLayout and host buttons
-        button_layout = QtWidgets.QHBoxLayout()
-        ok_button = QtWidgets.QPushButton("OK")
-        save_button = QtWidgets.QPushButton("SAVE")
-        button_layout.addWidget(ok_button)
-        button_layout.addWidget(save_button)
-
-        # Add the button layout to the main layout
-        layout.addLayout(button_layout)
-
-        # Connect the "OK" button to close the dialog
-        ok_button.clicked.connect(dialog.accept)
-        save_button.clicked.connect(lambda: self.save_to_file(contents))
-
-        # Show the dialog
-        dialog.exec_()
-
     def save_to_file(self, plaintext: str):
         file_dialog = QtWidgets.QFileDialog.getSaveFileName(self, "Save File", "", "Text Files (*.txt);;All Files (*)")
         if file_dialog[0]:  # Check if a file was selected
@@ -391,67 +278,18 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.console_print("Added console contents to set")
         self.autosave()
 
-    def clear_data(self):
-        # Reset fields and properties related to data
-        self.fileset = None
-        self.fileset_location = None
-
-        self.currSetNameLineEdit.clear()
-        self.currDeviceLineEdit.clear()
-        self.notesPlainText.clear()
-        self.console_print("Cleared data from memory")
-
-        self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
-        self.selectedFilesList.clear()
-        self.plotTypeCombo.clear()
-
-    def clear_all(self):
-        # Reset complete gui
-        self.clear_data()
-        self.consoleTextEdit.clear()
-        self.console_print("Cleared memory")
-
     def show_about(self):
         """
             Shows a simple window with licence, authorship and build information
         """
         # Grab the "about" info from about.txt
-        with open("about.txt") as about_file:
+        with open("../about.txt") as about_file:
             about_contents = about_file.read()
 
-        # Create a custom QDialog for the about information
-        about_dialog = QtWidgets.QDialog(self.centralwidget)
-        about_dialog.setWindowTitle("About")
-
-        # Set the fixed size of the dialog
-        about_dialog.setFixedSize(650, 700)  # Adjust the dimensions as needed
-
-        # Load and set the image using QPixmap (make sure the path is correct)
-        pixmap = QtGui.QPixmap(config["logos_path"] + "X_logo_x-lab_baseline_KL.png")
-        pixmap = pixmap.scaled(600, 200, QtCore.Qt.KeepAspectRatio)
-        image_label = QtWidgets.QLabel(about_dialog)
-        image_label.setPixmap(pixmap)
-
-        # Create a QLabel for the text (using HTML formatting)
-        text_label = QtWidgets.QLabel(about_dialog)
-        text_label.setWordWrap(True)
-        text_label.setText(about_contents)
-
-        # Create a QVBoxLayout for the dialog and add the image and text labels
-        layout = QtWidgets.QVBoxLayout(about_dialog)
-        layout.addWidget(image_label)
-        layout.addWidget(text_label)
-
-        about_dialog.setLayout(layout)
+        about_dialog = generate_about_dialog(about_contents, self.centralWidget(), config)
 
         # Show the about dialog
         about_dialog.exec_()
-
-    def reload_preferences(self):
-        # Read the JSON config file
-        with open('config_linux.json') as f:
-            config = json.load(f)
-        self.console_print("Preferences loaded from config_linux.json")
 
     def not_implemented(self):
         """
