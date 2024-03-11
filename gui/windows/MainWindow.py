@@ -5,6 +5,7 @@ import datetime
 import json
 import logging
 import sys
+import os
 import fileset as fs
 import utils
 from utils.get_class_methods import get_class_methods
@@ -25,7 +26,12 @@ from gui.dialogs.dialog_print import dialog_print
 from functools import partial
 
 # Read the JSON config file
-with open('config.json') as f:
+if os.name == "nt":
+    config_file = 'config_win.json'
+else:
+    config_file = 'config_linux.json'
+
+with open(config_file) as f:
     config = json.load(f)
 
 # Get the analysis package path
@@ -290,6 +296,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Show the about dialog
         about_dialog.exec_()
+
+    def reload_preferences(self):
+        # Read the JSON config file
+        with open(config_file) as f:
+            config = json.load(f)
+        self.console_print("Preferences loaded from config file")
 
     def not_implemented(self):
         """
