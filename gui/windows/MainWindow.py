@@ -40,7 +40,7 @@ analysis_path = config['analysis_path']
 # # Add the analysis package path to the system path and import it
 # sys.path.insert(0, analysis_path)
 # sys.path.append("../..")
-import analysis.devices
+import analysis.devices as devices
 
 
 # Added a comment
@@ -76,8 +76,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.plot_types = {}
         self.devices = {}
 
-        # Get list of devices as defined manually in the analysis.devices __init__.py file
-        for entry in analysis.devices.__all__:
+        # Get list of devices as defined manually in the devices __init__.py file
+        for entry in devices.__all__:
             # Find and load the widget for any given device and add it to the stackedWidget
             entry_ui_file = entry.lower() + ".ui"
             entry_widget = uic.loadUi(config["widgets_path"] + entry_ui_file)
@@ -85,7 +85,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             self.devices[entry] = entry_index
 
             # Import the corresponding module and get the class methods to add to the plot_types combobox when needed
-            module = importlib.import_module(f"{analysis.devices.workers.__name__}.{entry.lower()}")
+            module = importlib.import_module(f"{devices.workers.__name__}.{entry.lower()}")
             entry_cls = getattr(module, entry)
             self.plot_types[entry] = get_class_methods(entry_cls, ignore=["run"])
 
@@ -217,7 +217,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Instantiate proper device class and set the data
         current_device_class = self.fileset.get_device()
-        device_module = getattr(analysis.devices.workers, current_device_class.lower())
+        device_module = getattr(devices.workers, current_device_class.lower())
         experiment_cls = getattr(device_module, current_device_class)
 
         # # Grab the correct plotting function and pass all options to it
