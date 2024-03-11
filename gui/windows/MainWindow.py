@@ -37,9 +37,9 @@ with open(config_file) as f:
 # Get the analysis package path
 analysis_path = config['analysis_path']
 
-# Add the analysis package path to the system path and import it
-sys.path.insert(0, analysis_path)
-sys.path.append("../..")
+# # Add the analysis package path to the system path and import it
+# sys.path.insert(0, analysis_path)
+# sys.path.append("../..")
 import analysis.devices
 
 
