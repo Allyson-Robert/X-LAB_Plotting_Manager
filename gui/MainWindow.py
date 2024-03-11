@@ -81,7 +81,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.actionCreate_Set.triggered.connect(self.create_data)
         self.actionSave_Set.triggered.connect(self.save_data)
         self.actionLoad_Set.triggered.connect(self.open_data_file)
-        self.actionPreferences.triggered.connect(self.not_implemented)
+        self.actionPreferences.triggered.connect(self.reload_preferences)
         self.actionQuit.triggered.connect(self.quit)
 
         self.actionSave_format.triggered.connect(self.not_implemented)
@@ -109,7 +109,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Show the app
         self.show()
-        self.console_print("Program Started")
+        self.console_print(f"Program Started with {[k for k in self.devices.keys()]} experiment types")
 
     def create_data(self):
         # Run the DataCreatorWindow
@@ -439,6 +439,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Show the about dialog
         about_dialog.exec_()
+
+    def reload_preferences(self):
+        # Read the JSON config file
+        with open('config.json') as f:
+            config = json.load(f)
+        self.console_print("Preferences loaded from config.json")
 
     def not_implemented(self):
         """
