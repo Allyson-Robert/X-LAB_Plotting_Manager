@@ -4,11 +4,20 @@ from utils import constants
 import datetime
 import fileset as fs
 import json
+import os
 
 # TODO: There has to be a better way
 # Read the JSON config file
-with open('config.json') as f:
+if os.name == "nt":
+    config_file = 'config_win.json'
+else:
+    config_file = 'config_linux.json'
+
+with open(config_file) as f:
     config = json.load(f)
+
+# Get the analysis package path
+analysis_path = config['analysis_path']
 
 # Get the analysis package path
 analysis_path = config['analysis_path']
