@@ -77,8 +77,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.plot_types = {}
         self.devices = {}
 
-        # Get list of devices as defined manually in the analysis.devices __init__.py file
-        for entry in analysis.devices.__all__:
+        # Get list of devices as defined manually in the.devices __init__.py file
+        for entry in devices.__all__:
             # Find and load the widget for any given device and add it to the stackedWidget
             entry_ui_file = entry.lower() + ".ui"
             entry_widget = uic.loadUi(config["widgets_path"] + entry_ui_file)
@@ -86,7 +86,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             self.devices[entry] = entry_index
 
             # Import the corresponding module and get the class methods to add to the plot_types combobox when needed
-            module = importlib.import_module(f"{analysis.devices.workers.__name__}.{entry.lower()}")
+            module = importlib.import_module(f"{devices.workers.__name__}.{entry.lower()}")
             entry_cls = getattr(module, entry)
             self.plot_types[entry] = get_class_methods(entry_cls, ignore=["run"])
 
