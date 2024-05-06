@@ -21,6 +21,26 @@ def get_reverse(input: list) -> list:
     return input[half_len:]
 
 
+def split_forward_reverse(independent: list, dependent: list) -> tuple[list, list, list, list]:
+    """
+    Assuming a behaviour for the independent list in two parts, a monotonic increase followed by a monotonic decrease.
+    Under this assumption the function will split both independent and dependent lists by finding when the first
+    reverses.
+
+    :param independent:
+    :param dependent:
+    :return:
+
+    """
+
+    # Find the index at which the list reverses direction
+    change = np.diff(independent)
+    direction = [np.sign(v) for v in change]
+    reversing_index = direction.index(-1)
+
+    return independent[:reversing_index], independent[reversing_index:], dependent[:reversing_index], dependent[reversing_index:]
+
+
 def trim_iv(voltages: list, currents: list, to_trim: list, isc: float, voc: float) -> list:
     """
         Will return a list that is trimmed based on the IV curve, Voc and Isc.
