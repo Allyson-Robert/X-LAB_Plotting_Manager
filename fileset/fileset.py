@@ -1,6 +1,8 @@
 import os
+from pathlib import Path
 import natsort
 from datetime import datetime
+import warnings
 
 
 class Fileset:
@@ -106,6 +108,45 @@ class Fileset:
             # Add the file to the dataset and update the gui
             self.colours[label] = colour
 
+    def construct_filepaths(self, root_dir) -> str:
+        warnings.warn("New function construct_filepaths_nrecursive not implemented recursively")
+        # TODO: Should depend on experiment type (making structure redundant)?
+        # TODO: Something about the experiment type compatibility here.
+        return self.construct_filepaths_nrecursive(root_dir)
+
+    def construct_filepaths_nrecursive(self, root_dir) -> str:
+        """
+        Will generate a structured file set and add it to the current filepaths. This will seek all files and
+            of the giver root_dir and append all data files to the filepaths attribute. Note that
+            root_dir should be an absolute path.
+        """
+        # TO DO: structure should be removed
+        if self.get_structure_type() != "flat":
+            errors = ""
+            # Checks which files are contained in the root dir
+            items = natsort.natsorted(os.listdir(root_dir))
+            for item in items:
+                # Ignores duplicates
+                if item in self.filepaths.keys():
+                    errors += f"Ignored {item}: duplicate label \n"
+                    continue
+
+                # Only add valid files
+                path = f"{root_dir}/{item}"
+                is_path_valid, error_msg = self._check_valid_path(path)
+                if is_path_valid:
+                    # Use filename as path label
+                    self.add_filepath(path=path, label=Path(path).stem)
+                else:
+                    errors += error_msg
+        else:
+            errors = "Flat fileset cannot use structured construction"
+
+        return errors
+
+    def construct_filepaths_recursive(self, root_dir) -> str:
+        pass
+
 
     def construct_structured_filepaths(self, root_dir: str) -> str:
         """
@@ -113,6 +154,7 @@ class Fileset:
             subdirectories of the giver root_dir and append all data files to the filepaths attribute. Note that
             root_dir should be an absolute path.
         """
+        warnings.warn("Function construct_structured_filepaths is deprecated use construct_filepaths instead", DeprecationWarning)
         if self.get_structure_type() != "flat":
             errors = ""
             items = natsort.natsorted(os.listdir(root_dir))
