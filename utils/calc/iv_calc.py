@@ -36,12 +36,38 @@ def split_forward_reverse(independent: list, dependent: list) -> tuple[list, lis
 
     """
 
-    # Find the index at which the list reverses direction
+    if len(independent) != len(dependent):
+        raise ValueError("Input lists are of unequal length, cannot split forward and reverse")
+
+    # Squash down all detail to detect the reversing index later
     change = np.diff(independent)
     direction = [np.sign(v) for v in change]
-    reversing_index = direction.index(-1)
 
-    return independent[:reversing_index], independent[reversing_index:], dependent[:reversing_index], dependent[reversing_index:]
+    # Check the number of reversions in the independent list
+    num_reversions = sum(1 for i in range(1, len(direction)) if direction[i] != direction[i - 1])
+
+    # Only the case where at most one reversion is detected is allowed, others are not valid
+    if num_reversions > 1:
+        raise ValueError("Independent list is not monotonic, cannot find a revering point")
+
+    # The independent list reverses exactly once
+    elif num_reversions == 1:
+        reversing_index = direction.index(-1) + 1
+        return independent[:reversing_index], independent[reversing_index:], dependent[:reversing_index], dependent[reversing_index:]
+
+    # The independent list does not reverse
+    else:
+        first_element = direction[0]
+        # Independent is monotonically increasing, thus fully forward
+        if first_element == 1:
+            return independent, [], dependent, []
+
+        # Independent is monotonically decreasing, thus fully reverse
+        elif first_element == -1:
+            return [], independent, [], dependent
+
+        else:
+            raise ValueError(f"Unknown ValueError encountered, check lists \n independent:\t{independent}, \n dependent:\t{dependent}")
 
 
 def trim_iv(voltages: list, currents: list, to_trim: list, isc: float, voc: float) -> list:
