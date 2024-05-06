@@ -87,7 +87,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
     def generate_set(self):
         try:
             path = self.browseDirText.toPlainText()
-            errors = self.fileset.construct_structured_filepaths(path)
+            errors = self.fileset.construct_filepaths(path)
 
             # Show the directories/files that were ignored to the user
             if errors != "":
