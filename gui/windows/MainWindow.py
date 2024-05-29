@@ -45,7 +45,6 @@ import analysis.devices as devices
 
 
 # Added a comment
-
 class UiMainWindow(QtWidgets.QMainWindow):
     """
         gui for automated plotting of various types of data.
@@ -94,9 +93,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
 
         # Define menubar actions
-        self.actionCreate_Set.triggered.connect(partial(create_data, self))
-        self.actionSave_Set.triggered.connect(partial(save_data, self))
-        self.actionLoad_Set.triggered.connect(partial(open_data_file, self))
+        self.actionCreate_Set.triggered.connect(partial(create_data, window=self))
+        self.actionSave_Set.triggered.connect(partial(save_data, window=self))
+        self.actionLoad_Set.triggered.connect(partial(open_data_file, window=self))
         self.actionPreferences.triggered.connect(self.not_implemented)
         self.actionQuit.triggered.connect(self.quit)
 
@@ -113,12 +112,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.addNotesBtn.clicked.connect(self.add_notes)
 
         self.appendBtn.clicked.connect(self.append_console_to_set)
-        self.clearBtn.clicked.connect(partial(clear_data, self))
-        self.clearAllBtn.clicked.connect(partial(clear_all, self))
+        self.clearBtn.clicked.connect(partial(clear_data, window=self))
+        self.clearAllBtn.clicked.connect(partial(clear_all, window=self))
         self.quitBtn.clicked.connect(self.quit)
 
         # Define stackedWidget widget actions
-        self.plotBtn.clicked.connect(partial(plot_manager, self, config))
+        self.plotBtn.clicked.connect(partial(plot_manager, window=self, config=config))
 
         # Make sure the progress bar is cleared
         self.progressBar.setValue(0)
