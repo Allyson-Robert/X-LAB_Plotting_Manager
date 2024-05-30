@@ -6,10 +6,15 @@ import json
 import fileset as fs
 
 
-def open_data_file(window: QtWidgets.QMainWindow):
-    # Choose file
-    file_name = QtWidgets.QFileDialog.getOpenFileName(window, "Open Files")[0]
-    if file_name != '':
+def open_data_file(window: QtWidgets.QMainWindow, file_name: str = None):
+    # Choose file if not specified
+    if file_name is None:
+        file_name = QtWidgets.QFileDialog.getOpenFileName(window, "Open Files")[0]
+
+    # Check for empty filename
+    if file_name == '':
+        window.console_print(f"Err: No file specified", level="warning")
+    else:
         # Reset data
         clear_data(window)
         window.consoleTextEdit.clear()
