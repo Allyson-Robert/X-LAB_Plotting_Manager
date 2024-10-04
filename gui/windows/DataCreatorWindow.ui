@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>545</width>
-    <height>639</height>
+    <height>753</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,7 +49,7 @@
          <x>10</x>
          <y>10</y>
          <width>501</width>
-         <height>62</height>
+         <height>63</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -195,7 +195,7 @@
         <enum>QTabWidget::Triangular</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="documentMode">
         <bool>false</bool>
@@ -361,7 +361,7 @@
            <height>201</height>
           </rect>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0">
+         <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,0">
           <item>
            <widget class="QLabel" name="instruction_2">
             <property name="font">
@@ -371,7 +371,7 @@
              </font>
             </property>
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Browse for the correct directory. All files within the directory will be used to create a new dataset. Labels for legends will be automatically generated.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Files in the chosen directory will be used to create a dataset. Select structured if desired. Labels will be auto-generated.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -393,6 +393,27 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QRadioButton" name="flatRadioBtn">
+              <property name="text">
+               <string>Flat</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="structRadioBtn">
+              <property name="text">
+               <string>Structured</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
