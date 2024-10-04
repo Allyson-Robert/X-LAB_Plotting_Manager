@@ -1,6 +1,6 @@
 {
   "analysis_path": "/home/allyson/PycharmProjects/X-LAB_Plotting_Manager_Analysis_Example",
-  "widgets_path": "/home/allyson/PycharmProjects/X-LAB_Plotting_Manager_Analysis_Example/analysis/devices/widgets/",
+  "devices_path": "/home/allyson/PycharmProjects/X-LAB_Plotting_Manager_Analysis_Example/analysis/devices/",
   "logos_path": "/home/allyson/PycharmProjects/X-LAB_Plotting_Manager_GUI/gui/logos/",
   "log_level":"INFO"
 }
