@@ -81,9 +81,16 @@ class UiMainWindow(QtWidgets.QMainWindow):
         for entry in devices.__all__:
             # Find and load the widget for any given device and add it to the stackedWidget
             entry_ui_file = entry.lower() + ".ui"
-            entry_widget = uic.loadUi(config["widgets_path"] + entry_ui_file)
+            entry_widget = uic.loadUi(config["devices_path"] + "widgets\\" + entry_ui_file)
             entry_index = self.stackedWidget.addWidget(entry_widget)
             self.devices[entry] = entry_index
+
+            # Load any functionality if needed
+            entry_functionality_file = config["devices_path"] + "functionality/" + entry.lower() + ".py"
+            if os.path.exists(entry_functionality_file):
+                functionality = importlib.import_module(f"{devices.functionality.__name__}.{entry.lower()}")
+                entry_functionality = getattr(functionality, entry)
+                entry_functionality(entry_widget)
 
             # Import the corresponding module and get the class methods to add to the plot_types combobox when needed
             module = importlib.import_module(f"{devices.workers.__name__}.{entry.lower()}")
