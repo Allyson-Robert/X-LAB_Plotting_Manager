@@ -16,3 +16,4 @@ class ObservableNotComputableError(ValueError):
 
 class IncompatibleDeviceTypeFound(KeyError):
     pass
+

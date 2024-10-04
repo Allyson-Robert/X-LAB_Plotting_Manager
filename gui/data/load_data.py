@@ -3,6 +3,7 @@ from utils.errors.errors import IncompatibleDeviceTypeFound
 from gui.clear.clear_data import clear_data
 from utils.logging import with_logging
 import json
+import os
 import fileset as fs
 
 
@@ -20,7 +21,7 @@ def open_data_file(window: QtWidgets.QMainWindow, file_name: str = None):
         window.consoleTextEdit.clear()
 
         # Open then load the json file, remember the location and update gui
-        window.fileset_location = file_name
+        # window.fileset_location = file_name
         with open(file_name) as json_file:
             window.fileset = json.load(json_file, cls=fs.FilesetJSONDecoder)
             window.console_print(f"Opened {file_name}")
@@ -28,11 +29,11 @@ def open_data_file(window: QtWidgets.QMainWindow, file_name: str = None):
             window.notesPlainText.setPlainText(window.fileset.get_notes())
             load_data(window)
             window.update_header()
+
+        # Clear the data if loading failed
         except IncompatibleDeviceTypeFound:
             clear_data(window)
-    else:
-        # File not chosen
-        window.console_print(f"Err: No file loaded", level="warning")
+            window.console_print(f"Err: Loading failed", level="warning")
 
 
 @with_logging

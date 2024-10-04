@@ -28,6 +28,7 @@ sys.path.insert(0, analysis_path)
 sys.path.append("../..")
 import analysis.devices
 
+
 def plot_manager(window, config):
     """
         This can last a long time and will therefore instantiate a QThread to leave the gui responsive.

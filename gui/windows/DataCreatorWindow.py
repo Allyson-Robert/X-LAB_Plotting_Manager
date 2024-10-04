@@ -9,6 +9,7 @@ import sys
 # FEATURE REQUEST: Switch over to databases for filesets
 # FEATURE REQUEST: Allow customisation of the GUI for specific types of data
 
+
 class UiDataCreatorWindow(QtWidgets.QDialog):
     """"
         gui for creation of various datasets, either manual or automated.
