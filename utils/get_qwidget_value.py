@@ -7,13 +7,13 @@ def get_qwidget_value(widget):
     """
     assert isinstance(widget, QtWidgets.QWidget)
 
-    if isinstance(widget, QtWidgets.QSpinBox):
-        return widget.value()
-    elif isinstance(widget, QtWidgets.QDoubleSpinBox):
+    if isinstance(widget, QtWidgets.QDoubleSpinBox) or isinstance(widget, QtWidgets.QSpinBox):
         return widget.value()
     elif isinstance(widget, QtWidgets.QCheckBox):
         return widget.isChecked()
     elif isinstance(widget, QtWidgets.QLineEdit):
         return widget.text()
+    elif isinstance(widget, QtWidgets.QComboBox):
+        return widget.currentText()
     else:
         raise NotImplementedError
