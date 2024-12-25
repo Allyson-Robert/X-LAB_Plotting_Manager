@@ -55,4 +55,4 @@ def load_data(window: QtWidgets.QMainWindow):
             f"Incompatible device type [{window.dataspec.get_device()}] found in {window.dataspec.get_name()}, select another dataspec or implement the device type. DataSpec path: N/A")
         raise IncompatibleDeviceTypeFound
 
-    window.console_print("ExperimentDB loaded")
+    window.console_print("DataSpec loaded")
