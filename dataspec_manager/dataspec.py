@@ -5,7 +5,7 @@ from datetime import datetime
 import warnings
 
 
-class Fileset:
+class DataSpec:
     """
     This class collects paths to files containing relevant data. The exact contents of the files does not matter as
     only the locations are relevant for this class.
@@ -18,7 +18,8 @@ class Fileset:
 
     def __init__(self, creation_date: str):
         assert isinstance(creation_date, str)
-        # FEATURE REQUEST: Fileset should be aware of its own location
+        # FEATURE REQUEST: DataSpec file should be aware of its own location
+        # Re: Why?
         self.name = ""
         self.creation_date = datetime.strptime(creation_date, "%Y.%m.%d_%H.%M.%S")
         self.experiment_date_time = None
@@ -90,7 +91,7 @@ class Fileset:
         if self.get_structure_type() != 'structured':
             # Checks for duplicate label
             if label in self.filepaths.keys():
-                return "Duplicate label found in fileset"
+                return "Duplicate label found in dataspec_manager"
             else:
                 # Add the file to the dataset and update the gui
                 self.filepaths[label] = path
@@ -140,7 +141,7 @@ class Fileset:
                 else:
                     errors += error_msg
         else:
-            errors = "Flat fileset cannot use structured construction"
+            errors = "Flat dataspec_manager cannot use structured construction"
 
         return errors
 
@@ -176,7 +177,7 @@ class Fileset:
                         else:
                             errors += error_msg
         else:
-            errors = "Flat fileset cannot use structured construction"
+            errors = "Flat dataspec_manager cannot use structured construction"
 
         return errors
 
@@ -207,7 +208,7 @@ class Fileset:
         assert isinstance(colours, dict)
         self.colours = colours
 
-    # Checks are needed before paths are added to the fileset
+    # Checks are needed before paths are added to the dataspec_manager
     def _check_valid_path(self, path: str):
         assert isinstance(path, str)
         # Checks whether the path exists and points to a file

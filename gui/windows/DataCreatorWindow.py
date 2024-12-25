@@ -1,6 +1,6 @@
 # Main.py
 from PyQt5 import QtWidgets, uic
-import fileset as fs
+import dataspec_manager
 import datetime
 import json
 import sys
@@ -22,7 +22,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         # Note that loadUI adds objects to 'self' using objectName
         uic.loadUi("windows/DataCreatorWindow.ui", self)
 
-        self.fileset = fs.Fileset(datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S"))
+        self.fileset = dataspec_manager.DataSpec(datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S"))
 
         # Add the correct devices to the experiment combo box
         self.dataTypeCombo.addItems(devices)

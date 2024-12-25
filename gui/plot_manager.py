@@ -2,7 +2,7 @@ from PyQt5 import QtWidgets, QtCore
 from utils.get_qwidget_value import get_qwidget_value
 from utils import constants
 import datetime
-import fileset as fs
+import dataspec_manager
 import json
 import os
 
@@ -36,20 +36,20 @@ def plot_manager(window, config):
 
     # Grab the selected files for plotting
     fileset_time = datetime.datetime.now().strftime(constants.DATETIME_FORMAT)
-    experiment_time = window.fileset.get_experiment_date().strftime(constants.DATETIME_FORMAT)
-    selected_fileset = fs.Fileset(fileset_time)
+    experiment_time = window.dataspec.get_experiment_date().strftime(constants.DATETIME_FORMAT)
+    selected_fileset = dataspec_manager.DataSpec(fileset_time)
     selected_fileset.set_experiment_date(experiment_time)
 
     for item in window.selectedFilesList.selectedItems():
         lbl = item.text()
-        path = window.fileset.get_filepath(lbl)
+        path = window.dataspec.get_filepath(lbl)
         selected_fileset.add_filepath(path, lbl)
-        colour = window.fileset.get_colour(lbl)
+        colour = window.dataspec.get_colour(lbl)
         selected_fileset.add_colour(colour, lbl)
 
-    selected_fileset.set_device(window.fileset.get_device())
-    selected_fileset.set_structure_type(window.fileset.get_structure_type())
-    selected_fileset.set_name(window.fileset.get_name())
+    selected_fileset.set_device(window.dataspec.get_device())
+    selected_fileset.set_structure_type(window.dataspec.get_structure_type())
+    selected_fileset.set_name(window.dataspec.get_name())
 
     # Recursively search for QWidget children with an alias to collect options and get their values
     options_dict = {}
@@ -61,14 +61,14 @@ def plot_manager(window, config):
     options_dict["legend_title"] = get_qwidget_value(window.legendTitleLineEdit)
 
     # Instantiate proper device class and set the data
-    current_device_class = window.fileset.get_device()
+    current_device_class = window.dataspec.get_device()
     device_module = getattr(analysis.devices.workers, current_device_class.lower())
     experiment_cls = getattr(device_module, current_device_class)
 
     # # Grab the correct plotting function and pass all options to it
     plot_type = window.plotTypeCombo.currentText()
     window.console_print(
-        f"Producing {current_device_class}-{plot_type} plot for {window.fileset.get_name()} with options {options_dict}")
+        f"Producing {current_device_class}-{plot_type} plot for {window.dataspec.get_name()} with options {options_dict}")
 
     # Create a new thread for the device class to run in
     window.thread = QtCore.QThread()

@@ -6,7 +6,7 @@ import json
 import logging
 import sys
 import os
-import fileset as fs
+import dataspec_manager
 import utils
 from utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
@@ -55,8 +55,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         self.thread = None
         self.experiment_worker = None
-        self.fileset = None
-        self.fileset_location = None
+        self.dataspec = None
+        # FEATURE REQUEST: Dataspec file location is def'ed here
+        self.dataspec_location = None
 
         # Load the UI, Note that loadUI adds objects to 'self' using objectName
         self.dataWindow = None
@@ -140,57 +141,57 @@ class UiMainWindow(QtWidgets.QMainWindow):
             open_data_file(self, demo_file_name)
 
     def autosave(self):
-        file_name = self.fileset_location
+        file_name = self.dataspec_location
         if file_name is None:
             return self.console_print("Cannot autosave, no file location known. Open or create dataset first")
 
         with open(file_name, "w") as json_file:
-            json.dump(self.fileset, json_file, cls=fs.FilesetJSONEncoder)
+            json.dump(self.dataspec, json_file, cls=dataspec_manager.DataSpecJSONEncoder)
         json_file.close()
         return self.console_print(f"Saved data to {file_name}")
 
     def display_data(self):
         # Abort if no data was loaded
-        if self.fileset is None:
+        if self.dataspec is None:
             return self.console_print("Err: Must first load data", level="warning")
 
         # Pretty print the data in a simple dialog
         pretty_json = json.dumps(
-            self.fileset,
+            self.dataspec,
             indent=4,
             separators=(',', ': '),
-            cls=fs.FilesetJSONEncoder
+            cls=dataspec_manager.DataSpecJSONEncoder
         )
-        dialog_print(window=self, title=f"ExperimentDB RAW: {self.fileset.get_name()}", contents=pretty_json)
+        dialog_print(window=self, title=f"ExperimentDB RAW: {self.dataspec.get_name()}", contents=pretty_json)
 
     def display_history(self):
-        if self.fileset is None:
+        if self.dataspec is None:
             return self.console_print("Err: Must first load data", level="warning")
 
         # Prints only the console history to a simple dialog
         pretty_history = ""
-        for k, v in sorted(self.fileset.get_console().items()):
+        for k, v in sorted(self.dataspec.get_console().items()):
             line = f"{v}\n"
             pretty_history += line
 
-        dialog_print(window=self, title=f"ExperimentDB History: {self.fileset.get_name()}", contents=pretty_history)
+        dialog_print(window=self, title=f"ExperimentDB History: {self.dataspec.get_name()}", contents=pretty_history)
 
     def add_notes(self):
-        if self.fileset is None:
+        if self.dataspec is None:
             return self.console_print("Err: Must first load data", level="warning")
 
-        # Add any notes to the fileset
-        self.fileset.add_notes(self.notesPlainText.toPlainText())
-        self.console_print("Notes added to fileset")
+        # Add any notes to the dataspec_manager
+        self.dataspec.add_notes(self.notesPlainText.toPlainText())
+        self.console_print("Notes added to dataspec_manager")
         self.autosave()
 
     def update_header(self):
         # Header should reflect opened data
-        self.currSetNameLineEdit.setText(self.fileset.get_name())
-        self.currDeviceLineEdit.setText(self.fileset.get_device())
+        self.currSetNameLineEdit.setText(self.dataspec.get_name())
+        self.currDeviceLineEdit.setText(self.dataspec.get_device())
 
         # Stacked widget should show the correct widget for the opened data
-        new_page = self.stackedWidget.widget(self.devices[self.fileset.get_device()])
+        new_page = self.stackedWidget.widget(self.devices[self.dataspec.get_device()])
         self.stackedWidget.setCurrentWidget(new_page)
 
     def report_progress(self, progress: int):
@@ -217,13 +218,13 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.consoleTextEdit.setTextColor(c.get_colour("normal"))
 
     def append_console_to_set(self):
-        if self.fileset is None:
+        if self.dataspec is None:
             return self.console_print("Err: Must first load data", level="warning")
 
-        # Append console contents to the fileset
+        # Append console contents to the dataspec_manager
         console_text = self.consoleTextEdit.toPlainText()
         now = datetime.datetime.now()
-        self.fileset.add_console(now.strftime(constants.DATETIME_FORMAT), console_text)
+        self.dataspec.add_console(now.strftime(constants.DATETIME_FORMAT), console_text)
         self.console_print("Added console contents to set")
         self.autosave()
 

@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets
 import json
-import fileset as fs
+import dataspec_manager as fs
 
 
 def save_data(window: QtWidgets.QMainWindow):
@@ -14,7 +14,7 @@ def save_data(window: QtWidgets.QMainWindow):
         # Dump the data into a json file and remember the location
         window.fileset_location = file_name
         with open(file_name, "w") as json_file:
-            json.dump(window.fileset, json_file, cls=fs.FilesetJSONEncoder)
+            json.dump(window.fileset, json_file, cls=fs.DataSpecJSONEncoder)
         json_file.close()
 
         return window.console_print(f"Saved data to {file_name}")

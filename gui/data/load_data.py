@@ -4,7 +4,7 @@ from gui.clear.clear_data import clear_data
 from utils.logging import with_logging
 import json
 import os
-import fileset as fs
+import dataspec_manager
 
 
 def open_data_file(window: QtWidgets.QMainWindow, file_name: str = None):
@@ -23,7 +23,7 @@ def open_data_file(window: QtWidgets.QMainWindow, file_name: str = None):
         # Open then load the json file, remember the location and update gui
         # window.fileset_location = file_name
         with open(file_name) as json_file:
-            window.fileset = json.load(json_file, cls=fs.FilesetJSONDecoder)
+            window.fileset = json.load(json_file, cls=dataspec_manager.DataSpecJSONDecoder)
             window.console_print(f"Opened {file_name}")
         try:
             window.notesPlainText.setPlainText(window.fileset.get_notes())
