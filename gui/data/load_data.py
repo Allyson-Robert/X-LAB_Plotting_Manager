@@ -23,10 +23,10 @@ def open_data_file(window: QtWidgets.QMainWindow, file_name: str = None):
         # Open then load the json file, remember the location and update gui
         # window.fileset_location = file_name
         with open(file_name) as json_file:
-            window.fileset = json.load(json_file, cls=dataspec_manager.DataSpecJSONDecoder)
+            window.dataspec = json.load(json_file, cls=dataspec_manager.DataSpecJSONDecoder)
             window.console_print(f"Opened {file_name}")
         try:
-            window.notesPlainText.setPlainText(window.fileset.get_notes())
+            window.notesPlainText.setPlainText(window.dataspec.get_notes())
             load_data(window)
             window.update_header()
 
@@ -39,7 +39,7 @@ def open_data_file(window: QtWidgets.QMainWindow, file_name: str = None):
 @with_logging
 def load_data(window: QtWidgets.QMainWindow):
     # Add all top level keys to the selection list of the gui
-    for label in window.fileset.get_labels():
+    for label in window.dataspec.get_labels():
         window.selectedFilesList.addItem(label)
 
     # FEATURE REQUEST: Make this a setting
@@ -48,11 +48,11 @@ def load_data(window: QtWidgets.QMainWindow):
 
     # Edit combobox to show all available plot types
     try:
-        for plot_type in window.plot_types[window.fileset.get_device()]:
+        for plot_type in window.plot_types[window.dataspec.get_device()]:
             window.plotTypeCombo.addItem(plot_type)
     except KeyError:
         window.console_print(
-            f"Incompatible device type [{window.fileset.get_device()}] found in {window.fileset.get_name()}, select another fileset or implement the device type. Fileset path: N/A")
+            f"Incompatible device type [{window.dataspec.get_device()}] found in {window.dataspec.get_name()}, select another dataspec or implement the device type. DataSpec path: N/A")
         raise IncompatibleDeviceTypeFound
 
     window.console_print("ExperimentDB loaded")
