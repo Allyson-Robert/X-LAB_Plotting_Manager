@@ -81,7 +81,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         for entry in devices.__all__:
             # Find and load the widget for any given device and add it to the stackedWidget
             entry_ui_file = entry.lower() + ".ui"
-            entry_widget = uic.loadUi(config["devices_path"] + "widgets\\" + entry_ui_file)
+            entry_widget = uic.loadUi(config["devices_path"] + "widgets/" + entry_ui_file)
             entry_index = self.stackedWidget.addWidget(entry_widget)
             self.devices[entry] = entry_index
 
