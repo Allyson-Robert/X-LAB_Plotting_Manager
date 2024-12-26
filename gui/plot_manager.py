@@ -28,28 +28,34 @@ sys.path.insert(0, analysis_path)
 sys.path.append("../..")
 import analysis.devices
 
-
+# This plot manager
+#     collects the filenames
+#     builds a custom dataspec for plotting by copying from main window
+#     collects the options
+#     instantiates Class by importing module and class
+#     grab plot_function
+#     creates, connects and starts a worker thread
 def plot_manager(window, config):
     """
         This can last a long time and will therefore instantiate a QThread to leave the gui responsive.
     """
 
-    # Grab the selected files for plotting
-    fileset_time = datetime.datetime.now().strftime(constants.DATETIME_FORMAT)
+    # Grab the selected files for plotting and build a reduced dataspec
+    dataspec_time = datetime.datetime.now().strftime(constants.DATETIME_FORMAT)
     experiment_time = window.dataspec.get_experiment_date().strftime(constants.DATETIME_FORMAT)
-    selected_fileset = dataspec_manager.DataSpec(fileset_time)
-    selected_fileset.set_experiment_date(experiment_time)
+    dataspec_selection = dataspec_manager.DataSpec(dataspec_time)
+    dataspec_selection.set_experiment_date(experiment_time)
 
     for item in window.selectedFilesList.selectedItems():
         lbl = item.text()
         path = window.dataspec.get_filepath(lbl)
-        selected_fileset.add_filepath(path, lbl)
+        dataspec_selection.add_filepath(path, lbl)
         colour = window.dataspec.get_colour(lbl)
-        selected_fileset.add_colour(colour, lbl)
+        dataspec_selection.add_colour(colour, lbl)
 
-    selected_fileset.set_device(window.dataspec.get_device())
-    selected_fileset.set_structure_type(window.dataspec.get_structure_type())
-    selected_fileset.set_name(window.dataspec.get_name())
+    dataspec_selection.set_device(window.dataspec.get_device())
+    dataspec_selection.set_structure_type(window.dataspec.get_structure_type())
+    dataspec_selection.set_name(window.dataspec.get_name())
 
     # Recursively search for QWidget children with an alias to collect options and get their values
     options_dict = {}
@@ -66,13 +72,13 @@ def plot_manager(window, config):
     experiment_cls = getattr(device_module, current_device_class)
 
     # # Grab the correct plotting function and pass all options to it
-    plot_type = window.plotTypeCombo.currentText()
+    plot_function = window.plotTypeCombo.currentText()
     window.console_print(
-        f"Producing {current_device_class}-{plot_type} plot for {window.dataspec.get_name()} with options {options_dict}")
+        f"Producing {current_device_class}-{plot_function} plot for {window.dataspec.get_name()} with options {options_dict}")
 
     # Create a new thread for the device class to run in
     window.thread = QtCore.QThread()
-    window.experiment_worker = experiment_cls(current_device_class, selected_fileset, plot_type, options=options_dict)
+    window.experiment_worker = experiment_cls(current_device_class, dataspec_selection, plot_function, options=options_dict)
     window.experiment_worker.moveToThread(window.thread)
 
     # Connect signals and slots for the worker thread
