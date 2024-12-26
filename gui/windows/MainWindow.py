@@ -93,7 +93,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
                 entry_functionality = getattr(functionality, entry)
                 entry_functionality(entry_widget)
 
-            # Import the corresponding module and get the class methods to add to the plot_functions combobox when needed
+            # Import the corresponding module and get the class methods to set the plot_functions combobox when needed
             module = importlib.import_module(f"{devices.workers.__name__}.{entry.lower()}")
             entry_cls = getattr(module, entry)
             self.plot_functions = get_class_methods(entry_cls, ignore=["run"])
