@@ -45,7 +45,11 @@ class DataSpec:
         self.device = device
 
     def set_structure_type(self, desired_type: str):
-        assert desired_type in self._allowed_structure_types
+        try:
+            assert desired_type in self._allowed_structure_types
+        except AssertionError:
+            raise ValueError
+
         if self.structure_type is None:
             self.structure_type = desired_type
 
@@ -102,7 +106,7 @@ class DataSpec:
         return errors
 
     def construct_filepaths_recursive(self, root_dir) -> str:
-        pass
+        raise NotImplementedError
 
     def construct_structured_filepaths(self, root_dir: str) -> str:
         """
@@ -143,13 +147,13 @@ class DataSpec:
     def get_filepaths(self) -> dict:
         return self.filepaths
 
-    def get_colour(self, label: str) -> str:
-        if label in self.colours.keys():
-            return self.colours[label]
-        return None
-
     def get_experiment_date(self):
         return self.experiment_date_time
+
+    def get_single_colour(self, label: str) -> str:
+        if label in self.colours.keys():
+            return self.colours[label]
+        raise KeyError("Colour not defined")
 
     def get_colours(self) -> dict:
         if len(self.colours) == 0:
@@ -189,6 +193,11 @@ class DataSpec:
 
     # Path management
     def add_filepath(self, path: str, label: str):
+        # Check path before adding:
+        is_path_valid, error_msg = self._check_valid_path(path=path)
+        if not is_path_valid:
+            return "Will not add file with disallowed extension"
+
         if self.get_structure_type() != 'structured':
             # Checks for duplicate label
             if label in self.filepaths.keys():
