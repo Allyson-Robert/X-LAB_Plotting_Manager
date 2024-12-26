@@ -48,8 +48,9 @@ def load_data(window: QtWidgets.QMainWindow):
 
     # Edit combobox to show all available plot types
     try:
-        for plot_type in window.plot_types[window.dataspec.get_device()]:
-            window.plotTypeCombo.addItem(plot_type)
+        for function in window.get_all_plot_functions():
+            window.plotTypeCombo.addItem(function)
+
     except KeyError:
         window.console_print(
             f"Incompatible device type [{window.dataspec.get_device()}] found in {window.dataspec.get_name()}, select another dataspec or implement the device type. DataSpec path: N/A")

@@ -72,7 +72,7 @@ def plot_manager(window, config):
     experiment_cls = getattr(device_module, current_device_class)
 
     # # Grab the correct plotting function and pass all options to it
-    plot_function = window.plotTypeCombo.currentText()
+    plot_function = window.get_current_plot_function()
     window.console_print(
         f"Producing {current_device_class}-{plot_function} plot for {window.dataspec.get_name()} with options {options_dict}")
 
