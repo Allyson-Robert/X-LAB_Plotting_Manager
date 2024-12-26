@@ -31,83 +31,39 @@ class DataSpec:
         self.filepaths = {}
         self.colours = {}
 
-    def get_name(self) -> str:
-        return self.name
-
+    # Setters
     def set_name(self, name: str):
         assert isinstance(name, str)
         self.name = name
-
-    def get_creation_date(self) -> datetime:
-        return self.creation_date
 
     def set_experiment_date(self, experiment_date_time: str):
         assert isinstance(experiment_date_time, str)
         self.experiment_date_time = datetime.strptime(experiment_date_time, "%Y.%m.%d_%H.%M.%S")
 
-    def get_experiment_date(self) -> datetime:
-        return self.experiment_date_time
-
-    def get_device(self) -> str:
-        return self.device
-
     def set_device(self, device: str):
         assert isinstance(device, str)
         self.device = device
-
-    def get_structure_type(self) -> str:
-        return self.structure_type
 
     def set_structure_type(self, desired_type: str):
         assert desired_type in self._allowed_structure_types
         if self.structure_type is None:
             self.structure_type = desired_type
 
-    def add_notes(self, additional_notes: str):
-        assert isinstance(additional_notes, str)
-        self.notes += additional_notes
-
     def set_notes(self, notes_content: str):
         assert isinstance(notes_content, str)
         self.notes = notes_content
-
-    def get_notes(self) -> str:
-        return self.notes
-
-    def add_console(self, date_and_time: str, additional_console: str):
-        assert isinstance(date_and_time, str)
-        assert isinstance(additional_console, str)
-        self.console[date_and_time] = additional_console
 
     def set_console(self, console_content: dict):
         assert isinstance(console_content, dict)
         self.console = console_content
 
-    def get_console(self) -> dict:
-        return self.console
+    def set_filepaths(self, filepaths: dict):
+        assert isinstance(filepaths, dict)
+        self.filepaths = filepaths
 
-    # Path management
-    def add_filepath(self, path: str, label: str):
-        if self.get_structure_type() != 'structured':
-            # Checks for duplicate label
-            if label in self.filepaths.keys():
-                return "Duplicate label found in dataspec_manager"
-            else:
-                # Add the file to the dataset and update the gui
-                self.filepaths[label] = path
-        else:
-            return "Constructed structure cannot be appended manually"
-
-        return ""
-
-    def add_colour(self, colour: str, label: str):
-        # No need to check for structured, will be depracated
-        # Checks for duplicate label
-        if label in self.colours.keys():
-            return "Duplicate label found in colours"
-        else:
-            # Add the file to the dataset and update the gui
-            self.colours[label] = colour
+    def set_colours(self, colours: dict):
+        assert isinstance(colours, dict)
+        self.colours = colours
 
     def construct_filepaths(self, root_dir) -> str:
         warnings.warn("New function construct_filepaths_nrecursive not implemented recursively")
@@ -148,7 +104,6 @@ class DataSpec:
     def construct_filepaths_recursive(self, root_dir) -> str:
         pass
 
-
     def construct_structured_filepaths(self, root_dir: str) -> str:
         """
         Will generate a structured file set and add it to the current filepaths. This will seek all files and
@@ -181,6 +136,7 @@ class DataSpec:
 
         return errors
 
+    # Getters
     def get_filepath(self, label: str) -> str:
         return self.filepaths[label]
 
@@ -192,6 +148,9 @@ class DataSpec:
             return self.colours[label]
         return None
 
+    def get_experiment_date(self):
+        return self.experiment_date_time
+
     def get_colours(self) -> dict:
         if len(self.colours) == 0:
             return None
@@ -200,13 +159,56 @@ class DataSpec:
     def get_labels(self):
         return self.filepaths.keys()
 
-    def set_filepaths(self, filepaths: dict):
-        assert isinstance(filepaths, dict)
-        self.filepaths = filepaths
+    def get_console(self) -> dict:
+        return self.console
 
-    def set_colours(self, colours: dict):
-        assert isinstance(colours, dict)
-        self.colours = colours
+    def get_notes(self) -> str:
+        return self.notes
+
+    def get_structure_type(self) -> str:
+        return self.structure_type
+
+    def get_device(self) -> str:
+        return self.device
+
+    def get_creation_date(self) -> datetime:
+        return self.creation_date
+
+    def get_name(self) -> str:
+        return self.name
+
+    # Adding / Appending
+    def add_notes(self, additional_notes: str):
+        assert isinstance(additional_notes, str)
+        self.notes += additional_notes
+
+    def add_console(self, date_and_time: str, additional_console: str):
+        assert isinstance(date_and_time, str)
+        assert isinstance(additional_console, str)
+        self.console[date_and_time] = additional_console
+
+    # Path management
+    def add_filepath(self, path: str, label: str):
+        if self.get_structure_type() != 'structured':
+            # Checks for duplicate label
+            if label in self.filepaths.keys():
+                return "Duplicate label found in dataspec_manager"
+            else:
+                # Add the file to the dataset and update the gui
+                self.filepaths[label] = path
+        else:
+            return "Constructed structure cannot be appended manually"
+
+        return ""
+
+    def add_colour(self, colour: str, label: str):
+        # No need to check for structured, will be depracated
+        # Checks for duplicate label
+        if label in self.colours.keys():
+            return "Duplicate label found in colours"
+        else:
+            # Add the file to the dataset and update the gui
+            self.colours[label] = colour
 
     # Checks are needed before paths are added to the dataspec_manager
     def _check_valid_path(self, path: str):
