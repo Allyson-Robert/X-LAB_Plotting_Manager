@@ -74,7 +74,7 @@ def plot_manager(window, config):
     # # Grab the correct plotting function and pass all options to it
     plot_function = window.get_current_plot_function()
     window.console_print(
-        f"Producing {current_device_class}-{plot_function} plot for {window.dataspec.get_name()} with options {options_dict}")
+        f"Producing {current_device_class}-{plot_function} plot for {window.get_dataspec_name()} with options {options_dict}")
 
     # Create a new thread for the device class to run in
     window.thread = QtCore.QThread()

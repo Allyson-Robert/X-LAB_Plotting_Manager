@@ -147,6 +147,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
     def get_current_plot_function(self) -> str:
         return self.plotTypeCombo.currentText()
 
+    def get_current_device(self) -> str:
+        return self.dataspec.get_device()
+
+    def get_dataspec_name(self) -> str:
+        return self.dataspec.get_name()
+
     # FUNCTIONALITY
     def autosave(self):
         file_name = self.dataspec_location
