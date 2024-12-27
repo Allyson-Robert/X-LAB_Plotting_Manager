@@ -5,6 +5,7 @@ import datetime
 import dataspec_manager
 import json
 import os
+from analysis.plotters.plotter_options import PlotterOptions
 
 # TODO: There has to be a better way
 # Read the JSON config file
@@ -58,13 +59,14 @@ def plot_manager(window, config):
     dataspec_selection.set_name(window.dataspec.get_name())
 
     # Recursively search for QWidget children with an alias to collect options and get their values
-    options_dict = {}
+    # TODO: Options should be a class whose instance can be passed
+    options = PlotterOptions()
     for option in window.stackedWidget.currentWidget().findChildren(QtWidgets.QWidget):
         alias = option.property("alias")
         if alias is not None:
-            options_dict[alias] = get_qwidget_value(option)
-    options_dict["presentation"] = get_qwidget_value(window.presentationCheckBox)
-    options_dict["legend_title"] = get_qwidget_value(window.legendTitleLineEdit)
+            options.add_option(label = alias, value = get_qwidget_value(option))
+    options.add_option(label="presentation", value = get_qwidget_value(window.presentationCheckBox))
+    options.add_option(label="legend_title", value = get_qwidget_value(window.legendTitleLineEdit))
 
     # Instantiate proper device class and set the data
     current_device_class = window.dataspec.get_device()
@@ -74,11 +76,11 @@ def plot_manager(window, config):
     # # Grab the correct plotting function and pass all options to it
     plot_function = window.get_current_plot_function()
     window.console_print(
-        f"Producing {current_device_class}-{plot_function} plot for {window.get_dataspec_name()} with options {options_dict}")
+        f"Producing {current_device_class}-{plot_function} plot for {window.get_dataspec_name()} with options {options}")
 
     # Create a new thread for the device class to run in
     window.thread = QtCore.QThread()
-    window.experiment_worker = experiment_cls(current_device_class, dataspec_selection, plot_function, options=options_dict)
+    window.experiment_worker = experiment_cls(current_device_class, dataspec_selection, plot_function, options=options)
     window.experiment_worker.moveToThread(window.thread)
 
     # Connect signals and slots for the worker thread
