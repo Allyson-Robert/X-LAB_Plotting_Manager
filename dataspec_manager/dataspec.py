@@ -69,11 +69,17 @@ class DataSpec:
         assert isinstance(colours, dict)
         self.colours = colours
 
-    def construct_filepaths(self, root_dir) -> str:
+    def construct_filepaths(self, root_dir: str, type: str) -> str:
         warnings.warn("New function construct_filepaths_nrecursive not implemented recursively")
         # TODO: Should depend on experiment type (making structure redundant)?
         # TODO: Something about the experiment type compatibility here.
-        return self.construct_filepaths_nrecursive(root_dir)
+        match type:
+            case "flat":
+                return self.construct_filepaths_nrecursive(root_dir)
+            case "structured":
+                return self.construct_structured_filepaths(root_dir)
+            case _:
+                return "Incompatible structure type"
 
     def construct_filepaths_nrecursive(self, root_dir) -> str:
         """
@@ -196,6 +202,7 @@ class DataSpec:
         # Check path before adding:
         is_path_valid, error_msg = self._check_valid_path(path=path)
         if not is_path_valid:
+            print(error_msg)
             return "Will not add file with disallowed extension"
 
         if self.get_structure_type() != 'structured':
