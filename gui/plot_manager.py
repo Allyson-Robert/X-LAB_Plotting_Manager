@@ -51,7 +51,7 @@ def plot_manager(window, config):
         lbl = item.text()
         path = window.dataspec.get_filepath(lbl)
         dataspec_selection.add_filepath(path, lbl)
-        colour = window.dataspec.get_colour(lbl)
+        colour = window.dataspec.get_single_colour(lbl)
         dataspec_selection.add_colour(colour, lbl)
 
     dataspec_selection.set_device(window.dataspec.get_device())
