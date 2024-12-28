@@ -159,7 +159,7 @@ class DataSpec:
     def get_single_colour(self, label: str) -> str:
         if label in self.colours.keys():
             return self.colours[label]
-        raise KeyError("Colour not defined")
+        return None
 
     def get_all_colours(self) -> dict:
         if len(self.colours) == 0:

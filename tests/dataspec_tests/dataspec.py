@@ -65,8 +65,7 @@ class TestDataSpec(unittest.TestCase):
     def test_colours_methods(self):
         self.data_spec.add_colour("#FF5733", "highlight")
         self.assertEqual(self.data_spec.get_single_colour("highlight"), "#FF5733")
-        with self.assertRaises(KeyError):
-            self.data_spec.get_single_colour("nonexistent")
+        self.assertIsNone(self.data_spec.get_single_colour("nonexistent"))
 
     def test_path_validation(self):
         # Setup for testing
