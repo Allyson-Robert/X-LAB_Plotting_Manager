@@ -1,5 +1,5 @@
 """
-    This util tool should be used to sanitize datetime strings across data files from a variety of sources.
+    This util tool should be used to sanitize datetime strings across dataspec files from a variety of sources.
     It should be able to deal with any format that is explicitly specified, such as
 
     YYYY_MM_DD
@@ -14,7 +14,7 @@ import unittest
 
 class CustomDatetime:
     """
-    A utility class to sanitize and handle datetime strings across data files from a variety of sources.
+    A utility class to sanitize and handle datetime strings across dataspec files from a variety of sources.
     It can deal with any format explicitly specified and convert it to a consistent format.
     Default formats are provided
 

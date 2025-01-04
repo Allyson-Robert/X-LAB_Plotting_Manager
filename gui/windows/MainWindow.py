@@ -16,9 +16,9 @@ from gui.dialogs.generate_about_dialog import generate_about_dialog
 from gui.clear.clear_data import clear_data
 from gui.clear.clear_all import clear_all
 
-from gui.data.load_data import open_data_file
-from gui.data.save_data import save_data
-from gui.data.create_data import create_data
+from gui.dataspec_tools.load_dataspec import open_dataspec_file
+from gui.dataspec_tools.save_dataspec import save_dataspec
+from gui.dataspec_tools.create_dataspec import create_dataspec
 
 from gui.dialogs.dialog_print import dialog_print
 
@@ -102,9 +102,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
 
         # Define menubar actions
-        self.actionCreate_Set.triggered.connect(partial(create_data, window=self))
-        self.actionSave_Set.triggered.connect(partial(save_data, window=self))
-        self.actionLoad_Set.triggered.connect(partial(open_data_file, window=self))
+        self.actionCreate_Set.triggered.connect(partial(create_dataspec, window=self))
+        self.actionSave_Set.triggered.connect(partial(save_dataspec, window=self))
+        self.actionLoad_Set.triggered.connect(partial(open_dataspec_file, window=self))
         self.actionPreferences.triggered.connect(self.not_implemented)
         self.actionQuit.triggered.connect(self.quit)
 
@@ -138,7 +138,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Start the demo if it is specified
         if demo_file_name is not None:
             print("Starting demo")
-            open_data_file(self, demo_file_name)
+            open_dataspec_file(self, demo_file_name)
 
     # Getters
     def get_all_plot_functions(self) -> list:
@@ -150,8 +150,21 @@ class UiMainWindow(QtWidgets.QMainWindow):
     def get_current_device(self) -> str:
         return self.dataspec.get_device()
 
+    def get_dataspec(self):
+        return self.dataspec
+
     def get_dataspec_name(self) -> str:
         return self.dataspec.get_name()
+
+    def get_dataspec_window(self) -> QtWidgets.QDialog:
+        return self.dataWindow
+
+    # Setters
+    def set_dataspec_window(self, dataspec_window: QtWidgets.QDialog):
+        self.dataWindow = dataspec_window
+
+    def set_dataspec(self, dataspec: dataspec_manager.dataspec.DataSpec):
+        self.dataspec = dataspec
 
     # FUNCTIONALITY
     def autosave(self):
@@ -162,14 +175,14 @@ class UiMainWindow(QtWidgets.QMainWindow):
         with open(file_name, "w") as json_file:
             json.dump(self.dataspec, json_file, cls=dataspec_manager.DataSpecJSONEncoder)
         json_file.close()
-        return self.console_print(f"Saved data to {file_name}")
+        return self.console_print(f"Saved dataspec to {file_name}")
 
     def display_data(self):
-        # Abort if no data was loaded
+        # Abort if no dataspec was loaded
         if self.dataspec is None:
-            return self.console_print("Err: Must first load data", level="warning")
+            return self.console_print("Err: Must first load DataSpec", level="warning")
 
-        # Pretty print the data in a simple dialog
+        # Pretty print the dataspec in a simple dialog
         pretty_json = json.dumps(
             self.dataspec,
             indent=4,
@@ -180,7 +193,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
     def display_history(self):
         if self.dataspec is None:
-            return self.console_print("Err: Must first load data", level="warning")
+            return self.console_print("Err: Must first load DataSpec", level="warning")
 
         # Prints only the console history to a simple dialog
         pretty_history = ""
@@ -192,7 +205,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
     def add_notes(self):
         if self.dataspec is None:
-            return self.console_print("Err: Must first load data", level="warning")
+            return self.console_print("Err: Must first load DataSpec", level="warning")
 
         # Add any notes to the dataspec_manager
         self.dataspec.add_notes(self.notesPlainText.toPlainText())
@@ -200,11 +213,11 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.autosave()
 
     def update_header(self):
-        # Header should reflect opened data
+        # Header should reflect opened dataspec
         self.currSetNameLineEdit.setText(self.dataspec.get_name())
         self.currDeviceLineEdit.setText(self.dataspec.get_device())
 
-        # Stacked widget should show the correct widget for the opened data
+        # Stacked widget should show the correct widget for the opened dataspec
         new_page = self.stackedWidget.widget(self.devices[self.dataspec.get_device()])
         self.stackedWidget.setCurrentWidget(new_page)
 
@@ -233,7 +246,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
     def append_console_to_set(self):
         if self.dataspec is None:
-            return self.console_print("Err: Must first load data", level="warning")
+            return self.console_print("Err: Must first load DataSpec", level="warning")
 
         # Append console contents to the dataspec_manager
         console_text = self.consoleTextEdit.toPlainText()

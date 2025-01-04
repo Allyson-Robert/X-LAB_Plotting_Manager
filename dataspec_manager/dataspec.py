@@ -7,7 +7,7 @@ import warnings
 
 class DataSpec:
     """
-    This class collects paths to files containing relevant data. The exact contents of the files does not matter as
+    This class collects paths to files containing relevant dataspec. The exact contents of the files does not matter as
     only the locations are relevant for this class.
     Paths can be added by construction in which case the structure type is said to be 'structured'. Paths can also be
     added manually one by one, in this case the structure type is 'flat'.
@@ -84,7 +84,7 @@ class DataSpec:
     def construct_filepaths_nrecursive(self, root_dir) -> str:
         """
         Will generate a structured file set and add it to the current filepaths. This will seek all files and
-            of the giver root_dir and append all data files to the filepaths attribute. Note that
+            of the giver root_dir and append all dataspec files to the filepaths attribute. Note that
             root_dir should be an absolute path.
         """
         # TO DO: structure should be removed
@@ -117,7 +117,7 @@ class DataSpec:
     def construct_structured_filepaths(self, root_dir: str) -> str:
         """
         Will generate a structured file set and add it to the current filepaths. This will seek all files and
-            subdirectories of the giver root_dir and append all data files to the filepaths attribute. Note that
+            subdirectories of the giver root_dir and append all dataspec files to the filepaths attribute. Note that
             root_dir should be an absolute path.
         """
         warnings.warn("Function construct_structured_filepaths is deprecated use construct_filepaths instead", DeprecationWarning)
