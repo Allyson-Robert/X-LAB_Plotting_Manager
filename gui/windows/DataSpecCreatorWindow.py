@@ -6,8 +6,6 @@ import json
 import sys
 
 # FEATURE REQUEST: Allow multiple device types to be compatible with the same set
-# FEATURE REQUEST: Switch over to databases for filesets
-# FEATURE REQUEST: Allow customisation of the GUI for specific types of data
 
 
 class UiDataCreatorWindow(QtWidgets.QDialog):
