@@ -9,10 +9,25 @@ def save_dataspec(window: QtWidgets.QMainWindow):
         return window.console_print("Err: Must first load dataspec", level="warning")
 
     # Run the file dialog
-    file_name = QtWidgets.QFileDialog.getSaveFileName(window, "Save file to disk")[0]
+    # TODO: There's a bug in ubuntu 24 that has the filter reinitialised when navigating the path
+    file_name = QtWidgets.QFileDialog.getSaveFileName(
+        parent=window,
+        caption="Save file to disk",
+        filter="DataSpecs (*.json *.dataspec *.ds);;All (*)",
+        initialFilter="DataSpecs (*.json *.dataspec *.ds)"
+    )[0]
+
     if file_name != "":
-        # Dump the data into a json file and remember the location
-        window.fileset_location = file_name
+        # Dump the dataspec_tools into a json file and remember the location
+        # TODO: Dataspec should be aware of its location
+
+        # Ensure the file name has a valid extension
+        if file_name:
+            if not any(file_name.endswith(ext) for ext in ('.json', '.dataspec', '.ds')):
+                # Default to .dataspec if no valid extension
+                file_name += '.dataspec'
+
+        window.dataspec_location = file_name
         with open(file_name, "w") as json_file:
             json.dump(window.get_dataspec(), json_file, cls=fs.DataSpecJSONEncoder)
         json_file.close()
