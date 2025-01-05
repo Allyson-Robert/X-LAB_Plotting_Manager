@@ -68,10 +68,10 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
 
         # Check for duplicate label
         if file_label in self.dataspec.get_labels():
-            msg = QtWidgets.QMessageBox()
-            msg.setWindowTitle("Duplicate Label")
-            msg.setText("""This label has already been used. Choose another label and try again.""")
-            msg.exec_()
+            self.show_message(
+                title="Duplicate Label",
+                message="""This label has already been used. Choose another label and try again."""
+            )
         else:
             # Add the file to the dataset and update the gui
             self.dataspec.add_filepath(file_name, file_label)
@@ -96,12 +96,9 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
             else:
                 errors = self.dataspec.construct_filepaths(path)
 
-            # Show the directories/files that were ignored to the user
-            if errors != "":
-                msg = QtWidgets.QMessageBox()
-                msg.setWindowTitle("Files were ignored")
-                msg.setText(errors)
-                x = msg.exec_()
+        # Show the directories/files that were ignored to the user
+        if errors != "":
+            self.show_message(title="Files were ignored", message=errors)
 
             # Show the files in the gui
             self.showSetPlainText.setPlainText(
@@ -124,6 +121,13 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
             self.doneBtn.setEnabled(True)
         else:
             self.doneBtn.setEnabled(False)
+
+    @staticmethod
+    def show_message(title, message):
+        msg = QtWidgets.QMessageBox()
+        msg.setWindowTitle(title)
+        msg.setText(message)
+        x = msg.exec_()
 
     def reset(self):
         self.nameEdit.clear()
