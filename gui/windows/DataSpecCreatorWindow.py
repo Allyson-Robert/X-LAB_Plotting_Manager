@@ -5,6 +5,9 @@ import datetime
 import json
 import sys
 
+from gui.utils.search_for_active_radio_button import search_for_active_radio_button
+from gui.utils.split_camelCase import split_camel_case
+
 # FEATURE REQUEST: Allow multiple device types to be compatible with the same set
 
 
@@ -51,17 +54,22 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
 
     def browse_files(self):
         """
-        # Open file selection file dialog and update gui
+        # Open file selection dialog to get a file path and update gui when confirmed
         """
         file_name = QtWidgets.QFileDialog.getOpenFileName(self, "Open File")
         self.browseFilesText.setPlainText(file_name[0])
 
     def browse_dir(self):
-        # Open directory selection file dialog and update gui
+        """
+        # Open directory selection dialog to get a path and update gui when confirmed
+        """
         dir_name = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Directory')
         self.browseDirText.setPlainText(dir_name)
 
     def add_file_to_set(self):
+        """
+        # Gets the path and label and adds it to the current DataSpec instance while updating GUI
+        """
         # Read name and legend label from gui
         file_name = self.browseFilesText.toPlainText()
         file_label = self.labelEdit.text()
@@ -89,32 +97,37 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         self.labelEdit.clear()
 
     def generate_set(self):
-        try:
-            path = self.browseDirText.toPlainText()
-            if self.structRadioBtn.isChecked():
-                errors = self.dataspec.construct_structured_filepaths(path)
-            else:
-                errors = self.dataspec.construct_filepaths(path)
+        """
+        Automatically generate a set of filepaths based on a directory path. Will create nested structure if desired
+        """
+        path = self.browseDirText.toPlainText()
+
+        # If path is not selected, show message and return None
+        if not path:
+            self.show_message(title="No directory selected", message="""No directory was selected, please select directory and try again""")
+            return None
+
+        # Construct the filepaths for this dataspec
+        active_button = split_camel_case(search_for_active_radio_button(self).objectName())[0]
+        errors = self.dataspec.construct_filepaths(root_dir=path, type=active_button)
 
         # Show the directories/files that were ignored to the user
         if errors != "":
             self.show_message(title="Files were ignored", message=errors)
 
-            # Show the files in the gui
-            self.showSetPlainText.setPlainText(
-                json.dumps(
-                    self.dataspec.get_filepaths(),
-                    indent=4,
-                    separators=(',', ': ')
-                )
+        # Show the files in the gui
+        self.showSetPlainText.setPlainText(
+            json.dumps(
+                self.dataspec.get_filepaths(),
+                indent=4,
+                separators=(',', ': ')
             )
-            self.dataspec.set_structure_type("structured")
-
-        except Exception as e:
-            self.console_print(f"Fatal Err: Plot aborted{e}")
+        )
+        self.dataspec.set_structure_type("structured")
 
     def button_state(self):
-        # The gui should not be closed while the dataset is still empty
+        """ Only enable closing when some data was included """
+        # TODO: hmmmmmmmmmmmm, should I be able to close the window if I mistakenly opened it?
         nameTxt = self.nameEdit.text()
         files = self.showSetPlainText.toPlainText()
         if (files != "") and (nameTxt != ""):
@@ -130,6 +143,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         x = msg.exec_()
 
     def reset(self):
+        """ Completely reset this UI by clearing all elements """
         self.nameEdit.clear()
         self.labelEdit.clear()
         self.browseDirText.clear()
@@ -138,7 +152,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         self.button_state()
 
     def finish(self):
-        # Add name, device type, date and time, and dataspec_tools to the dataset before exiting
+        """ Add name, device type,  and date and time dataspec before exiting """
         self.dataspec.set_name(self.nameEdit.text())
         self.dataspec.set_device(self.dataTypeCombo.currentText())
         experiment_date_time = self.dateTimeEdit.dateTime().toPyDateTime().strftime("%Y.%m.%d_%H.%M.%S")
