@@ -10,9 +10,11 @@ def get_svg_config(filename: str = 'custom_image') -> dict:
 
     config = {
         'toImageButtonOptions': {
-            'format': 'svg',  # one of png, svg, jpeg, webp
+            'format': 'svg',  # Save as SVG
             'filename': filename,
-            'scale': 1  # Multiply title/legend/axis/canvas sizes by this factor
+            'scale': 1,
+            'width': 1920,  # 1080p width
+            'height': 1080  # 1080p height (16:9 aspect ratio)
         }
     }
 
