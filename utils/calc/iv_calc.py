@@ -24,6 +24,7 @@ def get_reverse(input: list) -> list:
     return input[half_len:]
 
 
+# TODO: Use is_monotonic to check for monotonicity
 def split_forward_reverse(independent: list, dependent: list) -> tuple[list, list, list, list]:
     """
     Assuming a behaviour for the independent list in two parts, a monotonic increase followed by a monotonic decrease.
@@ -43,6 +44,18 @@ def split_forward_reverse(independent: list, dependent: list) -> tuple[list, lis
     change = np.diff(independent)
     direction = [np.sign(v) for v in change]
 
+    # Filter direction to treat no change as incoming change
+    if direction[0] == 0:
+        raise ValueError("Independent list starts with duplicate, stopping")
+    filtered_direction = []
+    for i, d in enumerate(direction):
+        if d != 0:
+            filtered_direction.append(d)
+        else:
+            filtered_direction.append(direction[i+1])
+
+    direction = filtered_direction
+
     # Check the number of reversions in the independent list
     num_reversions = sum(1 for i in range(1, len(direction)) if direction[i] != direction[i - 1])
 
@@ -50,7 +63,7 @@ def split_forward_reverse(independent: list, dependent: list) -> tuple[list, lis
     if num_reversions > 1:
         raise ValueError("Independent list is not monotonic, cannot find a revering point")
 
-    # The independent list reverses exactly once
+    # The independent list reverses exactly once -> split where the array starts going back
     elif num_reversions == 1:
         reversing_index = direction.index(-1) + 1
         return independent[:reversing_index], independent[reversing_index:], dependent[:reversing_index], dependent[reversing_index:]

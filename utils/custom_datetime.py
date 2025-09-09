@@ -14,7 +14,7 @@ import unittest
 
 class CustomDatetime:
     """
-    A utility class to sanitize and handle datetime strings across data files from a variety of sources.
+    A utility class_utils to sanitize and handle datetime strings across data files from a variety of sources.
     It can deal with any format explicitly specified and convert it to a consistent format.
     Default formats are provided
 
@@ -106,6 +106,9 @@ class CustomDatetime:
         datetime_str = input_datetime.strftime(self.label_format)
         return datetime_str
 
+    def get_current_timestamp(self) -> str:
+        return datetime.now().strftime(self.label_format)
+
 
 class TestCustomDatetime(unittest.TestCase):
 
@@ -151,6 +154,11 @@ class TestCustomDatetime(unittest.TestCase):
         sanitizer = CustomDatetime()
         with self.assertRaises(ValueError):
             sanitizer.write_datetime_to_string(None)
+
+    def test_get_current_timestamp(self):
+        sanitizer = CustomDatetime()
+        dt_str = sanitizer.get_current_timestamp()
+        self.assertRegex(dt_str, r'\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2}')
 
 
 if __name__ == "__main__":

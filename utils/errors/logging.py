@@ -27,4 +27,4 @@ def exceptions_logging(func: Callable[..., Any], logger: logging.Logger) -> Call
 
             raise
     return wrapper
-# CHECK: https://stackoverflow.com/a/6307868 decorate class
+# CHECK: https://stackoverflow.com/a/6307868 decorate class_utils

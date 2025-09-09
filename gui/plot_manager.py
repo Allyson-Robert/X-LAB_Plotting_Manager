@@ -60,7 +60,7 @@ def plot_manager(window, config):
     options_dict["presentation"] = get_qwidget_value(window.presentationCheckBox)
     options_dict["legend_title"] = get_qwidget_value(window.legendTitleLineEdit)
 
-    # Instantiate proper device class and set the data
+    # Instantiate proper device class_utils and set the data
     current_device_class = window.fileset.get_device()
     device_module = getattr(analysis.devices.workers, current_device_class.lower())
     experiment_cls = getattr(device_module, current_device_class)
@@ -70,7 +70,7 @@ def plot_manager(window, config):
     window.console_print(
         f"Producing {current_device_class}-{plot_type} plot for {window.fileset.get_name()} with options {options_dict}")
 
-    # Create a new thread for the device class to run in
+    # Create a new thread for the device class_utils to run in
     window.thread = QtCore.QThread()
     window.experiment_worker = experiment_cls(current_device_class, selected_fileset, plot_type, options=options_dict)
     window.experiment_worker.moveToThread(window.thread)

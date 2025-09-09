@@ -1,5 +1,5 @@
 import csv
-from utils.file_readers.read_csv import read_csv
+from utils.file_readers.read_table_csv import read_csv
 
 
 def read_pti_file(filename):

@@ -7,14 +7,14 @@ import warnings
 
 class Fileset:
     """
-    This class collects paths to files containing relevant data. The exact contents of the files does not matter as
-    only the locations are relevant for this class.
+    This class_utils collects paths to files containing relevant data. The exact contents of the files does not matter as
+    only the locations are relevant for this class_utils.
     Paths can be added by construction in which case the structure type is said to be 'structured'. Paths can also be
     added manually one by one, in this case the structure type is 'flat'.
     Flat and structured construction cannot be mixed
     """
     _allowed_structure_types = ("flat", "structured")
-    _accepted_extensions = ("xlsx", "xls", "csv", "txt", "dpt")
+    _accepted_extensions = ("xlsx", "xls", "csv", "txt", "dpt", "json", "lbic")
 
     def __init__(self, creation_date: str):
         assert isinstance(creation_date, str)
