@@ -2,9 +2,10 @@ from PyQt5 import QtWidgets, QtCore
 from utils.get_qwidget_value import get_qwidget_value
 from utils import constants
 import datetime
-import fileset as fs
+import dataspec_manager
 import json
 import os
+from analysis.plotters.plotter_options import PlotterOptions
 
 # TODO: There has to be a better way
 # Read the JSON config file
@@ -28,51 +29,58 @@ sys.path.insert(0, analysis_path)
 sys.path.append("../..")
 import analysis.devices
 
-
+# This plot manager
+#     collects the filenames
+#     builds a custom dataspec for plotting by copying from main window
+#     collects the options
+#     instantiates Class by importing module and class
+#     grab plot_function
+#     creates, connects and starts a worker thread
 def plot_manager(window, config):
     """
         This can last a long time and will therefore instantiate a QThread to leave the gui responsive.
     """
 
-    # Grab the selected files for plotting
-    fileset_time = datetime.datetime.now().strftime(constants.DATETIME_FORMAT)
-    experiment_time = window.fileset.get_experiment_date().strftime(constants.DATETIME_FORMAT)
-    selected_fileset = fs.Fileset(fileset_time)
-    selected_fileset.set_experiment_date(experiment_time)
+    # Grab the selected files for plotting and build a reduced dataspec
+    dataspec_time = datetime.datetime.now().strftime(constants.DATETIME_FORMAT)
+    experiment_time = window.dataspec.get_experiment_date().strftime(constants.DATETIME_FORMAT)
+    dataspec_selection = dataspec_manager.DataSpec(dataspec_time)
+    dataspec_selection.set_experiment_date(experiment_time)
 
     for item in window.selectedFilesList.selectedItems():
         lbl = item.text()
-        path = window.fileset.get_filepath(lbl)
-        selected_fileset.add_filepath(path, lbl)
-        colour = window.fileset.get_colour(lbl)
-        selected_fileset.add_colour(colour, lbl)
+        path = window.dataspec.get_filepath(lbl)
+        dataspec_selection.add_filepath(path, lbl)
+        colour = window.dataspec.get_single_colour(lbl)
+        dataspec_selection.add_colour(colour, lbl)
 
-    selected_fileset.set_device(window.fileset.get_device())
-    selected_fileset.set_structure_type(window.fileset.get_structure_type())
-    selected_fileset.set_name(window.fileset.get_name())
+    dataspec_selection.set_device(window.dataspec.get_device())
+    dataspec_selection.set_structure_type(window.dataspec.get_structure_type())
+    dataspec_selection.set_name(window.dataspec.get_name())
 
     # Recursively search for QWidget children with an alias to collect options and get their values
-    options_dict = {}
+    # TODO: Options should be a class whose instance can be passed
+    options = PlotterOptions()
     for option in window.stackedWidget.currentWidget().findChildren(QtWidgets.QWidget):
         alias = option.property("alias")
         if alias is not None:
-            options_dict[alias] = get_qwidget_value(option)
-    options_dict["presentation"] = get_qwidget_value(window.presentationCheckBox)
-    options_dict["legend_title"] = get_qwidget_value(window.legendTitleLineEdit)
+            options.add_option(label = alias, value = get_qwidget_value(option))
+    options.add_option(label="presentation", value = get_qwidget_value(window.presentationCheckBox))
+    options.add_option(label="legend_title", value = get_qwidget_value(window.legendTitleLineEdit))
 
-    # Instantiate proper device class_utils and set the data
-    current_device_class = window.fileset.get_device()
+    # Instantiate proper device class and set the data
+    current_device_class = window.dataspec.get_device()
     device_module = getattr(analysis.devices.workers, current_device_class.lower())
     experiment_cls = getattr(device_module, current_device_class)
 
     # # Grab the correct plotting function and pass all options to it
-    plot_type = window.plotTypeCombo.currentText()
+    plot_function = window.get_current_plot_function()
     window.console_print(
-        f"Producing {current_device_class}-{plot_type} plot for {window.fileset.get_name()} with options {options_dict}")
+        f"Producing {current_device_class}-{plot_function} plot for {window.get_dataspec_name()} with options {options}")
 
-    # Create a new thread for the device class_utils to run in
+    # Create a new thread for the device class to run in
     window.thread = QtCore.QThread()
-    window.experiment_worker = experiment_cls(current_device_class, selected_fileset, plot_type, options=options_dict)
+    window.experiment_worker = experiment_cls(current_device_class, dataspec_selection, plot_function, options=options)
     window.experiment_worker.moveToThread(window.thread)
 
     # Connect signals and slots for the worker thread

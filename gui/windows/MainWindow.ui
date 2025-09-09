@@ -53,7 +53,7 @@
           <locale language="English" country="Belgium"/>
          </property>
          <property name="text">
-          <string>Dataset</string>
+          <string>DataSpec</string>
          </property>
         </widget>
        </item>
@@ -78,7 +78,7 @@
           <bool>true</bool>
          </property>
          <property name="placeholderText">
-          <string>Open/Create data</string>
+          <string>No DataSpec selected -&gt; open/create to load data</string>
          </property>
         </widget>
        </item>
@@ -94,7 +94,7 @@
           <locale language="English" country="Belgium"/>
          </property>
          <property name="text">
-          <string>Device</string>
+          <string>Experiment</string>
          </property>
         </widget>
        </item>
@@ -142,7 +142,7 @@
           <locale language="English" country="Belgium"/>
          </property>
          <property name="text">
-          <string>Raw ExperimentDB</string>
+          <string>Raw DataSpec</string>
          </property>
         </widget>
        </item>
@@ -343,7 +343,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Add notes to set</string>
+        <string>Add notes to DataSpec file</string>
        </property>
       </widget>
      </item>
