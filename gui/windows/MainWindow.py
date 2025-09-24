@@ -8,7 +8,7 @@ import sys
 import os
 import dataspec_manager
 import utils
-from utils.get_class_methods import get_class_methods
+from utils.class_utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
 from utils import constants
 
