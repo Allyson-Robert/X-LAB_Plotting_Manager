@@ -29,6 +29,7 @@ sys.path.insert(0, analysis_path)
 sys.path.append("../..")
 import analysis.devices
 
+
 # This plot manager
 #     collects the filenames
 #     builds a custom dataspec for plotting by copying from main window
