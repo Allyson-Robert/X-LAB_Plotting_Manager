@@ -65,7 +65,9 @@ def plot_manager(window, config):
     for option in window.stackedWidget.currentWidget().findChildren(QtWidgets.QWidget):
         alias = option.property("alias")
         if alias is not None:
-            options.add_option(label=alias, value=get_qwidget_value(option))
+            option_value = get_qwidget_value(option)
+            if option_value is not None:
+                options.add_option(label=alias, value=option_value)
     options.add_option(label="presentation", value=get_qwidget_value(window.presentationCheckBox))
     options.add_option(label="legend_title", value=get_qwidget_value(window.legendTitleLineEdit))
 
