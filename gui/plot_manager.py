@@ -65,9 +65,9 @@ def plot_manager(window, config):
     for option in window.stackedWidget.currentWidget().findChildren(QtWidgets.QWidget):
         alias = option.property("alias")
         if alias is not None:
-            options.add_option(label = alias, value = get_qwidget_value(option))
-    options.add_option(label="presentation", value = get_qwidget_value(window.presentationCheckBox))
-    options.add_option(label="legend_title", value = get_qwidget_value(window.legendTitleLineEdit))
+            options.add_option(label=alias, value=get_qwidget_value(option))
+    options.add_option(label="presentation", value=get_qwidget_value(window.presentationCheckBox))
+    options.add_option(label="legend_title", value=get_qwidget_value(window.legendTitleLineEdit))
 
     # Instantiate proper device class and set the data
     current_device_class = window.dataspec.get_device()
