@@ -87,11 +87,11 @@ class UiMainWindow(QtWidgets.QMainWindow):
             self.devices[entry] = entry_index
 
             # TODO REMOVE: Load any functionality if needed
-            entry_functionality_file = config["devices_path"] + "functionality/" + entry.lower() + ".py"
-            if os.path.exists(entry_functionality_file):
-                functionality = importlib.import_module(f"{devices.functionality.__name__}.{entry.lower()}")
-                entry_functionality = getattr(functionality, entry)
-                entry_functionality(entry_widget)
+            # entry_functionality_file = config["devices_path"] + "functionality/" + entry.lower() + ".py"
+            # if os.path.exists(entry_functionality_file):
+            #     functionality = importlib.import_module(f"{devices.functionality.__name__}.{entry.lower()}")
+            #     entry_functionality = getattr(functionality, entry)
+            #     entry_functionality(entry_widget)
 
             # Import the corresponding module and get the class methods to set the plot_functions combobox when needed
             module = importlib.import_module(f"{devices.workers.__name__}.{entry.lower()}")
