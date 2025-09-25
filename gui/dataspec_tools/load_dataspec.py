@@ -6,6 +6,7 @@ import json
 import os
 import dataspec_manager
 
+
 # TODO: BUGFIX: Assumed notes and console are attributes and knows what they look like, same with plotTypeCombo
 def open_dataspec_file(window: QtWidgets.QMainWindow, file_name: str = None):
     # Choose file if not specified
@@ -53,12 +54,12 @@ def load_dataspec(window: QtWidgets.QMainWindow):
 
     # Edit combobox to show all available plot types
     try:
-        for function in window.get_all_plot_functions():
+        for function in window.get_plot_functions(window.get_current_device()):
             window.plotTypeCombo.addItem(function)
 
     except KeyError:
         window.console_print(
-            f"Incompatible device type [{window.get_device()}] found in {window.get_dataspec_name()}, select another dataspec or implement the device type. DataSpec path: N/A")
+            f"Incompatible device type [{window.get_current_device()}] found in {window.get_dataspec_name()}, select another dataspec or implement the device type. DataSpec path: N/A")
         raise IncompatibleDeviceTypeFound
 
     window.console_print("DataSpec loaded")

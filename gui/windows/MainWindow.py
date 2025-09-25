@@ -75,7 +75,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         log_level = getattr(utils.logging, config["log_level"])
         self.logger.setLevel(log_level)
 
-        self.plot_functions = []
+        self.plot_functions = {}
         self.devices = {}
 
         # Get list of devices as defined manually in the.devices __init__.py file
@@ -96,7 +96,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             # Import the corresponding module and get the class methods to set the plot_functions combobox when needed
             module = importlib.import_module(f"{devices.workers.__name__}.{entry.lower()}")
             entry_cls = getattr(module, entry)
-            self.plot_functions = get_class_methods(entry_cls, ignore=["run"])
+            self.plot_functions[entry] = get_class_methods(entry_cls, ignore=["run"])
 
         # Reset stacked widget to empty page
         self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
@@ -141,8 +141,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
             open_dataspec_file(self, demo_file_name)
 
     # Getters
-    def get_all_plot_functions(self) -> list:
-        return self.plot_functions
+    def get_plot_functions(self, device='Generic') -> list:
+        return self.plot_functions[device]
 
     def get_current_plot_function(self) -> str:
         return self.plotTypeCombo.currentText()
