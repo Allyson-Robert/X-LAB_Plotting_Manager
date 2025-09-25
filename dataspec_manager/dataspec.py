@@ -14,7 +14,7 @@ class DataSpec:
     Flat and structured construction cannot be mixed
     """
     _allowed_structure_types = ("flat", "structured")
-    _accepted_extensions = ("xlsx", "xls", "csv", "txt", "dpt")
+    _accepted_extensions = ("xlsx", "xls", "csv", "txt", "dpt", "json")
 
     def __init__(self, creation_date: str):
         assert isinstance(creation_date, str)
