@@ -50,8 +50,13 @@ def plot_manager(window, config):
 
     for item in window.selectedFilesList.selectedItems():
         lbl = item.text()
+
+        structure = window.dataspec.get_structure_type()
+        dataspec_selection.set_structure_type(structure)
+
         path = window.dataspec.get_filepath(lbl)
         dataspec_selection.add_filepath(path, lbl)
+
         colour = window.dataspec.get_single_colour(lbl)
         dataspec_selection.add_colour(colour, lbl)
 

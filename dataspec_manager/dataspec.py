@@ -8,12 +8,13 @@ import warnings
 class DataSpec:
     """
     This class collects paths to files containing relevant dataspec. The exact contents of the files does not matter as
-    only the locations are relevant for this class.
-    Paths can be added by construction in which case the structure type is said to be 'structured'. Paths can also be
-    added manually one by one, in this case the structure type is 'flat'.
-    Flat and structured construction cannot be mixed
+    only the locations are relevant for this class. DataSpecs can currently contain straight up files ('flat') or
+    directories containing files ('grouped_by_dir').
+    The former can be added manually one at a time, the latter must be automatically constructed. Both types cannot be
+    mixed.
     """
-    _allowed_structure_types = ("flat", "structured")
+    # TODO: properly deprecate structured, assume flat for now
+    _allowed_structure_types = ("flat", "grouped_by_dir", "structured")
     _accepted_extensions = ("xlsx", "xls", "csv", "txt", "dpt", "json")
 
     def __init__(self, creation_date: str):
@@ -52,6 +53,7 @@ class DataSpec:
 
         if self.structure_type is None:
             self.structure_type = desired_type
+        # Warn users when trying to overwrite the structure type
 
     def set_notes(self, notes_content: str):
         assert isinstance(notes_content, str)
@@ -76,14 +78,14 @@ class DataSpec:
         match type:
             case "flat":
                 return self.construct_filepaths_nrecursive(root_dir)
-            case "structured":
+            case "grouped_by_dir":
                 return self.construct_structured_filepaths(root_dir)
             case _:
                 return "Incompatible structure type"
 
     def construct_filepaths_nrecursive(self, root_dir) -> str:
         """
-        Will generate a structured file set and add it to the current filepaths. This will seek all files and
+        Will generate a grouped_by_dir file set and add it to the current filepaths. This will seek all files and
             of the giver root_dir and append all dataspec files to the filepaths attribute. Note that
             root_dir should be an absolute path.
         """
@@ -107,7 +109,7 @@ class DataSpec:
                 else:
                     errors += error_msg
         else:
-            errors = "Flat dataspec_manager cannot use structured construction"
+            errors = "Flat dataspec_manager cannot use grouped_by_dir construction"
 
         return errors
 
@@ -116,7 +118,7 @@ class DataSpec:
 
     def construct_structured_filepaths(self, root_dir: str) -> str:
         """
-        Will generate a structured file set and add it to the current filepaths. This will seek all files and
+        Will generate a grouped_by_dir file set and add it to the current filepaths. This will seek all files and
             subdirectories of the giver root_dir and append all dataspec files to the filepaths attribute. Note that
             root_dir should be an absolute path.
         """
@@ -142,7 +144,7 @@ class DataSpec:
                         else:
                             errors += error_msg
         else:
-            errors = "Flat dataspec_manager cannot use structured construction"
+            errors = "Flat dataspec_manager cannot use grouped_by_dir construction"
 
         return errors
 
@@ -199,26 +201,31 @@ class DataSpec:
 
     # Path management
     def add_filepath(self, path: str, label: str):
-        # Check path before adding:
-        is_path_valid, error_msg = self._check_valid_path(path=path)
-        if not is_path_valid:
-            print(error_msg)
-            return "Will not add file with disallowed extension"
-
-        if self.get_structure_type() != 'structured':
-            # Checks for duplicate label
-            if label in self.filepaths.keys():
-                return "Duplicate label found in dataspec_manager"
-            else:
-                # Add the file to the dataset and update the gui
-                self.filepaths[label] = path
+        # Wrap flat paths for validation
+        if self.get_structure_type() == 'flat':
+            path_to_validate = {label: path}
         else:
-            return "Constructed structure cannot be appended manually"
+            path_to_validate = path
+        path_to_store = path
+
+        # Check for duplicate label
+        if label in self.filepaths.keys():
+            return "Duplicate label found in dataspec_manager"
+
+        # Check that all paths are valid
+        for sublabel in path_to_validate:
+            # Check path before adding:
+            is_path_valid, error_msg = self._check_valid_path(path=path_to_validate[sublabel])
+            if not is_path_valid:
+                print(error_msg)
+                return "Will not add file with disallowed extension"
+
+        # Add the path
+        self.filepaths[label] = path_to_store
 
         return ""
 
     def add_colour(self, colour: str, label: str):
-        # No need to check for structured, will be depracated
         # Checks for duplicate label
         if label in self.colours.keys():
             return "Duplicate label found in colours"
@@ -235,11 +242,11 @@ class DataSpec:
             if path.endswith(self._accepted_extensions):
                 return True, ""
             else:
-                return False, f"Forbidden Extension: Ignored {path}\n"
+                return False, f"DataSpec Forbidden Extension: Ignored {path}\n"
         elif os.path.exists(path) and not os.path.isfile(path):
-            return False, f"Not a File: Ignored {path}\n"
+            return False, f"DataSpec Not a File: Ignored {path}\n"
         else:
-            return False, f"Filesystem Error: Ignored {path}\n"
+            return False, f"DataSpec Filesystem Error: Ignored {path}\n"
 
     def __eq__(self, other):
         if type(other) is type(self):
