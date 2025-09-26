@@ -82,6 +82,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
             )
         else:
             # Add the file to the dataset and update the gui
+            self.dataspec.set_structure_type("flat")
             self.dataspec.add_filepath(file_name, file_label)
             self.showSetPlainText.setPlainText(
                 json.dumps(
@@ -91,7 +92,6 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
                 )
             )
             self.browseFilesText.clear()
-            self.dataspec.set_structure_type("flat")
 
         # Empty label widget
         self.labelEdit.clear()
