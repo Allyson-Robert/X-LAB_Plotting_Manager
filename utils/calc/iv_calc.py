@@ -8,11 +8,9 @@ def split_forward_reverse(independent: list, dependent: list) -> tuple[list, lis
     Assuming a behaviour for the independent list in two parts, a monotonic increase followed by a monotonic decrease.
     Under this assumption the function will split both independent and dependent lists by finding when the first
     reverses.
-
-    :param independent:
-    :param dependent:
-    :return:
-
+    This function checks:
+        1) Whether the lists are of equal length
+        2) If there is more than one change in direction
     """
 
     if len(independent) != len(dependent):
@@ -22,15 +20,19 @@ def split_forward_reverse(independent: list, dependent: list) -> tuple[list, lis
     change = np.diff(independent)
     direction = [np.sign(v) for v in change]
 
+    # Check for constant array
+    if set(direction) == {0}:
+        raise ValueError("IV CALC: Independent list is constant")
+
     # Filter direction to treat no change as incoming change
-    if direction[0] == 0:
-        raise ValueError("Independent list starts with duplicate, stopping")
     filtered_direction = []
     for i, d in enumerate(direction):
-        if d != 0:
+        if d != 0: # If change, copy
             filtered_direction.append(d)
-        else:
-            filtered_direction.append(direction[i+1])
+        elif i < len(direction) - 1: # If no change, copy next
+            filtered_direction.append(direction[i + 1])
+        else: # plateau could lead to out of bounds access
+            filtered_direction.append(filtered_direction[-1])
 
     direction = filtered_direction
 
@@ -39,14 +41,14 @@ def split_forward_reverse(independent: list, dependent: list) -> tuple[list, lis
 
     # Only the case where at most one reversion is detected is allowed, others are not valid
     if num_reversions > 1:
-        raise ValueError("Independent list is not monotonic, cannot find a revering point")
+        raise ValueError("Independent list is not monotonic, cannot find a reversing point")
 
     # The independent list reverses exactly once -> split where the array starts going back
     elif num_reversions == 1:
         reversing_index = direction.index(-1) + 1
         return independent[:reversing_index], independent[reversing_index:], dependent[:reversing_index], dependent[reversing_index:]
 
-    # The independent list does not reverse
+    # The independent list does not reverse, constant lists have already been selected out
     else:
         first_element = direction[0]
         # Independent is monotonically increasing, thus fully forward
@@ -54,11 +56,8 @@ def split_forward_reverse(independent: list, dependent: list) -> tuple[list, lis
             return independent, [], dependent, []
 
         # Independent is monotonically decreasing, thus fully reverse
-        elif first_element == -1:
-            return [], independent, [], dependent
-
         else:
-            raise ValueError(f"Unknown ValueError encountered, check lists \n independent:\t{independent}, \n dependent:\t{dependent}")
+            return [], independent, [], dependent
 
 
 def trim_iv(voltages: list, currents: list, to_trim: list, isc: float, voc: float) -> list:
