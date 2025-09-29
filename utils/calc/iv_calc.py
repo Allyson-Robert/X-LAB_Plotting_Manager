@@ -1,5 +1,4 @@
 import numpy as np
-import warnings
 
 
 # TODO: Use is_monotonic to check for monotonicity
@@ -14,7 +13,7 @@ def split_forward_reverse(independent: list, dependent: list) -> tuple[list, lis
     """
 
     if len(independent) != len(dependent):
-        raise ValueError("Input lists are of unequal length, cannot split forward and reverse")
+        raise ValueError("IV CALC: Input lists are of unequal length, cannot split forward and reverse")
 
     # Squash down all detail to detect the reversing index later
     change = np.diff(independent)
@@ -41,7 +40,7 @@ def split_forward_reverse(independent: list, dependent: list) -> tuple[list, lis
 
     # Only the case where at most one reversion is detected is allowed, others are not valid
     if num_reversions > 1:
-        raise ValueError("Independent list is not monotonic, cannot find a reversing point")
+        raise ValueError("IV CALC: Independent list is not monotonic, cannot find a unique reversing point")
 
     # The independent list reverses exactly once -> split where the array starts going back
     elif num_reversions == 1:
