@@ -2,14 +2,6 @@ import numpy as np
 import warnings
 
 
-# CHECK: Deprecate?
-def is_illuminated(input_currents: list) -> bool:
-    # Checks the first quarter of the list
-    sample = input_currents[:int(len(input_currents) / 4)]
-    average_current = np.average(sample)
-    # FIXME: Check this cutoff, not sure that -0.1 uA is sufficiently low
-    # return average_current < -10**(-7)
-    return True
 
 
 def get_forward(input: list) -> list:
