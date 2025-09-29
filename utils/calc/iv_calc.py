@@ -1,4 +1,5 @@
 import numpy as np
+from utils.errors.errors import ObservableNotComputableError
 
 
 # TODO: Use is_monotonic to check for monotonicity
@@ -13,7 +14,7 @@ def split_forward_reverse(independent: list, dependent: list) -> tuple[list, lis
     """
 
     if len(independent) != len(dependent):
-        raise ValueError("IV CALC: Input lists are of unequal length, cannot split forward and reverse")
+        raise ObservableNotComputableError("IV CALC: Input lists are of unequal length, cannot split forward and reverse")
 
     # Squash down all detail to detect the reversing index later
     change = np.diff(independent)
@@ -21,7 +22,7 @@ def split_forward_reverse(independent: list, dependent: list) -> tuple[list, lis
 
     # Check for constant array
     if set(direction) == {0}:
-        raise ValueError("IV CALC: Independent list is constant")
+        raise ObservableNotComputableError("IV CALC: Independent list is constant")
 
     # Filter direction to treat no change as incoming change
     filtered_direction = []
@@ -40,7 +41,7 @@ def split_forward_reverse(independent: list, dependent: list) -> tuple[list, lis
 
     # Only the case where at most one reversion is detected is allowed, others are not valid
     if num_reversions > 1:
-        raise ValueError("IV CALC: Independent list is not monotonic, cannot find a unique reversing point")
+        raise ObservableNotComputableError("IV CALC: Independent list is not monotonic, cannot find a unique reversing point")
 
     # The independent list reverses exactly once -> split where the array starts going back
     elif num_reversions == 1:
