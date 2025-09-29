@@ -2,20 +2,6 @@ import numpy as np
 import warnings
 
 
-
-
-def get_forward(input: list) -> list:
-    warnings.warn("WARNING: get_forward is deprecated due to erroneous assumptions, use split_forward_reverse instead", DeprecationWarning)
-    half_len = int(len(input)/2)
-    return input[:half_len]
-
-
-def get_reverse(input: list) -> list:
-    warnings.warn("WARNING: get_reverse is deprecated due to erroneous assumptions, use split_forward_reverse instead", DeprecationWarning)
-    half_len = int(len(input)/2)
-    return input[half_len:]
-
-
 # TODO: Use is_monotonic to check for monotonicity
 def split_forward_reverse(independent: list, dependent: list) -> tuple[list, list, list, list]:
     """
