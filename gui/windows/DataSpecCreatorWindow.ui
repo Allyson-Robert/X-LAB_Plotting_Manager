@@ -407,9 +407,9 @@
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="structuredRadioBtn">
+             <widget class="QRadioButton" name="dirlabelledRadioBtn">
               <property name="text">
-               <string>Structured</string>
+               <string>Directory Labelled</string>
               </property>
              </widget>
             </item>
