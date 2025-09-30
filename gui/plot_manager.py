@@ -83,8 +83,6 @@ def plot_manager(window, config):
 
     # # Grab the correct plotting function and pass all options to it
     plot_function = window.get_current_plot_function()
-    window.console_print(
-        f"Producing {current_device_class}-{plot_function} plot for {window.get_dataspec_name()} with options {options}")
 
     # Create a new thread for the device class to run in
     window.thread = QtCore.QThread()
@@ -100,6 +98,8 @@ def plot_manager(window, config):
 
     # Start the thread
     window.thread.start()
+    window.console_print(
+        f"(run {window.experiment_worker.identifier}) producing {current_device_class}-{plot_function} plot for {window.get_dataspec_name()} with options {options}")
 
     # FIXME: Final resets
     # window.longRunningBtn.setEnabled(False)
