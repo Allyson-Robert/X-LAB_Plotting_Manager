@@ -14,7 +14,7 @@ class DataSpec:
     mixed.
     """
     # TODO: properly deprecate structured, assume flat for now
-    _allowed_structure_types = ("flat", "grouped_by_dir", "structured")
+    _allowed_structure_types = ("flat", "dirlabelled", "structured")
     _accepted_extensions = ("xlsx", "xls", "csv", "txt", "dpt", "json")
 
     def __init__(self, creation_date: str):
@@ -78,14 +78,14 @@ class DataSpec:
         match type:
             case "flat":
                 return self.construct_filepaths_nrecursive(root_dir)
-            case "grouped_by_dir":
+            case "dirlabelled":
                 return self.construct_structured_filepaths(root_dir)
             case _:
-                return "Incompatible structure type"
+                return f"Incompatible structure type ({type}). Choose from {self._allowed_structure_types}"
 
     def construct_filepaths_nrecursive(self, root_dir) -> str:
         """
-        Will generate a grouped_by_dir file set and add it to the current filepaths. This will seek all files and
+        Will generate a dirlabelled file set and add it to the current filepaths. This will seek all files and
             of the giver root_dir and append all dataspec files to the filepaths attribute. Note that
             root_dir should be an absolute path.
         """
@@ -109,7 +109,7 @@ class DataSpec:
                 else:
                     errors += error_msg
         else:
-            errors = "Flat dataspec_manager cannot use grouped_by_dir construction"
+            errors = "Flat dataspec_manager cannot use dirlabelled construction"
 
         return errors
 
@@ -118,7 +118,7 @@ class DataSpec:
 
     def construct_structured_filepaths(self, root_dir: str) -> str:
         """
-        Will generate a grouped_by_dir file set and add it to the current filepaths. This will seek all files and
+        Will generate a dirlabelled file set and add it to the current filepaths. This will seek all files and
             subdirectories of the giver root_dir and append all dataspec files to the filepaths attribute. Note that
             root_dir should be an absolute path.
         """
@@ -144,7 +144,7 @@ class DataSpec:
                         else:
                             errors += error_msg
         else:
-            errors = "Flat dataspec_manager cannot use grouped_by_dir construction"
+            errors = "Flat dataspec_manager cannot use dirlabelled construction"
 
         return errors
 
