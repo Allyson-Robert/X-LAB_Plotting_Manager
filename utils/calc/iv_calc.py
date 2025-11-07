@@ -81,10 +81,16 @@ def find_crossing(x: list, y:list) -> float:
     """
         Determine interpolated y-crossing for a given numerical plot. Could be confused by excessively noisy x-data.
     """
-    # To find the y-crossing we seek the point where the x-data turns positive
-    for index in range(len(x)):
-        if x[index + 1] > 0:
+    # To find the y-crossing we seek a point where the data goes from negative to positive
+    flag_found = False
+    for index in range(len(x)-1):
+        if x[index] < 0 < x[index + 1]:
+            flag_found = True
             break
+
+    if not flag_found:
+        raise ObservableNotComputableError("IV Calc: No negative-to-positive y-crossing could be found")
+
     # Once the numerical y-crossing has been found: determine the interpolated y-crossing (x = 0)
     crossing = np.interp(0, x[index:index+2], y[index:index+2])
     return crossing
