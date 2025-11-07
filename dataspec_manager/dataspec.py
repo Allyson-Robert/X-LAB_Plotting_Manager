@@ -75,41 +75,42 @@ class DataSpec:
         warnings.warn("New function construct_filepaths_nrecursive not implemented recursively")
         # TODO: Should depend on experiment type (making structure redundant)?
         # TODO: Something about the experiment type compatibility here.
+        if type in self._allowed_structure_types:
+            self.set_structure_type(type)
+        else:
+            return f"Incompatible structure type ({type}). Choose from {self._allowed_structure_types}"
+
         match type:
             case "flat":
                 return self.construct_filepaths_nrecursive(root_dir)
             case "dirlabelled":
                 return self.construct_structured_filepaths(root_dir)
-            case _:
-                return f"Incompatible structure type ({type}). Choose from {self._allowed_structure_types}"
+
 
     def construct_filepaths_nrecursive(self, root_dir) -> str:
         """
-        Will generate a dirlabelled file set and add it to the current filepaths. This will seek all files and
+        Will generate a flat file set and add it to the current filepaths. This will seek all files and
             of the giver root_dir and append all dataspec files to the filepaths attribute. Note that
             root_dir should be an absolute path.
         """
-        # TO DO: structure should be removed
-        if self.get_structure_type() != "flat":
-            errors = ""
-            # Checks which files are contained in the root dir
-            items = natsort.natsorted(os.listdir(root_dir))
-            for item in items:
-                # Ignores duplicates
-                if item in self.filepaths.keys():
-                    errors += f"Ignored {item}: duplicate label \n"
-                    continue
 
-                # Only add valid files
-                path = f"{root_dir}/{item}"
-                is_path_valid, error_msg = self._check_valid_path(path)
-                if is_path_valid:
-                    # Use filename as path label
-                    self.add_filepath(path=path, label=Path(path).stem)
-                else:
-                    errors += error_msg
-        else:
-            errors = "Flat dataspec_manager cannot use dirlabelled construction"
+        errors = ""
+        # Checks which files are contained in the root dir
+        items = natsort.natsorted(os.listdir(root_dir))
+        for item in items:
+            # Ignores duplicates
+            if item in self.filepaths.keys():
+                errors += f"Ignored {item}: duplicate label \n"
+                continue
+
+            # Only add valid files
+            path = f"{root_dir}/{item}"
+            is_path_valid, error_msg = self._check_valid_path(path)
+            if is_path_valid:
+                # Use filename as path label
+                self.add_filepath(path=path, label=Path(path).stem)
+            else:
+                errors += error_msg
 
         return errors
 

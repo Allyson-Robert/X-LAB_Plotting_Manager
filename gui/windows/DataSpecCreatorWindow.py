@@ -123,7 +123,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
                 separators=(',', ': ')
             )
         )
-        self.dataspec.set_structure_type("dirlabelled")
+        self.dataspec.set_structure_type(active_button)
 
     def button_state(self):
         """ Only enable closing when some data was included """
