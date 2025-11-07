@@ -77,6 +77,14 @@ class CustomDatetime:
             raise ValueError("Input datetime cannot be None")
         return input_datetime.strftime(self.label_format)
 
+    def get_current_timestamp(self, now: datetime | None = None) -> str:
+        """
+        Returns a timestamp string using `label_format`, suitable for filenames.
+        Pass `now` for deterministic testing; otherwise uses current local time.
+        """
+        current = now or datetime.now()
+        return self.write_datetime_to_string(current)
+
 
 class TestCustomDatetime(unittest.TestCase):
 
@@ -150,6 +158,16 @@ class TestCustomDatetime(unittest.TestCase):
         dt_obj = sanitizer.create_datetime_from_string(test_datetime_str)
         expected_datetime = datetime(2025, 8, 12, 13, 32, 0)
         self.assertEqual(dt_obj, expected_datetime)
+
+    def test_get_current_timestamp_default_format(self):
+        sanitizer = CustomDatetime()
+        ts = sanitizer.get_current_timestamp(now=datetime(2024, 6, 14, 12, 30, 45))
+        self.assertEqual(ts, "2024_06_14_12_30_45")
+
+    def test_get_current_timestamp_custom_format(self):
+        sanitizer = CustomDatetime(label_format="%Y-%m-%d")
+        ts = sanitizer.get_current_timestamp(now=datetime(2024, 6, 14, 12, 30, 45))
+        self.assertEqual(ts, "2024-06-14")
 
 
 if __name__ == "__main__":
