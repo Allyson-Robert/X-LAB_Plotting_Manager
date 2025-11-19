@@ -21,5 +21,6 @@ def read_lbic_from_json(path: str) -> list:
     # Create x and y axis arrays based on step size and number of steps
     x = [i * step_size for i in range(x_steps)]  # mm
     y = [i * step_size for i in range(y_steps)]  # mm
+    step_size = float(step_size)/1000.0 # mm
 
-    return [x, y, z]
+    return [x, y, z, step_size]
