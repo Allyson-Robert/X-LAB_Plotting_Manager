@@ -5,7 +5,7 @@ import datetime
 import dataspec_manager
 import json
 import os
-from analysis.plotters.plotter_options import PlotterOptions
+from contracts.plotter_options import PlotterOptions
 
 # TODO: There has to be a better way
 # Read the JSON config file

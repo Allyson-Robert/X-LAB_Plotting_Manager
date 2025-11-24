@@ -1,0 +1,83 @@
+class PlotterOptions:
+    def __init__(self):
+        self.options = {}
+        # self.handlers = {}
+
+    def add_option(self, label: str, value) -> bool:
+        self.options[label] = value
+        return True
+
+    # Return option
+    def get_option(self, label: str):
+        # Check option existance before returning
+        if self.has_options(label):
+            return self.options[label]
+        else:
+            return None
+
+    # Check whether the option exists
+    def has_options(self, options_to_check):
+        # Single option will typically be a string, put in list to be handled below
+        if isinstance(options_to_check, str):
+            options_to_check = [options_to_check]
+
+        # Check if a list was passed
+        if isinstance(options_to_check, list):
+            # Verify that all listed options are present in the keys, return false for first missing option
+            for option in options_to_check:
+                if option not in self.options.keys():
+                    return False
+            return True
+        # Fail if options_to_check is neither list not string
+        else:
+            raise ValueError(f"Passed incorrect type to PlotterOptions class, {type(options_to_check)} of {options_to_check} is not list or string")
+
+    def __str__(self):
+        return_string = ''
+        for key in self.options.keys():
+            return_string += f"{key}: {self.options[key]} "
+        return return_string
+
+    def as_kwargs(self, keys=None) -> dict:
+        """
+        Return a dict of options that can be passed as **kwargs.
+        """
+
+        # No filtering: return everything
+        if keys is None:
+            return dict(self.options)
+
+        # Normalise single string to list
+        if isinstance(keys, str):
+            keys = [keys]
+
+        # Sanity check
+        try:
+            iter(keys)
+        except TypeError:
+            raise TypeError("keys must be None, a string, or an iterable of strings")
+
+        # Check all keys
+        missing = [k for k in keys if k not in self.options]
+        if missing:
+            raise KeyError(f"Requested options not present: {missing}")
+
+        # Return kwarg dict
+        return {k: self.options[k] for k in keys}
+
+    # def add_handler(self, label: str, handler: callable) -> bool:
+    #     """
+    #     Attach a custom handler for a specific option. This corresponds to a delegation of responsability
+    #     """
+    #     if label not in self.options:
+    #         raise KeyError(f"Option '{label}' must be defined before adding a handler.")
+    #     self.handlers[label] = handler
+    #     return True
+    #
+    # def apply_handler(self, label: str, *args, **kwargs):
+    #     """
+    #     Apply the handler for the given option if it exists.
+    #     """
+    #     if label in self.handlers:
+    #         return self.handlers[label](self.options[label], *args, **kwargs)
+    #     return None
