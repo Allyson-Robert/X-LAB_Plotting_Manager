@@ -1,19 +1,69 @@
 X-Lab Plotting v2.0.0
 ===========================
-Last update: **2023/03/10**
+Last update: **2025/11/25**
 
 Plotting software written while pursuing a PhD at Hasselt University. 
 This program can be used to create filesets and plot the contents of the files therein.
 
 ### Table of Contents
-* ![Installation](#Installation)
-* ![General Use](#General-Use)
-* ![How to Expand](#How-to-Expand)
-* ![Upcoming Features](#Upcoming-Features)
+* [Installation](#installation)
+* [General Use](#general-use)
+* [How to Expand](#how-to-expand)
+* [Upcoming Features](#upcoming-features)
 
 
 Installation
 ============
+
+### 1. Clone the GUI repository
+
+```bash
+git clone https://github.com/Allyson-Robert/X-LAB_Plotting_Manager.git
+cd X-LAB_Plotting_Manager
+```
+
+### 2. (Optional, recommended) Clone the Implementations repository
+
+The GUI automatically loads various classes, such as devices, data processors, and plotters from the `implementations/` directory.
+To use this plotting manager effectively you will want to implement your own version of all of these.
+These should be implemented according to the contracts available in the *contracts* submodule.
+It is therefore recommended to clone/fork the example implementation from [this](https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Implementations) repository.
+
+```bash
+git clone https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Implementations.git implementations
+```
+
+This keeps the GUI and implementations cleanly separated, allows users to version their implementation as desired.
+
+
+### 3. Create a virtual environment
+
+```bash
+python -m venv .venv
+# Activate:
+source .venv/bin/activate        # Linux/macOS
+.\.venv\Scripts\activate         # Windows
+```
+
+### 4. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+If your implementations require additional packages, install them as well.
+
+### 5. Launch the application
+
+From the project root:
+
+```bash
+python -m gui.windows.MainWindow
+```
+
+The GUI will start and automatically detect any available implementations in the `implementations/` directory.
+
+---
 
 Dependencies
 ------------
@@ -32,12 +82,13 @@ General Use
 ![Main Window](./IMG/MainWindow.png)
 
 ### Menu bar
-The menu bar contains three main submenu's: *"File"*, *"Plot Config"*, and *"Help"*
+The menu bar contains three main submenus: *"File"*, *"Plot Config"*, and *"Help"*
 
 #### File
-Most important is the *"File"* dropdown which allows the use to create, save and load filesets.
-These filesets are json files containing some metadata about any particular analysis session as well as paths
+Most important is the *"File"* dropdown which allows the use to create, save and load dataspecs.
+These dataspecs are json files containing some metadata about any particular analysis session as well as paths
 to the files used in that session.
+They should be saved as *".ds"* or *".dataspec."*
 
 #### Plot Config
 The *"Plot Config"* is currently under construction and is not yet functional.
@@ -45,10 +96,10 @@ The *"Plot Config"* is currently under construction and is not yet functional.
 #### Help
 The *"Help"* links to a basic about window and to this documentation (not yet implemented).
 
-### ExperimentDB creation
+### DataSpec creation
 ![Main Window](./IMG/DataCreationWindow.png)
 
-ExperimentDB are created by opening the Data Creation Window by navigating the menu bar *"File -> Create Set"*.
+DataSpecs are created by opening the Data Creation Window by navigating the menu bar *"File -> Create Set"*.
 Filesets must always be named and contain paths to datafiles.
 Do not forget to select the correct Experiment Type at this step.
 Adding datafiles can be done manually by browsing to the proper file and labelling each.
@@ -68,7 +119,7 @@ The experiment type is selected when a fileset is created and will alter some UI
 analysis required for the device.
 Any number of new experiments can be defined and included as needed by subclassing DeviceWorker and adding it to the GUI.
 See ![here](#How-to-Expand) for more information
-A number of experiments are included by default: Generic, Sunbrick, Stability, DW2000, LBIC, PDS, PTI.
+A Generic Experiment is included by default as an example.
 
 ### Notes
 A text window is available to add notes to a fileset if necessary.
@@ -208,19 +259,3 @@ class DataCore{
     get_allowed_observables()
 }
 ```
-
-# Upcoming features
-Here I will keep a list of features I need for the program to work well.
-
-## Database storage
-Currently, everything is recomputed every time when a dataset is loaded into the program.
-Dataset functionality will be expanded to include the current json as well as SQL databases.
-JSON datasets will keep functioning as they do now but database datasets will be able to save computed values for future use.
-
-## HTML Autosave
-The plots currently open in the browser, but sometimes you might need many plots for large datasets. 
-An option will allow you to choose between drawing the plots in the browser or saving them to a local folder.
-
-## ExperimentDB Creation redesign
-The current implementation is rather clunky and independent of the type of data that is selected.
-The automatic feature should be aware of the type of data it is aggregating in order to adjust how it works.
