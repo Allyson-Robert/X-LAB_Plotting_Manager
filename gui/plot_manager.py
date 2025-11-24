@@ -3,43 +3,21 @@ from utils.get_qwidget_value import get_qwidget_value
 from utils import constants
 import datetime
 import dataspec_manager
-import json
-import os
 from contracts.plotter_options import PlotterOptions
+import implementations
+import implementations.devices
 
-# TODO: There has to be a better way
-# Read the JSON config file
-if os.name == "nt":
-    config_file = 'gui/config_win.json'
-else:
-    config_file = 'gui/config_linux.json'
-
-with open(config_file) as f:
-    config = json.load(f)
-
-# Get the analysis package path
-analysis_path = config['analysis_path']
-
-# Get the analysis package path
-analysis_path = config['analysis_path']
-
-# Add the analysis package path to the system path and import it
-import sys
-sys.path.insert(0, analysis_path)
-sys.path.append("../..")
-import analysis.devices
-
-
-# This plot manager
-#     collects the filenames
-#     builds a custom dataspec for plotting by copying from main window
-#     collects the options
-#     instantiates Class by importing module and class
-#     grab plot_function
-#     creates, connects and starts a worker thread
-def plot_manager(window, config):
+def plot_manager(window):
     """
         This can last a long time and will therefore instantiate a QThread to leave the gui responsive.
+
+        This plot manager
+            1) collects the filenames
+            2) builds a custom dataspec for plotting by copying from main window
+            3) collects the options
+            4) instantiates Class by importing module and class
+            5) grab plot_function
+            6) creates, connects and starts a worker thread
     """
 
     # Grab the selected files for plotting and build a reduced dataspec
@@ -78,7 +56,7 @@ def plot_manager(window, config):
 
     # Instantiate proper device class and set the data
     current_device_class = window.dataspec.get_device()
-    device_module = getattr(analysis.devices.workers, current_device_class.lower())
+    device_module = getattr(implementations.devices.workers, current_device_class.lower())
     experiment_cls = getattr(device_module, current_device_class)
 
     # # Grab the correct plotting function and pass all options to it

@@ -1,11 +1,16 @@
 # Main.py
+
+WINDOW_PATH = "gui/windows/MainWindow.ui"
+DEVICE_PATH = "implementations/devices/"
+WIDGET_PATH = DEVICE_PATH + "widgets/"
+LOGO_PATH = "gui/logos/"
+
 import importlib
 from PyQt5 import QtWidgets, uic, QtCore
 import datetime
 import json
 import logging
 import sys
-import os
 import dataspec_manager
 import utils
 from utils.class_utils.get_class_methods import get_class_methods
@@ -26,23 +31,8 @@ from gui.plot_manager import plot_manager
 
 from functools import partial
 
-# Read the JSON config file
-if os.name == "nt":
-    config_file = 'gui/config_win.json'
-else:
-    config_file = 'gui/config_linux.json'
-
-with open(config_file) as f:
-    config = json.load(f)
-
-# Get the analysis package path
-analysis_path = config['analysis_path']
-
-# # Add the analysis package path to the system path and import it
-# sys.path.insert(0, analysis_path)
-# sys.path.append("../..")
-import analysis.devices as devices
-
+import implementations
+import implementations.devices as devices
 
 # Added a comment
 class UiMainWindow(QtWidgets.QMainWindow):
@@ -61,7 +51,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Load the UI, Note that loadUI adds objects to 'self' using objectName
         self.dataWindow = None
-        uic.loadUi("gui/windows/MainWindow.ui", self)
+        uic.loadUi(WINDOW_PATH, self)
 
         # Create/Get a logger with the desired settings
         self.logger = logging.getLogger(constants.LOG_NAME)
@@ -72,7 +62,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
             )
         )
         self.logger.addHandler(self.consoleTextEdit)
-        log_level = getattr(utils.logging, config["log_level"])
+        # log_level = getattr(utils.logging, config["log_level"])
+        log_level = "INFO"
         self.logger.setLevel(log_level)
 
         self.plot_functions = {}
@@ -82,7 +73,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         for entry in devices.__all__:
             # Find and load the widget for any given device and add it to the stackedWidget
             entry_ui_file = entry.lower() + ".ui"
-            entry_widget = uic.loadUi(config["devices_path"] + "widgets/" + entry_ui_file)
+            entry_widget = uic.loadUi(WIDGET_PATH + entry_ui_file)
             entry_index = self.stackedWidget.addWidget(entry_widget)
             self.devices[entry] = entry_index
 
@@ -126,7 +117,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.quitBtn.clicked.connect(self.quit)
 
         # Define stackedWidget widget actions
-        self.plotBtn.clicked.connect(partial(plot_manager, window=self, config=config))
+        self.plotBtn.clicked.connect(partial(plot_manager, window=self))
 
         # Make sure the progress bar is cleared
         self.progressBar.setValue(0)
@@ -263,16 +254,10 @@ class UiMainWindow(QtWidgets.QMainWindow):
         with open("../about.txt") as about_file:
             about_contents = about_file.read()
 
-        about_dialog = generate_about_dialog(about_contents, self.centralWidget(), config)
+        about_dialog = generate_about_dialog(about_contents, self.centralWidget(), LOGO_PATH)
 
         # Show the about dialog
         about_dialog.exec_()
-
-    def reload_preferences(self):
-        # Read the JSON config file
-        with open(config_file) as f:
-            config = json.load(f)
-        self.console_print("Preferences loaded from config file")
 
     def not_implemented(self):
         """
