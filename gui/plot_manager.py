@@ -10,9 +10,9 @@ from contracts.plotter_options import PlotterOptions
 # TODO: There has to be a better way
 # Read the JSON config file
 if os.name == "nt":
-    config_file = 'config_win.json'
+    config_file = 'gui/config_win.json'
 else:
-    config_file = 'config_linux.json'
+    config_file = 'gui/config_linux.json'
 
 with open(config_file) as f:
     config = json.load(f)

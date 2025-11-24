@@ -28,9 +28,9 @@ from functools import partial
 
 # Read the JSON config file
 if os.name == "nt":
-    config_file = 'config_win.json'
+    config_file = 'gui/config_win.json'
 else:
-    config_file = 'config_linux.json'
+    config_file = 'gui/config_linux.json'
 
 with open(config_file) as f:
     config = json.load(f)
@@ -61,7 +61,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Load the UI, Note that loadUI adds objects to 'self' using objectName
         self.dataWindow = None
-        uic.loadUi("windows/MainWindow.ui", self)
+        uic.loadUi("gui/windows/MainWindow.ui", self)
 
         # Create/Get a logger with the desired settings
         self.logger = logging.getLogger(constants.LOG_NAME)

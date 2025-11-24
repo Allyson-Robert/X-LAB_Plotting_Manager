@@ -21,7 +21,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
 
         # Load the UI,
         # Note that loadUI adds objects to 'self' using objectName
-        uic.loadUi("windows/DataSpecCreatorWindow.ui", self)
+        uic.loadUi("gui/windows/DataSpecCreatorWindow.ui", self)
 
         self.dataspec = dataspec_manager.DataSpec(datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S"))
 
