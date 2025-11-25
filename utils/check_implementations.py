@@ -30,6 +30,7 @@ def check_implementations() -> None:
     modules = _import_impl_modules()
     _check_contract_implementations(modules)
     _check_device_ui_files(impl_root, modules["devices_workers"])
+    _check_config_file(impl_root)
 
 
 # --------------------------------------------------------------------------- #
@@ -245,3 +246,12 @@ def _check_device_ui_files(impl_root: Path, devices_pkg: object) -> None:
             "the correct file name.",
         ]
         raise FileNotFoundError("\n".join(lines))
+
+def _check_config_file(impl_root: Path) -> None:
+    """Check that the config.json file exists in the implementations root."""
+    config_path = impl_root / "config.json"
+    if not config_path.exists():
+        raise FileNotFoundError(
+            f"Configuration file not found:\n  {config_path}\n"
+            "Create this file to define default settings for the implementations."
+        )

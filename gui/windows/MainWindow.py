@@ -9,6 +9,7 @@ from functools import partial
 import dataspec_manager
 from utils.class_utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
+from utils.read_config import read_config
 
 # Local gui imports
 from gui.dialogs.generate_about_dialog import generate_about_dialog
@@ -77,6 +78,10 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.dataWindow = None
         uic.loadUi(constants.WINDOW_PATH, self)
 
+        # Read the config file
+        self.config = read_config(constants.CONFIG_PATH)
+        print(self.config.keys())
+
         # Create/Get a logger with the desired settings
         self.logger = logging.getLogger(constants.LOG_NAME)
         self.consoleTextEdit.setFormatter(
@@ -86,7 +91,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             )
         )
         self.logger.addHandler(self.consoleTextEdit)
-        self.logger.setLevel(constants.LOG_LEVEL)
+        self.logger.setLevel(self.config['log_level'])
 
         self.plot_functions = {}
         self.devices = {}
