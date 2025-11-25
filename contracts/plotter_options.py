@@ -20,7 +20,10 @@ class PlotterOptions:
         # self.handlers = {}
 
     def add_option(self, label: str, value) -> bool:
-        self.options[label] = value
+        if label not in self.options.keys():
+            self.options[label] = value
+        else:
+            raise KeyError(f"Option with label {label} already exists in PlotterOptions")
         return True
 
     # Return option
