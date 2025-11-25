@@ -2,6 +2,9 @@ from json import JSONEncoder
 import datetime
 
 
+from utils.logging import decorate_class_with_logging, DEBUG
+
+@decorate_class_with_logging(log_level=DEBUG)
 class DataSpecJSONEncoder(JSONEncoder):
     """
     JSON encoder for `DataSpec` objects and related dataclasses.

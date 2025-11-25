@@ -3,6 +3,9 @@ from json import JSONDecoder
 import traceback
 
 
+from utils.logging import decorate_class_with_logging, DEBUG
+
+@decorate_class_with_logging(log_level=DEBUG)
 class DataSpecJSONDecoder(JSONDecoder):
     """
     Custom JSON decoder that reconstructs `DataSpec` instances from JSON.

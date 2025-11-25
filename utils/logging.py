@@ -3,6 +3,7 @@ import functools
 from typing import Callable, Any
 from implementations.utils import constants
 
+DEBUG = 10
 DEBUG_DATA_TYPE = 11
 DEBUG_DATA_PROCESSOR = 12
 DEBUG_PLOTTER = 13

@@ -3,8 +3,9 @@ from pathlib import Path
 import natsort
 from datetime import datetime
 import warnings
+from utils.logging import decorate_class_with_logging, DEBUG
 
-
+@decorate_class_with_logging(log_level=DEBUG)
 class DataSpec:
     """
     Lightweight container for experiment metadata and associated data file locations.
