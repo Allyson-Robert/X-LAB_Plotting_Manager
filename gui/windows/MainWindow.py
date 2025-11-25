@@ -26,9 +26,16 @@ from gui.dialogs.dialog_print import dialog_print
 # Plot manager imports
 from gui.plot_manager import plot_manager
 
-from functools import partial
+# Check that the implementations package is available and complete
+from utils.check_implementations import check_implementations, ImplementationError
+try:
+    check_implementations()
+except (ImportError, FileNotFoundError, ImplementationError) as exc:
+    print("Cannot start GUI, implementations package not found or incomplete.")
+    raise exc
 
 import implementations.devices as devices
+from implementations.utils import constants
 
 class UiMainWindow(QtWidgets.QMainWindow):
     """
