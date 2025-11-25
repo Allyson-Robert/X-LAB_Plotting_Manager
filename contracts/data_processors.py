@@ -60,7 +60,7 @@ class DataProcessorCore(DataProcessor):
         self._processing_functions = {
             "elapsed_time": self.elapsed_time
         }
-        self.processed_data = {}
+        self.processed_data: dict[str, Observable] = {}
         for key in self._processing_functions:
             self.processed_data[key] = None
 

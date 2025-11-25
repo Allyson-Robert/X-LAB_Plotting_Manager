@@ -3,6 +3,7 @@ from dataspec_manager.dataspec import DataSpec
 from PyQt5 import QtCore
 import uuid
 from utils.logging import DEBUG_WORKER, decorate_class_with_logging
+from contracts.plotter_options import PlotterOptions
 
 
 # This custom metaclass is needed to make ABC and QObject multiple inheritance possible
@@ -78,7 +79,7 @@ class DeviceWorkerCore(DeviceWorker):
     finished = QtCore.pyqtSignal()
     progress = QtCore.pyqtSignal(int)
 
-    def __init__(self, device, dataspec, plot_type, options):
+    def __init__(self, device, dataspec, plot_type, options: PlotterOptions):
         super().__init__()
 
         self.device = device

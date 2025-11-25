@@ -62,7 +62,7 @@ class DataCore(Data):
     """
     raw_data: dict[str, Observable]
     def __init__(self, file_reader: FileReaderFn):
-        self.raw_data = {}
+        self.raw_data: dict[str, Observable] = {}
         self._allowed_observables = {}
         self.file_reader = file_reader
 
