@@ -19,18 +19,29 @@ class ConsoleLogging:
         self.logger.log(level, message)
 
 
-def with_logging(func: Callable[..., Any], log_level: int = 10) -> Callable[..., Any]:
-    @functools.wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> Any:
-        # FIXME: Logger name is magic string
-        logger = logging.getLogger(constants.LOG_NAME)
+def with_logging(func=None, *, log_level: int = 10):
+    """
+    Logging decorator usable as:
+        @with_logging
+        @with_logging()
+        @with_logging(log_level=...)
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            logger = logging.getLogger(constants.LOG_NAME)
+            logger.log(log_level, f"Calling {func.__qualname__}")
+            value = func(*args, **kwargs)
+            logger.log(log_level, f"Finished calling {func.__qualname__}")
+            return value
+        return wrapper
 
-        logger.log(log_level, f"Calling {func.__qualname__}")
-        value = func(*args, **kwargs)
-        logger.log(log_level, f"Finished calling {func.__qualname__}")
+    # CASE 1: @with_logging  → func is the decorated function
+    if callable(func):
+        return decorator(func)
 
-        return value
-    return wrapper
+    # CASE 2: @with_logging(...) → func is None, return real decorator
+    return decorator
 
 from types import FunctionType
 
