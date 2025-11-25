@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import os
 from utils.custom_datetime import CustomDatetime
+from contracts.observable import Observable
 
 # Abstract class_utils for all data types
 class Data(ABC):
@@ -51,6 +52,7 @@ class DataCore(Data):
         Subclasses must implement `read_file` and populate `raw_data` / `_allowed_observables`.
         `get_data` raises ValueError for unsupported observables.
     """
+    raw_data: dict[str, Observable]
     def __init__(self):
         self.raw_data = {}
         self._allowed_observables = {}
