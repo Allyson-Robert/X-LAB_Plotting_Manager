@@ -4,6 +4,7 @@ from utils.custom_datetime import CustomDatetime
 from contracts.observable import Observable
 from contracts.file_readers import FileReaderFn
 from typing import Any
+from utils.logging import DEBUG_DATA_TYPE, decorate_class_with_logging
 
 # Abstract class_utils for all data types
 class Data(ABC):
@@ -39,6 +40,7 @@ class Data(ABC):
 
 
 # Master class_utils with implementation of 1) get_data, 2) get_units and 3) get_allowed_observables
+@decorate_class_with_logging(log_level=DEBUG_DATA_TYPE)
 class DataCore(Data):
     """
         Base implementation providing common behaviors for data types.

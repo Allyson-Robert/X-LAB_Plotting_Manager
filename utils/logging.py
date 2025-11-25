@@ -31,10 +31,59 @@ def with_logging(func: Callable[..., Any], log_level: int = 10) -> Callable[...,
         return value
     return wrapper
 
-def decorate_abc_with_debug_logging(cls, list_of_methods, log_level):
-    for function_to_wrap in list_of_methods:
-        setattr(
-            cls,
-            function_to_wrap,
-            with_logging(cls.__dict__[function_to_wrap], log_level=log_level)
-        )
+from types import FunctionType
+
+def decorate_class_with_logging(
+    log_level: int = 10,
+    include: set[str] | None = None,
+    exclude: set[str] | None = None,
+):
+    """
+    Class decorator that wraps explicitly defined *methods* on a class
+    with `with_logging`, without touching Qt signals or other descriptors.
+
+    - Only items in `cls.__dict__` that are real functions (or class/staticmethods)
+      are wrapped.
+    - By default, public methods (no leading underscore) are wrapped.
+    - You can narrow/adjust behaviour with `include` / `exclude`.
+    """
+
+    def decorator(cls):
+        for name, attr in cls.__dict__.items():
+            # unwrap classmethod / staticmethod
+            is_classmethod = isinstance(attr, classmethod)
+            is_staticmethod = isinstance(attr, staticmethod)
+            func = attr.__func__ if (is_classmethod or is_staticmethod) else attr
+
+            # only wrap *real* functions, not pyqtSignal, properties, etc.
+            if not isinstance(func, FunctionType):
+                continue
+
+            # skip dunder + private-ish names
+            if name.startswith("__") and name.endswith("__"):
+                continue
+            if name.startswith("_"):
+                continue
+
+            # optional filters
+            if include is not None and name not in include:
+                continue
+            if exclude is not None and name in exclude:
+                continue
+
+            # your existing with_logging(func, log_level=...)
+            wrapped_func = with_logging(func, log_level=log_level)
+
+            # re-wrap as classmethod/staticmethod if needed
+            if is_classmethod:
+                wrapped_attr = classmethod(wrapped_func)
+            elif is_staticmethod:
+                wrapped_attr = staticmethod(wrapped_func)
+            else:
+                wrapped_attr = wrapped_func
+
+            setattr(cls, name, wrapped_attr)
+
+        return cls
+
+    return decorator

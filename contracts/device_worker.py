@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from dataspec_manager.dataspec import DataSpec
 from PyQt5 import QtCore
 import uuid
+from utils.logging import DEBUG_WORKER, decorate_class_with_logging
 
 
 # This custom metaclass is needed to make ABC and QObject multiple inheritance possible
@@ -57,7 +58,7 @@ class DeviceWorker(ABC, QtCore.QObject, metaclass=WorkerMeta):
     def set_processor_type(self, processor_type):
         pass
 
-
+@decorate_class_with_logging(log_level=DEBUG_WORKER)
 class DeviceWorkerCore(DeviceWorker):
     """
         Concrete worker base implementing common setup and progress handling.

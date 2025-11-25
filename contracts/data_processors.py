@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from contracts.data_types import Data
 from contracts.observable import Observable
 from typing import Callable, Any
+from utils.logging import  DEBUG_DATA_PROCESSOR, decorate_class_with_logging
 
 
 class DataProcessor(ABC):
@@ -32,7 +33,7 @@ class DataProcessor(ABC):
     def validate_observables(self, *args, **kwargs) -> None:
         pass
 
-
+@decorate_class_with_logging(log_level=DEBUG_DATA_PROCESSOR)
 class DataProcessorCore(DataProcessor):
     """
        Default on‑demand processing core for derived observables.

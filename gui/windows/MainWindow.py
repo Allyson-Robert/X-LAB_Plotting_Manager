@@ -86,9 +86,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             )
         )
         self.logger.addHandler(self.consoleTextEdit)
-        # log_level = getattr(utils.logging, config["log_level"])
-        log_level = "INFO"
-        self.logger.setLevel(log_level)
+        self.logger.setLevel(constants.LOG_LEVEL)
 
         self.plot_functions = {}
         self.devices = {}

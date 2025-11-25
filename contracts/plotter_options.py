@@ -1,3 +1,6 @@
+from utils.logging import DEBUG_PLOTTER, decorate_class_with_logging
+
+@decorate_class_with_logging(log_level=DEBUG_PLOTTER)
 class PlotterOptions:
     """
     Small, dictionary-backed container for named plotter options.
