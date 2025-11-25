@@ -1,26 +1,30 @@
-# Main.py
-
-import importlib
+# Generic dependency imports
+import importlib, datetime, json, logging, sys
 from PyQt5 import QtWidgets, uic, QtCore
-import datetime
-import json
-import logging
-import sys
+
+# Functional programming imports
+from functools import partial
+
+# Local imports
 import dataspec_manager
 from utils.class_utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
 from implementations.utils import constants
 
+# Local gui imports
 from gui.dialogs.generate_about_dialog import generate_about_dialog
 from gui.clear.clear_data import clear_data
 from gui.clear.clear_all import clear_all
 
+# Dataspec file imports
 from gui.dataspec_tools.load_dataspec import open_dataspec_file
 from gui.dataspec_tools.save_dataspec import save_dataspec
 from gui.dataspec_tools.create_dataspec import create_dataspec
 
+# Dialog imports
 from gui.dialogs.dialog_print import dialog_print
 
+# Plot manager imports
 from gui.plot_manager import plot_manager
 
 from functools import partial
