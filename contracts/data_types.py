@@ -3,6 +3,7 @@ import os
 from utils.custom_datetime import CustomDatetime
 from contracts.observable import Observable
 from contracts.file_readers import FileReaderFn
+from typing import Any
 
 # Abstract class_utils for all data types
 class Data(ABC):
@@ -72,7 +73,7 @@ class DataCore(Data):
         filename = os.path.basename(filepath)
         self.raw_data['datetime'] = {"units": None, "data": datetime.create_datetime_from_string(filename)}
 
-    def get_data(self, observable: str):
+    def get_data(self, observable: str) -> Any:
         if observable in self._allowed_observables:
             return self.raw_data[observable]['data']
         else:

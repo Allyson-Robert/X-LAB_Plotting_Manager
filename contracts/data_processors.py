@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 from contracts.data_types import Data
+from contracts.observable import Observable
+from typing import Callable
 
 
 class DataProcessor(ABC):
@@ -19,7 +21,7 @@ class DataProcessor(ABC):
         """
 
     @abstractmethod
-    def get_data(self, observable: str):
+    def get_data(self, observable: str) -> Any:
         pass
 
     @abstractmethod
@@ -48,6 +50,9 @@ class DataProcessorCore(DataProcessor):
            Register per-observable processing functions in `_processing_functions`
            and ensure they return `{"units": str, "data": ...}`.
        """
+
+    processed_data: dict[str, Observable]
+    processing_functions: dict[str, Callable]
 
     def __init__(self, data: Data):
         self.data = data
@@ -95,7 +100,7 @@ class DataProcessorCore(DataProcessor):
         """
         pass
 
-    def elapsed_time(self, *args, **kwargs):
+    def elapsed_time(self, *args, **kwargs) -> Observable:
         # Get a reference timestamp from *args
         reference_datetime = kwargs["experiment_datetime"]
         data_datetime = self.get_data("datetime")
