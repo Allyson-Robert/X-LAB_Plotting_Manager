@@ -4,6 +4,21 @@ import dataspec_manager as fs
 
 
 def save_dataspec(window: QtWidgets.QMainWindow):
+    """
+    Save the currently loaded dataspec to disk using a file dialog.
+
+    Behaviour:
+    - Ensures a dataspec is loaded before saving.
+    - Opens a save-file dialog and writes the dataspec via `DataSpecJSONEncoder`.
+    - Auto-appends a valid extension if necessary.
+    - Updates the stored dataspec location and logs status messages.
+
+    Parameters
+    ----------
+    window : QMainWindow
+        GUI window containing the active dataspec.
+    """
+
     # Make sure there is a dataspec to save
     if window.get_dataspec_name() is None:
         return window.console_print("Err: Must first load dataspec", level="warning")

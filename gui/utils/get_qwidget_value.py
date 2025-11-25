@@ -10,7 +10,24 @@ def _cast_none_string_to_none_type(string: str):
 
 def get_qwidget_value(widget):
     """
-        Fetches the value of any the following QWidget types: QSpinbox, QCheckBox, QLineEdit
+    Extract the current value from common Qt widget types.
+
+    Supported widgets:
+    - QDoubleSpinBox / QSpinBox → numeric value
+    - QCheckBox → boolean `isChecked`
+    - QLineEdit / QComboBox → text, with "None"/"none" mapped to `None`
+
+    Raises `NotImplementedError` if the widget type is unsupported.
+
+    Parameters
+    ----------
+    widget : QWidget
+        The widget whose value should be extracted.
+
+    Returns
+    -------
+    Any
+        The widget's value in a Python-friendly type.
     """
     assert isinstance(widget, QtWidgets.QWidget)
 

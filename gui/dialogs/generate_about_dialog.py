@@ -2,6 +2,28 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 
 
 def generate_about_dialog(about_contents, centralwidget, logo_path):
+    """
+    Build and return an 'About' information dialog containing a logo and text.
+
+    Features:
+    - Displays an application logo loaded via QPixmap.
+    - Shows about text with HTML formatting support.
+    - Uses a fixed-size vertical layout.
+
+    Parameters
+    ----------
+    about_contents : str
+        HTML/markdown-like text describing the application.
+    centralwidget : QWidget
+        Parent widget for modal behavior.
+    logo_path : str
+        Directory path to the logo image file.
+
+    Returns
+    -------
+    QDialog
+        Configured dialog ready to be shown.
+    """
     # Create a custom QDialog for the about information
     about_dialog = QtWidgets.QDialog(centralwidget)
     about_dialog.setWindowTitle("About")

@@ -6,7 +6,23 @@ from gui.dataspec_tools.save_dataspec import save_dataspec
 
 
 def create_dataspec(window: QtWidgets.QMainWindow):
-    # Run the DataCreatorWindow
+    """
+    Launch the DataSpec creation dialog and construct a new dataspec from user input.
+
+    Workflow:
+    - Opens the DataSpec creator window populated with available devices.
+    - On confirmation:
+        * Clears existing state.
+        * Stores the newly created dataspec.
+        * Loads it into the GUI and updates the header.
+        * Immediately saves it to disk.
+    - If cancelled, informs the user that no dataspec was created.
+
+    Parameters
+    ----------
+    window : QMainWindow
+        Main application window controlling dataspec creation.
+    """
     window.set_dataspec_window(gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow(devices = [k for k in window.devices]))
     window.get_dataspec_window().show()
 

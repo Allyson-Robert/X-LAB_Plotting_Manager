@@ -2,6 +2,23 @@ from PyQt5 import QtWidgets
 
 
 def dialog_print(window: QtWidgets.QMainWindow, title, contents):
+    """
+    Display text content inside a modal dialog with optional saving.
+
+    The dialog contains:
+    - A read-only text editor showing `contents`.
+    - “OK” to close the dialog.
+    - “SAVE” to delegate saving via `window.save_to_file`.
+
+    Parameters
+    ----------
+    window : QMainWindow
+        Parent window providing the save callback.
+    title : str
+        Dialog title bar text.
+    contents : str
+        Text content to display.
+    """
     # Prepare a text edit widget to host the contents
     history_text_edit = QtWidgets.QTextEdit(window)
     history_text_edit.setPlainText(contents)

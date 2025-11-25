@@ -9,6 +9,25 @@ import dataspec_manager
 
 # TODO: BUGFIX: Assumed notes and console are attributes and knows what they look like, same with plotTypeCombo
 def open_dataspec_file(window: QtWidgets.QMainWindow, file_name: str = None):
+    """
+    Open a dataspec JSON file, load it into memory, and refresh the GUI.
+
+    Behaviour:
+    - Prompts the user for a file if no path is provided.
+    - Clears existing dataspec state.
+    - Loads the JSON file using `DataSpecJSONDecoder`.
+    - Updates notes, file list, plot options, and header display.
+
+    If loading fails due to an incompatible device type, the GUI is reset and a
+    warning is printed.
+
+    Parameters
+    ----------
+    window : QMainWindow
+        GUI wrapper holding the active dataspec.
+    file_name : str, optional
+        JSON file path. If omitted, a file dialog is opened.
+    """
     # Choose file if not specified
     if file_name is None:
         file_name = QtWidgets.QFileDialog.getOpenFileName(
@@ -44,6 +63,24 @@ def open_dataspec_file(window: QtWidgets.QMainWindow, file_name: str = None):
 
 @with_logging
 def load_dataspec(window: QtWidgets.QMainWindow):
+    """
+    Populate the GUI with data from the currently loaded dataspec.
+
+    Actions:
+    - Adds all dataspec labels to the file selection list.
+    - Selects all items by default.
+    - Populates the plot-type combobox with device-appropriate plotting functions.
+
+    Raises
+    ------
+    IncompatibleDeviceTypeFound
+        If the dataspec’s device type does not match available plot handlers.
+
+    Parameters
+    ----------
+    window : QMainWindow
+        GUI instance holding a loaded dataspec.
+    """
     # Add all top level keys to the selection list of the gui
     for label in window.dataspec.get_labels():
         window.selectedFilesList.addItem(label)

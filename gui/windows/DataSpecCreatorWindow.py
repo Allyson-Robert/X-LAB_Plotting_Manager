@@ -5,7 +5,7 @@ import datetime
 import json
 import sys
 
-from gui.utils.search_for_active_radio_button import search_for_active_radio_button
+from gui.utils.search_for_active_radio_button import search_for_first_active_radio_button
 from gui.utils.split_camelCase import split_camel_case
 
 # FEATURE REQUEST: Allow multiple device types to be compatible with the same set
@@ -108,7 +108,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
             return None
 
         # Construct the filepaths for this dataspec
-        active_button = split_camel_case(search_for_active_radio_button(self).objectName())[0]
+        active_button = split_camel_case(search_for_first_active_radio_button(self).objectName())[0]
         errors = self.dataspec.construct_filepaths(root_dir=path, type=active_button)
 
         # Show the directories/files that were ignored to the user
