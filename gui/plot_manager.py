@@ -9,16 +9,31 @@ import implementations.devices
 
 def plot_manager(window):
     """
-        This can last a long time and will therefore instantiate a QThread to leave the gui responsive.
+        Orchestrate a plotting run in a background thread to keep the GUI responsive.
 
-        This plot manager
-            1) collects the filenames
-            2) builds a custom dataspec for plotting by copying from main window
-            3) collects the options
-            4) instantiates Class by importing module and class
-            5) grab plot_function
-            6) creates, connects and starts a worker thread
-    """
+        Workflow
+        --------
+        1. Collect the selected file labels from the main window.
+        2. Build a reduced `DataSpec` containing only the selected files, colours,
+           device, structure type, and name.
+        3. Collect plotting options from the active device widget (via `alias`
+           properties) and from global GUI controls, storing them in `PlotterOptions`.
+        4. Resolve and instantiate the appropriate device worker class from the
+           `implementations.devices.workers` namespace.
+        5. Configure the worker with the reduced dataspec, selected plot function,
+           and options.
+        6. Move the worker to a `QThread`, wire up progress/finished signals, and
+           start the thread.
+
+        The function logs a concise summary of the run (including a short run
+        identifier) to the GUI console once the worker is started.
+
+        Parameters
+        ----------
+        window : QMainWindow
+            Main application window providing access to the dataspec, widgets
+            (file selection, stacked options, checkboxes, etc.), and console API.
+        """
 
     # Grab the selected files for plotting and build a reduced dataspec
     dataspec_time = datetime.datetime.now().strftime(constants.DATETIME_FORMAT)

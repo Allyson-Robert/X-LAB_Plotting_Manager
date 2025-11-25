@@ -4,8 +4,24 @@ from PyQt5 import QtCore, QtWidgets
 
 class QTextEditConsole(logging.Handler, QtWidgets.QTextEdit):
     """
-    Subclass of QTextEdit that can serve as a console for the gui.
-    This subclasses both QTextEdit and logging.Handler in order to be used with the logging module.
+    QTextEdit-based logging console widget for the GUI.
+
+    This class bridges the `logging` module with a Qt text widget by:
+    - Subclassing both `logging.Handler` and `QTextEdit`.
+    - Emitting formatted log messages through a dedicated Qt signal
+      (`appendTextEdit`), which is connected to the widget's `append` slot.
+    - Keeping the text area read-only so it behaves like a console.
+
+    Typical usage
+    -------------
+    - Create an instance and add it as a handler to a `logging.Logger`.
+    - Configure a formatter for the handler.
+    - Logged messages will appear in the GUI with the configured format.
+
+    Parameters
+    ----------
+    parent : QWidget
+        Parent widget that will own this console.
     """
     appendTextEdit = QtCore.pyqtSignal(str)
 
