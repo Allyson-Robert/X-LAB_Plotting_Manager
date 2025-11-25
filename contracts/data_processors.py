@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from contracts.data_types import Data
 from contracts.observable import Observable
-from typing import Callable
+from typing import Callable, Any
 
 
 class DataProcessor(ABC):
