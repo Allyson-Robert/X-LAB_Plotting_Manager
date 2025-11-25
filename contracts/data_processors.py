@@ -21,15 +21,15 @@ class DataProcessor(ABC):
         """
 
     @abstractmethod
-    def get_data(self, observable: str) -> Any:
+    def get_data(self, observable: str, *args, **kwargs) -> Any:
         pass
 
     @abstractmethod
-    def get_units(self, observable: str) -> str:
+    def get_units(self, observable: str, *args, **kwargs) -> str:
         pass
 
     @abstractmethod
-    def validate_observables(self, *args) -> None:
+    def validate_observables(self, *args, **kwargs) -> None:
         pass
 
 
@@ -93,7 +93,7 @@ class DataProcessorCore(DataProcessor):
             raise ValueError(f"{self.__class__.__name__} does not contain {observable} data")
 
     @abstractmethod
-    def validate_observables(self, *args) -> None:
+    def validate_observables(self, *args, **kwargs) -> None:
         """
             This function will check whether all requested observables are available.
             This should be implemented by the individual subclasses
