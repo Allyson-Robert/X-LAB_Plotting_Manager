@@ -132,7 +132,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.quitBtn.clicked.connect(self.quit)
 
         # Define stackedWidget widget actions
-        self.plotBtn.clicked.connect(partial(plot_manager, window=self))
+        self.plotBtn.clicked.connect(partial(plot_manager, self))
 
         # Make sure the progress bar is cleared
         self.progressBar.setValue(0)

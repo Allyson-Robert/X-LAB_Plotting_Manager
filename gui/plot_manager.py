@@ -6,8 +6,10 @@ import dataspec_manager
 from contracts.plotter_options import PlotterOptions
 import implementations
 import implementations.devices
+from utils.logging import with_logging
 
-def plot_manager(window):
+@with_logging
+def plot_manager(window, *args, **kwargs):
     """
         Orchestrate a plotting run in a background thread to keep the GUI responsive.
 
