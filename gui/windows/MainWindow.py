@@ -7,7 +7,6 @@ import json
 import logging
 import sys
 import dataspec_manager
-import utils
 from utils.class_utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
 from utils import constants
@@ -71,13 +70,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
             entry_widget = uic.loadUi(constants.WIDGET_PATH + entry_ui_file)
             entry_index = self.stackedWidget.addWidget(entry_widget)
             self.devices[entry] = entry_index
-
-            # TODO REMOVE: Load any functionality if needed
-            # entry_functionality_file = config["devices_path"] + "functionality/" + entry.lower() + ".py"
-            # if os.path.exists(entry_functionality_file):
-            #     functionality = importlib.import_module(f"{devices.functionality.__name__}.{entry.lower()}")
-            #     entry_functionality = getattr(functionality, entry)
-            #     entry_functionality(entry_widget)
 
             # Import the corresponding module and get the class methods to set the plot_functions combobox when needed
             module = importlib.import_module(f"{devices.workers.__name__}.{entry.lower()}")
