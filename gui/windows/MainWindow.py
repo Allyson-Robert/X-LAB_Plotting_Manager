@@ -110,9 +110,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
 
         # Define menubar actions
-        self.actionCreate_Set.triggered.connect(partial(create_dataspec, window=self))
-        self.actionSave_Set.triggered.connect(partial(save_dataspec, window=self))
-        self.actionLoad_Set.triggered.connect(partial(open_dataspec_file, window=self))
+        self.actionCreate_Set.triggered.connect(partial(create_dataspec, self))
+        self.actionSave_Set.triggered.connect(partial(save_dataspec, self))
+        self.actionLoad_Set.triggered.connect(partial(open_dataspec_file, self))
         self.actionPreferences.triggered.connect(self.not_implemented)
         self.actionQuit.triggered.connect(self.quit)
 
@@ -142,11 +142,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Show the app
         self.show()
         self.console_print("Program Started")
-
-        # Start the demo if it is specified
-        if demo_file_name is not None:
-            print("Starting demo")
-            open_dataspec_file(self, demo_file_name)
 
     # Getters
     def get_plot_functions(self, device='Generic') -> list:

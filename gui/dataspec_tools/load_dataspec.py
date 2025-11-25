@@ -7,7 +7,7 @@ import dataspec_manager
 
 
 # TODO: BUGFIX: Assumed notes and console are attributes and knows what they look like, same with plotTypeCombo
-def open_dataspec_file(window: QtWidgets.QMainWindow, file_name: str = None):
+@with_logging
 def open_dataspec_file(window: QtWidgets.QMainWindow, *args, **kwargs):
     """
     Open a dataspec JSON file, load it into memory, and refresh the GUI.

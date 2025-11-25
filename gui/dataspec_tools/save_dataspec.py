@@ -1,9 +1,10 @@
 from PyQt5 import QtWidgets
 import json
 import dataspec_manager as fs
+from utils.logging import with_logging
 
-
-def save_dataspec(window: QtWidgets.QMainWindow):
+@with_logging
+def save_dataspec(window: QtWidgets.QMainWindow, *args, **kwargs):
     """
     Save the currently loaded dataspec to disk using a file dialog.
 
