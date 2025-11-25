@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets, QtCore
-from utils.get_qwidget_value import get_qwidget_value
+from gui.utils.get_qwidget_value import get_qwidget_value
 from utils import constants
 import datetime
 import dataspec_manager
