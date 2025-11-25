@@ -17,12 +17,12 @@ class PlotterOptions:
     """
     def __init__(self):
         self.options = {}
-        # self.handlers = {}
 
     def add_option(self, label: str, value) -> bool:
-        if label not in self.options.keys():
+        """ Add option if it does not already exist, if it does and the values conflict raise KeyError """
+        if not self.has_options(label):
             self.options[label] = value
-        else:
+        elif self.get_option(label) != value:
             raise KeyError(f"Option with label {label} already exists in PlotterOptions")
         return True
 
