@@ -1,5 +1,5 @@
 """
-File reader contracts.
+File reader contracts for use by DataCore and DataProcessingCore.
 
 Defines the canonical function signature and return type used by all
 file readers in the X-LAB plotting ecosystem.
