@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import os
 from utils.custom_datetime import CustomDatetime
 from contracts.observable import Observable
+from contracts.file_readers import FileReaderFn
 
 # Abstract class_utils for all data types
 class Data(ABC):
@@ -39,23 +40,28 @@ class Data(ABC):
 # Master class_utils with implementation of 1) get_data, 2) get_units and 3) get_allowed_observables
 class DataCore(Data):
     """
-    Base implementation providing common behaviors for data types.
+        Base implementation providing common behaviors for data types.
 
-    Overview:
-        Supplies shared storage and partial method implementations useful to subclasses.
+        Overview:
+            Supplies shared storage and partial method implementations useful to subclasses.
 
-    - Manages `raw_data` and `_allowed_observables`.
-    - Implements datetime extraction from filenames, get_data, get_units, and get_allowed_observables.
-    - Leaves `read_file` abstract for concrete file-parsing logic.
+        - Manages `raw_data` and `_allowed_observables`.
+        - Requires a `file_reader` conforming to `FileReaderFn` for loading raw data.
+        - Implements datetime extraction from filenames, `get_data`, `get_units`,
+          and `get_allowed_observables`.
+        - Leaves `read_file` abstract so subclasses can:
+            - call `self.file_reader(filepath)`
+            - interpret its output into domain-specific observables.
 
-    Usage Notes:
-        Subclasses must implement `read_file` and populate `raw_data` / `_allowed_observables`.
-        `get_data` raises ValueError for unsupported observables.
+        Usage Notes:
+            Subclasses must implement `read_file` and populate `raw_data` / `_allowed_observables`.
+            `get_data` raises ValueError for unsupported observables.
     """
     raw_data: dict[str, Observable]
-    def __init__(self):
+    def __init__(self, file_reader: FileReaderFn):
         self.raw_data = {}
         self._allowed_observables = {}
+        self.file_reader = file_reader
 
     @abstractmethod
     def read_file(self, filepath: str) -> None:
