@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, QtCore
 from gui.utils.get_qwidget_value import get_qwidget_value
-from utils import constants
+from implementations.utils import constants
 import datetime
 import dataspec_manager
 from contracts.plotter_options import PlotterOptions

@@ -1,6 +1,0 @@
-LOG_NAME = "xlab_plotting_gui_logger"
-DATETIME_FORMAT = "%Y.%m.%d_%H.%M.%S"
-WINDOW_PATH = "gui/windows/MainWindow.ui"
-DEVICE_PATH = "implementations/devices/"
-WIDGET_PATH = DEVICE_PATH + "widgets/"
-LOGO_PATH = "gui/logos/"

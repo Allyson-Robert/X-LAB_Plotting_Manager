@@ -9,7 +9,7 @@ import sys
 import dataspec_manager
 from utils.class_utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
-from utils import constants
+from implementations.utils import constants
 
 from gui.dialogs.generate_about_dialog import generate_about_dialog
 from gui.clear.clear_data import clear_data
@@ -25,7 +25,6 @@ from gui.plot_manager import plot_manager
 
 from functools import partial
 
-import implementations
 import implementations.devices as devices
 
 # Added a comment
