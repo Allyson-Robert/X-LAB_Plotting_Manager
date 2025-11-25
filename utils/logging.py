@@ -1,8 +1,9 @@
 import logging
 import functools
-from typing import Callable, Any
 from implementations.utils import constants
+from types import FunctionType
 
+# Custom log levels
 DEBUG = 10
 DEBUG_DATA_TYPE = 11
 DEBUG_DATA_PROCESSOR = 12
@@ -42,8 +43,6 @@ def with_logging(func=None, *, log_level: int = 10):
 
     # CASE 2: @with_logging(...) → func is None, return real decorator
     return decorator
-
-from types import FunctionType
 
 def decorate_class_with_logging(
     log_level: int = 10,
