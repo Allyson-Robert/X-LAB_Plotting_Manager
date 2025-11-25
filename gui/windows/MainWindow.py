@@ -155,6 +155,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
         return self.dataspec
 
     def get_dataspec_name(self) -> str:
+        if self.dataspec is None:
+            return None
         return self.dataspec.get_name()
 
     def get_dataspec_window(self) -> QtWidgets.QDialog:
