@@ -3,17 +3,17 @@ from utils.errors.errors import IncompatibleDeviceTypeFound
 from gui.clear.clear_data import clear_data
 from utils.logging import with_logging
 import json
-import os
 import dataspec_manager
 
 
 # TODO: BUGFIX: Assumed notes and console are attributes and knows what they look like, same with plotTypeCombo
 def open_dataspec_file(window: QtWidgets.QMainWindow, file_name: str = None):
+def open_dataspec_file(window: QtWidgets.QMainWindow, *args, **kwargs):
     """
     Open a dataspec JSON file, load it into memory, and refresh the GUI.
 
     Behaviour:
-    - Prompts the user for a file if no path is provided.
+    - Prompts the user for a file.
     - Clears existing dataspec state.
     - Loads the JSON file using `DataSpecJSONDecoder`.
     - Updates notes, file list, plot options, and header display.
@@ -28,14 +28,13 @@ def open_dataspec_file(window: QtWidgets.QMainWindow, file_name: str = None):
     file_name : str, optional
         JSON file path. If omitted, a file dialog is opened.
     """
-    # Choose file if not specified
-    if file_name is None:
-        file_name = QtWidgets.QFileDialog.getOpenFileName(
-            parent=window,
-            caption="Open Files",
-            filter="DataSpecs (*.json *.dataspec *.ds);;All (*)",
-            initialFilter="DataSpecs (*.json *.dataspec *.ds)"
-        )[0]
+    # Choose file
+    file_name = QtWidgets.QFileDialog.getOpenFileName(
+        parent=window,
+        caption="Open Files",
+        filter="DataSpecs (*.json *.dataspec *.ds);;All (*)",
+        initialFilter="DataSpecs (*.json *.dataspec *.ds)"
+    )[0]
 
     # Check for empty filename
     if file_name == '':
