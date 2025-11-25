@@ -64,7 +64,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Dataset Name</string>
+             <string>DataSpec Name</string>
             </property>
            </widget>
           </item>
@@ -91,7 +91,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Experiment</string>
+             <string>Device</string>
             </property>
            </widget>
           </item>
@@ -542,11 +542,11 @@
          </font>
         </property>
         <property name="text">
-         <string>Finish &amp; Save</string>
+         <string>Finish &amp;&amp; Save</string>
         </property>
         <property name="icon">
          <iconset theme="application-exit">
-          <normaloff>C:/Users/lucp8023/.designer/backup</normaloff>C:/Users/lucp8023/.designer/backup</iconset>
+          <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
         </property>
        </widget>
       </item>
