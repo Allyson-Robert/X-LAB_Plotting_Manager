@@ -82,7 +82,7 @@ class DataProcessorCore(DataProcessor):
             # FIXME: Apparently object has no attribute '__name__'. Did you mean: '__ne__'? gets triggered when ValueError is raised
             raise ValueError(f"{self.__class__.__name__} does not contain {observable} data")
 
-    def get_units(self, observable: str) -> str:
+    def get_units(self, observable: str, *args, **kwargs) -> str:
         self.get_data(observable)
         # Return raw data
         if observable in self.data.get_allowed_observables():
