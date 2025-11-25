@@ -1,10 +1,5 @@
 # Main.py
 
-WINDOW_PATH = "gui/windows/MainWindow.ui"
-DEVICE_PATH = "implementations/devices/"
-WIDGET_PATH = DEVICE_PATH + "widgets/"
-LOGO_PATH = "gui/logos/"
-
 import importlib
 from PyQt5 import QtWidgets, uic, QtCore
 import datetime
@@ -51,7 +46,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Load the UI, Note that loadUI adds objects to 'self' using objectName
         self.dataWindow = None
-        uic.loadUi(WINDOW_PATH, self)
+        uic.loadUi(constants.WINDOW_PATH, self)
 
         # Create/Get a logger with the desired settings
         self.logger = logging.getLogger(constants.LOG_NAME)
@@ -73,7 +68,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         for entry in devices.__all__:
             # Find and load the widget for any given device and add it to the stackedWidget
             entry_ui_file = entry.lower() + ".ui"
-            entry_widget = uic.loadUi(WIDGET_PATH + entry_ui_file)
+            entry_widget = uic.loadUi(constants.WIDGET_PATH + entry_ui_file)
             entry_index = self.stackedWidget.addWidget(entry_widget)
             self.devices[entry] = entry_index
 
@@ -254,7 +249,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         with open("../about.txt") as about_file:
             about_contents = about_file.read()
 
-        about_dialog = generate_about_dialog(about_contents, self.centralWidget(), LOGO_PATH)
+        about_dialog = generate_about_dialog(about_contents, self.centralWidget(), constants.LOGO_PATH)
 
         # Show the about dialog
         about_dialog.exec_()
