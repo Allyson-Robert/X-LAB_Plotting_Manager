@@ -178,6 +178,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         with open(file_name, "w") as json_file:
             json.dump(self.dataspec, json_file, cls=dataspec_manager.DataSpecJSONEncoder)
         json_file.close()
+
         return self.console_print(f"Saved dataspec to {file_name}")
 
     def display_data(self):
@@ -194,6 +195,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
         )
         dialog_print(window=self, title=f"ExperimentDB RAW: {self.dataspec.get_name()}", contents=pretty_json)
 
+        return None
+
     def display_history(self):
         if self.dataspec is None:
             return self.console_print("Err: Must first load DataSpec", level="warning")
@@ -206,6 +209,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         dialog_print(window=self, title=f"ExperimentDB History: {self.dataspec.get_name()}", contents=pretty_history)
 
+        return None
+
     def add_notes(self):
         if self.dataspec is None:
             return self.console_print("Err: Must first load DataSpec", level="warning")
@@ -214,6 +219,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.dataspec.add_notes(self.notesPlainText.toPlainText())
         self.console_print("Notes added to dataspec_manager")
         self.autosave()
+
+        return None
 
     def update_header(self):
         # Header should reflect opened dataspec
@@ -257,6 +264,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.dataspec.add_console(now.strftime(constants.DATETIME_FORMAT), console_text)
         self.console_print("Added console contents to set")
         self.autosave()
+
+        return None
 
     def show_about(self):
         """
