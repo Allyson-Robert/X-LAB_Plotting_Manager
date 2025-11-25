@@ -1,4 +1,17 @@
 class PlotterOptions:
+    """
+    Small, dictionary-backed container for named plotter options.
+
+    Overview:
+        Stores arbitrary named options, offers safe retrieval and `as_kwargs`
+        filtering for passing options as **kwargs.
+
+    - Supports add_option, get_option, has_options, as_kwargs.
+    - Raises clear exceptions for missing keys or bad argument types.
+
+    Usage Notes:
+        Use as a simple options bag shared between workers and plotters.
+    """
     def __init__(self):
         self.options = {}
         # self.handlers = {}

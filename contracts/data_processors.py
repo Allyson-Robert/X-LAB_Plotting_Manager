@@ -3,6 +3,21 @@ from contracts.data_types import Data
 
 
 class DataProcessor(ABC):
+    """
+        Abstract interface for data processors that derive observables from raw Data.
+
+        Overview:
+            Defines the minimal contract for processing layers that expose
+            computed observables and their units.
+
+        - Abstract methods: get_data, get_units, validate_observables.
+        - Focused on returning data and unit strings for named observables.
+
+        Usage Notes:
+            Implementations should delegate raw observables to a Data instance
+            and compute derived observables on demand.
+        """
+
     @abstractmethod
     def get_data(self, observable: str):
         pass
@@ -18,14 +33,21 @@ class DataProcessor(ABC):
 
 class DataProcessorCore(DataProcessor):
     """
-    Default implementation enables calling observables by name. Processing functions should be declared and implemented
-    for each desired derived observable.
-    A processing function should only be responsible for its own observable by returning a dict with two items, the unit
-    and the data itself {"units": str, "data": Any | list}.
+       Default on‑demand processing core for derived observables.
 
-    self.get_data will compute the observable just in time, returns the results and keeps them in self.processed_data
-    self.get_units does the same but returns the "units" value rather than the "data" value.
-    """
+       Overview:
+           Provides a processing-functions registry and a cache for computed results.
+           Delegates raw observables to the wrapped Data object and computes others
+           using registered functions.
+
+       - Maintains `_processing_functions` and `processed_data` cache.
+       - get_data/get_units compute lazily and raise ValueError if unknown.
+       - validate_observables remains abstract for concrete checks.
+
+       Usage Notes:
+           Register per-observable processing functions in `_processing_functions`
+           and ensure they return `{"units": str, "data": ...}`.
+       """
 
     def __init__(self, data: Data):
         self.data = data
