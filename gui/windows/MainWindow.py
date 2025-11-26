@@ -7,6 +7,7 @@ from functools import partial
 
 # Local imports
 import dataspec_manager
+import implementations.utils.constants
 from utils.class_utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
 from utils.read_config import read_config
@@ -122,7 +123,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.actionColour_scheme.triggered.connect(self.not_implemented)
         self.actionLine_width.triggered.connect(self.not_implemented)
 
-        self.actionDocumentation.triggered.connect(self.not_implemented)
+        self.actionDocumentation.triggered.connect(self.navigate_to_docs)
         self.actionAbout.triggered.connect(self.show_about)
 
         # Define gui button actions
@@ -277,13 +278,20 @@ class UiMainWindow(QtWidgets.QMainWindow):
             Shows a simple window with licence, authorship and build information
         """
         # Grab the "about" info from about.txt
-        with open("../about.txt") as about_file:
+        with open(constants.ABOUT_PATH) as about_file:
             about_contents = about_file.read()
 
         about_dialog = generate_about_dialog(about_contents, self.centralWidget(), constants.LOGO_PATH)
 
         # Show the about dialog
         about_dialog.exec_()
+
+    def navigate_to_docs(self):
+        """
+            Opens the default web browser and navigates to the documentation URL.
+        """
+        import webbrowser
+        webbrowser.open(constants.DOCS_URL)
 
     def not_implemented(self):
         """
