@@ -1,3 +1,9 @@
+"""
+Logging wrappers that report errors to the user interface without crashing it.
+
+These decorators are provided for future use and are not yet used anywhere
+in the codebase.
+"""
 import logging
 import functools
 from typing import Callable, Any
