@@ -8,45 +8,45 @@ from utils.logging import decorate_class_with_logging, DEBUG
 @decorate_class_with_logging(log_level=DEBUG)
 class DataSpec:
     """
-    Lightweight container for experiment metadata and associated data file locations.
+        Container for experiment metadata and associated data file locations.
 
-    A `DataSpec` instance describes a single experiment or dataset in terms of:
-    - Basic metadata: name, creation date, experiment date/time, device identifier.
-    - User annotations: free-form notes and a simple time-stamped console log.
-    - File layout: a mapping from human-readable labels to absolute file paths.
-    - Optional colour mapping: label-to-colour mapping for consistent plotting.
-    - Structure type: how files are organised on disk (e.g. flat vs. directory-labelled).
+        A `DataSpec` instance describes a single experiment or dataset in terms of:
+        - Basic metadata: name, creation date, experiment date/time, device identifier.
+        - User annotations: free-form notes and a simple time-stamped console log.
+        - File layout: a mapping from human-readable labels to absolute file paths.
+        - Optional colour mapping: label-to-colour mapping for consistent plotting.
+        - Structure type: how files are organised on disk (e.g. flat vs. directory-labelled).
 
-    The class does *not* interpret the contents of the files; it only tracks their
-    locations and minimal metadata. Filepaths can be:
-    - Added manually via `add_filepath`, or
-    - Auto-populated from a root directory using `construct_filepaths(...)`.
+        The class does *not* interpret the contents of the files; it only tracks their
+        locations and minimal metadata. Filepaths can be:
+        - Added manually via `add_filepath`, or
+        - Auto-populated from a root directory using `construct_filepaths(...)`.
 
-    Structure types
-    ----------------
-    - ``"flat"``:
-        A simple one-level mapping from label -> file path. This is the default
-        and most common mode; `construct_filepaths_nrecursive` will scan a single
-        directory and register all supported files using their stem as label.
-    - ``"dirlabelled"``:
-        A directory-labelled mode where each top-level directory becomes a label
-        and contains its own mapping of files. This is handled by
-        `construct_structured_filepaths` and is considered deprecated in favour
-        of the generic `construct_filepaths`.
-    - ``"structured"``:
-        Reserved for legacy/experimental layouts; treated as an allowed but
-        user-managed structure type.
+        Structure types
+        ----------------
+        - ``"flat"``:
+            A simple one-level mapping from label -> file path. This is the default
+            and most common mode; `construct_filepaths_nrecursive` will scan a single
+            directory and register all supported files using their stem as label.
+        - ``"dirlabelled"``:
+            A directory-labelled mode where each top-level directory becomes a label
+            and contains its own mapping of files. This is handled by
+            `construct_structured_filepaths` and is considered deprecated in favour
+            of the generic `construct_filepaths`.
+        - ``"structured"``:
+            Reserved for legacy/experimental layouts; treated as an allowed but
+            user-managed structure type.
 
-    Validation
-    ----------
-    All paths added to the dataspec are checked for:
-    - Existence on disk.
-    - Being a file (not a directory).
-    - Having an extension in the accepted set (``xlsx``, ``xls``, ``csv``,
-      ``txt``, ``dpt``, ``json``).
+        Validation
+        ----------
+        All paths added to the dataspec are checked for:
+        - Existence on disk.
+        - Being a file (not a directory).
+        - Having an extension in the accepted set (``xlsx``, ``xls``, ``csv``,
+          ``txt``, ``dpt``, ``json``).
 
-    Two `DataSpec` instances are considered equal if all their attributes
-    (including filepaths, colours, and metadata) match exactly.
+        Two `DataSpec` instances are considered equal if all their attributes
+        (including filepaths, colours, and metadata) match exactly.
     """
 
     # TODO: properly deprecate structured, assume flat for now
