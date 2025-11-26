@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets
-from gui.clear.clear_data import clear_data
+from gui.utils.clear.clear_data import clear_data
 
 
 def clear_all(window: QtWidgets.QMainWindow):

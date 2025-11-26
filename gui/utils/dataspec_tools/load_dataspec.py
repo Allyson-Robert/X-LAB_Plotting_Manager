@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets
 from utils.errors.errors import IncompatibleDeviceTypeFound
-from gui.clear.clear_data import clear_data
+from gui.utils.clear.clear_data import clear_data
 from utils.logging import with_logging
 import json
 import dataspec_manager

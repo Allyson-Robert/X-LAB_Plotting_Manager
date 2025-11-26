@@ -1,9 +1,9 @@
 from PyQt5 import QtWidgets
 from utils.logging import with_logging
 import gui.windows.DataSpecCreatorWindow
-from gui.clear.clear_data import clear_data
-from gui.dataspec_tools.load_dataspec import load_dataspec
-from gui.dataspec_tools.save_dataspec import save_dataspec
+from gui.utils.clear.clear_data import clear_data
+from gui.utils.dataspec_tools.load_dataspec import load_dataspec
+from gui.utils.dataspec_tools.save_dataspec import save_dataspec
 
 @with_logging
 def create_dataspec(window: QtWidgets.QMainWindow, *args, **kwargs):

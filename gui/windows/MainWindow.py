@@ -12,17 +12,17 @@ from utils.console_colours import ConsoleColours
 from utils.read_config import read_config
 
 # Local gui imports
-from gui.dialogs.generate_about_dialog import generate_about_dialog
-from gui.clear.clear_data import clear_data
-from gui.clear.clear_all import clear_all
+from gui.windows.dialogs.generate_about_dialog import generate_about_dialog
+from gui.utils.clear.clear_data import clear_data
+from gui.utils.clear.clear_all import clear_all
 
 # Dataspec file imports
-from gui.dataspec_tools.load_dataspec import open_dataspec_file
-from gui.dataspec_tools.save_dataspec import save_dataspec
-from gui.dataspec_tools.create_dataspec import create_dataspec
+from gui.utils.dataspec_tools.load_dataspec import open_dataspec_file
+from gui.utils.dataspec_tools.save_dataspec import save_dataspec
+from gui.utils.dataspec_tools.create_dataspec import create_dataspec
 
 # Dialog imports
-from gui.dialogs.dialog_print import dialog_print
+from gui.windows.dialogs.dialog_print import dialog_print
 
 # Plot manager imports
 from gui.plot_manager import plot_manager
@@ -80,7 +80,6 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Read the config file
         self.config = read_config(constants.CONFIG_PATH)
-        print(self.config.keys())
 
         # Create/Get a logger with the desired settings
         self.logger = logging.getLogger(constants.LOG_NAME)
