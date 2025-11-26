@@ -26,6 +26,14 @@ class PlotterOptions:
             raise KeyError(f"Option with label {label} already exists in PlotterOptions")
         return True
 
+    def update_option(self, label: str, value) -> bool:
+        """ Update option if it exists, if not set option by calling add_option """
+        if self.has_options(label):
+            self.options[label] = value
+        else:
+            self.add_option(label, value)
+        return True
+
     # Return option
     def get_option(self, label: str):
         # Check option existance before returning
