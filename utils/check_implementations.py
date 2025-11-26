@@ -93,6 +93,15 @@ def _check_directory_structure(impl_root: Path) -> None:
 # Imports and contract discovery
 # --------------------------------------------------------------------------- #
 
+class ImplementationImportError(RuntimeError):
+    def __init__(self, base_pkg, errors):
+        self.base_pkg = base_pkg
+        self.errors = errors
+        lines = [f"Failed to import some modules under {base_pkg.__name__}:"]
+        for name, exc in errors.items():
+            lines.append(f"  - {name}: {exc!r}")
+        super().__init__("\n".join(lines))
+
 def _import_impl_modules() -> Mapping[str, object]:
     """Import key implementation packages."""
     names = {
@@ -113,9 +122,10 @@ def _import_impl_modules() -> Mapping[str, object]:
             ) from exc
     return modules
 
-
-def _iter_package_modules(pkg: object):
-    """Yield a package and all its submodules."""
+def _iter_package_modules(pkg, import_errors=None):
+    """Yield a package and all its submodules, recording import errors."""
+    if import_errors is None:
+        import_errors = {}
     yield pkg
     pkg_path = getattr(pkg, "__path__", None)
     if pkg_path is None:
@@ -124,12 +134,11 @@ def _iter_package_modules(pkg: object):
     for info in pkgutil.walk_packages(pkg_path, prefix):
         try:
             submod = importlib.import_module(info.name)
-        except Exception:
-            # If a submodule is broken it will be caught again when actually used.
+        except Exception as e:  # not just ImportError
+            import_errors[info.name] = e
             continue
         else:
             yield submod
-
 
 def _find_concrete_subclasses_in_package(
     pkg: object,
