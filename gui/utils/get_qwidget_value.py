@@ -15,7 +15,9 @@ def _cast_none_string_to_none_type(string: str):
         ``None`` if ``string`` is ``'None'`` or ``'none'``, otherwise the original
         string value.
     """
-    assert isinstance(string, str)
+    if not isinstance(string, str):
+        raise ValueError("Input must be a string")
+
     if string == "None" or string == "none":
         return None
     return string
@@ -42,7 +44,8 @@ def get_qwidget_value(widget):
     Any
         The widget's value in a Python-friendly type.
     """
-    assert isinstance(widget, QtWidgets.QWidget)
+    if not isinstance(widget, QtWidgets.QWidget):
+        raise ValueError("Input must be a QWidget instance")
 
     if isinstance(widget, QtWidgets.QDoubleSpinBox) or isinstance(widget, QtWidgets.QSpinBox):
         return widget.value()
@@ -53,4 +56,4 @@ def get_qwidget_value(widget):
     elif isinstance(widget, QtWidgets.QComboBox):
         return _cast_none_string_to_none_type(widget.currentText())
     else:
-        raise NotImplementedError
+        raise NotImplementedError(f"Widget type {type(widget)} not supported")

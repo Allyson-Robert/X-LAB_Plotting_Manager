@@ -15,7 +15,7 @@ class DataSpecManager:
        ----------------
        - `save_dataspec(dataspec, file_name)`:
            Serialises a `DataSpec` instance to disk using `DataSpecJSONEncoder`.
-           The method asserts that the passed object is a `DataSpec` and writes
+           The method checks that the passed object is a `DataSpec` and writes
            the encoded JSON to the given file path.
        - `open_dataspec(file_name)`:
            Opens a JSON file and deserialises it into a `DataSpec` instance using
@@ -31,7 +31,8 @@ class DataSpecManager:
     @staticmethod
     def save_dataspec(dataspec, file_name):
         """ Saves the dataspec_manager data into a JSON file """
-        assert isinstance(dataspec, DataSpec)
+        if not isinstance(dataspec, DataSpec):
+            raise ValueError("dataspec must be an instance of DataSpec")
 
         # Who should check whether the filename is valid?
         with open(file_name, "w") as json_file:

@@ -237,8 +237,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.setCurrentWidget(new_page)
 
     def report_progress(self, progress: int):
-        assert isinstance(progress, int)
-        assert 0 <= progress <= 100
+        if not (isinstance(progress, int) and 0 <= progress <= 100):
+            raise ValueError("Progress must be an integer between 0 and 100")
+
         self.progressBar.setValue(progress)
 
     def save_to_file(self, plaintext: str):

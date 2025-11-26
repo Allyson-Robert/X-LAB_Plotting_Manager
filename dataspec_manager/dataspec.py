@@ -54,7 +54,8 @@ class DataSpec:
     _accepted_extensions = ("xlsx", "xls", "csv", "txt", "dpt", "json")
 
     def __init__(self, creation_date: str):
-        assert isinstance(creation_date, str)
+        if not isinstance(creation_date, str):
+            raise ValueError("creation_date must be a string in format YYYY.MM.DD_HH.MM.SS")
         # FEATURE REQUEST: DataSpec file should be aware of its own location
         # Re: Why?
         self.name = ""
@@ -70,21 +71,22 @@ class DataSpec:
 
     # Setters
     def set_name(self, name: str):
-        assert isinstance(name, str)
+        if not isinstance(name, str):
+            raise ValueError("name must be a string")
         self.name = name
 
     def set_experiment_date(self, experiment_date_time: str):
-        assert isinstance(experiment_date_time, str)
+        if not isinstance(experiment_date_time, str):
+            raise ValueError("experiment_date_time must be a string in format YYYY.MM.DD_HH.MM.SS")
         self.experiment_date_time = datetime.strptime(experiment_date_time, "%Y.%m.%d_%H.%M.%S")
 
     def set_device(self, device: str):
-        assert isinstance(device, str)
+        if not isinstance(device, str):
+            raise ValueError("device must be a string")
         self.device = device
 
     def set_structure_type(self, desired_type: str):
-        try:
-            assert desired_type in self._allowed_structure_types
-        except AssertionError:
+        if not desired_type in self._allowed_structure_types:
             raise ValueError
 
         if self.structure_type is None:
@@ -92,19 +94,23 @@ class DataSpec:
         # Warn users when trying to overwrite the structure type
 
     def set_notes(self, notes_content: str):
-        assert isinstance(notes_content, str)
+        if not isinstance(notes_content, str):
+            raise ValueError("notes_content must be a string")
         self.notes = notes_content
 
     def set_console(self, console_content: dict):
-        assert isinstance(console_content, dict)
+        if not isinstance(console_content, dict):
+            raise ValueError("console_content must be a dict")
         self.console = console_content
 
     def set_filepaths(self, filepaths: dict):
-        assert isinstance(filepaths, dict)
+        if not isinstance(filepaths, dict):
+            raise ValueError("filepaths must be a dict")
         self.filepaths = filepaths
 
     def set_colours(self, colours: dict):
-        assert isinstance(colours, dict)
+        if not isinstance(colours, dict):
+            raise ValueError("colours must be a dict")
         self.colours = colours
 
     def construct_filepaths(self, root_dir: str, type: str) -> str:
@@ -228,12 +234,15 @@ class DataSpec:
 
     # Adding / Appending
     def add_notes(self, additional_notes: str):
-        assert isinstance(additional_notes, str)
+        if not isinstance(additional_notes, str):
+            raise ValueError("additional_notes must be a string")
         self.notes += additional_notes
 
     def add_console(self, date_and_time: str, additional_console: str):
-        assert isinstance(date_and_time, str)
-        assert isinstance(additional_console, str)
+        if not isinstance(date_and_time, str):
+            raise ValueError("date_and_time must be a string")
+        if not isinstance(additional_console, str):
+            raise ValueError("additional_console must be a string")
         self.console[date_and_time] = additional_console
 
     # Path management
@@ -272,7 +281,8 @@ class DataSpec:
 
     # Checks are needed before paths are added to the dataspec_manager
     def _check_valid_path(self, path: str):
-        assert isinstance(path, str)
+        if not isinstance(path, str):
+            raise ValueError("path must be a string")
         # Checks whether the path exists and points to a file
         if os.path.exists(path) and os.path.isfile(path):
             # Checks if the file has the proper extension
