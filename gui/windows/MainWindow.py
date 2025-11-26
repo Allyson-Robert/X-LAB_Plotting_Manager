@@ -198,7 +198,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             separators=(',', ': '),
             cls=dataspec_manager.DataSpecJSONEncoder
         )
-        dialog_print(window=self, title=f"ExperimentDB RAW: {self.dataspec.get_name()}", contents=pretty_json)
+        dialog_print(window=self, title=f"DataSpec RAW: {self.dataspec.get_name()}", contents=pretty_json)
 
         return None
 
@@ -212,7 +212,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             line = f"{v}\n"
             pretty_history += line
 
-        dialog_print(window=self, title=f"ExperimentDB History: {self.dataspec.get_name()}", contents=pretty_history)
+        dialog_print(window=self, title=f"DataSpec History: {self.dataspec.get_name()}", contents=pretty_history)
 
         return None
 
@@ -220,8 +220,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
         if self.dataspec is None:
             return self.console_print("Err: Must first load DataSpec", level="warning")
 
-        # Add any notes to the dataspec_manager
-        self.dataspec.add_notes(self.notesPlainText.toPlainText())
+        # Add any notes to the dataspec_manager with a trailing new line
+        self.dataspec.add_notes(self.notesPlainText.toPlainText() + "\n")
         self.console_print("Notes added to dataspec_manager")
         self.autosave()
 
