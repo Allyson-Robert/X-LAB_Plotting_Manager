@@ -17,10 +17,7 @@ from contracts.device_worker import (
     DeviceWorkerCore,
 )
 from contracts.plotter import Plotter
-
-
-class ImplementationError(RuntimeError):
-    """Raised when the implementations package fails validation."""
+from utils.errors.errors import ImplementationError
 
 
 def check_implementations() -> None:

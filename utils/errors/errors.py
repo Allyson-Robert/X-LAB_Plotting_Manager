@@ -16,3 +16,7 @@ class ObservableNotComputableError(ValueError):
 class IncompatibleDeviceTypeFound(KeyError):
     """Raised when a dataspec or configuration refers to an unknown device type."""
     pass
+
+
+class ImplementationError(RuntimeError):
+    """Raised when the implementations package fails validation."""

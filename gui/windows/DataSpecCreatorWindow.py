@@ -2,7 +2,7 @@ from PyQt5 import QtWidgets, uic
 import dataspec_manager
 import datetime, json, sys
 
-from gui.utils.search_for_active_radio_button import search_for_first_active_radio_button
+from gui.utils.search_for_first_active_radio_button import search_for_first_active_radio_button
 from gui.utils.split_camelCase import split_camel_case
 
 # FEATURE REQUEST: Allow multiple device types to be compatible with the same set

@@ -2,8 +2,6 @@ import json
 from dataspec_manager import DataSpec
 from dataspec_json_encoder import DataSpecJSONEncoder
 from dataspec_json_decoder import DataSpecJSONDecoder
-
-
 from utils.logging import decorate_class_with_logging, DEBUG
 
 @decorate_class_with_logging(log_level=DEBUG)
