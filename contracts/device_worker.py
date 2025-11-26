@@ -96,12 +96,19 @@ class DeviceWorkerCore(DeviceWorker):
         self.data_type = None
 
     def set_data_type(self, data_type):
+        if not isinstance(data_type, Data):
+            raise TypeError("data_type must be a subclass of Data")
         self.data_type = data_type
 
     def set_processor_type(self, processor_type):
+        if not isinstance(processor_type, DataProcessor):
+            raise TypeError("processor_type must be a subclass of DataProcessor")
         self.processor_type = processor_type
 
     def set_data(self, dataspec: DataSpec):
+        if not isinstance(dataspec, DataSpec):
+            raise TypeError("dataspec must be an instance of DataSpec")
+
         # CHECK: Check that dataspec and processor types have been set
         # Initialise an empty dict and get the required filepaths
         self.data_processors = {}
