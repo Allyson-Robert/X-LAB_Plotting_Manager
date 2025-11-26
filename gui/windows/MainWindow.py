@@ -176,7 +176,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
     # FUNCTIONALITY
     def autosave(self):
-        file_name = self.dataspec_location
+        file_name = self.dataspec.get_location()
         if file_name is None:
             return self.console_print("Cannot autosave, no file location known. Open or create dataset first")
 

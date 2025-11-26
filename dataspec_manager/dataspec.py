@@ -56,8 +56,7 @@ class DataSpec:
     def __init__(self, creation_date: str):
         if not isinstance(creation_date, str):
             raise ValueError("creation_date must be a string in format YYYY.MM.DD_HH.MM.SS")
-        # FEATURE REQUEST: DataSpec file should be aware of its own location
-        # Re: Why?
+        self.location = None
         self.name = ""
         self.creation_date = datetime.strptime(creation_date, "%Y.%m.%d_%H.%M.%S")
         self.experiment_date_time = None
@@ -112,6 +111,11 @@ class DataSpec:
         if not isinstance(colours, dict):
             raise ValueError("colours must be a dict")
         self.colours = colours
+
+    def set_location(self, location: str):
+        if not isinstance(location, str):
+            raise ValueError("location must be a string/path")
+        self.location = location
 
     def construct_filepaths(self, root_dir: str, type: str) -> str:
         warnings.warn("New function construct_filepaths_nrecursive not implemented recursively")
@@ -231,6 +235,11 @@ class DataSpec:
 
     def get_name(self) -> str:
         return self.name
+
+    def get_location(self) -> str | None:
+        if self.location:
+            return self.location
+        return None
 
     # Adding / Appending
     def add_notes(self, additional_notes: str):

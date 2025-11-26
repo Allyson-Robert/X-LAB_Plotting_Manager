@@ -41,11 +41,12 @@ def save_dataspec(window: QtWidgets.QMainWindow, *args, **kwargs):
         if file_name:
             if not any(file_name.endswith(ext) for ext in ('.json', '.dataspec', '.ds')):
                 # Default to .dataspec if no valid extension
-                file_name += '.dataspec'
+                file_name += '.ds'
 
-        window.dataspec_location = file_name
         with open(file_name, "w") as json_file:
-            json.dump(window.get_dataspec(), json_file, cls=fs.DataSpecJSONEncoder)
+            current_dataspec = window.get_dataspec()
+            json.dump(current_dataspec, json_file, cls=fs.DataSpecJSONEncoder)
+            current_dataspec.set_location(file_name)
         json_file.close()
 
         return window.console_print(f"Saved dataspec file to {file_name}")
