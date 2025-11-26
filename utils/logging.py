@@ -12,7 +12,11 @@ DEBUG_WORKER = 14
 DEBUG_GUI = 15
 
 class ConsoleLogging:
-    # FIXME: Logger name is magic string
+    """Thin wrapper around the shared application logger.
+
+    The class provides a simple ``console_print`` method used by the GUI to
+    write messages to the configured logger identified by ``constants.LOG_NAME``.
+    """
     def __init__(self):
         self.logger = logging.getLogger(constants.LOG_NAME)
 

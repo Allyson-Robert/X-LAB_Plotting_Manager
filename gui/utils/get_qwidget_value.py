@@ -2,6 +2,19 @@ from PyQt5 import QtWidgets
 
 
 def _cast_none_string_to_none_type(string: str):
+    """Return ``None`` for strings representing 'None', otherwise pass the value through.
+
+    Parameters
+    ----------
+    string:
+        Input text, typically read from a Qt widget.
+
+    Returns
+    -------
+    Any
+        ``None`` if ``string`` is ``'None'`` or ``'none'``, otherwise the original
+        string value.
+    """
     assert isinstance(string, str)
     if string == "None" or string == "none":
         return None

@@ -5,6 +5,22 @@ from utils.errors.errors import VocNotFoundError
 
 
 def error_with_logging(func: Callable[..., Any], logger: logging.Logger) -> Callable[..., Any]:
+    """
+    Wrap a function so that :class:`VocNotFoundError` is logged and suppressed.
+
+    Parameters
+    ----------
+    func:
+        Callable to execute.
+    logger:
+        Logger instance used to record the error.
+
+    Returns
+    -------
+    Callable[..., Any]
+        A wrapper that calls ``func`` and logs any :class:`VocNotFoundError`
+        instead of propagating it.
+    """
     @functools.wraps(func)
     def wrapper(*args: Any, **kwargs: Any) -> Any:
         try:
@@ -16,6 +32,21 @@ def error_with_logging(func: Callable[..., Any], logger: logging.Logger) -> Call
 
 
 def exceptions_logging(func: Callable[..., Any], logger: logging.Logger) -> Callable[..., Any]:
+    """
+    Decorator that logs and re-raises any exception raised by ``func``.
+
+    Parameters
+    ----------
+    func:
+        Callable to wrap.
+    logger:
+        Logger instance used to record the exception and traceback.
+
+    Returns
+    -------
+    Callable[..., Any]
+        A wrapper that logs the exception details before re-raising them.
+    """
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         try:
@@ -27,4 +58,3 @@ def exceptions_logging(func: Callable[..., Any], logger: logging.Logger) -> Call
 
             raise
     return wrapper
-# CHECK: https://stackoverflow.com/a/6307868 decorate class_utils

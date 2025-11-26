@@ -2,6 +2,12 @@ from PyQt5 import QtGui
 
 
 class ConsoleColours:
+    """
+    Helper for mapping message level names to QColor instances.
+
+    The colours are used by the GUI console to display messages with different
+    visual emphasis (alert, warning, normal).
+    """
     def __init__(self):
         self._alert = QtGui.QColor(255, 0, 0)
         self._warning = QtGui.QColor(255, 127, 0)

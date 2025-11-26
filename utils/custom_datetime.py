@@ -4,6 +4,13 @@ import unittest
 
 
 class CustomDatetime:
+    """
+    Utility for parsing and serialising my custom timestamp format.
+
+    The helper supports flexible separators and format strings used to construct
+    filenames and labels, and provides round-tripping between strings and
+    :class:`datetime.datetime` objects.
+    """
     def __init__(self,
                  separators="-_",
                  label_format="%Y_%m_%d_%H_%M_%S",
@@ -87,7 +94,7 @@ class CustomDatetime:
 
 
 class TestCustomDatetime(unittest.TestCase):
-
+    """Unit tests covering the behaviour of :class:`CustomDatetime`."""
     def test_create_datetime_from_string_with_default_time(self):
         sanitizer = CustomDatetime()
         test_datetime_str = "2024-06-14"
