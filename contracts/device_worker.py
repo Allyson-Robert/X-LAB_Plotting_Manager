@@ -4,6 +4,8 @@ from PyQt5 import QtCore
 import uuid
 from utils.logging import DEBUG_WORKER, decorate_class_with_logging
 from contracts.plotter_options import PlotterOptions
+from contracts.data_types import Data
+from contracts.data_processors import DataProcessor
 
 
 # This custom metaclass is needed to make ABC and QObject multiple inheritance possible
@@ -96,12 +98,12 @@ class DeviceWorkerCore(DeviceWorker):
         self.data_type = None
 
     def set_data_type(self, data_type):
-        if not isinstance(data_type, Data):
+        if not issubclass(data_type, Data):
             raise TypeError("data_type must be a subclass of Data")
         self.data_type = data_type
 
     def set_processor_type(self, processor_type):
-        if not isinstance(processor_type, DataProcessor):
+        if not issubclass(processor_type, DataProcessor):
             raise TypeError("processor_type must be a subclass of DataProcessor")
         self.processor_type = processor_type
 
