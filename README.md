@@ -5,10 +5,12 @@ application for managing scientific data sets and generating publication-ready
 plots.
 
 This application provides a general interface for plotting scientific data.
+
 ![X-LAB Plotting Manager Screenshot](docs/images/MainWindow.png)
 
 A secondary window allows users to create new data sets based on predefined
 "dataspecs" that define the required data structure and metadata.
+
 ![DataCreationWindow Screenshot](docs/images/DataCreationWindow.png)
 
 The GUI is built on top of a small core of contracts and utilities and expects
@@ -16,6 +18,7 @@ device- and experiment-specific logic to live in a separate `implementations`
 package.
 
 The general overview of this architecture is illustrated in the following diagram:
+
 ![Contract Diagram](docs/images/Contracts.png)
 
 
