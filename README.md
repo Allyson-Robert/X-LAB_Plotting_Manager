@@ -31,6 +31,13 @@ The full documentation is in the `docs/` folder and published via MkDocs
 - Installation & usage: [docs/getting-started.md](docs/getting-started.md)
 - Dataspec format: [docs/dataspecs.md](docs/dataspecs.md)
 
+Show pre-built docs locally by running:
+```
+python -m http.server -d .\site\ 8000
+```
+Then open your browser to `http://localhost:8000`.
+
+
 ---
 
 ## Quick start

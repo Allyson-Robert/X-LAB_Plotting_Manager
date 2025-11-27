@@ -11,11 +11,12 @@ plugins:
       default_handler: python
 
 nav:
-  - Home: index.md
-  - Getting started: getting_started.md
-  - Dataspecs: dataspecs.md
-  - Logging & debugging: logging.md
-  - API:
+  - Guide:
+    - Home: index.md
+    - Getting started: getting_started.md
+    - Dataspecs: dataspecs.md
+    - Logging & debugging: logging.md
+  - API Reference:
       - GUI - Windows: api/gui/windows_and_dialogs.md
       - GUI - Plot Manager: api/gui/plot_manager.md
       - GUI - Utils: api/gui/utils.md

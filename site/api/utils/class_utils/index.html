@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Utils - Class Utils - X-LAB Plotting Manager</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Utils - Class Utils";
+        var mkdocs_page_input_path = "api\\utils\\class_utils.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> X-LAB Plotting Manager
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../dataspecs/">Dataspecs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../gui/windows_and_dialogs/">GUI - Windows</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gui/plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gui/utils/">GUI - Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/devices/">Contracts - Devices</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Utils - Class Utils</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#utils.class_utils.build_class_index.build_class_index">build_class_index</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utils.class_utils.load_class_from_index.load_class_from_index">load_class_from_index</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utils.class_utils.get_class_methods.get_class_methods">get_class_methods</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#utils.class_utils.get_class_methods.get_class_methods--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#utils.class_utils.get_class_methods.get_class_methods--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../others/">Utils - Others</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../dataspec_manager/">DataSpec</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">X-LAB Plotting Manager</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API Reference</li>
+      <li class="breadcrumb-item active">Utils - Class Utils</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/utils/class_utils.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="class-utils">Class Utils</h1>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="utils.class_utils.build_class_index.build_class_index"></a>
+    <div class="doc doc-contents first">
+
+        <p>Scan a package for class_utils definitions without importing all modules at once.
+Returns a dict mapping class_utils name to (module_name, class_name).</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>utils\class_utils\build_class_index.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">build_class_index</span><span class="p">(</span><span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scan a package for class_utils definitions without importing all modules at once.</span>
+<span class="sd">    Returns a dict mapping class_utils name to (module_name, class_name).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">package</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">package_name</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">walk_packages</span><span class="p">(</span><span class="n">package</span><span class="o">.</span><span class="n">__path__</span><span class="p">,</span> <span class="n">package</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="p">):</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>  <span class="c1"># minimal import to inspect</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">==</span> <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
+                <span class="n">index</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">index</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="utils.class_utils.load_class_from_index.load_class_from_index"></a>
+    <div class="doc doc-contents first">
+
+        <p>Given a class_utils index (from build_class_index) and a class_utils name,
+import and return the class_utils object.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>utils\class_utils\load_class_from_index.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_class_from_index</span><span class="p">(</span><span class="n">class_index</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a class_utils index (from build_class_index) and a class_utils name,</span>
+<span class="sd">    import and return the class_utils object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">class_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">class_index</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class &#39;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+
+    <span class="n">module_name</span><span class="p">,</span> <span class="n">cls_name</span> <span class="o">=</span> <span class="n">class_index</span><span class="p">[</span><span class="n">class_name</span><span class="p">]</span>
+    <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">cls_name</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="utils.class_utils.get_class_methods.get_class_methods"></a>
+    <div class="doc doc-contents first">
+
+        <p>Return the names of public methods defined directly on a class.</p>
+<h3 id="utils.class_utils.get_class_methods.get_class_methods--parameters">Parameters</h3>
+<p>cls:
+    Class whose methods should be inspected.
+ignore:
+    Optional list of method names to exclude from the result.</p>
+<h3 id="utils.class_utils.get_class_methods.get_class_methods--returns">Returns</h3>
+<p>list[str]
+    Names of methods defined on <code>cls</code> that are:
+    - plain functions (no descriptors),
+    - not dunder methods,
+    - not starting with <code>set</code>,
+    - not listed in <code>ignore</code>.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>utils\class_utils\get_class_methods.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_class_methods</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ignore</span><span class="o">=</span><span class="p">[])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the names of public methods defined directly on a class.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cls:</span>
+<span class="sd">        Class whose methods should be inspected.</span>
+<span class="sd">    ignore:</span>
+<span class="sd">        Optional list of method names to exclude from the result.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list[str]</span>
+<span class="sd">        Names of methods defined on ``cls`` that are:</span>
+<span class="sd">        - plain functions (no descriptors),</span>
+<span class="sd">        - not dunder methods,</span>
+<span class="sd">        - not starting with ``set``,</span>
+<span class="sd">        - not listed in ``ignore``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">methods</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">func</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># Skip items that are not of the function type</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="o">!=</span> <span class="n">FunctionType</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="c1"># ignore dunder_methods, setters and explicitly ignored function names</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;set&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ignore</span><span class="p">:</span>
+            <span class="n">methods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">methods</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../contracts/observable/" class="btn btn-neutral float-left" title="Contracts - Observable"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../errors/" class="btn btn-neutral float-right" title="Utils - Errors">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../contracts/observable/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../errors/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

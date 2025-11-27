@@ -1,0 +1,2094 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>GUI - Windows - X-LAB Plotting Manager</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "GUI - Windows";
+        var mkdocs_page_input_path = "api\\gui\\windows_and_dialogs.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> X-LAB Plotting Manager
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../dataspecs/">Dataspecs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">GUI - Windows</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow">UiMainWindow</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow--responsibilities">Responsibilities</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow.navigate_to_docs">navigate_to_docs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow.not_implemented">not_implemented</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow.show_about">show_about</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow">UiDataCreatorWindow</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow--overview">Overview</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow--behaviour">Behaviour</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.add_file_to_set">add_file_to_set</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.add_file_to_set--gets-the-path-and-label-and-adds-it-to-the-current-dataspec-instance-while-updating-gui">Gets the path and label and adds it to the current DataSpec instance while updating GUI</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.browse_dir">browse_dir</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.browse_dir--open-directory-selection-dialog-to-get-a-path-and-update-gui-when-confirmed">Open directory selection dialog to get a path and update gui when confirmed</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.browse_files">browse_files</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.browse_files--open-file-selection-dialog-to-get-a-file-path-and-update-gui-when-confirmed">Open file selection dialog to get a file path and update gui when confirmed</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.button_state">button_state</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.finish">finish</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.generate_set">generate_set</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.reset">reset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.qtexteditconsole.QTextEditConsole">QTextEditConsole</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.qtexteditconsole.QTextEditConsole--typical-usage">Typical usage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.qtexteditconsole.QTextEditConsole--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.dialogs.dialog_print.dialog_print">dialog_print</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.dialogs.dialog_print.dialog_print--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.dialogs.generate_about_dialog.generate_about_dialog">generate_about_dialog</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.dialogs.generate_about_dialog.generate_about_dialog--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.dialogs.generate_about_dialog.generate_about_dialog--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/">GUI - Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/devices/">Contracts - Devices</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/class_utils/">Utils - Class Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/others/">Utils - Others</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../dataspec_manager/">DataSpec</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">X-LAB Plotting Manager</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API Reference</li>
+      <li class="breadcrumb-item active">GUI - Windows</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/gui/windows_and_dialogs.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="windows-and-dialogs">Windows and Dialogs</h1>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="gui.windows.MainWindow.UiMainWindow"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="PyQt5.QtWidgets.QMainWindow">QMainWindow</span></code></p>
+
+
+
+        <p>Main GUI window for interactive, automated plotting of experimental data.</p>
+<h3 id="gui.windows.MainWindow.UiMainWindow--responsibilities">Responsibilities</h3>
+<ul>
+<li>Load the main QtDesigner-generated UI file and dynamically attach device-
+  specific option panels to the central <code>QStackedWidget</code>.</li>
+<li>Manage the currently loaded <code>DataSpec</code>:<ul>
+<li>Creating, loading, saving, and autosaving dataspecs.</li>
+<li>Displaying raw JSON content and console history in helper dialogs.</li>
+<li>Updating header fields (set name, device type) when dataspecs change.</li>
+</ul>
+</li>
+<li>Integrate logging with a QTextEdit-based console for time-stamped messages.</li>
+<li>Provide a thin controller layer for:<ul>
+<li>Launching the plotting pipeline via <code>plot_manager</code>.</li>
+<li>Handling progress updates and console appends.</li>
+<li>Adding notes and console history back into the dataspec.</li>
+</ul>
+</li>
+</ul>
+<p>On construction, the window:
+- Discovers available devices from <code>implementations.devices</code>.
+- Loads and registers per-device widgets and their plot functions.
+- Wires menu actions and buttons to dataspec, plotting, and utility actions.
+- Optionally auto-opens a demo dataspec if a file name is supplied.</p>
+<p>The class is intended to be the central hub of the GUI application, with
+device-specific logic pushed into worker classes and implementations.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>gui\windows\MainWindow.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">UiMainWindow</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main GUI window for interactive, automated plotting of experimental data.</span>
+
+<span class="sd">    Responsibilities</span>
+<span class="sd">    ----------------</span>
+<span class="sd">    - Load the main QtDesigner-generated UI file and dynamically attach device-</span>
+<span class="sd">      specific option panels to the central `QStackedWidget`.</span>
+<span class="sd">    - Manage the currently loaded `DataSpec`:</span>
+<span class="sd">        * Creating, loading, saving, and autosaving dataspecs.</span>
+<span class="sd">        * Displaying raw JSON content and console history in helper dialogs.</span>
+<span class="sd">        * Updating header fields (set name, device type) when dataspecs change.</span>
+<span class="sd">    - Integrate logging with a QTextEdit-based console for time-stamped messages.</span>
+<span class="sd">    - Provide a thin controller layer for:</span>
+<span class="sd">        * Launching the plotting pipeline via `plot_manager`.</span>
+<span class="sd">        * Handling progress updates and console appends.</span>
+<span class="sd">        * Adding notes and console history back into the dataspec.</span>
+
+<span class="sd">    On construction, the window:</span>
+<span class="sd">    - Discovers available devices from `implementations.devices`.</span>
+<span class="sd">    - Loads and registers per-device widgets and their plot functions.</span>
+<span class="sd">    - Wires menu actions and buttons to dataspec, plotting, and utility actions.</span>
+<span class="sd">    - Optionally auto-opens a demo dataspec if a file name is supplied.</span>
+
+<span class="sd">    The class is intended to be the central hub of the GUI application, with</span>
+<span class="sd">    device-specific logic pushed into worker classes and implementations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">demo_file_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">UiMainWindow</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">experiment_worker</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># FEATURE REQUEST: Dataspec file location is def&#39;ed here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec_location</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Load the UI, Note that loadUI adds objects to &#39;self&#39; using objectName</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataWindow</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">uic</span><span class="o">.</span><span class="n">loadUi</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">WINDOW_PATH</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># Read the config file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">read_config</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">CONFIG_PATH</span><span class="p">)</span>
+
+        <span class="c1"># Create/Get a logger with the desired settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">LOG_NAME</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">consoleTextEdit</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> [</span><span class="si">%(levelname)8.8s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">datefmt</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">constants</span><span class="o">.</span><span class="n">DATETIME_FORMAT</span><span class="si">}</span><span class="s1">: &#39;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">consoleTextEdit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;log_level&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_functions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Get list of devices as defined manually in the.devices __init__.py file</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">devices</span><span class="o">.</span><span class="n">__all__</span><span class="p">:</span>
+            <span class="c1"># Find and load the widget for any given device and add it to the stackedWidget</span>
+            <span class="n">entry_ui_file</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;.ui&quot;</span>
+            <span class="n">entry_widget</span> <span class="o">=</span> <span class="n">uic</span><span class="o">.</span><span class="n">loadUi</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">WIDGET_PATH</span> <span class="o">+</span> <span class="n">entry_ui_file</span><span class="p">)</span>
+            <span class="n">entry_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">entry_widget</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="n">entry</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry_index</span>
+
+            <span class="c1"># Import the corresponding module and get the class methods to set the plot_functions combobox when needed</span>
+            <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">devices</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">entry_cls</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_functions</span><span class="p">[</span><span class="n">entry</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_class_methods</span><span class="p">(</span><span class="n">entry_cls</span><span class="p">,</span> <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;run&quot;</span><span class="p">])</span>
+
+        <span class="c1"># Reset stacked widget to empty page</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+        <span class="c1"># Define menubar actions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionCreate_Set</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">create_dataspec</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSave_Set</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">save_dataspec</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionLoad_Set</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">open_dataspec_file</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionPreferences</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">not_implemented</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionQuit</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSave_format</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">not_implemented</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionColour_scheme</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">not_implemented</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionLine_width</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">not_implemented</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionDocumentation</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">navigate_to_docs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionAbout</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">show_about</span><span class="p">)</span>
+
+        <span class="c1"># Define gui button actions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showDataBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showHistoryBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_history</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addNotesBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_notes</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">appendBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">append_console_to_set</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clearBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">clear_data</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clearAllBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">clear_all</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quitBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
+
+        <span class="c1"># Define stackedWidget widget actions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">plot_manager</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+
+        <span class="c1"># Make sure the progress bar is cleared</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progressBar</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Show the app</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Program Started&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Getters</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_plot_functions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;Generic&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_functions</span><span class="p">[</span><span class="n">device</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_current_plot_function</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotTypeCombo</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_current_device</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_device</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataspec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataspec_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataspec_window</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataWindow</span>
+
+    <span class="c1"># Setters</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_dataspec_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataspec_window</span><span class="p">:</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataWindow</span> <span class="o">=</span> <span class="n">dataspec_window</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_dataspec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataspec</span><span class="p">:</span> <span class="n">dataspec_manager</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">DataSpec</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="o">=</span> <span class="n">dataspec</span>
+
+    <span class="c1"># FUNCTIONALITY</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">autosave</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">file_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Cannot autosave, no file location known. Open or create dataset first&quot;</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">dataspec_manager</span><span class="o">.</span><span class="n">DataSpecJSONEncoder</span><span class="p">)</span>
+        <span class="n">json_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved dataspec to </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">display_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Abort if no dataspec was loaded</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Err: Must first load DataSpec&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Pretty print the dataspec in a simple dialog</span>
+        <span class="n">pretty_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="p">,</span>
+            <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">),</span>
+            <span class="bp">cls</span><span class="o">=</span><span class="n">dataspec_manager</span><span class="o">.</span><span class="n">DataSpecJSONEncoder</span>
+        <span class="p">)</span>
+        <span class="n">dialog_print</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;DataSpec RAW: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="n">pretty_json</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">display_history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Err: Must first load DataSpec&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Prints only the console history to a simple dialog</span>
+        <span class="n">pretty_history</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_console</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">pretty_history</span> <span class="o">+=</span> <span class="n">line</span>
+
+        <span class="n">dialog_print</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;DataSpec History: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="n">pretty_history</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_notes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Err: Must first load DataSpec&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Add any notes to the dataspec_manager with a trailing new line</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">add_notes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notesPlainText</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Notes added to dataspec_manager&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autosave</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Header should reflect opened dataspec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currSetNameLineEdit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currDeviceLineEdit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_device</span><span class="p">())</span>
+
+        <span class="c1"># Stacked widget should show the correct widget for the opened dataspec</span>
+        <span class="n">new_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_device</span><span class="p">()])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="n">new_page</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">report_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">progress</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">progress</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Progress must be an integer between 0 and 100&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">progressBar</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">progress</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plaintext</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">file_dialog</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Save File&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;Text Files (*.txt);;All Files (*)&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_dialog</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>  <span class="c1"># Check if a file was selected</span>
+            <span class="n">file_path</span> <span class="o">=</span> <span class="n">file_dialog</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">console_print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fstring</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">):</span>
+        <span class="c1"># Print a message to the gui console</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">fstring_to_print</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">constants</span><span class="o">.</span><span class="n">DATETIME_FORMAT</span><span class="si">}</span><span class="s2">: &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">fstring</span>
+
+        <span class="n">c</span> <span class="o">=</span> <span class="n">ConsoleColours</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">consoleTextEdit</span><span class="o">.</span><span class="n">setTextColor</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">get_colour</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">consoleTextEdit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fstring_to_print</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">consoleTextEdit</span><span class="o">.</span><span class="n">setTextColor</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">get_colour</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_console_to_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Err: Must first load DataSpec&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Append console contents to the dataspec_manager</span>
+        <span class="n">console_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">consoleTextEdit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">add_console</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">DATETIME_FORMAT</span><span class="p">),</span> <span class="n">console_text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Added console contents to set&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autosave</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_about</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Shows a simple window with licence, authorship and build information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Grab the &quot;about&quot; info from about.txt</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">ABOUT_PATH</span><span class="p">)</span> <span class="k">as</span> <span class="n">about_file</span><span class="p">:</span>
+            <span class="n">about_contents</span> <span class="o">=</span> <span class="n">about_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="n">about_dialog</span> <span class="o">=</span> <span class="n">generate_about_dialog</span><span class="p">(</span><span class="n">about_contents</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">centralWidget</span><span class="p">(),</span> <span class="n">constants</span><span class="o">.</span><span class="n">LOGO_PATH</span><span class="p">)</span>
+
+        <span class="c1"># Show the about dialog</span>
+        <span class="n">about_dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">navigate_to_docs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Opens the default web browser and navigates to the documentation URL.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">webbrowser</span>
+        <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">DOCS_URL</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_implemented</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Shows the user a message that the current feature is planned but not yet implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Feature not implemented&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;warning&#39;</span><span class="p">)</span>
+
+    <span class="c1"># ESC now triggers a program exit</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key</span><span class="o">.</span><span class="n">Key_Escape</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">UiMainWindow</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+
+    <span class="c1"># CHECK: Program exit is not safe</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">quit</span><span class="p">():</span>
+        <span class="c1"># Terminate the application</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.MainWindow.UiMainWindow.navigate_to_docs" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">navigate_to_docs</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Opens the default web browser and navigates to the documentation URL.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui\windows\MainWindow.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">navigate_to_docs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Opens the default web browser and navigates to the documentation URL.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">webbrowser</span>
+    <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">DOCS_URL</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.MainWindow.UiMainWindow.not_implemented" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">not_implemented</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Shows the user a message that the current feature is planned but not yet implemented.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui\windows\MainWindow.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">not_implemented</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shows the user a message that the current feature is planned but not yet implemented.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Feature not implemented&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;warning&#39;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.MainWindow.UiMainWindow.show_about" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">show_about</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Shows a simple window with licence, authorship and build information</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui\windows\MainWindow.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">show_about</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shows a simple window with licence, authorship and build information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Grab the &quot;about&quot; info from about.txt</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">ABOUT_PATH</span><span class="p">)</span> <span class="k">as</span> <span class="n">about_file</span><span class="p">:</span>
+        <span class="n">about_contents</span> <span class="o">=</span> <span class="n">about_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="n">about_dialog</span> <span class="o">=</span> <span class="n">generate_about_dialog</span><span class="p">(</span><span class="n">about_contents</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">centralWidget</span><span class="p">(),</span> <span class="n">constants</span><span class="o">.</span><span class="n">LOGO_PATH</span><span class="p">)</span>
+
+    <span class="c1"># Show the about dialog</span>
+    <span class="n">about_dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="PyQt5.QtWidgets.QDialog">QDialog</span></code></p>
+
+
+
+        <p>Dialog for interactively creating new <code>DataSpec</code> instances.</p>
+<h3 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow--overview">Overview</h3>
+<p>This window guides the user through constructing a dataspec by:
+- Selecting a device type from a combobox.
+- Adding individual files with custom labels, or
+- Auto-generating filepaths from a directory according to a chosen structure.
+- Setting the experiment name and experiment date/time.</p>
+<h3 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow--behaviour">Behaviour</h3>
+<ul>
+<li>Maintains an internal <code>DataSpec</code> object that is updated as the user adds
+  files or generates sets from directories.</li>
+<li>Displays the current file mapping as formatted JSON in a plain-text widget.</li>
+<li>Validates that both a name and at least one file are present before
+  enabling the “Done” button.</li>
+<li>On completion (<code>finish</code>), writes name, device type, and experiment
+  datetime into the dataspec and closes with an accepted result.</li>
+</ul>
+<h3 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow--parameters">Parameters</h3>
+<p>devices : list[str], optional
+    List of available device names to present in the device selection combo
+    box. Defaults to a single <code>"N/A"</code> entry when not specified.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>gui\windows\DataSpecCreatorWindow.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">UiDataCreatorWindow</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       Dialog for interactively creating new `DataSpec` instances.</span>
+
+<span class="sd">       Overview</span>
+<span class="sd">       --------</span>
+<span class="sd">       This window guides the user through constructing a dataspec by:</span>
+<span class="sd">       - Selecting a device type from a combobox.</span>
+<span class="sd">       - Adding individual files with custom labels, or</span>
+<span class="sd">       - Auto-generating filepaths from a directory according to a chosen structure.</span>
+<span class="sd">       - Setting the experiment name and experiment date/time.</span>
+
+<span class="sd">       Behaviour</span>
+<span class="sd">       ---------</span>
+<span class="sd">       - Maintains an internal `DataSpec` object that is updated as the user adds</span>
+<span class="sd">         files or generates sets from directories.</span>
+<span class="sd">       - Displays the current file mapping as formatted JSON in a plain-text widget.</span>
+<span class="sd">       - Validates that both a name and at least one file are present before</span>
+<span class="sd">         enabling the “Done” button.</span>
+<span class="sd">       - On completion (`finish`), writes name, device type, and experiment</span>
+<span class="sd">         datetime into the dataspec and closes with an accepted result.</span>
+
+<span class="sd">       Parameters</span>
+<span class="sd">       ----------</span>
+<span class="sd">       devices : list[str], optional</span>
+<span class="sd">           List of available device names to present in the device selection combo</span>
+<span class="sd">           box. Defaults to a single `&quot;N/A&quot;` entry when not specified.</span>
+<span class="sd">       &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">devices</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;N/A&quot;</span><span class="p">]):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">UiDataCreatorWindow</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># Load the UI,</span>
+        <span class="c1"># Note that loadUI adds objects to &#39;self&#39; using objectName</span>
+        <span class="n">uic</span><span class="o">.</span><span class="n">loadUi</span><span class="p">(</span><span class="s2">&quot;gui/windows/DataSpecCreatorWindow.ui&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="o">=</span> <span class="n">dataspec_manager</span><span class="o">.</span><span class="n">DataSpec</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y.%m.</span><span class="si">%d</span><span class="s2">_%H.%M.%S&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Add the correct devices to the experiment combo box</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataTypeCombo</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span>
+
+        <span class="c1"># Set date to today by default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dateTimeEdit</span><span class="o">.</span><span class="n">setDateTime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+        <span class="c1"># Set starting tab to manual dataspec creation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabWidget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Define widget action</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browseFilesBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">browse_files</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browseDirBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">browse_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addLabelBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_file_to_set</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generateBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">generate_set</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doneBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">)</span>
+
+        <span class="c1"># Enable button when all is filled</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">button_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nameEdit</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">button_state</span><span class="p">)</span>
+
+        <span class="c1"># Show the app</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataspec</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">dataspec_manager</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">DataSpec</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">browse_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        # Open file selection dialog to get a file path and update gui when confirmed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Open File&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browseFilesText</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">file_name</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">browse_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        # Open directory selection dialog to get a path and update gui when confirmed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dir_name</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getExistingDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Select Directory&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browseDirText</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_file_to_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        # Gets the path and label and adds it to the current DataSpec instance while updating GUI</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Read name and legend label from gui</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">browseFilesText</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span>
+        <span class="n">file_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labelEdit</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+        <span class="c1"># Check for duplicate label</span>
+        <span class="k">if</span> <span class="n">file_label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span>
+                <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Duplicate Label&quot;</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;This label has already been used. Choose another label and try again.&quot;&quot;&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Add the file to the dataset and update the gui</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="s2">&quot;flat&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">add_filepath</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">file_label</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">(),</span>
+                    <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                    <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">browseFilesText</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="c1"># Empty label widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labelEdit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Automatically generate a set of filepaths based on a directory path. Will create nested structure if desired</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">browseDirText</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span>
+
+        <span class="c1"># If path is not selected, show message and return None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;No directory selected&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;No directory was selected, please select directory and try again&quot;&quot;&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Construct the filepaths for this dataspec</span>
+        <span class="n">active_button</span> <span class="o">=</span> <span class="n">split_camel_case</span><span class="p">(</span><span class="n">search_for_first_active_radio_button</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">objectName</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">construct_filepaths</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">active_button</span><span class="p">)</span>
+
+        <span class="c1"># Show the directories/files that were ignored to the user</span>
+        <span class="k">if</span> <span class="n">errors</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Files were ignored&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">errors</span><span class="p">)</span>
+
+        <span class="c1"># Show the files in the gui</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">(),</span>
+                <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="n">active_button</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">button_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Only enable closing when some data was included &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: hmmmmmmmmmmmm, should I be able to close the window if I mistakenly opened it?</span>
+        <span class="n">nameTxt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nameEdit</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">files</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">nameTxt</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">doneBtn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">doneBtn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_message</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="p">()</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Completely reset this UI by clearing all elements &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nameEdit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labelEdit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browseDirText</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browseFilesText</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_state</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Add name, device type,  and date and time dataspec before exiting &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nameEdit</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataTypeCombo</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+        <span class="n">experiment_date_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dateTimeEdit</span><span class="o">.</span><span class="n">dateTime</span><span class="p">()</span><span class="o">.</span><span class="n">toPyDateTime</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y.%m.</span><span class="si">%d</span><span class="s2">_%H.%M.%S&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_experiment_date</span><span class="p">(</span><span class="n">experiment_date_time</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.add_file_to_set" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">add_file_to_set</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <h3 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.add_file_to_set--gets-the-path-and-label-and-adds-it-to-the-current-dataspec-instance-while-updating-gui">Gets the path and label and adds it to the current DataSpec instance while updating GUI</h3>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui\windows\DataSpecCreatorWindow.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_file_to_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    # Gets the path and label and adds it to the current DataSpec instance while updating GUI</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Read name and legend label from gui</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">browseFilesText</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span>
+    <span class="n">file_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labelEdit</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+    <span class="c1"># Check for duplicate label</span>
+    <span class="k">if</span> <span class="n">file_label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Duplicate Label&quot;</span><span class="p">,</span>
+            <span class="n">message</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;This label has already been used. Choose another label and try again.&quot;&quot;&quot;</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Add the file to the dataset and update the gui</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="s2">&quot;flat&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">add_filepath</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">file_label</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">(),</span>
+                <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browseFilesText</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="c1"># Empty label widget</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">labelEdit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.browse_dir" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">browse_dir</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <h3 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.browse_dir--open-directory-selection-dialog-to-get-a-path-and-update-gui-when-confirmed">Open directory selection dialog to get a path and update gui when confirmed</h3>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui\windows\DataSpecCreatorWindow.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">browse_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    # Open directory selection dialog to get a path and update gui when confirmed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dir_name</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getExistingDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Select Directory&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">browseDirText</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.browse_files" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">browse_files</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <h3 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.browse_files--open-file-selection-dialog-to-get-a-file-path-and-update-gui-when-confirmed">Open file selection dialog to get a file path and update gui when confirmed</h3>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui\windows\DataSpecCreatorWindow.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">browse_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    # Open file selection dialog to get a file path and update gui when confirmed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Open File&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">browseFilesText</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">file_name</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.button_state" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">button_state</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Only enable closing when some data was included</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui\windows\DataSpecCreatorWindow.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">button_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Only enable closing when some data was included &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: hmmmmmmmmmmmm, should I be able to close the window if I mistakenly opened it?</span>
+    <span class="n">nameTxt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nameEdit</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">files</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">nameTxt</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doneBtn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doneBtn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.finish" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">finish</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add name, device type,  and date and time dataspec before exiting</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui\windows\DataSpecCreatorWindow.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Add name, device type,  and date and time dataspec before exiting &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nameEdit</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataTypeCombo</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+    <span class="n">experiment_date_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dateTimeEdit</span><span class="o">.</span><span class="n">dateTime</span><span class="p">()</span><span class="o">.</span><span class="n">toPyDateTime</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y.%m.</span><span class="si">%d</span><span class="s2">_%H.%M.%S&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_experiment_date</span><span class="p">(</span><span class="n">experiment_date_time</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.generate_set" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">generate_set</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Automatically generate a set of filepaths based on a directory path. Will create nested structure if desired</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui\windows\DataSpecCreatorWindow.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">generate_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically generate a set of filepaths based on a directory path. Will create nested structure if desired</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">browseDirText</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span>
+
+    <span class="c1"># If path is not selected, show message and return None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;No directory selected&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;No directory was selected, please select directory and try again&quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Construct the filepaths for this dataspec</span>
+    <span class="n">active_button</span> <span class="o">=</span> <span class="n">split_camel_case</span><span class="p">(</span><span class="n">search_for_first_active_radio_button</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">objectName</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">construct_filepaths</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">active_button</span><span class="p">)</span>
+
+    <span class="c1"># Show the directories/files that were ignored to the user</span>
+    <span class="k">if</span> <span class="n">errors</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Files were ignored&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">errors</span><span class="p">)</span>
+
+    <span class="c1"># Show the files in the gui</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">(),</span>
+            <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="n">active_button</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSpecCreatorWindow.UiDataCreatorWindow.reset" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">reset</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Completely reset this UI by clearing all elements</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui\windows\DataSpecCreatorWindow.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Completely reset this UI by clearing all elements &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">nameEdit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">labelEdit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">browseDirText</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">browseFilesText</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">button_state</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="gui.windows.qtexteditconsole.QTextEditConsole"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="logging.Handler">Handler</span></code>, <code><span title="PyQt5.QtWidgets.QTextEdit">QTextEdit</span></code></p>
+
+
+
+        <p>QTextEdit-based logging console widget for the GUI.</p>
+<p>This class bridges the <code>logging</code> module with a Qt text widget by:
+- Subclassing both <code>logging.Handler</code> and <code>QTextEdit</code>.
+- Emitting formatted log messages through a dedicated Qt signal
+  (<code>appendTextEdit</code>), which is connected to the widget's <code>append</code> slot.
+- Keeping the text area read-only so it behaves like a console.</p>
+<h3 id="gui.windows.qtexteditconsole.QTextEditConsole--typical-usage">Typical usage</h3>
+<ul>
+<li>Create an instance and add it as a handler to a <code>logging.Logger</code>.</li>
+<li>Configure a formatter for the handler.</li>
+<li>Logged messages will appear in the GUI with the configured format.</li>
+</ul>
+<h3 id="gui.windows.qtexteditconsole.QTextEditConsole--parameters">Parameters</h3>
+<p>parent : QWidget
+    Parent widget that will own this console.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>gui\windows\qtexteditconsole.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">QTextEditConsole</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTextEdit</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    QTextEdit-based logging console widget for the GUI.</span>
+
+<span class="sd">    This class bridges the `logging` module with a Qt text widget by:</span>
+<span class="sd">    - Subclassing both `logging.Handler` and `QTextEdit`.</span>
+<span class="sd">    - Emitting formatted log messages through a dedicated Qt signal</span>
+<span class="sd">      (`appendTextEdit`), which is connected to the widget&#39;s `append` slot.</span>
+<span class="sd">    - Keeping the text area read-only so it behaves like a console.</span>
+
+<span class="sd">    Typical usage</span>
+<span class="sd">    -------------</span>
+<span class="sd">    - Create an instance and add it as a handler to a `logging.Logger`.</span>
+<span class="sd">    - Configure a formatter for the handler.</span>
+<span class="sd">    - Logged messages will appear in the GUI with the configured format.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parent : QWidget</span>
+<span class="sd">        Parent widget that will own this console.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">appendTextEdit</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTextEdit</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setReadOnly</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">appendTextEdit</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">appendTextEdit</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="gui.windows.dialogs.dialog_print.dialog_print"></a>
+    <div class="doc doc-contents first">
+
+        <p>Display text content inside a modal dialog with optional saving.</p>
+<p>The dialog contains:
+- A read-only text editor showing <code>contents</code>.
+- “OK” to close the dialog.
+- “SAVE” to delegate saving via <code>window.save_to_file</code>.</p>
+<h3 id="gui.windows.dialogs.dialog_print.dialog_print--parameters">Parameters</h3>
+<p>window : QMainWindow
+    Parent window providing the save callback.
+title : str
+    Dialog title bar text.
+contents : str
+    Text content to display.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui\windows\dialogs\dialog_print.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">dialog_print</span><span class="p">(</span><span class="n">window</span><span class="p">:</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">contents</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display text content inside a modal dialog with optional saving.</span>
+
+<span class="sd">    The dialog contains:</span>
+<span class="sd">    - A read-only text editor showing `contents`.</span>
+<span class="sd">    - “OK” to close the dialog.</span>
+<span class="sd">    - “SAVE” to delegate saving via `window.save_to_file`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    window : QMainWindow</span>
+<span class="sd">        Parent window providing the save callback.</span>
+<span class="sd">    title : str</span>
+<span class="sd">        Dialog title bar text.</span>
+<span class="sd">    contents : str</span>
+<span class="sd">        Text content to display.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Prepare a text edit widget to host the contents</span>
+    <span class="n">history_text_edit</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTextEdit</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+    <span class="n">history_text_edit</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span>
+
+    <span class="c1"># Initialise the window</span>
+    <span class="n">dialog</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+    <span class="c1"># Set a default width and minimum height for the dialog</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+    <span class="c1"># Create a QVBoxLayout for the dialog</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">(</span><span class="n">dialog</span><span class="p">)</span>
+
+    <span class="c1"># Add the QTextEdit widget to the layout</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">history_text_edit</span><span class="p">)</span>
+
+    <span class="c1"># Create a QHBoxLayout and host buttons</span>
+    <span class="n">button_layout</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+    <span class="n">ok_button</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;OK&quot;</span><span class="p">)</span>
+    <span class="n">save_button</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;SAVE&quot;</span><span class="p">)</span>
+    <span class="n">button_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">ok_button</span><span class="p">)</span>
+    <span class="n">button_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">save_button</span><span class="p">)</span>
+
+    <span class="c1"># Add the button layout to the main layout</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">button_layout</span><span class="p">)</span>
+
+    <span class="c1"># Connect the &quot;OK&quot; button to close the dialog</span>
+    <span class="n">ok_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">accept</span><span class="p">)</span>
+    <span class="n">save_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">window</span><span class="o">.</span><span class="n">save_to_file</span><span class="p">(</span><span class="n">contents</span><span class="p">))</span>
+
+    <span class="c1"># Show the dialog</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="gui.windows.dialogs.generate_about_dialog.generate_about_dialog"></a>
+    <div class="doc doc-contents first">
+
+        <p>Build and return an 'About' information dialog containing a logo and text.</p>
+<p>Features:
+- Displays an application logo loaded via QPixmap.
+- Shows about text with HTML formatting support.
+- Uses a fixed-size vertical layout.</p>
+<h3 id="gui.windows.dialogs.generate_about_dialog.generate_about_dialog--parameters">Parameters</h3>
+<p>about_contents : str
+    HTML/markdown-like text describing the application.
+centralwidget : QWidget
+    Parent widget for modal behavior.
+logo_path : str
+    Directory path to the logo image file.</p>
+<h3 id="gui.windows.dialogs.generate_about_dialog.generate_about_dialog--returns">Returns</h3>
+<p>QDialog
+    Configured dialog ready to be shown.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui\windows\dialogs\generate_about_dialog.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">generate_about_dialog</span><span class="p">(</span><span class="n">about_contents</span><span class="p">,</span> <span class="n">centralwidget</span><span class="p">,</span> <span class="n">logo_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Build and return an &#39;About&#39; information dialog containing a logo and text.</span>
+
+<span class="sd">    Features:</span>
+<span class="sd">    - Displays an application logo loaded via QPixmap.</span>
+<span class="sd">    - Shows about text with HTML formatting support.</span>
+<span class="sd">    - Uses a fixed-size vertical layout.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    about_contents : str</span>
+<span class="sd">        HTML/markdown-like text describing the application.</span>
+<span class="sd">    centralwidget : QWidget</span>
+<span class="sd">        Parent widget for modal behavior.</span>
+<span class="sd">    logo_path : str</span>
+<span class="sd">        Directory path to the logo image file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    QDialog</span>
+<span class="sd">        Configured dialog ready to be shown.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create a custom QDialog for the about information</span>
+    <span class="n">about_dialog</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">(</span><span class="n">centralwidget</span><span class="p">)</span>
+    <span class="n">about_dialog</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;About&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Set the fixed size of the dialog</span>
+    <span class="n">about_dialog</span><span class="o">.</span><span class="n">setFixedSize</span><span class="p">(</span><span class="mi">650</span><span class="p">,</span> <span class="mi">700</span><span class="p">)</span>  <span class="c1"># Adjust the dimensions as needed</span>
+
+    <span class="c1"># Load and set the image using QPixmap (make sure the path is correct)</span>
+    <span class="n">pixmap</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">logo_path</span> <span class="o">+</span> <span class="s2">&quot;X_logo_x-lab_baseline_KL.png&quot;</span><span class="p">)</span>
+    <span class="n">pixmap</span> <span class="o">=</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">KeepAspectRatio</span><span class="p">)</span>
+    <span class="n">image_label</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">about_dialog</span><span class="p">)</span>
+    <span class="n">image_label</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
+
+    <span class="c1"># Create a QLabel for the text (using HTML formatting)</span>
+    <span class="n">text_label</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">about_dialog</span><span class="p">)</span>
+    <span class="n">text_label</span><span class="o">.</span><span class="n">setWordWrap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">text_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">about_contents</span><span class="p">)</span>
+
+    <span class="c1"># Create a QVBoxLayout for the dialog and add the image and text labels</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">(</span><span class="n">about_dialog</span><span class="p">)</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">image_label</span><span class="p">)</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">text_label</span><span class="p">)</span>
+
+    <span class="n">about_dialog</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">about_dialog</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../../logging/" class="btn btn-neutral float-left" title="Logging & debugging"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../plot_manager/" class="btn btn-neutral float-right" title="GUI - Plot Manager">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../../logging/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../plot_manager/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
