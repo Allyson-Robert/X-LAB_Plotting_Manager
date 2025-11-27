@@ -1,0 +1,6 @@
+plotly==6.5.0
+PyQt5==5.15.11
+pandas==2.3.3
+numpy==2.3.5
+natsort==8.4.0
+openpyxl==3.1.5
