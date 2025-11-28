@@ -85,9 +85,16 @@ def plot_manager(window, *args, **kwargs):
 
     # Connect signals and slots for the worker thread
     window.thread.started.connect(window.device_worker.run)
+
+    # When the worker says "I'm done", stop the thread and schedule the worker for deletion
     window.device_worker.finished.connect(window.thread.quit)
     window.device_worker.finished.connect(window.device_worker.deleteLater)
+
+    # When the thread is actually finished, clean up and reset GUI
     window.thread.finished.connect(window.thread.deleteLater)
+    window.thread.finished.connect(window.on_plot_thread_finished)
+
+    # Progress updates
     window.device_worker.progress.connect(window.report_progress)
 
     # Start the thread

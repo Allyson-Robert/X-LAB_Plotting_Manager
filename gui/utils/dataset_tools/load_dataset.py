@@ -44,8 +44,7 @@ def open_dataset_file(window: QtWidgets.QMainWindow, *args, **kwargs):
         clear_data(window)
         window.consoleTextEdit.clear()
 
-        # Open then load the json file, remember the location and update gui
-        # window.fileset_location = file_name
+        # Open then load the json file, and update gui
         with open(file_name) as json_file:
             dataset = json.load(json_file, cls=dataset_manager.DataSetJSONDecoder)
             dataset.set_location(file_name)
