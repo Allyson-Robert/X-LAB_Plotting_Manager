@@ -19,6 +19,7 @@ It is designed around a clean separation between:
 - Modular architecture (devices, data types, processors, plotters) 
 - Fully extensible/customisable via external implementation packages  
 - Minimal MkDocs documentation
+- A minimal example implementation package, available at [X-LAB Plotting Implementations](https://github.com/Allyson-Robert/X-LAB_Plotting_Implementations) and documented at the [X-LAB Plotting Implementations GitHub Pages](https://allyson-robert.github.io/X-LAB_Plotting_Manager_Implementations/)
 
 ---
 
