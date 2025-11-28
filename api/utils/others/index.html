@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Additional utilities - X-LAB Plotting Manager</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Additional utilities";
+        var mkdocs_page_input_path = "api\\utils\\others.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> X-LAB Plotting Manager
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">DataSets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">X-LAB Plotting Manager</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Additional utilities</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/utils/others.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="additional-utilities">Additional utilities</h1>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="utils.check_implementations.check_implementations"></a>
+    <div class="doc doc-contents first">
+
+        <p>Run all checks on the <code>implementations</code> package.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>utils\check_implementations.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_implementations</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run all checks on the `implementations` package.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">impl_root</span> <span class="o">=</span> <span class="n">_require_implementations_package</span><span class="p">()</span>
+    <span class="n">_check_directory_structure</span><span class="p">(</span><span class="n">impl_root</span><span class="p">)</span>
+    <span class="n">modules</span> <span class="o">=</span> <span class="n">_import_impl_modules</span><span class="p">()</span>
+    <span class="n">_check_contract_implementations</span><span class="p">(</span><span class="n">modules</span><span class="p">)</span>
+    <span class="n">_check_device_ui_files</span><span class="p">(</span><span class="n">impl_root</span><span class="p">,</span> <span class="n">modules</span><span class="p">[</span><span class="s2">&quot;devices_workers&quot;</span><span class="p">])</span>
+    <span class="n">_check_config_file</span><span class="p">(</span><span class="n">impl_root</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="utils.console_colours.ConsoleColours"></a>
+    <div class="doc doc-contents first">
+
+
+
+        <p>Helper for mapping message level names to QColor instances.</p>
+<p>The colours are used by the GUI console to display messages with different
+visual emphasis (alert, warning, normal).</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>utils\console_colours.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ConsoleColours</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper for mapping message level names to QColor instances.</span>
+
+<span class="sd">    The colours are used by the GUI console to display messages with different</span>
+<span class="sd">    visual emphasis (alert, warning, normal).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alert</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warning</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_normal</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_colour</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="utils.custom_datetime.CustomDatetime"></a>
+    <div class="doc doc-contents first">
+
+
+
+        <p>Utility for parsing and serialising my custom timestamp format.</p>
+<p>The helper supports flexible separators and format strings used to construct
+filenames and labels, and provides round-tripping between strings and
+:class:<code>datetime.datetime</code> objects.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>utils\custom_datetime.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CustomDatetime</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Utility for parsing and serialising my custom timestamp format.</span>
+
+<span class="sd">    The helper supports flexible separators and format strings used to construct</span>
+<span class="sd">    filenames and labels, and provides round-tripping between strings and</span>
+<span class="sd">    :class:`datetime.datetime` objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">separators</span><span class="o">=</span><span class="s2">&quot;-_&quot;</span><span class="p">,</span>
+                 <span class="n">label_format</span><span class="o">=</span><span class="s2">&quot;%Y_%m_</span><span class="si">%d</span><span class="s2">_%H_%M_%S&quot;</span><span class="p">,</span>
+                 <span class="n">default_time</span><span class="o">=</span><span class="s2">&quot;09_00_00&quot;</span><span class="p">,</span>
+                 <span class="n">date_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">time_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">separators</span> <span class="o">=</span> <span class="n">separators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_format</span> <span class="o">=</span> <span class="n">label_format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_time</span> <span class="o">=</span> <span class="n">default_time</span>
+
+        <span class="c1"># If user didn&#39;t pass custom patterns, use default YYYY_MM_DD / HH_MM_SS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date_pattern</span> <span class="o">=</span> <span class="n">date_pattern</span> <span class="ow">or</span> <span class="sa">rf</span><span class="s2">&quot;(\d</span><span class="se">{{</span><span class="s2">4</span><span class="se">}}</span><span class="s2">)[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">separators</span><span class="si">}</span><span class="s2">](\d</span><span class="se">{{</span><span class="s2">2</span><span class="se">}}</span><span class="s2">)[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">separators</span><span class="si">}</span><span class="s2">](\d</span><span class="se">{{</span><span class="s2">2</span><span class="se">}}</span><span class="s2">)&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_pattern</span> <span class="o">=</span> <span class="n">time_pattern</span> <span class="ow">or</span> <span class="sa">rf</span><span class="s2">&quot;(\d</span><span class="se">{{</span><span class="s2">2</span><span class="se">}}</span><span class="s2">)[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">separators</span><span class="si">}</span><span class="s2">](\d</span><span class="se">{{</span><span class="s2">2</span><span class="se">}}</span><span class="s2">)[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">separators</span><span class="si">}</span><span class="s2">](\d</span><span class="se">{{</span><span class="s2">2</span><span class="se">}}</span><span class="s2">)&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_datetime_from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_datetime_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a datetime object from an input datetime string.</span>
+
+<span class="sd">        - Infers %Y vs %y from the year token length.</span>
+<span class="sd">        - Allows HH_MM or HH_MM_SS; pads seconds to 00 when missing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">input_datetime_str</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input datetime string cannot be None&quot;</span><span class="p">)</span>
+
+        <span class="c1"># --- Find date ---</span>
+        <span class="n">date_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">date_pattern</span><span class="p">,</span> <span class="n">input_datetime_str</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">date_match</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input string </span><span class="si">{</span><span class="n">input_datetime_str</span><span class="si">}</span><span class="s2"> does not contain a valid date&quot;</span><span class="p">)</span>
+
+        <span class="n">date_groups</span> <span class="o">=</span> <span class="n">date_match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">date_groups</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Date pattern must capture exactly 3 groups (Y, m, d)&quot;</span><span class="p">)</span>
+
+        <span class="n">year_token</span> <span class="o">=</span> <span class="n">date_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">year_token</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">date_fmt</span> <span class="o">=</span> <span class="s2">&quot;%Y_%m_</span><span class="si">%d</span><span class="s2">&quot;</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">year_token</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">date_fmt</span> <span class="o">=</span> <span class="s2">&quot;%y_%m_</span><span class="si">%d</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Year group must be 2 or 4 digits&quot;</span><span class="p">)</span>
+
+        <span class="n">date_str</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">date_groups</span><span class="p">)</span>
+
+        <span class="c1"># --- Find time (search only after date to avoid picking up pre-date tokens) ---</span>
+        <span class="n">remaining_str</span> <span class="o">=</span> <span class="n">input_datetime_str</span><span class="p">[</span><span class="n">date_match</span><span class="o">.</span><span class="n">end</span><span class="p">():]</span>
+        <span class="n">time_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_pattern</span><span class="p">,</span> <span class="n">remaining_str</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">time_match</span><span class="p">:</span>
+            <span class="n">time_groups</span> <span class="o">=</span> <span class="n">time_match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">time_groups</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">time_str</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">time_groups</span><span class="p">)</span>  <span class="c1"># HH_MM_SS</span>
+                <span class="n">time_fmt</span> <span class="o">=</span> <span class="s2">&quot;%H_%M_%S&quot;</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">time_groups</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">time_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">time_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">time_groups</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">_00&quot;</span>  <span class="c1"># HH_MM_00</span>
+                <span class="n">time_fmt</span> <span class="o">=</span> <span class="s2">&quot;%H_%M_%S&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Time pattern must capture 2 (H,M) or 3 (H,M,S) groups&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Use default time (assumed HH_MM_SS like &quot;09_00_00&quot;)</span>
+            <span class="n">time_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_time</span>
+            <span class="n">time_fmt</span> <span class="o">=</span> <span class="s2">&quot;%H_%M_%S&quot;</span>
+
+        <span class="c1"># Final assemble + parse</span>
+        <span class="n">datetime_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">date_str</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">time_str</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">date_fmt</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">time_fmt</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">datetime_str</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_datetime_to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_datetime</span><span class="p">:</span> <span class="n">datetime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">input_datetime</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input datetime cannot be None&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">input_datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_format</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_current_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">now</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a timestamp string using `label_format`, suitable for filenames.</span>
+<span class="sd">        Pass `now` for deterministic testing; otherwise uses current local time.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">now</span> <span class="ow">or</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_datetime_to_string</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="utils.custom_datetime.CustomDatetime.create_datetime_from_string" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">create_datetime_from_string</span><span class="p">(</span><span class="n">input_datetime_str</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a datetime object from an input datetime string.</p>
+<ul>
+<li>Infers %Y vs %y from the year token length.</li>
+<li>Allows HH_MM or HH_MM_SS; pads seconds to 00 when missing.</li>
+</ul>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>utils\custom_datetime.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">create_datetime_from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_datetime_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a datetime object from an input datetime string.</span>
+
+<span class="sd">    - Infers %Y vs %y from the year token length.</span>
+<span class="sd">    - Allows HH_MM or HH_MM_SS; pads seconds to 00 when missing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">input_datetime_str</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input datetime string cannot be None&quot;</span><span class="p">)</span>
+
+    <span class="c1"># --- Find date ---</span>
+    <span class="n">date_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">date_pattern</span><span class="p">,</span> <span class="n">input_datetime_str</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">date_match</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input string </span><span class="si">{</span><span class="n">input_datetime_str</span><span class="si">}</span><span class="s2"> does not contain a valid date&quot;</span><span class="p">)</span>
+
+    <span class="n">date_groups</span> <span class="o">=</span> <span class="n">date_match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">date_groups</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Date pattern must capture exactly 3 groups (Y, m, d)&quot;</span><span class="p">)</span>
+
+    <span class="n">year_token</span> <span class="o">=</span> <span class="n">date_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">year_token</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">date_fmt</span> <span class="o">=</span> <span class="s2">&quot;%Y_%m_</span><span class="si">%d</span><span class="s2">&quot;</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">year_token</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">date_fmt</span> <span class="o">=</span> <span class="s2">&quot;%y_%m_</span><span class="si">%d</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Year group must be 2 or 4 digits&quot;</span><span class="p">)</span>
+
+    <span class="n">date_str</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">date_groups</span><span class="p">)</span>
+
+    <span class="c1"># --- Find time (search only after date to avoid picking up pre-date tokens) ---</span>
+    <span class="n">remaining_str</span> <span class="o">=</span> <span class="n">input_datetime_str</span><span class="p">[</span><span class="n">date_match</span><span class="o">.</span><span class="n">end</span><span class="p">():]</span>
+    <span class="n">time_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_pattern</span><span class="p">,</span> <span class="n">remaining_str</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">time_match</span><span class="p">:</span>
+        <span class="n">time_groups</span> <span class="o">=</span> <span class="n">time_match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">time_groups</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">time_str</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">time_groups</span><span class="p">)</span>  <span class="c1"># HH_MM_SS</span>
+            <span class="n">time_fmt</span> <span class="o">=</span> <span class="s2">&quot;%H_%M_%S&quot;</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">time_groups</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">time_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">time_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">time_groups</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">_00&quot;</span>  <span class="c1"># HH_MM_00</span>
+            <span class="n">time_fmt</span> <span class="o">=</span> <span class="s2">&quot;%H_%M_%S&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Time pattern must capture 2 (H,M) or 3 (H,M,S) groups&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Use default time (assumed HH_MM_SS like &quot;09_00_00&quot;)</span>
+        <span class="n">time_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_time</span>
+        <span class="n">time_fmt</span> <span class="o">=</span> <span class="s2">&quot;%H_%M_%S&quot;</span>
+
+    <span class="c1"># Final assemble + parse</span>
+    <span class="n">datetime_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">date_str</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">time_str</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">date_fmt</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">time_fmt</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">datetime_str</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="utils.custom_datetime.CustomDatetime.get_current_timestamp" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_current_timestamp</span><span class="p">(</span><span class="n">now</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns a timestamp string using <code>label_format</code>, suitable for filenames.
+Pass <code>now</code> for deterministic testing; otherwise uses current local time.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>utils\custom_datetime.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_current_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">now</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a timestamp string using `label_format`, suitable for filenames.</span>
+<span class="sd">    Pass `now` for deterministic testing; otherwise uses current local time.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="n">now</span> <span class="ow">or</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_datetime_to_string</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="utils.export_to_csv.export_to_csv"></a>
+    <div class="doc doc-contents first">
+
+        <p>Export matrix to a delimiter-separated text file.</p>
+<h3 id="utils.export_to_csv.export_to_csv--parameters">Parameters</h3>
+<p>filename:
+    Path to the output file that will be created/overwritten.
+list_of_lists:
+    List of equal-length iterables, each representing a column of data.
+header:
+    List of column labels written as the first line of the file.
+delimiter:
+    String used to join header fields and row values (defaults to tab).</p>
+<h3 id="utils.export_to_csv.export_to_csv--notes">Notes</h3>
+<p>The function assumes that all columns in <code>list_of_lists</code> have the same
+length and will raise <code>IndexError</code> if this is not the case.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>utils\export_to_csv.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">export_to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">list_of_lists</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">header</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Export matrix to a delimiter-separated text file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename:</span>
+<span class="sd">        Path to the output file that will be created/overwritten.</span>
+<span class="sd">    list_of_lists:</span>
+<span class="sd">        List of equal-length iterables, each representing a column of data.</span>
+<span class="sd">    header:</span>
+<span class="sd">        List of column labels written as the first line of the file.</span>
+<span class="sd">    delimiter:</span>
+<span class="sd">        String used to join header fields and row values (defaults to tab).</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The function assumes that all columns in ``list_of_lists`` have the same</span>
+<span class="sd">    length and will raise ``IndexError`` if this is not the case.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">first_list</span> <span class="o">=</span> <span class="n">list_of_lists</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Open a file</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
+        <span class="c1"># Save the header row</span>
+        <span class="n">csv_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">delimiter</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">header</span><span class="p">))</span>
+        <span class="n">csv_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Go through all columns and write the data</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">first_list</span><span class="p">)):</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">list_of_lists</span><span class="p">:</span>
+                <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sublist</span><span class="p">[</span><span class="n">index</span><span class="p">]))</span>
+            <span class="n">csv_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">delimiter</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
+            <span class="n">csv_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="utils.read_config.read_config"></a>
+    <div class="doc doc-contents first">
+
+        <p>Read a JSON configuration file and return its contents as a dictionary.</p>
+<h3 id="utils.read_config.read_config--parameters">Parameters</h3>
+<p>config_path : str
+    The file path to the JSON configuration file.</p>
+<h3 id="utils.read_config.read_config--returns">Returns</h3>
+<p>dict
+    A dictionary containing the configuration settings.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>utils\read_config.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">read_config</span><span class="p">(</span><span class="n">config_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read a JSON configuration file and return its contents as a dictionary.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    config_path : str</span>
+<span class="sd">        The file path to the JSON configuration file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        A dictionary containing the configuration settings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">config</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
