@@ -256,6 +256,18 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         self.progressBar.setValue(progress)
 
+    def on_plot_thread_finished(self):
+        # Reset UI elements
+        self.progressBar.setValue(0)
+
+        # Free button and log to console
+        self.plotBtn.setEnabled(True)
+        self.console_print(f"(run {self.device_worker.identifier}) finished")
+
+        # Drop strong references so GC can do its thing
+        self.device_worker = None
+        self.thread = None
+
     def save_to_file(self, plaintext: str):
         file_dialog = QtWidgets.QFileDialog.getSaveFileName(self, "Save File", "", "Text Files (*.txt);;All Files (*)")
         if file_dialog[0]:  # Check if a file was selected

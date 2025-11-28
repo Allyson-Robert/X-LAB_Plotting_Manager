@@ -102,11 +102,4 @@ def plot_manager(window, *args, **kwargs):
     window.console_print(
         f"(run {window.device_worker.identifier}) producing {current_device_class}-{plot_function} plot for {window.get_dataset_name()} with options {options}")
 
-    # FIXME: Final resets
-    # window.longRunningBtn.setEnabled(False)
-    # window.thread.finished.connect(
-    #     lambda: window.longRunningBtn.setEnabled(True)
-    # )
-    # window.thread.finished.connect(
-    #     lambda: window.stepLabel.setText("Long-Running Step: 0")
-    # )
+    window.plotBtn.setEnabled(False)
