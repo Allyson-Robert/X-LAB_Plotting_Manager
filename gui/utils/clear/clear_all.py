@@ -7,7 +7,7 @@ def clear_all(window: QtWidgets.QMainWindow):
     Fully reset the GUI state and remove all in-memory data.
 
     This helper:
-    - Clears the active `DataSpec` and GUI fields via `clear_data`.
+    - Clears the active `DataSet` and GUI fields via `clear_data`.
     - Empties the console widget.
     - Writes a confirmation message to the GUI console.
 

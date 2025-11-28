@@ -53,7 +53,7 @@
           <locale language="English" country="Belgium"/>
          </property>
          <property name="text">
-          <string>DataSpec</string>
+          <string>DataSet</string>
          </property>
         </widget>
        </item>
@@ -78,7 +78,7 @@
           <bool>true</bool>
          </property>
          <property name="placeholderText">
-          <string>No DataSpec selected -&gt; open/create to load data</string>
+          <string>No DataSet selected -&gt; open/create to load data</string>
          </property>
         </widget>
        </item>
@@ -142,7 +142,7 @@
           <locale language="English" country="Belgium"/>
          </property>
          <property name="text">
-          <string>Raw DataSpec</string>
+          <string>Raw DataSet</string>
          </property>
         </widget>
        </item>
@@ -343,7 +343,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Add notes to DataSpec file</string>
+        <string>Add notes to DataSet file</string>
        </property>
       </widget>
      </item>

@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets, uic
-import dataspec_manager
+import dataset_manager
 import datetime, json, sys
 
 from gui.utils.search_for_first_active_radio_button import search_for_first_active_radio_button
@@ -10,11 +10,11 @@ from gui.utils.split_camelCase import split_camel_case
 
 class UiDataCreatorWindow(QtWidgets.QDialog):
     """
-       Dialog for interactively creating new `DataSpec` instances.
+       Dialog for interactively creating new `DataSet` instances.
 
        Overview
        --------
-       This window guides the user through constructing a dataspec by:
+       This window guides the user through constructing a dataset by:
        - Selecting a device type from a combobox.
        - Adding individual files with custom labels, or
        - Auto-generating filepaths from a directory according to a chosen structure.
@@ -22,13 +22,13 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
 
        Behaviour
        ---------
-       - Maintains an internal `DataSpec` object that is updated as the user adds
+       - Maintains an internal `DataSet` object that is updated as the user adds
          files or generates sets from directories.
        - Displays the current file mapping as formatted JSON in a plain-text widget.
        - Validates that both a name and at least one file are present before
          enabling the “Done” button.
        - On completion (`finish`), writes name, device type, and experiment
-         datetime into the dataspec and closes with an accepted result.
+         datetime into the dataset and closes with an accepted result.
 
        Parameters
        ----------
@@ -41,9 +41,9 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
 
         # Load the UI,
         # Note that loadUI adds objects to 'self' using objectName
-        uic.loadUi("gui/windows/DataSpecCreatorWindow.ui", self)
+        uic.loadUi("gui/windows/DataSetCreatorWindow.ui", self)
 
-        self.dataspec = dataspec_manager.DataSpec(datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S"))
+        self.dataset = dataset_manager.DataSet(datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S"))
 
         # Add the correct devices to the experiment combo box
         self.dataTypeCombo.addItems(devices)
@@ -51,7 +51,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         # Set date to today by default
         self.dateTimeEdit.setDateTime(datetime.datetime.now())
 
-        # Set starting tab to manual dataspec creation
+        # Set starting tab to manual dataset creation
         self.tabWidget.setCurrentIndex(0)
 
         # Define widget action
@@ -69,8 +69,8 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         # Show the app
         self.show()
 
-    def get_dataspec(self) -> dataspec_manager.dataspec.DataSpec:
-        return self.dataspec
+    def get_dataset(self) -> dataset_manager.dataset.DataSet:
+        return self.dataset
 
     def browse_files(self):
         """
@@ -88,25 +88,25 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
 
     def add_file_to_set(self):
         """
-        # Gets the path and label and adds it to the current DataSpec instance while updating GUI
+        # Gets the path and label and adds it to the current DataSet instance while updating GUI
         """
         # Read name and legend label from gui
         file_name = self.browseFilesText.toPlainText()
         file_label = self.labelEdit.text()
 
         # Check for duplicate label
-        if file_label in self.dataspec.get_labels():
+        if file_label in self.dataset.get_labels():
             self.show_message(
                 title="Duplicate Label",
                 message="""This label has already been used. Choose another label and try again."""
             )
         else:
             # Add the file to the dataset and update the gui
-            self.dataspec.set_structure_type("flat")
-            self.dataspec.add_filepath(file_name, file_label)
+            self.dataset.set_structure_type("flat")
+            self.dataset.add_filepath(file_name, file_label)
             self.showSetPlainText.setPlainText(
                 json.dumps(
-                    self.dataspec.get_filepaths(),
+                    self.dataset.get_filepaths(),
                     indent=4,
                     separators=(',', ': ')
                 )
@@ -127,9 +127,9 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
             self.show_message(title="No directory selected", message="""No directory was selected, please select directory and try again""")
             return None
 
-        # Construct the filepaths for this dataspec
+        # Construct the filepaths for this dataset
         active_button = split_camel_case(search_for_first_active_radio_button(self).objectName())[0]
-        errors = self.dataspec.construct_filepaths(root_dir=path, type=active_button)
+        errors = self.dataset.construct_filepaths(root_dir=path, type=active_button)
 
         # Show the directories/files that were ignored to the user
         if errors != "":
@@ -138,12 +138,12 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         # Show the files in the gui
         self.showSetPlainText.setPlainText(
             json.dumps(
-                self.dataspec.get_filepaths(),
+                self.dataset.get_filepaths(),
                 indent=4,
                 separators=(',', ': ')
             )
         )
-        self.dataspec.set_structure_type(active_button)
+        self.dataset.set_structure_type(active_button)
 
     def button_state(self):
         """ Only enable closing when some data was included """
@@ -172,11 +172,11 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         self.button_state()
 
     def finish(self):
-        """ Add name, device type,  and date and time dataspec before exiting """
-        self.dataspec.set_name(self.nameEdit.text())
-        self.dataspec.set_device(self.dataTypeCombo.currentText())
+        """ Add name, device type,  and date and time dataset before exiting """
+        self.dataset.set_name(self.nameEdit.text())
+        self.dataset.set_device(self.dataTypeCombo.currentText())
         experiment_date_time = self.dateTimeEdit.dateTime().toPyDateTime().strftime("%Y.%m.%d_%H.%M.%S")
-        self.dataspec.set_experiment_date(experiment_date_time)
+        self.dataset.set_experiment_date(experiment_date_time)
 
         self.done(1)
 

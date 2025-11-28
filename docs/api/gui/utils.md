@@ -4,10 +4,10 @@
 ::: gui.utils.clear.clear_all.clear_all
 ::: gui.utils.clear.clear_data.clear_data
 
-## DataSpec Tools
-::: gui.utils.dataspec_tools.create_dataspec.create_dataspec
-::: gui.utils.dataspec_tools.load_dataspec.load_dataspec
-::: gui.utils.dataspec_tools.save_dataspec.save_dataspec
+## DataSet Tools
+::: gui.utils.dataset_tools.create_dataset.create_dataset
+::: gui.utils.dataset_tools.load_dataset.load_dataset
+::: gui.utils.dataset_tools.save_dataset.save_dataset
 
 ## Other
 ::: gui.utils.get_qwidget_value.get_qwidget_value

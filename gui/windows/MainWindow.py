@@ -18,7 +18,7 @@ from PyQt5 import QtWidgets, uic, QtCore
 from functools import partial
 
 # Local imports
-import dataspec_manager
+import dataset_manager
 import implementations.utils.constants
 from utils.class_utils.get_class_methods import get_class_methods
 from utils.console_colours import ConsoleColours
@@ -29,10 +29,10 @@ from gui.windows.dialogs.generate_about_dialog import generate_about_dialog
 from gui.utils.clear.clear_data import clear_data
 from gui.utils.clear.clear_all import clear_all
 
-# Dataspec file imports
-from gui.utils.dataspec_tools.load_dataspec import open_dataspec_file
-from gui.utils.dataspec_tools.save_dataspec import save_dataspec
-from gui.utils.dataspec_tools.create_dataspec import create_dataspec
+# DataSet file imports
+from gui.utils.dataset_tools.load_dataset import open_dataset_file
+from gui.utils.dataset_tools.save_dataset import save_dataset
+from gui.utils.dataset_tools.create_dataset import create_dataset
 
 # Dialog imports
 from gui.windows.dialogs.dialog_print import dialog_print
@@ -59,21 +59,21 @@ class UiMainWindow(QtWidgets.QMainWindow):
     ----------------
     - Load the main QtDesigner-generated UI file and dynamically attach device-
       specific option panels to the central `QStackedWidget`.
-    - Manage the currently loaded `DataSpec`:
-        * Creating, loading, saving, and autosaving dataspecs.
+    - Manage the currently loaded `DataSet`:
+        * Creating, loading, saving, and autosaving datasets.
         * Displaying raw JSON content and console history in helper dialogs.
-        * Updating header fields (set name, device type) when dataspecs change.
+        * Updating header fields (set name, device type) when datasets change.
     - Integrate logging with a QTextEdit-based console for time-stamped messages.
     - Provide a thin controller layer for:
         * Launching the plotting pipeline via `plot_manager`.
         * Handling progress updates and console appends.
-        * Adding notes and console history back into the dataspec.
+        * Adding notes and console history back into the dataset.
 
     On construction, the window:
     - Discovers available devices from `implementations.devices`.
     - Loads and registers per-device widgets and their plot functions.
-    - Wires menu actions and buttons to dataspec, plotting, and utility actions.
-    - Optionally auto-opens a demo dataspec if a file name is supplied.
+    - Wires menu actions and buttons to dataset, plotting, and utility actions.
+    - Optionally auto-opens a demo dataset if a file name is supplied.
 
     The class is intended to be the central hub of the GUI application, with
     device-specific logic pushed into worker classes and implementations.
@@ -83,9 +83,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         self.thread = None
         self.experiment_worker = None
-        self.dataspec = None
-        # FEATURE REQUEST: Dataspec file location is def'ed here
-        self.dataspec_location = None
+        self.dataset = None
+        self.dataset_location = None
 
         # Load the UI, Note that loadUI adds objects to 'self' using objectName
         self.dataWindow = None
@@ -125,9 +124,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
 
         # Define menubar actions
-        self.actionCreate_Set.triggered.connect(partial(create_dataspec, self))
-        self.actionSave_Set.triggered.connect(partial(save_dataspec, self))
-        self.actionLoad_Set.triggered.connect(partial(open_dataspec_file, self))
+        self.actionCreate_Set.triggered.connect(partial(create_dataset, self))
+        self.actionSave_Set.triggered.connect(partial(save_dataset, self))
+        self.actionLoad_Set.triggered.connect(partial(open_dataset_file, self))
         self.actionPreferences.triggered.connect(self.not_implemented)
         self.actionQuit.triggered.connect(self.quit)
 
@@ -166,86 +165,86 @@ class UiMainWindow(QtWidgets.QMainWindow):
         return self.plotTypeCombo.currentText()
 
     def get_current_device(self) -> str:
-        return self.dataspec.get_device()
+        return self.dataset.get_device()
 
-    def get_dataspec(self):
-        return self.dataspec
+    def get_dataset(self):
+        return self.dataset
 
-    def get_dataspec_name(self) -> str:
-        if self.dataspec is None:
+    def get_dataset_name(self) -> str:
+        if self.dataset is None:
             return None
-        return self.dataspec.get_name()
+        return self.dataset.get_name()
 
-    def get_dataspec_window(self) -> QtWidgets.QDialog:
+    def get_dataset_window(self) -> QtWidgets.QDialog:
         return self.dataWindow
 
     # Setters
-    def set_dataspec_window(self, dataspec_window: QtWidgets.QDialog):
-        self.dataWindow = dataspec_window
+    def set_dataset_window(self, dataset_window: QtWidgets.QDialog):
+        self.dataWindow = dataset_window
 
-    def set_dataspec(self, dataspec: dataspec_manager.dataspec.DataSpec):
-        self.dataspec = dataspec
+    def set_dataset(self, dataset: dataset_manager.dataset.DataSet):
+        self.dataset = dataset
 
     # FUNCTIONALITY
     def autosave(self):
-        file_name = self.dataspec.get_location()
+        file_name = self.dataset.get_location()
         if file_name is None:
             return self.console_print("Cannot autosave, no file location known. Open or create dataset first")
 
         with open(file_name, "w") as json_file:
-            json.dump(self.dataspec, json_file, cls=dataspec_manager.DataSpecJSONEncoder)
+            json.dump(self.dataset, json_file, cls=dataset_manager.DataSetJSONDecoder)
         json_file.close()
 
-        return self.console_print(f"Saved dataspec to {file_name}")
+        return self.console_print(f"Saved dataset to {file_name}")
 
     def display_data(self):
-        # Abort if no dataspec was loaded
-        if self.dataspec is None:
-            return self.console_print("Err: Must first load DataSpec", level="warning")
+        # Abort if no dataset was loaded
+        if self.dataset is None:
+            return self.console_print("Err: Must first load DataSet", level="warning")
 
-        # Pretty print the dataspec in a simple dialog
+        # Pretty print the dataset in a simple dialog
         pretty_json = json.dumps(
-            self.dataspec,
+            self.dataset,
             indent=4,
             separators=(',', ': '),
-            cls=dataspec_manager.DataSpecJSONEncoder
+            cls=dataset_manager.DataSetJSONDecoder
         )
-        dialog_print(window=self, title=f"DataSpec RAW: {self.dataspec.get_name()}", contents=pretty_json)
+        dialog_print(window=self, title=f"DataSet RAW: {self.dataset.get_name()}", contents=pretty_json)
 
         return None
 
     def display_history(self):
-        if self.dataspec is None:
-            return self.console_print("Err: Must first load DataSpec", level="warning")
+        if self.dataset is None:
+            return self.console_print("Err: Must first load DataSet", level="warning")
 
         # Prints only the console history to a simple dialog
         pretty_history = ""
-        for k, v in sorted(self.dataspec.get_console().items()):
+        for k, v in sorted(self.dataset.get_console().items()):
             line = f"{v}\n"
             pretty_history += line
 
-        dialog_print(window=self, title=f"DataSpec History: {self.dataspec.get_name()}", contents=pretty_history)
+        dialog_print(window=self, title=f"DataSet History: {self.dataset.get_name()}", contents=pretty_history)
 
         return None
 
     def add_notes(self):
-        if self.dataspec is None:
-            return self.console_print("Err: Must first load DataSpec", level="warning")
+        if self.dataset is None:
+            return self.console_print("Err: Must first load DataSet", level="warning")
 
-        # Add any notes to the dataspec_manager with a trailing new line
-        self.dataspec.add_notes(self.notesPlainText.toPlainText() + "\n")
-        self.console_print("Notes added to dataspec_manager")
+        # Add any notes to the dataset_manager with a trailing new line
+        self.dataset.add_notes(self.notesPlainText.toPlainText() + "\n")
+        self.console_print("Notes added to dataset_manager")
         self.autosave()
 
         return None
 
     def update_header(self):
-        # Header should reflect opened dataspec
-        self.currSetNameLineEdit.setText(self.dataspec.get_name())
-        self.currDeviceLineEdit.setText(self.dataspec.get_device())
+        # Header should reflect opened dataset
+        self.currSetNameLineEdit.setText(self.dataset.get_name())
+        self.currDeviceLineEdit.setText(self.dataset.get_device())
 
-        # Stacked widget should show the correct widget for the opened dataspec
-        new_page = self.stackedWidget.widget(self.devices[self.dataspec.get_device()])
+        # Stacked widget should show the correct widget for the opened dataset
+        new_page = self.stackedWidget.widget(self.devices[self.dataset.get_device()])
         self.stackedWidget.setCurrentWidget(new_page)
 
     def report_progress(self, progress: int):
@@ -273,13 +272,13 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.consoleTextEdit.setTextColor(c.get_colour("normal"))
 
     def append_console_to_set(self):
-        if self.dataspec is None:
-            return self.console_print("Err: Must first load DataSpec", level="warning")
+        if self.dataset is None:
+            return self.console_print("Err: Must first load DataSet", level="warning")
 
-        # Append console contents to the dataspec_manager
+        # Append console contents to the dataset_manager
         console_text = self.consoleTextEdit.toPlainText()
         now = datetime.datetime.now()
-        self.dataspec.add_console(now.strftime(constants.DATETIME_FORMAT), console_text)
+        self.dataset.add_console(now.strftime(constants.DATETIME_FORMAT), console_text)
         self.console_print("Added console contents to set")
         self.autosave()
 

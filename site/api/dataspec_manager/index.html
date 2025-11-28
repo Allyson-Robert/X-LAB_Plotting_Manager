@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>DataSpec - X-LAB Plotting Manager</title>
+    <title>DataSet - X-LAB Plotting Manager</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,7 +13,7 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "DataSpec";
+        var mkdocs_page_name = "DataSet";
         var mkdocs_page_input_path = "api\\dataspec_manager.md";
         var mkdocs_page_url = null;
       </script>
@@ -89,31 +89,31 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../utils/others/">Utils - Others</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">DataSpec</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">DataSet</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec.DataSpec">DataSpec</a>
+    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec.DataSet">DataSet</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#dataspec_manager.dataspec.DataSpec--structure-types">Structure types</a>
+    <li class="toctree-l3"><a class="reference internal" href="#dataspec_manager.dataspec.DataSet--structure-types">Structure types</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#dataspec_manager.dataspec.DataSpec--validation">Validation</a>
+    <li class="toctree-l3"><a class="reference internal" href="#dataspec_manager.dataspec.DataSet--validation">Validation</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec.DataSpec.construct_filepaths_nrecursive">construct_filepaths_nrecursive</a>
+    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec.DataSet.construct_filepaths_nrecursive">construct_filepaths_nrecursive</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec.DataSpec.construct_structured_filepaths">construct_structured_filepaths</a>
+    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec.DataSet.construct_structured_filepaths">construct_structured_filepaths</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec_json_encoder.DataSpecJSONEncoder">DataSpecJSONEncoder</a>
+    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec_json_encoder.DataSetJSONEncoder">DataSetJSONEncoder</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec_json_decoder.DataSpecJSONDecoder">DataSpecJSONDecoder</a>
+    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec_json_decoder.DataSetJSONDecoder">DataSetJSONDecoder</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec_manager.DataSpecManager">DataSpecManager</a>
+    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec_manager.DataSetManager">DataSetManager</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#dataspec_manager.dataspec_manager.DataSpecManager--responsibilities">Responsibilities</a>
+    <li class="toctree-l3"><a class="reference internal" href="#dataspec_manager.dataspec_manager.DataSetManager--responsibilities">Responsibilities</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec_manager.DataSpecManager.save_dataspec">save_dataspec</a>
+    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec_manager.DataSetManager.save_dataspec">save_dataspec</a>
     </li>
     </ul>
                   </li>
@@ -133,7 +133,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">API Reference</li>
-      <li class="breadcrumb-item active">DataSpec</li>
+      <li class="breadcrumb-item active">DataSet</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/dataspec_manager.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -143,20 +143,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="dataspec-manager-api-documentation">DataSpec Manager API Documentation</h1>
+                <h1 id="dataspec-manager-api-documentation">DataSet Manager API Documentation</h1>
 
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="dataspec_manager.dataspec.DataSpec"></a>
+<a id="dataspec_manager.dataspec.DataSet"></a>
     <div class="doc doc-contents first">
 
 
 
         <p>Container for experiment metadata and associated data file locations.</p>
-<p>A <code>DataSpec</code> instance describes a single experiment or dataset in terms of:
+<p>A <code>DataSet</code> instance describes a single experiment or dataset in terms of:
 - Basic metadata: name, creation date, experiment date/time, device identifier.
 - User annotations: free-form notes and a simple time-stamped console log.
 - File layout: a mapping from human-readable labels to absolute file paths.
@@ -166,7 +166,7 @@
 locations and minimal metadata. Filepaths can be:
 - Added manually via <code>add_filepath</code>, or
 - Auto-populated from a root directory using <code>construct_filepaths(...)</code>.</p>
-<h3 id="dataspec_manager.dataspec.DataSpec--structure-types">Structure types</h3>
+<h3 id="dataspec_manager.dataspec.DataSet--structure-types">Structure types</h3>
 <ul>
 <li><code>"flat"</code>:
     A simple one-level mapping from label -&gt; file path. This is the default
@@ -181,13 +181,13 @@ locations and minimal metadata. Filepaths can be:
     Reserved for legacy/experimental layouts; treated as an allowed but
     user-managed structure type.</li>
 </ul>
-<h3 id="dataspec_manager.dataspec.DataSpec--validation">Validation</h3>
+<h3 id="dataspec_manager.dataspec.DataSet--validation">Validation</h3>
 <p>All paths added to the dataspec are checked for:
 - Existence on disk.
 - Being a file (not a directory).
 - Having an extension in the accepted set (<code>xlsx</code>, <code>xls</code>, <code>csv</code>,
   <code>txt</code>, <code>dpt</code>, <code>json</code>).</p>
-<p>Two <code>DataSpec</code> instances are considered equal if all their attributes
+<p>Two <code>DataSet</code> instances are considered equal if all their attributes
 (including filepaths, colours, and metadata) match exactly.</p>
 
 
@@ -501,11 +501,11 @@ locations and minimal metadata. Filepaths can be:
 <span class="normal">308</span>
 <span class="normal">309</span>
 <span class="normal">310</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@decorate_class_with_logging</span><span class="p">(</span><span class="n">log_level</span><span class="o">=</span><span class="n">DEBUG</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">DataSpec</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DataSet</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Container for experiment metadata and associated data file locations.</span>
 
-<span class="sd">        A `DataSpec` instance describes a single experiment or dataset in terms of:</span>
+<span class="sd">        A `DataSet` instance describes a single experiment or dataset in terms of:</span>
 <span class="sd">        - Basic metadata: name, creation date, experiment date/time, device identifier.</span>
 <span class="sd">        - User annotations: free-form notes and a simple time-stamped console log.</span>
 <span class="sd">        - File layout: a mapping from human-readable labels to absolute file paths.</span>
@@ -540,7 +540,7 @@ locations and minimal metadata. Filepaths can be:
 <span class="sd">        - Having an extension in the accepted set (``xlsx``, ``xls``, ``csv``,</span>
 <span class="sd">          ``txt``, ``dpt``, ``json``).</span>
 
-<span class="sd">        Two `DataSpec` instances are considered equal if all their attributes</span>
+<span class="sd">        Two `DataSet` instances are considered equal if all their attributes</span>
 <span class="sd">        (including filepaths, colours, and metadata) match exactly.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -793,11 +793,11 @@ locations and minimal metadata. Filepaths can be:
             <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_accepted_extensions</span><span class="p">):</span>
                 <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;DataSpec Forbidden Extension: Ignored </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;DataSet Forbidden Extension: Ignored </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;DataSpec Not a File: Ignored </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;DataSet Not a File: Ignored </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;DataSpec Filesystem Error: Ignored </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;DataSet Filesystem Error: Ignored </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -822,7 +822,7 @@ locations and minimal metadata. Filepaths can be:
 <div class="doc doc-object doc-function">
 
 
-<h2 id="dataspec_manager.dataspec.DataSpec.construct_filepaths_nrecursive" class="doc doc-heading">
+<h2 id="dataspec_manager.dataspec.DataSet.construct_filepaths_nrecursive" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">construct_filepaths_nrecursive</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span></code>
 
 </h2>
@@ -897,7 +897,7 @@ locations and minimal metadata. Filepaths can be:
 <div class="doc doc-object doc-function">
 
 
-<h2 id="dataspec_manager.dataspec.DataSpec.construct_structured_filepaths" class="doc doc-heading">
+<h2 id="dataspec_manager.dataspec.DataSet.construct_structured_filepaths" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">construct_structured_filepaths</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span></code>
 
 </h2>
@@ -992,19 +992,19 @@ locations and minimal metadata. Filepaths can be:
 
 
 
-<a id="dataspec_manager.dataspec_json_encoder.DataSpecJSONEncoder"></a>
+<a id="dataspec_manager.dataspec_json_encoder.DataSetJSONEncoder"></a>
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
               Bases: <code><span title="json.JSONEncoder">JSONEncoder</span></code></p>
 
 
 
-        <p>JSON encoder for <code>DataSpec</code> objects and related dataclasses.</p>
+        <p>JSON encoder for <code>DataSet</code> objects and related dataclasses.</p>
 <p>This encoder provides two custom behaviours:</p>
 <ul>
 <li><code>datetime.datetime</code> instances are serialised to a compact string
   representation using the format <code>"%Y.%m.%d_%H.%M.%S"</code>. This matches
-  the format expected by <code>DataSpec</code> and the corresponding JSON decoder.</li>
+  the format expected by <code>DataSet</code> and the corresponding JSON decoder.</li>
 <li>All other objects are serialised via their <code>__dict__</code> attribute,
   which is sufficient for simple container-like classes such as <code>DataSpec</code>.</li>
 </ul>

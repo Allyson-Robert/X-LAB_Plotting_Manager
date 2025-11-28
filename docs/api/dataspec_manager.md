@@ -1,5 +1,5 @@
-# DataSpec Manager API Documentation
-::: dataspec_manager.dataspec.DataSpec
-::: dataspec_manager.dataspec_json_encoder.DataSpecJSONEncoder
-::: dataspec_manager.dataspec_json_decoder.DataSpecJSONDecoder
-::: dataspec_manager.dataspec_manager.DataSpecManager
+# DataSet Manager API Documentation
+::: dataset_manager.dataset.DataSet
+::: dataset_manager.dataset_json_encoder.DataSetJSONEncoder
+::: dataset_manager.dataset_json_decoder.DataSetJSONDecoder
+::: dataset_manager.dataset_manager.DataSetManager

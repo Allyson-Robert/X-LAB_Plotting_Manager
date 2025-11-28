@@ -6,11 +6,11 @@ import warnings
 from utils.logging import decorate_class_with_logging, DEBUG
 
 @decorate_class_with_logging(log_level=DEBUG)
-class DataSpec:
+class DataSet:
     """
         Container for experiment metadata and associated data file locations.
 
-        A `DataSpec` instance describes a single experiment or dataset in terms of:
+        A `DataSet` instance describes a single experiment or dataset in terms of:
         - Basic metadata: name, creation date, experiment date/time, device identifier.
         - User annotations: free-form notes and a simple time-stamped console log.
         - File layout: a mapping from human-readable labels to absolute file paths.
@@ -39,13 +39,13 @@ class DataSpec:
 
         Validation
         ----------
-        All paths added to the dataspec are checked for:
+        All paths added to the dataset are checked for:
         - Existence on disk.
         - Being a file (not a directory).
         - Having an extension in the accepted set (``xlsx``, ``xls``, ``csv``,
           ``txt``, ``dpt``, ``json``).
 
-        Two `DataSpec` instances are considered equal if all their attributes
+        Two `DataSet` instances are considered equal if all their attributes
         (including filepaths, colours, and metadata) match exactly.
     """
 
@@ -136,7 +136,7 @@ class DataSpec:
     def construct_filepaths_nrecursive(self, root_dir) -> str:
         """
         Will generate a flat file set and add it to the current filepaths. This will seek all files and
-            of the giver root_dir and append all dataspec files to the filepaths attribute. Note that
+            of the giver root_dir and append all dataset files to the filepaths attribute. Note that
             root_dir should be an absolute path.
         """
 
@@ -166,7 +166,7 @@ class DataSpec:
     def construct_structured_filepaths(self, root_dir: str) -> str:
         """
         Will generate a dirlabelled file set and add it to the current filepaths. This will seek all files and
-            subdirectories of the giver root_dir and append all dataspec files to the filepaths attribute. Note that
+            subdirectories of the giver root_dir and append all dataset files to the filepaths attribute. Note that
             root_dir should be an absolute path.
         """
         warnings.warn("Function construct_structured_filepaths is deprecated use construct_filepaths instead", DeprecationWarning)
@@ -191,7 +191,7 @@ class DataSpec:
                         else:
                             errors += error_msg
         else:
-            errors = "Flat dataspec_manager cannot use dirlabelled construction"
+            errors = "Flat dataset_manager cannot use dirlabelled construction"
 
         return errors
 
@@ -265,7 +265,7 @@ class DataSpec:
 
         # Check for duplicate label
         if label in self.filepaths.keys():
-            return "Duplicate label found in dataspec_manager"
+            return "Duplicate label found in dataset_manager"
 
         # Check that all paths are valid
         for sublabel in path_to_validate:
@@ -288,7 +288,7 @@ class DataSpec:
             # Add the file to the dataset and update the gui
             self.colours[label] = colour
 
-    # Checks are needed before paths are added to the dataspec_manager
+    # Checks are needed before paths are added to the dataset_manager
     def _check_valid_path(self, path: str):
         if not isinstance(path, str):
             raise ValueError("path must be a string")
@@ -298,11 +298,11 @@ class DataSpec:
             if path.endswith(self._accepted_extensions):
                 return True, ""
             else:
-                return False, f"DataSpec Forbidden Extension: Ignored {path}\n"
+                return False, f"DataSet Forbidden Extension: Ignored {path}\n"
         elif os.path.exists(path) and not os.path.isfile(path):
-            return False, f"DataSpec Not a File: Ignored {path}\n"
+            return False, f"DataSet Not a File: Ignored {path}\n"
         else:
-            return False, f"DataSpec Filesystem Error: Ignored {path}\n"
+            return False, f"DataSet Filesystem Error: Ignored {path}\n"
 
     def __eq__(self, other):
         if type(other) is type(self):

@@ -1,12 +1,12 @@
 import unittest
 import os, shutil
 from datetime import datetime
-from dataspec_manager.dataspec import DataSpec  # Assuming the class is defined in a file named dataspec.py
+from dataset_manager.dataset import DataSet  # Assuming the class is defined in a file named dataset.py
 
-class TestDataSpec(unittest.TestCase):
+class TestDataSet(unittest.TestCase):
     def setUp(self):
-        # Initialize a DataSpec object for testing
-        self.data_spec = DataSpec(creation_date="2024.12.25_00.00.00")
+        # Initialize a DataSet object for testing
+        self.data_spec = DataSet(creation_date="2024.12.25_00.00.00")
 
     def test_initialization(self):
         self.assertEqual(self.data_spec.get_creation_date(),
@@ -196,7 +196,7 @@ class TestDataSpec(unittest.TestCase):
             shutil.rmtree(os.path.join(root_dir, "level1"), ignore_errors=True)
 
     def test_equality(self):
-        other_data_spec = DataSpec(creation_date="2024.12.25_00.00.00")
+        other_data_spec = DataSet(creation_date="2024.12.25_00.00.00")
         self.assertEqual(self.data_spec, other_data_spec)
         other_data_spec.set_name("DifferentName")
         self.assertNotEqual(self.data_spec, other_data_spec)

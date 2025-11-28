@@ -14,7 +14,7 @@ nav:
   - Guide:
     - Home: index.md
     - Getting started: getting_started.md
-    - Dataspecs: dataspecs.md
+    - DataSets: datasets.md
     - Logging & debugging: logging.md
   - API Reference:
       - GUI - Windows: api/gui/windows_and_dialogs.md
@@ -33,4 +33,4 @@ nav:
       - Utils - Errors: api/utils/errors.md
       - Utils - Logging: api/utils/logging.md
       - Utils - Others: api/utils/others.md
-      - DataSpec: api/dataspec_manager.md
+      - DataSet: api/dataset_manager.md

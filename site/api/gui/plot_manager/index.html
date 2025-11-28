@@ -46,7 +46,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting started</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../dataspecs/">Dataspecs</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">datasets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
                   </li>
@@ -99,7 +99,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../utils/others/">Utils - Others</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../dataspec_manager/">DataSpec</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../dataset_manager/">DataSet</a>
                   </li>
               </ul>
       </div>
@@ -141,13 +141,13 @@
 <h3 id="gui.plot_manager.plot_manager--workflow">Workflow</h3>
 <ol>
 <li>Collect the selected file labels from the main window.</li>
-<li>Build a reduced <code>DataSpec</code> containing only the selected files, colours,
+<li>Build a reduced <code>DataSet</code> containing only the selected files, colours,
    device, structure type, and name.</li>
 <li>Collect plotting options from the active device widget (via <code>alias</code>
    properties) and from global GUI controls, storing them in <code>PlotterOptions</code>.</li>
 <li>Resolve and instantiate the appropriate device worker class from the
    <code>implementations.devices.workers</code> namespace.</li>
-<li>Configure the worker with the reduced dataspec, selected plot function,
+<li>Configure the worker with the reduced dataset, selected plot function,
    and options.</li>
 <li>Move the worker to a <code>QThread</code>, wire up progress/finished signals, and
    start the thread.</li>
@@ -156,7 +156,7 @@
 identifier) to the GUI console once the worker is started.</p>
 <h3 id="gui.plot_manager.plot_manager--parameters">Parameters</h3>
 <p>window : QMainWindow
-    Main application window providing access to the dataspec, widgets
+    Main application window providing access to the dataset, widgets
     (file selection, stacked options, checkboxes, etc.), and console API.</p>
 
 
@@ -256,13 +256,13 @@ identifier) to the GUI console once the worker is started.</p>
 <span class="sd">        Workflow</span>
 <span class="sd">        --------</span>
 <span class="sd">        1. Collect the selected file labels from the main window.</span>
-<span class="sd">        2. Build a reduced `DataSpec` containing only the selected files, colours,</span>
+<span class="sd">        2. Build a reduced `DataSet` containing only the selected files, colours,</span>
 <span class="sd">           device, structure type, and name.</span>
 <span class="sd">        3. Collect plotting options from the active device widget (via `alias`</span>
 <span class="sd">           properties) and from global GUI controls, storing them in `PlotterOptions`.</span>
 <span class="sd">        4. Resolve and instantiate the appropriate device worker class from the</span>
 <span class="sd">           `implementations.devices.workers` namespace.</span>
-<span class="sd">        5. Configure the worker with the reduced dataspec, selected plot function,</span>
+<span class="sd">        5. Configure the worker with the reduced dataset, selected plot function,</span>
 <span class="sd">           and options.</span>
 <span class="sd">        6. Move the worker to a `QThread`, wire up progress/finished signals, and</span>
 <span class="sd">           start the thread.</span>
@@ -280,7 +280,7 @@ identifier) to the GUI console once the worker is started.</p>
     <span class="c1"># Grab the selected files for plotting and build a reduced dataspec</span>
     <span class="n">dataspec_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">DATETIME_FORMAT</span><span class="p">)</span>
     <span class="n">experiment_time</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_experiment_date</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">DATETIME_FORMAT</span><span class="p">)</span>
-    <span class="n">dataspec_selection</span> <span class="o">=</span> <span class="n">dataspec_manager</span><span class="o">.</span><span class="n">DataSpec</span><span class="p">(</span><span class="n">dataspec_time</span><span class="p">)</span>
+    <span class="n">dataspec_selection</span> <span class="o">=</span> <span class="n">dataspec_manager</span><span class="o">.</span><span class="n">DataSet</span><span class="p">(</span><span class="n">dataspec_time</span><span class="p">)</span>
     <span class="n">dataspec_selection</span><span class="o">.</span><span class="n">set_experiment_date</span><span class="p">(</span><span class="n">experiment_time</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">window</span><span class="o">.</span><span class="n">selectedFilesList</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">():</span>

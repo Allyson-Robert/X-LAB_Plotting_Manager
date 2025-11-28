@@ -15,7 +15,7 @@ It is designed around a clean separation between:
 ## ✨ Features
 
 - PyQt-based GUI for dataset management  
-- User-defined “dataspecs” describing required data & metadata  
+- User-defined “DataSets” describing required data & metadata  
 - Modular architecture (devices, data types, processors, plotters) 
 - Fully extensible/customisable via external implementation packages  
 - Minimal MkDocs documentation
@@ -69,7 +69,7 @@ pip install -r implementations/requirements-312.txt
 Without an implementation, the application will exit with an error on startup.
 
 > ✨ **Yes—you can write your own full implementation!**  
-> The documentation explains how to implement devices, dataspecs, data classes, processors, and plotters.
+> The documentation explains how to implement devices, datasets, data classes, processors, and plotters.
 
 ---
 
@@ -91,7 +91,7 @@ From the menu bar:
 
 **File → Create Set**
 
-This opens the **Data Creation Window**, where you build datasets based on structured **dataspecs** that define required data inputs and metadata.
+This opens the **Data Creation Window**, where you build datasets based on structured **datasets** that define required data inputs and metadata.
 
 ![DataCreationWindow](docs/images/DataCreationWindow.png)
 
@@ -115,7 +115,7 @@ Full documentation is available in the `docs/` folder:
 
 - Overview: [docs/index.md](docs/index.md)  
 - Getting started: [docs/getting-started.md](docs/getting-started.md) 
-- Dataspecs: [docs/dataspecs.md](docs/dataspecs.md)
+- datasets: [docs/datasets.md](docs/datasets.md)
 
 ### View pre-built docs locally
 

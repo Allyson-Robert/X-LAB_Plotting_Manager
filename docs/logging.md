@@ -84,4 +84,4 @@ Cores come pre-decorated with logging, and their messages go to the UI console w
 Plotters, and any other user-defined components, must be decorated explicitly to participate in the logging ecosystem.
 The logging utilities make it easy to track the execution of your code in a consistent way, providing a unified view of the system’s behaviour.
 
-By using the logging system thoughtfully, you get a transparent, traceable view of your data analysis runs, from dataspec-driven configuration through to final plots.
+By using the logging system thoughtfully, you get a transparent, traceable view of your data analysis runs, from dataset-driven configuration through to final plots.

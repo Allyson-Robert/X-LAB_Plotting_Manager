@@ -53,7 +53,7 @@ pip install -r implementations/requirements-312.txt
 Without an implementation, the application will exit with an error on startup.
 
 > ✨ **Yes—you can write your own full implementation!**  
-> The documentation explains how to implement devices, dataspecs, data classes, processors, and plotters.
+> The documentation explains how to implement devices, datasets, data classes, processors, and plotters.
 
 ---
 
@@ -75,7 +75,7 @@ From the menu bar:
 
 **File → Create Set**
 
-This opens the **Data Creation Window**, where you build datasets based on structured **dataspecs** that define required data inputs and metadata.
+This opens the **Data Creation Window**, where you build datasets based on structured **datasets** that define required data inputs and metadata.
 
 ![DataCreationWindow](docs/images/DataCreationWindow.png)
 

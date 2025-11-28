@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from dataspec_manager.dataspec import DataSpec
+from dataset_manager.dataset import DataSet
 from PyQt5 import QtCore
 import uuid
 from utils.logging import DEBUG_WORKER, decorate_class_with_logging
@@ -32,7 +32,7 @@ class DeviceWorker(ABC, QtCore.QObject, metaclass=WorkerMeta):
         Abstract base for device worker objects that run in a Qt context.
 
         Overview:
-            Defines the required API for workers that accept a DataSpec,
+            Defines the required API for workers that accept a DataSet,
             run a task, and accept data/processor types.
 
         - Required methods: set_data, run, set_data_type, set_processor_type.
@@ -46,7 +46,7 @@ class DeviceWorker(ABC, QtCore.QObject, metaclass=WorkerMeta):
         self.identifier = str(uuid.uuid4())[:4]
 
     @abstractmethod
-    def set_data(self, dataspec: DataSpec):
+    def set_data(self, dataset: DataSet):
         pass
 
     @abstractmethod
@@ -70,7 +70,7 @@ class DeviceWorkerCore(DeviceWorker):
             Implements option handling, dataset instantiation and a simple run
             flow that prepares data processors, emits progress, and calls a plot.
 
-        - Manages `device`, `dataspec`, `plot_type`, `options`, and `data_processors`.
+        - Manages `device`, `dataset`, `plot_type`, `options`, and `data_processors`.
         - Populates processors per-file and emits `progress`/`finished` signals.
         - `set_data_type` / `set_processor_type` are simple setters.
 
@@ -81,15 +81,15 @@ class DeviceWorkerCore(DeviceWorker):
     finished = QtCore.pyqtSignal()
     progress = QtCore.pyqtSignal(int)
 
-    def __init__(self, device, dataspec, plot_type, options: PlotterOptions):
+    def __init__(self, device, dataset, plot_type, options: PlotterOptions):
         super().__init__()
 
         self.device = device
-        self.dataspec = dataspec
+        self.dataset = dataset
         self.plot_type = plot_type
 
         self.options = options
-        self.options.add_option(label="experiment_datetime", value = dataspec.get_experiment_date())
+        self.options.add_option(label="experiment_datetime", value = dataset.get_experiment_date())
 
 
         self.data_processors = None
@@ -107,16 +107,16 @@ class DeviceWorkerCore(DeviceWorker):
             raise TypeError("processor_type must be a subclass of DataProcessor")
         self.processor_type = processor_type
 
-    def set_data(self, dataspec: DataSpec):
-        if not isinstance(dataspec, DataSpec):
-            raise TypeError("dataspec must be an instance of DataSpec")
+    def set_data(self, dataset: DataSet):
+        if not isinstance(dataset, DataSet):
+            raise TypeError("dataset must be an instance of DataSet")
 
-        # CHECK: Check that dataspec and processor types have been set
+        # CHECK: Check that dataset and processor types have been set
         # Initialise an empty dict and get the required filepaths
         self.data_processors = {}
-        filepaths = dataspec.get_filepaths()
+        filepaths = dataset.get_filepaths()
 
-        colours = dataspec.get_all_colours()
+        colours = dataset.get_all_colours()
         if colours is not None:
             self.options.add_option(label="colours", value=colours)
 
@@ -124,7 +124,7 @@ class DeviceWorkerCore(DeviceWorker):
         nr_of_files = len(filepaths)
         counter = 0
 
-        # Read the dataspec and instantiate a processor for each file
+        # Read the dataset and instantiate a processor for each file
         for key in filepaths:
             data = self.data_type(key)
             data.read_file(filepaths[key])
@@ -136,10 +136,10 @@ class DeviceWorkerCore(DeviceWorker):
 
     def run(self):
         # Set the data
-        self.set_data(self.dataspec)
+        self.set_data(self.dataset)
 
         # Grab the correct plot and execute it, including uuid in the title
-        title = f"{self.dataspec.get_name()} (run {self.identifier})"
+        title = f"{self.dataset.get_name()} (run {self.identifier})"
         plot_type = getattr(self, self.plot_type)
         plot_type(title=title)
         self.finished.emit()

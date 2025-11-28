@@ -46,7 +46,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting started</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../dataspecs/">Dataspecs</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">datasets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
                   </li>
@@ -73,15 +73,15 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec-tools">DataSpec Tools</a>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset-tools">DataSet Tools</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.dataspec_tools.create_dataspec.create_dataspec">create_dataspec</a>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.dataset_tools.create_dataset.create_dataset">create_dataset</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.dataspec_tools.create_dataspec.create_dataspec--parameters">Parameters</a>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.dataset_tools.create_dataset.create_dataset--parameters">Parameters</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.dataspec_tools.load_dataspec.load_dataspec">load_dataspec</a>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.dataset_tools.load_dataset.load_dataspec">load_dataspec</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#gui.utils.dataspec_tools.load_dataspec.load_dataspec--raises">Raises</a>
     </li>
@@ -155,7 +155,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../utils/others/">Utils - Others</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../dataspec_manager/">DataSpec</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../dataspec_manager/">DataSet</a>
                   </li>
               </ul>
       </div>
@@ -196,7 +196,7 @@
 
         <p>Fully reset the GUI state and remove all in-memory data.</p>
 <p>This helper:
-- Clears the active <code>DataSpec</code> and GUI fields via <code>clear_data</code>.
+- Clears the active <code>DataSet</code> and GUI fields via <code>clear_data</code>.
 - Empties the console widget.
 - Writes a confirmation message to the GUI console.</p>
 <h3 id="gui.utils.clear.clear_all.clear_all--parameters">Parameters</h3>
@@ -227,7 +227,7 @@
 <span class="sd">    Fully reset the GUI state and remove all in-memory data.</span>
 
 <span class="sd">    This helper:</span>
-<span class="sd">    - Clears the active `DataSpec` and GUI fields via `clear_data`.</span>
+<span class="sd">    - Clears the active `DataSet` and GUI fields via `clear_data`.</span>
 <span class="sd">    - Empties the console widget.</span>
 <span class="sd">    - Writes a confirmation message to the GUI console.</span>
 
@@ -254,7 +254,7 @@
 
         <p>Clear the currently loaded dataspec and reset all GUI widgets tied to it.</p>
 <p>Resets:
-- Stored <code>DataSpec</code> object and its disk location.
+- Stored <code>DataSet</code> object and its disk location.
 - Set name, device name, notes, and list widgets.
 - Plot type combobox and stacked widget view.</p>
 <p>A console message is printed to confirm completion.</p>
@@ -296,7 +296,7 @@
 <span class="sd">    Clear the currently loaded dataspec and reset all GUI widgets tied to it.</span>
 
 <span class="sd">    Resets:</span>
-<span class="sd">    - Stored `DataSpec` object and its disk location.</span>
+<span class="sd">    - Stored `DataSet` object and its disk location.</span>
 <span class="sd">    - Set name, device name, notes, and list widgets.</span>
 <span class="sd">    - Plot type combobox and stacked widget view.</span>
 
@@ -322,7 +322,7 @@
             </details>
     </div>
 
-</div><h2 id="dataspec-tools">DataSpec Tools</h2>
+</div><h2 id="dataspec-tools">DataSet Tools</h2>
 
 
 <div class="doc doc-object doc-function">
@@ -332,9 +332,9 @@
 <a id="gui.utils.dataspec_tools.create_dataspec.create_dataspec"></a>
     <div class="doc doc-contents first">
 
-        <p>Launch the DataSpec creation dialog and construct a new dataspec from user input.</p>
+        <p>Launch the DataSet creation dialog and construct a new dataspec from user input.</p>
 <p>Workflow:
-- Opens the DataSpec creator window populated with available devices.
+- Opens the DataSet creator window populated with available devices.
 - On confirmation:
     * Clears existing state.
     * Stores the newly created dataspec.
@@ -384,10 +384,10 @@
 <span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@with_logging</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_dataspec</span><span class="p">(</span><span class="n">window</span><span class="p">:</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Launch the DataSpec creation dialog and construct a new dataspec from user input.</span>
+<span class="sd">    Launch the DataSet creation dialog and construct a new dataspec from user input.</span>
 
 <span class="sd">    Workflow:</span>
-<span class="sd">    - Opens the DataSpec creator window populated with available devices.</span>
+<span class="sd">    - Opens the DataSet creator window populated with available devices.</span>
 <span class="sd">    - On confirmation:</span>
 <span class="sd">        * Clears existing state.</span>
 <span class="sd">        * Stores the newly created dataspec.</span>
@@ -400,7 +400,7 @@
 <span class="sd">    window : QMainWindow</span>
 <span class="sd">        Main application window controlling dataspec creation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">window</span><span class="o">.</span><span class="n">set_dataspec_window</span><span class="p">(</span><span class="n">gui</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">DataSpecCreatorWindow</span><span class="o">.</span><span class="n">UiDataCreatorWindow</span><span class="p">(</span><span class="n">devices</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">window</span><span class="o">.</span><span class="n">devices</span><span class="p">]))</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">set_dataspec_window</span><span class="p">(</span><span class="n">gui</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">DataSetCreatorWindow</span><span class="o">.</span><span class="n">UiDataCreatorWindow</span><span class="p">(</span><span class="n">devices</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">window</span><span class="o">.</span><span class="n">devices</span><span class="p">]))</span>
     <span class="n">window</span><span class="o">.</span><span class="n">get_dataspec_window</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">window</span><span class="o">.</span><span class="n">dataWindow</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -408,13 +408,13 @@
         <span class="c1">#     Copy dataspec_tools and print to console</span>
         <span class="n">clear_data</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
         <span class="n">window</span><span class="o">.</span><span class="n">set_dataspec</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">get_dataspec_window</span><span class="p">()</span><span class="o">.</span><span class="n">get_dataspec</span><span class="p">())</span>
-        <span class="n">window</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DataSpec file created&quot;</span><span class="p">)</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DataSet file created&quot;</span><span class="p">)</span>
         <span class="n">load_dataspec</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
         <span class="n">window</span><span class="o">.</span><span class="n">update_header</span><span class="p">()</span>
         <span class="n">save_dataspec</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># Warn user that window was improperly closed and that no dataspec_tools was created</span>
-        <span class="n">window</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;No DataSpec file was created&quot;</span><span class="p">)</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;No DataSet file was created&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -516,10 +516,10 @@
 
     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
         <span class="n">window</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Incompatible device type [</span><span class="si">{</span><span class="n">window</span><span class="o">.</span><span class="n">get_current_device</span><span class="p">()</span><span class="si">}</span><span class="s2">] found in </span><span class="si">{</span><span class="n">window</span><span class="o">.</span><span class="n">get_dataspec_name</span><span class="p">()</span><span class="si">}</span><span class="s2">, select another dataspec or implement the device type. DataSpec path: N/A&quot;</span><span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;Incompatible device type [</span><span class="si">{</span><span class="n">window</span><span class="o">.</span><span class="n">get_current_device</span><span class="p">()</span><span class="si">}</span><span class="s2">] found in </span><span class="si">{</span><span class="n">window</span><span class="o">.</span><span class="n">get_dataspec_name</span><span class="p">()</span><span class="si">}</span><span class="s2">, select another dataspec or implement the device type. DataSet path: N/A&quot;</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">IncompatibleDeviceTypeFound</span>
 
-    <span class="n">window</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;DataSpec loaded&quot;</span><span class="p">)</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;DataSet loaded&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -536,7 +536,7 @@
         <p>Save the currently loaded dataspec to disk using a file dialog.</p>
 <p>Behaviour:
 - Ensures a dataspec is loaded before saving.
-- Opens a save-file dialog and writes the dataspec via <code>DataSpecJSONEncoder</code>.
+- Opens a save-file dialog and writes the dataspec via <code>DataSetJSONEncoder</code>.
 - Auto-appends a valid extension if necessary.
 - Updates the stored dataspec location and logs status messages.</p>
 <h3 id="gui.utils.dataspec_tools.save_dataspec.save_dataspec--parameters">Parameters</h3>
@@ -602,7 +602,7 @@
 
 <span class="sd">    Behaviour:</span>
 <span class="sd">    - Ensures a dataspec is loaded before saving.</span>
-<span class="sd">    - Opens a save-file dialog and writes the dataspec via `DataSpecJSONEncoder`.</span>
+<span class="sd">    - Opens a save-file dialog and writes the dataspec via `DataSetJSONEncoder`.</span>
 <span class="sd">    - Auto-appends a valid extension if necessary.</span>
 <span class="sd">    - Updates the stored dataspec location and logs status messages.</span>
 
@@ -621,8 +621,8 @@
     <span class="n">file_name</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span>
         <span class="n">parent</span><span class="o">=</span><span class="n">window</span><span class="p">,</span>
         <span class="n">caption</span><span class="o">=</span><span class="s2">&quot;Save file to disk&quot;</span><span class="p">,</span>
-        <span class="nb">filter</span><span class="o">=</span><span class="s2">&quot;DataSpecs (*.json *.dataspec *.ds);;All (*)&quot;</span><span class="p">,</span>
-        <span class="n">initialFilter</span><span class="o">=</span><span class="s2">&quot;DataSpecs (*.json *.dataspec *.ds)&quot;</span>
+        <span class="nb">filter</span><span class="o">=</span><span class="s2">&quot;DataSets (*.json *.dataspec *.ds);;All (*)&quot;</span><span class="p">,</span>
+        <span class="n">initialFilter</span><span class="o">=</span><span class="s2">&quot;DataSets (*.json *.dataspec *.ds)&quot;</span>
     <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">file_name</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
@@ -637,7 +637,7 @@
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
             <span class="n">current_dataspec</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">get_dataspec</span><span class="p">()</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">current_dataspec</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">DataSpecJSONEncoder</span><span class="p">)</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">current_dataspec</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">DataSetJSONEncoder</span><span class="p">)</span>
             <span class="n">current_dataspec</span><span class="o">.</span><span class="n">set_location</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
         <span class="n">json_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 

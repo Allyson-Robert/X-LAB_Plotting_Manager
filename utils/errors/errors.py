@@ -14,7 +14,7 @@ class ObservableNotComputableError(ValueError):
 
 
 class IncompatibleDeviceTypeFound(KeyError):
-    """Raised when a dataspec or configuration refers to an unknown device type."""
+    """Raised when a dataset or configuration refers to an unknown device type."""
     pass
 
 

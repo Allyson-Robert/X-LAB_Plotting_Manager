@@ -1,7 +1,7 @@
 from device.sunbrick import Sunbrick
-from dataspec_manager.dataspec import DataSpec
+from dataset_manager.dataset import DataSet
 
-test_fileset = DataSpec("2023-02-07")
+test_fileset = DataSet("2023-02-07")
 test_fileset.add_filepath(
     path='G:\\My Drive\\Data\\Sunbrick\\2023\\01-January\\20_12_2022_Long-term_IV\\Position_1\\'
          'IV_2023_01_05_14_41_07.txt',

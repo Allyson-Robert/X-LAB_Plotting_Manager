@@ -1,7 +1,7 @@
 from device.dw2000 import DW2000
-from dataspec_manager.dataspec import DataSpec
+from dataset_manager.dataset import DataSet
 
-test_fileset = DataSpec("2023.02.07_11.09.12", "2023.02.07_11.09.12")
+test_fileset = DataSet("2023.02.07_11.09.12", "2023.02.07_11.09.12")
 test_fileset.add_filepath(
     path="G:\\My Drive\\Data\\DW2000 - UVvis\\2022\\05-May\\2022-05-03_Aluminum_cuvettes_BA.csv",
     label='test BA'

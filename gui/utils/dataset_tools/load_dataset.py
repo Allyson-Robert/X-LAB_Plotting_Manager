@@ -3,19 +3,19 @@ from utils.errors.errors import IncompatibleDeviceTypeFound
 from gui.utils.clear.clear_data import clear_data
 from utils.logging import with_logging
 import json
-import dataspec_manager
+import dataset_manager
 
 
 # TODO: BUGFIX: Assumed notes and console are attributes and knows what they look like, same with plotTypeCombo
 @with_logging
-def open_dataspec_file(window: QtWidgets.QMainWindow, *args, **kwargs):
+def open_dataset_file(window: QtWidgets.QMainWindow, *args, **kwargs):
     """
-    Open a dataspec JSON file, load it into memory, and refresh the GUI.
+    Open a dataset JSON file, load it into memory, and refresh the GUI.
 
     Behaviour:
     - Prompts the user for a file.
-    - Clears existing dataspec state.
-    - Loads the JSON file using `DataSpecJSONDecoder`.
+    - Clears existing dataset state.
+    - Loads the JSON file using `DataSetJSONEncoder`.
     - Updates notes, file list, plot options, and header display.
 
     If loading fails due to an incompatible device type, the GUI is reset and a
@@ -24,7 +24,7 @@ def open_dataspec_file(window: QtWidgets.QMainWindow, *args, **kwargs):
     Parameters
     ----------
     window : QMainWindow
-        GUI wrapper holding the active dataspec.
+        GUI wrapper holding the active dataset.
     file_name : str, optional
         JSON file path. If omitted, a file dialog is opened.
     """
@@ -32,58 +32,58 @@ def open_dataspec_file(window: QtWidgets.QMainWindow, *args, **kwargs):
     file_name = QtWidgets.QFileDialog.getOpenFileName(
         parent=window,
         caption="Open Files",
-        filter="DataSpecs (*.json *.dataspec *.ds);;All (*)",
-        initialFilter="DataSpecs (*.json *.dataspec *.ds)"
+        filter="DataSets (*.json *.dataset *.ds);;All (*)",
+        initialFilter="DataSets (*.json *.dataset *.ds)"
     )[0]
 
     # Check for empty filename
     if file_name == '':
         window.console_print(f"Err: No file specified", level="warning")
     else:
-        # Reset dataspec_tools
+        # Reset dataset_tools
         clear_data(window)
         window.consoleTextEdit.clear()
 
         # Open then load the json file, remember the location and update gui
         # window.fileset_location = file_name
         with open(file_name) as json_file:
-            dataspec = json.load(json_file, cls=dataspec_manager.DataSpecJSONDecoder)
-            dataspec.set_location(file_name)
-            window.set_dataspec(dataspec)
+            dataset = json.load(json_file, cls=dataset_manager.DataSetJSONEncoder)
+            dataset.set_location(file_name)
+            window.set_dataset(dataset)
             window.console_print(f"Opened {file_name}")
         try:
-            window.notesPlainText.setPlainText(window.dataspec.get_notes())
-            load_dataspec(window)
+            window.notesPlainText.setPlainText(window.dataset.get_notes())
+            load_dataset(window)
             window.update_header()
 
-        # Clear the dataspec_tools if loading failed
+        # Clear the dataset_tools if loading failed
         except IncompatibleDeviceTypeFound:
             clear_data(window)
             window.console_print(f"Err: Loading failed", level="warning")
 
 
 @with_logging
-def load_dataspec(window: QtWidgets.QMainWindow):
+def load_dataset(window: QtWidgets.QMainWindow):
     """
-    Populate the GUI with data from the currently loaded dataspec.
+    Populate the GUI with data from the currently loaded dataset.
 
     Actions:
-    - Adds all dataspec labels to the file selection list.
+    - Adds all dataset labels to the file selection list.
     - Selects all items by default.
     - Populates the plot-type combobox with device-appropriate plotting functions.
 
     Raises
     ------
     IncompatibleDeviceTypeFound
-        If the dataspec’s device type does not match available plot handlers.
+        If the dataset’s device type does not match available plot handlers.
 
     Parameters
     ----------
     window : QMainWindow
-        GUI instance holding a loaded dataspec.
+        GUI instance holding a loaded dataset.
     """
     # Add all top level keys to the selection list of the gui
-    for label in window.dataspec.get_labels():
+    for label in window.dataset.get_labels():
         window.selectedFilesList.addItem(label)
 
     # FEATURE REQUEST: Make this a setting
@@ -97,7 +97,7 @@ def load_dataspec(window: QtWidgets.QMainWindow):
 
     except KeyError:
         window.console_print(
-            f"Incompatible device type [{window.get_current_device()}] found in {window.get_dataspec_name()}, select another dataspec or implement the device type. DataSpec path: N/A")
+            f"Incompatible device type [{window.get_current_device()}] found in {window.get_dataset_name()}, select another dataset or implement the device type. DataSet path: N/A")
         raise IncompatibleDeviceTypeFound
 
-    window.console_print("DataSpec loaded")
+    window.console_print("DataSet loaded")

@@ -6,7 +6,7 @@ The aim of this project is two-fold
 
 At a high level, it provides:
 
-- Two user interface windows, one for creating **dataspecs** (which define what data to collect and how to process it) and one for launching and monitoring **analyses** (which execute dataspecs and plot the results)
+- Two user interface windows, one for creating **datasets** (which define what data to collect and how to process it) and one for launching and monitoring **analyses** (which execute datasets and plot the results)
 - A set of **contracts / interfaces** that define how devices, processors, and plotters should behave
 - A layer of general **utilities** for configuration and general plumbing
 - An easy way to enable logging to the UIs console
