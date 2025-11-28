@@ -73,7 +73,7 @@ Without an implementation, the application will exit with an error on startup.
 
 ---
 
-### 5) Launch the GUI
+### 5) Launch the GUI from the root directory (e.g. X-LAB_Plotting_Manager/)S
 
 ```bash
 python -m gui.windows.MainWindow
@@ -149,3 +149,8 @@ Before contributing, please ensure:
 
 TBD
 
+---
+
+## Known Issues
+
+For Python 3.10 the specific version of PyQt5 triggers a deprecation warning. This does not affect functionality and can be safely ignored.
