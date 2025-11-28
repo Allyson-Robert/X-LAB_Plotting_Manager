@@ -113,9 +113,9 @@ The project architecture is modular and contract-driven:
 
 Full documentation is available in the `docs/` folder:
 
-- Overview: `docs/index.md`  
-- Getting started: `docs/getting-started.md`  
-- Dataspecs: `docs/dataspecs.md`
+- Overview: [docs/index.md](docs/index.md)  
+- Getting started: [docs/getting-started.md](docs/getting-started.md) 
+- Dataspecs: [docs/dataspecs.md](docs/dataspecs.md)
 
 ### View pre-built docs locally
 
