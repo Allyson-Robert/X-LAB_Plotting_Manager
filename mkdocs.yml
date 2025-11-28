@@ -1,6 +1,7 @@
 site_name: X-LAB Plotting Manager
 site_description: "Graphical user interface for scientific data management and analysis"
 repo_url: https://github.com/Allyson-Robert/X-LAB_Plotting_Manager
+site_url: https://allyson-robert.github.io/X-LAB_Plotting_Manager/
 
 theme:
   name: readthedocs
