@@ -42,7 +42,7 @@ def save_dataset(window: QtWidgets.QMainWindow, *args, **kwargs):
 
         with open(file_name, "w") as json_file:
             current_dataset = window.get_dataset()
-            json.dump(current_dataset, json_file, cls=fs.DataSetJSONDecoder)
+            json.dump(current_dataset, json_file, cls=fs.DataSetJSONEncoder)
             current_dataset.set_location(file_name)
         json_file.close()
 

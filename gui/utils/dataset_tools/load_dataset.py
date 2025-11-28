@@ -47,7 +47,7 @@ def open_dataset_file(window: QtWidgets.QMainWindow, *args, **kwargs):
         # Open then load the json file, remember the location and update gui
         # window.fileset_location = file_name
         with open(file_name) as json_file:
-            dataset = json.load(json_file, cls=dataset_manager.DataSetJSONEncoder)
+            dataset = json.load(json_file, cls=dataset_manager.DataSetJSONDecoder)
             dataset.set_location(file_name)
             window.set_dataset(dataset)
             window.console_print(f"Opened {file_name}")
