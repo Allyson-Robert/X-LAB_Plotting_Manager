@@ -40,6 +40,9 @@ from gui.windows.dialogs.dialog_print import dialog_print
 # Plot manager imports
 from gui.plot_manager import plot_manager
 
+# Import relative paths from gui.utils.paths
+import gui.utils.paths as CONSTANT_PATHS
+
 # Check that the implementations package is available and complete
 from utils.check_implementations import check_implementations, ImplementationError
 try:
@@ -88,10 +91,10 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Load the UI, Note that loadUI adds objects to 'self' using objectName
         self.dataWindow = None
-        uic.loadUi(constants.WINDOW_PATH, self)
+        uic.loadUi(CONSTANT_PATHS.WINDOW_PATH, self)
 
         # Read the config file
-        self.config = read_config(constants.CONFIG_PATH)
+        self.config = read_config(CONSTANT_PATHS.CONFIG_PATH)
 
         # Create/Get a logger with the desired settings
         self.logger = logging.getLogger(constants.LOG_NAME)
@@ -111,7 +114,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         for entry in devices.__all__:
             # Find and load the widget for any given device and add it to the stackedWidget
             entry_ui_file = entry.lower() + ".ui"
-            entry_widget = uic.loadUi(constants.WIDGET_PATH + entry_ui_file)
+            entry_widget = uic.loadUi(CONSTANT_PATHS.WIDGET_PATH + entry_ui_file)
             entry_index = self.stackedWidget.addWidget(entry_widget)
             self.devices[entry] = entry_index
 
@@ -289,10 +292,10 @@ class UiMainWindow(QtWidgets.QMainWindow):
             Shows a simple window with licence, authorship and build information
         """
         # Grab the "about" info from about.txt
-        with open(constants.ABOUT_PATH) as about_file:
+        with open(CONSTANT_PATHS.ABOUT_PATH) as about_file:
             about_contents = about_file.read()
 
-        about_dialog = generate_about_dialog(about_contents, self.centralWidget(), constants.LOGO_PATH)
+        about_dialog = generate_about_dialog(about_contents, self.centralWidget(), gui.utils.paths.LOGO_PATH)
 
         # Show the about dialog
         about_dialog.exec_()
@@ -302,7 +305,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             Opens the default web browser and navigates to the documentation URL.
         """
         import webbrowser
-        webbrowser.open(constants.DOCS_URL)
+        webbrowser.open(CONSTANT_PATHS.DOCS_URL)
 
     def not_implemented(self):
         """

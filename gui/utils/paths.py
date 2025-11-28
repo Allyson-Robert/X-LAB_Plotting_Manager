@@ -1,0 +1,7 @@
+WINDOW_PATH = "gui/windows/MainWindow.ui"
+DEVICE_PATH = "implementations/devices/"
+WIDGET_PATH = DEVICE_PATH + "widgets/"
+LOGO_PATH = "gui/logos/"
+CONFIG_PATH = "implementations/config.json"
+ABOUT_PATH = "./gui/about.txt"
+DOCS_URL = "https://Allyson-Robert.github.io/X-LAB_Plotting_Manager/"
