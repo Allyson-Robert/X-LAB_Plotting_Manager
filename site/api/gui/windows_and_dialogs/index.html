@@ -46,7 +46,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting started</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../dataspecs/">Dataspecs</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">DataSets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
                   </li>
@@ -79,7 +79,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.add_file_to_set">add_file_to_set</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.add_file_to_set--gets-the-path-and-label-and-adds-it-to-the-current-dataspec-instance-while-updating-gui">Gets the path and label and adds it to the current DataSet instance while updating GUI</a>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.add_file_to_set--gets-the-path-and-label-and-adds-it-to-the-current-dataset-instance-while-updating-gui">Gets the path and label and adds it to the current DataSet instance while updating GUI</a>
     </li>
         </ul>
     </li>
@@ -161,7 +161,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../utils/others/">Utils - Others</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../dataspec_manager/">DataSet</a>
+                  <li class="toctree-l1"><a class="" href="../../dataset_manager.md">DataSet</a>
                   </li>
               </ul>
       </div>
@@ -209,24 +209,24 @@
 <li>Load the main QtDesigner-generated UI file and dynamically attach device-
   specific option panels to the central <code>QStackedWidget</code>.</li>
 <li>Manage the currently loaded <code>DataSet</code>:<ul>
-<li>Creating, loading, saving, and autosaving dataspecs.</li>
+<li>Creating, loading, saving, and autosaving datasets.</li>
 <li>Displaying raw JSON content and console history in helper dialogs.</li>
-<li>Updating header fields (set name, device type) when dataspecs change.</li>
+<li>Updating header fields (set name, device type) when datasets change.</li>
 </ul>
 </li>
 <li>Integrate logging with a QTextEdit-based console for time-stamped messages.</li>
 <li>Provide a thin controller layer for:<ul>
 <li>Launching the plotting pipeline via <code>plot_manager</code>.</li>
 <li>Handling progress updates and console appends.</li>
-<li>Adding notes and console history back into the dataspec.</li>
+<li>Adding notes and console history back into the dataset.</li>
 </ul>
 </li>
 </ul>
 <p>On construction, the window:
 - Discovers available devices from <code>implementations.devices</code>.
 - Loads and registers per-device widgets and their plot functions.
-- Wires menu actions and buttons to dataspec, plotting, and utility actions.
-- Optionally auto-opens a demo dataspec if a file name is supplied.</p>
+- Wires menu actions and buttons to dataset, plotting, and utility actions.
+- Optionally auto-opens a demo dataset if a file name is supplied.</p>
 <p>The class is intended to be the central hub of the GUI application, with
 device-specific logic pushed into worker classes and implementations.</p>
 
@@ -238,19 +238,7 @@ device-specific logic pushed into worker classes and implementations.</p>
 
               <details class="quote">
                 <summary>Source code in <code>gui\windows\MainWindow.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 42</span>
-<span class="normal"> 43</span>
-<span class="normal"> 44</span>
-<span class="normal"> 45</span>
-<span class="normal"> 46</span>
-<span class="normal"> 47</span>
-<span class="normal"> 48</span>
-<span class="normal"> 49</span>
-<span class="normal"> 50</span>
-<span class="normal"> 51</span>
-<span class="normal"> 52</span>
-<span class="normal"> 53</span>
-<span class="normal"> 54</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 54</span>
 <span class="normal"> 55</span>
 <span class="normal"> 56</span>
 <span class="normal"> 57</span>
@@ -509,7 +497,18 @@ device-specific logic pushed into worker classes and implementations.</p>
 <span class="normal">310</span>
 <span class="normal">311</span>
 <span class="normal">312</span>
-<span class="normal">313</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">UiMainWindow</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">):</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">UiMainWindow</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Main GUI window for interactive, automated plotting of experimental data.</span>
 
@@ -518,20 +517,20 @@ device-specific logic pushed into worker classes and implementations.</p>
 <span class="sd">    - Load the main QtDesigner-generated UI file and dynamically attach device-</span>
 <span class="sd">      specific option panels to the central `QStackedWidget`.</span>
 <span class="sd">    - Manage the currently loaded `DataSet`:</span>
-<span class="sd">        * Creating, loading, saving, and autosaving dataspecs.</span>
+<span class="sd">        * Creating, loading, saving, and autosaving datasets.</span>
 <span class="sd">        * Displaying raw JSON content and console history in helper dialogs.</span>
-<span class="sd">        * Updating header fields (set name, device type) when dataspecs change.</span>
+<span class="sd">        * Updating header fields (set name, device type) when datasets change.</span>
 <span class="sd">    - Integrate logging with a QTextEdit-based console for time-stamped messages.</span>
 <span class="sd">    - Provide a thin controller layer for:</span>
 <span class="sd">        * Launching the plotting pipeline via `plot_manager`.</span>
 <span class="sd">        * Handling progress updates and console appends.</span>
-<span class="sd">        * Adding notes and console history back into the dataspec.</span>
+<span class="sd">        * Adding notes and console history back into the dataset.</span>
 
 <span class="sd">    On construction, the window:</span>
 <span class="sd">    - Discovers available devices from `implementations.devices`.</span>
 <span class="sd">    - Loads and registers per-device widgets and their plot functions.</span>
-<span class="sd">    - Wires menu actions and buttons to dataspec, plotting, and utility actions.</span>
-<span class="sd">    - Optionally auto-opens a demo dataspec if a file name is supplied.</span>
+<span class="sd">    - Wires menu actions and buttons to dataset, plotting, and utility actions.</span>
+<span class="sd">    - Optionally auto-opens a demo dataset if a file name is supplied.</span>
 
 <span class="sd">    The class is intended to be the central hub of the GUI application, with</span>
 <span class="sd">    device-specific logic pushed into worker classes and implementations.</span>
@@ -541,9 +540,8 @@ device-specific logic pushed into worker classes and implementations.</p>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">experiment_worker</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="c1"># FEATURE REQUEST: Dataspec file location is def&#39;ed here</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec_location</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_location</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># Load the UI, Note that loadUI adds objects to &#39;self&#39; using objectName</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataWindow</span> <span class="o">=</span> <span class="kc">None</span>
@@ -583,9 +581,9 @@ device-specific logic pushed into worker classes and implementations.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 
         <span class="c1"># Define menubar actions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actionCreate_Set</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">create_dataspec</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actionSave_Set</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">save_dataspec</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actionLoad_Set</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">open_dataspec_file</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionCreate_Set</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">create_dataset</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSave_Set</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">save_dataset</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionLoad_Set</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">open_dataset_file</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actionPreferences</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">not_implemented</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actionQuit</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
 
@@ -624,86 +622,86 @@ device-specific logic pushed into worker classes and implementations.</p>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotTypeCombo</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get_current_device</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_device</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_device</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataspec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataspec_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataset_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataspec_window</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataset_window</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataWindow</span>
 
     <span class="c1"># Setters</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">set_dataspec_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataspec_window</span><span class="p">:</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataWindow</span> <span class="o">=</span> <span class="n">dataspec_window</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_dataset_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_window</span><span class="p">:</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataWindow</span> <span class="o">=</span> <span class="n">dataset_window</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">set_dataspec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataspec</span><span class="p">:</span> <span class="n">dataspec_manager</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">DataSet</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="o">=</span> <span class="n">dataspec</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">dataset_manager</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">DataSet</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
 
     <span class="c1"># FUNCTIONALITY</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">autosave</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">file_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Cannot autosave, no file location known. Open or create dataset first&quot;</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">dataspec_manager</span><span class="o">.</span><span class="n">DataSetJSONEncoder</span><span class="p">)</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">dataset_manager</span><span class="o">.</span><span class="n">DataSetJSONDecoder</span><span class="p">)</span>
         <span class="n">json_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved dataspec to </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved dataset to </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">display_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Abort if no dataspec was loaded</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Abort if no dataset was loaded</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Err: Must first load DataSet&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Pretty print the dataspec in a simple dialog</span>
+        <span class="c1"># Pretty print the dataset in a simple dialog</span>
         <span class="n">pretty_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span>
             <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
             <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">),</span>
-            <span class="bp">cls</span><span class="o">=</span><span class="n">dataspec_manager</span><span class="o">.</span><span class="n">DataSetJSONEncoder</span>
+            <span class="bp">cls</span><span class="o">=</span><span class="n">dataset_manager</span><span class="o">.</span><span class="n">DataSetJSONDecoder</span>
         <span class="p">)</span>
-        <span class="n">dialog_print</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;DataSet RAW: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="n">pretty_json</span><span class="p">)</span>
+        <span class="n">dialog_print</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;DataSet RAW: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="n">pretty_json</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">display_history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Err: Must first load DataSet&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">)</span>
 
         <span class="c1"># Prints only the console history to a simple dialog</span>
         <span class="n">pretty_history</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_console</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_console</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="n">line</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="n">pretty_history</span> <span class="o">+=</span> <span class="n">line</span>
 
-        <span class="n">dialog_print</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;DataSet History: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="n">pretty_history</span><span class="p">)</span>
+        <span class="n">dialog_print</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;DataSet History: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="n">pretty_history</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">add_notes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Err: Must first load DataSet&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Add any notes to the dataspec_manager with a trailing new line</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">add_notes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notesPlainText</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Notes added to dataspec_manager&quot;</span><span class="p">)</span>
+        <span class="c1"># Add any notes to the dataset_manager with a trailing new line</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">add_notes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notesPlainText</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Notes added to dataset_manager&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">autosave</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">update_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Header should reflect opened dataspec</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">currSetNameLineEdit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">currDeviceLineEdit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_device</span><span class="p">())</span>
+        <span class="c1"># Header should reflect opened dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currSetNameLineEdit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currDeviceLineEdit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_device</span><span class="p">())</span>
 
-        <span class="c1"># Stacked widget should show the correct widget for the opened dataspec</span>
-        <span class="n">new_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_device</span><span class="p">()])</span>
+        <span class="c1"># Stacked widget should show the correct widget for the opened dataset</span>
+        <span class="n">new_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_device</span><span class="p">()])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="n">new_page</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">report_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
@@ -731,13 +729,13 @@ device-specific logic pushed into worker classes and implementations.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">consoleTextEdit</span><span class="o">.</span><span class="n">setTextColor</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">get_colour</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">append_console_to_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Err: Must first load DataSet&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Append console contents to the dataspec_manager</span>
+        <span class="c1"># Append console contents to the dataset_manager</span>
         <span class="n">console_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">consoleTextEdit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span>
         <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">add_console</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">DATETIME_FORMAT</span><span class="p">),</span> <span class="n">console_text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">add_console</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">DATETIME_FORMAT</span><span class="p">),</span> <span class="n">console_text</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span><span class="s2">&quot;Added console contents to set&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">autosave</span><span class="p">()</span>
 
@@ -813,12 +811,12 @@ device-specific logic pushed into worker classes and implementations.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>gui\windows\MainWindow.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">289</span>
-<span class="normal">290</span>
-<span class="normal">291</span>
-<span class="normal">292</span>
-<span class="normal">293</span>
-<span class="normal">294</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">navigate_to_docs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">navigate_to_docs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Opens the default web browser and navigates to the documentation URL.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -846,11 +844,11 @@ device-specific logic pushed into worker classes and implementations.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>gui\windows\MainWindow.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">296</span>
-<span class="normal">297</span>
-<span class="normal">298</span>
-<span class="normal">299</span>
-<span class="normal">300</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">not_implemented</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">not_implemented</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shows the user a message that the current feature is planned but not yet implemented.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -877,18 +875,18 @@ device-specific logic pushed into worker classes and implementations.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>gui\windows\MainWindow.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">276</span>
-<span class="normal">277</span>
-<span class="normal">278</span>
-<span class="normal">279</span>
-<span class="normal">280</span>
-<span class="normal">281</span>
-<span class="normal">282</span>
-<span class="normal">283</span>
-<span class="normal">284</span>
-<span class="normal">285</span>
-<span class="normal">286</span>
-<span class="normal">287</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">show_about</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">show_about</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shows a simple window with licence, authorship and build information</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -928,7 +926,7 @@ device-specific logic pushed into worker classes and implementations.</p>
 
         <p>Dialog for interactively creating new <code>DataSet</code> instances.</p>
 <h3 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow--overview">Overview</h3>
-<p>This window guides the user through constructing a dataspec by:
+<p>This window guides the user through constructing a dataset by:
 - Selecting a device type from a combobox.
 - Adding individual files with custom labels, or
 - Auto-generating filepaths from a directory according to a chosen structure.
@@ -941,7 +939,7 @@ device-specific logic pushed into worker classes and implementations.</p>
 <li>Validates that both a name and at least one file are present before
   enabling the “Done” button.</li>
 <li>On completion (<code>finish</code>), writes name, device type, and experiment
-  datetime into the dataspec and closes with an accepted result.</li>
+  datetime into the dataset and closes with an accepted result.</li>
 </ul>
 <h3 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow--parameters">Parameters</h3>
 <p>devices : list[str], optional
@@ -1132,7 +1130,7 @@ device-specific logic pushed into worker classes and implementations.</p>
 
 <span class="sd">       Overview</span>
 <span class="sd">       --------</span>
-<span class="sd">       This window guides the user through constructing a dataspec by:</span>
+<span class="sd">       This window guides the user through constructing a dataset by:</span>
 <span class="sd">       - Selecting a device type from a combobox.</span>
 <span class="sd">       - Adding individual files with custom labels, or</span>
 <span class="sd">       - Auto-generating filepaths from a directory according to a chosen structure.</span>
@@ -1146,7 +1144,7 @@ device-specific logic pushed into worker classes and implementations.</p>
 <span class="sd">       - Validates that both a name and at least one file are present before</span>
 <span class="sd">         enabling the “Done” button.</span>
 <span class="sd">       - On completion (`finish`), writes name, device type, and experiment</span>
-<span class="sd">         datetime into the dataspec and closes with an accepted result.</span>
+<span class="sd">         datetime into the dataset and closes with an accepted result.</span>
 
 <span class="sd">       Parameters</span>
 <span class="sd">       ----------</span>
@@ -1161,7 +1159,7 @@ device-specific logic pushed into worker classes and implementations.</p>
         <span class="c1"># Note that loadUI adds objects to &#39;self&#39; using objectName</span>
         <span class="n">uic</span><span class="o">.</span><span class="n">loadUi</span><span class="p">(</span><span class="s2">&quot;gui/windows/DataSetCreatorWindow.ui&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="o">=</span> <span class="n">dataspec_manager</span><span class="o">.</span><span class="n">DataSet</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y.%m.</span><span class="si">%d</span><span class="s2">_%H.%M.%S&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset_manager</span><span class="o">.</span><span class="n">DataSet</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y.%m.</span><span class="si">%d</span><span class="s2">_%H.%M.%S&quot;</span><span class="p">))</span>
 
         <span class="c1"># Add the correct devices to the experiment combo box</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataTypeCombo</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span>
@@ -1169,7 +1167,7 @@ device-specific logic pushed into worker classes and implementations.</p>
         <span class="c1"># Set date to today by default</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dateTimeEdit</span><span class="o">.</span><span class="n">setDateTime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
 
-        <span class="c1"># Set starting tab to manual dataspec creation</span>
+        <span class="c1"># Set starting tab to manual dataset creation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tabWidget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="c1"># Define widget action</span>
@@ -1187,8 +1185,8 @@ device-specific logic pushed into worker classes and implementations.</p>
         <span class="c1"># Show the app</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataspec</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">dataspec_manager</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">DataSet</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">dataset_manager</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">DataSet</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">browse_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1213,18 +1211,18 @@ device-specific logic pushed into worker classes and implementations.</p>
         <span class="n">file_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labelEdit</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
 
         <span class="c1"># Check for duplicate label</span>
-        <span class="k">if</span> <span class="n">file_label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">file_label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span>
                 <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Duplicate Label&quot;</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;This label has already been used. Choose another label and try again.&quot;&quot;&quot;</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Add the file to the dataset and update the gui</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="s2">&quot;flat&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">add_filepath</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">file_label</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="s2">&quot;flat&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">add_filepath</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">file_label</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span>
                 <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">(),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">(),</span>
                     <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
                     <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span>
                 <span class="p">)</span>
@@ -1245,9 +1243,9 @@ device-specific logic pushed into worker classes and implementations.</p>
             <span class="bp">self</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;No directory selected&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;No directory was selected, please select directory and try again&quot;&quot;&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="c1"># Construct the filepaths for this dataspec</span>
+        <span class="c1"># Construct the filepaths for this dataset</span>
         <span class="n">active_button</span> <span class="o">=</span> <span class="n">split_camel_case</span><span class="p">(</span><span class="n">search_for_first_active_radio_button</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">objectName</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">errors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">construct_filepaths</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">active_button</span><span class="p">)</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">construct_filepaths</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">active_button</span><span class="p">)</span>
 
         <span class="c1"># Show the directories/files that were ignored to the user</span>
         <span class="k">if</span> <span class="n">errors</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
@@ -1256,12 +1254,12 @@ device-specific logic pushed into worker classes and implementations.</p>
         <span class="c1"># Show the files in the gui</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span>
             <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">(),</span>
                 <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
                 <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span>
             <span class="p">)</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="n">active_button</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="n">active_button</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">button_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Only enable closing when some data was included &quot;&quot;&quot;</span>
@@ -1290,11 +1288,11 @@ device-specific logic pushed into worker classes and implementations.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">button_state</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Add name, device type,  and date and time dataspec before exiting &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nameEdit</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataTypeCombo</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Add name, device type,  and date and time dataset before exiting &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nameEdit</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataTypeCombo</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
         <span class="n">experiment_date_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dateTimeEdit</span><span class="o">.</span><span class="n">dateTime</span><span class="p">()</span><span class="o">.</span><span class="n">toPyDateTime</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y.%m.</span><span class="si">%d</span><span class="s2">_%H.%M.%S&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_experiment_date</span><span class="p">(</span><span class="n">experiment_date_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">set_experiment_date</span><span class="p">(</span><span class="n">experiment_date_time</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -1324,7 +1322,7 @@ device-specific logic pushed into worker classes and implementations.</p>
 
     <div class="doc doc-contents ">
 
-        <h3 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.add_file_to_set--gets-the-path-and-label-and-adds-it-to-the-current-dataspec-instance-while-updating-gui">Gets the path and label and adds it to the current DataSet instance while updating GUI</h3>
+        <h3 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.add_file_to_set--gets-the-path-and-label-and-adds-it-to-the-current-dataset-instance-while-updating-gui">Gets the path and label and adds it to the current DataSet instance while updating GUI</h3>
 
 
             <details class="mkdocstrings-source">
@@ -1366,18 +1364,18 @@ device-specific logic pushed into worker classes and implementations.</p>
     <span class="n">file_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labelEdit</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
 
     <span class="c1"># Check for duplicate label</span>
-    <span class="k">if</span> <span class="n">file_label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">file_label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span>
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Duplicate Label&quot;</span><span class="p">,</span>
             <span class="n">message</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;This label has already been used. Choose another label and try again.&quot;&quot;&quot;</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># Add the file to the dataset and update the gui</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="s2">&quot;flat&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">add_filepath</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">file_label</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="s2">&quot;flat&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">add_filepath</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">file_label</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span>
             <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">(),</span>
                 <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
                 <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span>
             <span class="p">)</span>
@@ -1508,7 +1506,7 @@ device-specific logic pushed into worker classes and implementations.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Add name, device type,  and date and time dataspec before exiting</p>
+        <p>Add name, device type,  and date and time dataset before exiting</p>
 
 
             <details class="mkdocstrings-source">
@@ -1521,11 +1519,11 @@ device-specific logic pushed into worker classes and implementations.</p>
 <span class="normal">179</span>
 <span class="normal">180</span>
 <span class="normal">181</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot; Add name, device type,  and date and time dataspec before exiting &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nameEdit</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataTypeCombo</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Add name, device type,  and date and time dataset before exiting &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nameEdit</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataTypeCombo</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
     <span class="n">experiment_date_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dateTimeEdit</span><span class="o">.</span><span class="n">dateTime</span><span class="p">()</span><span class="o">.</span><span class="n">toPyDateTime</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y.%m.</span><span class="si">%d</span><span class="s2">_%H.%M.%S&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_experiment_date</span><span class="p">(</span><span class="n">experiment_date_time</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">set_experiment_date</span><span class="p">(</span><span class="n">experiment_date_time</span><span class="p">)</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -1588,9 +1586,9 @@ device-specific logic pushed into worker classes and implementations.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;No directory selected&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;No directory was selected, please select directory and try again&quot;&quot;&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="c1"># Construct the filepaths for this dataspec</span>
+    <span class="c1"># Construct the filepaths for this dataset</span>
     <span class="n">active_button</span> <span class="o">=</span> <span class="n">split_camel_case</span><span class="p">(</span><span class="n">search_for_first_active_radio_button</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">objectName</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">errors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">construct_filepaths</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">active_button</span><span class="p">)</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">construct_filepaths</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">active_button</span><span class="p">)</span>
 
     <span class="c1"># Show the directories/files that were ignored to the user</span>
     <span class="k">if</span> <span class="n">errors</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
@@ -1599,12 +1597,12 @@ device-specific logic pushed into worker classes and implementations.</p>
     <span class="c1"># Show the files in the gui</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">showSetPlainText</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span>
         <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">(),</span>
             <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
             <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span>
         <span class="p">)</span>
     <span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="n">active_button</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="n">active_button</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1855,7 +1853,9 @@ contents : str
 <span class="normal">51</span>
 <span class="normal">52</span>
 <span class="normal">53</span>
-<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">dialog_print</span><span class="p">(</span><span class="n">window</span><span class="p">:</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">contents</span><span class="p">):</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">dialog_print</span><span class="p">(</span><span class="n">window</span><span class="p">:</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">contents</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Display text content inside a modal dialog with optional saving.</span>
 
@@ -1902,7 +1902,9 @@ contents : str
 
     <span class="c1"># Connect the &quot;OK&quot; button to close the dialog</span>
     <span class="n">ok_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">accept</span><span class="p">)</span>
-    <span class="n">save_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">window</span><span class="o">.</span><span class="n">save_to_file</span><span class="p">(</span><span class="n">contents</span><span class="p">))</span>
+    <span class="n">save_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+        <span class="k">lambda</span><span class="p">:</span> <span class="n">window</span><span class="o">.</span><span class="n">save_to_file</span><span class="p">(</span><span class="n">history_text_edit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">())</span>
+    <span class="p">)</span>
 
     <span class="c1"># Show the dialog</span>
     <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>

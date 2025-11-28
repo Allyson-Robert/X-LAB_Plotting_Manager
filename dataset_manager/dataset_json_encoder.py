@@ -5,7 +5,7 @@ import datetime
 from utils.logging import decorate_class_with_logging, DEBUG
 
 @decorate_class_with_logging(log_level=DEBUG)
-class DataSetJSONDecoder(JSONEncoder):
+class DataSetJSONEncoder(JSONEncoder):
     """
     JSON encoder for `DataSet` objects and related dataclasses.
 

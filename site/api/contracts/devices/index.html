@@ -46,7 +46,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting started</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../dataspecs/">Dataspecs</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">DataSets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
                   </li>
@@ -97,7 +97,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../utils/others/">Utils - Others</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../dataspec_manager/">DataSet</a>
+                  <li class="toctree-l1"><a class="" href="../../dataset_manager.md">DataSet</a>
                   </li>
               </ul>
       </div>
@@ -285,7 +285,7 @@ run a task, and accept data/processor types.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())[:</span><span class="mi">4</span><span class="p">]</span>
 
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataspec</span><span class="p">:</span> <span class="n">DataSet</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">DataSet</span><span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="nd">@abstractmethod</span>
@@ -343,7 +343,7 @@ run a task, and accept data/processor types.</p>
   <p>Implements option handling, dataset instantiation and a simple run
 flow that prepares data processors, emits progress, and calls a plot.</p>
 </details>        <ul>
-<li>Manages <code>device</code>, <code>dataspec</code>, <code>plot_type</code>, <code>options</code>, and <code>data_processors</code>.</li>
+<li>Manages <code>device</code>, <code>dataset</code>, <code>plot_type</code>, <code>options</code>, and <code>data_processors</code>.</li>
 <li>Populates processors per-file and emits <code>progress</code>/<code>finished</code> signals.</li>
 <li><code>set_data_type</code> / <code>set_processor_type</code> are simple setters.</li>
 </ul>
@@ -452,7 +452,7 @@ extend run behaviour if needed.</p>
 <span class="sd">            Implements option handling, dataset instantiation and a simple run</span>
 <span class="sd">            flow that prepares data processors, emits progress, and calls a plot.</span>
 
-<span class="sd">        - Manages `device`, `dataspec`, `plot_type`, `options`, and `data_processors`.</span>
+<span class="sd">        - Manages `device`, `dataset`, `plot_type`, `options`, and `data_processors`.</span>
 <span class="sd">        - Populates processors per-file and emits `progress`/`finished` signals.</span>
 <span class="sd">        - `set_data_type` / `set_processor_type` are simple setters.</span>
 
@@ -463,15 +463,15 @@ extend run behaviour if needed.</p>
     <span class="n">finished</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
     <span class="n">progress</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">dataspec</span><span class="p">,</span> <span class="n">plot_type</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="n">PlotterOptions</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">plot_type</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="n">PlotterOptions</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span> <span class="o">=</span> <span class="n">dataspec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_type</span> <span class="o">=</span> <span class="n">plot_type</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">options</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;experiment_datetime&quot;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">dataspec</span><span class="o">.</span><span class="n">get_experiment_date</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;experiment_datetime&quot;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_experiment_date</span><span class="p">())</span>
 
 
         <span class="bp">self</span><span class="o">.</span><span class="n">data_processors</span> <span class="o">=</span> <span class="kc">None</span>
@@ -489,16 +489,16 @@ extend run behaviour if needed.</p>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;processor_type must be a subclass of DataProcessor&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">processor_type</span> <span class="o">=</span> <span class="n">processor_type</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataspec</span><span class="p">:</span> <span class="n">DataSet</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataspec</span><span class="p">,</span> <span class="n">DataSet</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;dataspec must be an instance of DataSet&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">DataSet</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">DataSet</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;dataset must be an instance of DataSet&quot;</span><span class="p">)</span>
 
-        <span class="c1"># CHECK: Check that dataspec and processor types have been set</span>
+        <span class="c1"># CHECK: Check that dataset and processor types have been set</span>
         <span class="c1"># Initialise an empty dict and get the required filepaths</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_processors</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">filepaths</span> <span class="o">=</span> <span class="n">dataspec</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">()</span>
+        <span class="n">filepaths</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_filepaths</span><span class="p">()</span>
 
-        <span class="n">colours</span> <span class="o">=</span> <span class="n">dataspec</span><span class="o">.</span><span class="n">get_all_colours</span><span class="p">()</span>
+        <span class="n">colours</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_all_colours</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">colours</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;colours&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">colours</span><span class="p">)</span>
 
@@ -506,7 +506,7 @@ extend run behaviour if needed.</p>
         <span class="n">nr_of_files</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">filepaths</span><span class="p">)</span>
         <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
 
-        <span class="c1"># Read the dataspec and instantiate a processor for each file</span>
+        <span class="c1"># Read the dataset and instantiate a processor for each file</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">filepaths</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
             <span class="n">data</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">filepaths</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
@@ -518,10 +518,10 @@ extend run behaviour if needed.</p>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Set the data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
 
         <span class="c1"># Grab the correct plot and execute it, including uuid in the title</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2"> (run </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2"> (run </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="n">plot_type</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_type</span><span class="p">)</span>
         <span class="n">plot_type</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>

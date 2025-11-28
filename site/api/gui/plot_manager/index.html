@@ -46,7 +46,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting started</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">datasets</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">DataSets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
                   </li>
@@ -99,7 +99,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../utils/others/">Utils - Others</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../dataset_manager/">DataSet</a>
+                  <li class="toctree-l1"><a class="" href="../../dataset_manager.md">DataSet</a>
                   </li>
               </ul>
       </div>
@@ -273,31 +273,31 @@ identifier) to the GUI console once the worker is started.</p>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        window : QMainWindow</span>
-<span class="sd">            Main application window providing access to the dataspec, widgets</span>
+<span class="sd">            Main application window providing access to the dataset, widgets</span>
 <span class="sd">            (file selection, stacked options, checkboxes, etc.), and console API.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-    <span class="c1"># Grab the selected files for plotting and build a reduced dataspec</span>
-    <span class="n">dataspec_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">DATETIME_FORMAT</span><span class="p">)</span>
-    <span class="n">experiment_time</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_experiment_date</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">DATETIME_FORMAT</span><span class="p">)</span>
-    <span class="n">dataspec_selection</span> <span class="o">=</span> <span class="n">dataspec_manager</span><span class="o">.</span><span class="n">DataSet</span><span class="p">(</span><span class="n">dataspec_time</span><span class="p">)</span>
-    <span class="n">dataspec_selection</span><span class="o">.</span><span class="n">set_experiment_date</span><span class="p">(</span><span class="n">experiment_time</span><span class="p">)</span>
+    <span class="c1"># Grab the selected files for plotting and build a reduced dataset</span>
+    <span class="n">dataset_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">DATETIME_FORMAT</span><span class="p">)</span>
+    <span class="n">experiment_time</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_experiment_date</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">DATETIME_FORMAT</span><span class="p">)</span>
+    <span class="n">dataset_selection</span> <span class="o">=</span> <span class="n">dataset_manager</span><span class="o">.</span><span class="n">DataSet</span><span class="p">(</span><span class="n">dataset_time</span><span class="p">)</span>
+    <span class="n">dataset_selection</span><span class="o">.</span><span class="n">set_experiment_date</span><span class="p">(</span><span class="n">experiment_time</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">window</span><span class="o">.</span><span class="n">selectedFilesList</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">():</span>
         <span class="n">lbl</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
 
-        <span class="n">structure</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_structure_type</span><span class="p">()</span>
-        <span class="n">dataspec_selection</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span>
+        <span class="n">structure</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_structure_type</span><span class="p">()</span>
+        <span class="n">dataset_selection</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span>
 
-        <span class="n">path</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_filepath</span><span class="p">(</span><span class="n">lbl</span><span class="p">)</span>
-        <span class="n">dataspec_selection</span><span class="o">.</span><span class="n">add_filepath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">lbl</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_filepath</span><span class="p">(</span><span class="n">lbl</span><span class="p">)</span>
+        <span class="n">dataset_selection</span><span class="o">.</span><span class="n">add_filepath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">lbl</span><span class="p">)</span>
 
-        <span class="n">colour</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_single_colour</span><span class="p">(</span><span class="n">lbl</span><span class="p">)</span>
-        <span class="n">dataspec_selection</span><span class="o">.</span><span class="n">add_colour</span><span class="p">(</span><span class="n">colour</span><span class="p">,</span> <span class="n">lbl</span><span class="p">)</span>
+        <span class="n">colour</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_single_colour</span><span class="p">(</span><span class="n">lbl</span><span class="p">)</span>
+        <span class="n">dataset_selection</span><span class="o">.</span><span class="n">add_colour</span><span class="p">(</span><span class="n">colour</span><span class="p">,</span> <span class="n">lbl</span><span class="p">)</span>
 
-    <span class="n">dataspec_selection</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_device</span><span class="p">())</span>
-    <span class="n">dataspec_selection</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_structure_type</span><span class="p">())</span>
-    <span class="n">dataspec_selection</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+    <span class="n">dataset_selection</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_device</span><span class="p">())</span>
+    <span class="n">dataset_selection</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_structure_type</span><span class="p">())</span>
+    <span class="n">dataset_selection</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
 
     <span class="c1"># Recursively search for QWidget children with an alias to collect options and get their values</span>
     <span class="c1"># TODO: Options should be a class whose instance can be passed</span>
@@ -312,7 +312,7 @@ identifier) to the GUI console once the worker is started.</p>
     <span class="n">options</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;legend_title&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">get_qwidget_value</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">legendTitleLineEdit</span><span class="p">))</span>
 
     <span class="c1"># Instantiate proper device class and set the data</span>
-    <span class="n">current_device_class</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">dataspec</span><span class="o">.</span><span class="n">get_device</span><span class="p">()</span>
+    <span class="n">current_device_class</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_device</span><span class="p">()</span>
     <span class="n">device_module</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">implementations</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">workers</span><span class="p">,</span> <span class="n">current_device_class</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
     <span class="n">experiment_cls</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">device_module</span><span class="p">,</span> <span class="n">current_device_class</span><span class="p">)</span>
 
@@ -321,7 +321,7 @@ identifier) to the GUI console once the worker is started.</p>
 
     <span class="c1"># Create a new thread for the device class to run in</span>
     <span class="n">window</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QThread</span><span class="p">()</span>
-    <span class="n">window</span><span class="o">.</span><span class="n">experiment_worker</span> <span class="o">=</span> <span class="n">experiment_cls</span><span class="p">(</span><span class="n">current_device_class</span><span class="p">,</span> <span class="n">dataspec_selection</span><span class="p">,</span> <span class="n">plot_function</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">experiment_worker</span> <span class="o">=</span> <span class="n">experiment_cls</span><span class="p">(</span><span class="n">current_device_class</span><span class="p">,</span> <span class="n">dataset_selection</span><span class="p">,</span> <span class="n">plot_function</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
     <span class="n">window</span><span class="o">.</span><span class="n">experiment_worker</span><span class="o">.</span><span class="n">moveToThread</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">thread</span><span class="p">)</span>
 
     <span class="c1"># Connect signals and slots for the worker thread</span>
@@ -334,7 +334,7 @@ identifier) to the GUI console once the worker is started.</p>
     <span class="c1"># Start the thread</span>
     <span class="n">window</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
     <span class="n">window</span><span class="o">.</span><span class="n">console_print</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;(run </span><span class="si">{</span><span class="n">window</span><span class="o">.</span><span class="n">experiment_worker</span><span class="o">.</span><span class="n">identifier</span><span class="si">}</span><span class="s2">) producing </span><span class="si">{</span><span class="n">current_device_class</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">plot_function</span><span class="si">}</span><span class="s2"> plot for </span><span class="si">{</span><span class="n">window</span><span class="o">.</span><span class="n">get_dataspec_name</span><span class="p">()</span><span class="si">}</span><span class="s2"> with options </span><span class="si">{</span><span class="n">options</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="sa">f</span><span class="s2">&quot;(run </span><span class="si">{</span><span class="n">window</span><span class="o">.</span><span class="n">experiment_worker</span><span class="o">.</span><span class="n">identifier</span><span class="si">}</span><span class="s2">) producing </span><span class="si">{</span><span class="n">current_device_class</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">plot_function</span><span class="si">}</span><span class="s2"> plot for </span><span class="si">{</span><span class="n">window</span><span class="o">.</span><span class="n">get_dataset_name</span><span class="p">()</span><span class="si">}</span><span class="s2"> with options </span><span class="si">{</span><span class="n">options</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>

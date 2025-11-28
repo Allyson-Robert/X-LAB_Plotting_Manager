@@ -46,7 +46,21 @@
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">Getting started</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#quick-installation">🚀 Quick Installation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-install-python">1) Install Python</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-clone-the-project">2) Clone the project</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-set-up-a-virtual-environment-and-install-dependencies">3) Set up a virtual environment and install dependencies</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-add-an-implementation-package">4) Add an implementation package</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-launch-the-gui">5) Launch the GUI</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#creating-a-dataset">📦 Creating a Dataset</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#implementation-of-contracts">Implementation of contracts</a>
     </li>
@@ -54,7 +68,7 @@
     </li>
     </ul>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../dataspecs/">Dataspecs</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../datasets/">DataSets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../logging/">Logging & debugging</a>
                   </li>
@@ -97,7 +111,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../api/utils/others/">Utils - Others</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../api/dataspec_manager/">DataSet</a>
+                  <li class="toctree-l1"><a class="" href="../api/dataset_manager.md">DataSet</a>
                   </li>
               </ul>
       </div>
@@ -126,9 +140,59 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="getting-started">Getting started</h1>
-<h2 id="installation">Installation</h2>
-<pre><code class="language-bash">pip install -r requirements.txt
+<p>The <strong>X-LAB Plotting Manager</strong> is a PyQt-based desktop application for managing scientific data and generating publication-ready plots.<br />
+It is designed around a clean separation between:</p>
+<ul>
+<li><strong>Core GUI + contracts</strong> (this repository), and  </li>
+<li><strong>Device/experiment-specific implementations</strong> (separate package you provide)</li>
+</ul>
+<h2 id="quick-installation">🚀 Quick Installation</h2>
+<h3 id="1-install-python">1) Install Python</h3>
+<p>Ensure you have <strong>Python 3.10+</strong> installed:<br />
+https://www.python.org/downloads/</p>
+<hr />
+<h3 id="2-clone-the-project">2) Clone the project</h3>
+<pre><code class="language-bash">git clone https://github.com/Allyson-Robert/X-LAB_Plotting_Manager.git
 </code></pre>
+<hr />
+<h3 id="3-set-up-a-virtual-environment-and-install-dependencies">3) Set up a virtual environment and install dependencies</h3>
+<pre><code class="language-bash">cd X-LAB_Plotting_Manager
+
+python -m venv .venv
+source .venv/bin/activate       # Windows: .venv\Scripts\activate
+
+# Example for Python 3.12
+pip install -r requirements-312.txt
+</code></pre>
+<hr />
+<h3 id="4-add-an-implementation-package">4) Add an implementation package</h3>
+<p>The GUI <strong>requires an implementation</strong> of the device/data/processor/plotter contracts.<br />
+You may:</p>
+<ul>
+<li>Provide <strong>your own</strong> implementation inside <code>implementations/</code>  </li>
+<li>Or clone the official example implementation:</li>
+</ul>
+<pre><code class="language-bash">git clone https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Implementations.git implementations/
+pip install -r implementations/requirements-312.txt
+</code></pre>
+<p>Without an implementation, the application will exit with an error on startup.</p>
+<blockquote>
+<p>✨ <strong>Yes—you can write your own full implementation!</strong><br />
+The documentation explains how to implement devices, datasets, data classes, processors, and plotters.</p>
+</blockquote>
+<hr />
+<h3 id="5-launch-the-gui">5) Launch the GUI</h3>
+<pre><code class="language-bash">python -m gui.windows.MainWindow
+</code></pre>
+<p>This opens the main application window:</p>
+<p><img alt="MainWindow" src="docs/images/MainWindow.png" /></p>
+<hr />
+<h2 id="creating-a-dataset">📦 Creating a Dataset</h2>
+<p>From the menu bar:</p>
+<p><strong>File → Create Set</strong></p>
+<p>This opens the <strong>Data Creation Window</strong>, where you build datasets based on structured <strong>datasets</strong> that define required data inputs and metadata.</p>
+<p><img alt="DataCreationWindow" src="docs/images/DataCreationWindow.png" /></p>
+<hr />
 <h2 id="implementation-of-contracts">Implementation of contracts</h2>
 <p>To use this framework, you will need to implement the contracts defined in the <code>contracts</code> module.
 Crucially, the following contracts must be implemented at least once in an <code>implementations</code> module:</p>
@@ -162,6 +226,9 @@ Crucially, the following contracts must be implemented at least once in an <code
 </code></pre>
 <p>A basic example/starting point can be found in the following repository: <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Implementations">X-LAB Plotting Manager Implementations</a></p>
 <h2 id="running-the-gui">Running the GUI</h2>
+<p>Before running the GUI, ensure that you have an <code>implementations</code> module as described above.
+Also ensure that the root directory of the project is in your <code>PYTHONPATH</code>.
+To launch the GUI, run the following command from the root of the project:</p>
 <pre><code class="language-bash">python -m gui.windows.MainWindow
 </code></pre>
               
@@ -169,7 +236,7 @@ Crucially, the following contracts must be implemented at least once in an <code
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../dataspecs/" class="btn btn-neutral float-right" title="Dataspecs">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../datasets/" class="btn btn-neutral float-right" title="DataSets">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -199,7 +266,7 @@ Crucially, the following contracts must be implemented at least once in an <code
       <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../dataspecs/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../datasets/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

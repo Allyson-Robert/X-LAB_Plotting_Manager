@@ -4,7 +4,7 @@ from utils.logging import decorate_class_with_logging, DEBUG
 
 
 @decorate_class_with_logging(log_level=DEBUG)
-class DataSetJSONEncoder(JSONDecoder):
+class DataSetJSONDecoder(JSONDecoder):
     """
     Custom JSON decoder that reconstructs `DataSet` instances from JSON.
 

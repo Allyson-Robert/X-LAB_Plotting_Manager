@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>DataSet - X-LAB Plotting Manager</title>
+    <title>DataSet Manager API Documentation - X-LAB Plotting Manager</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,7 +13,7 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "DataSet";
+        var mkdocs_page_name = "DataSet Manager API Documentation";
         var mkdocs_page_input_path = "api\\dataspec_manager.md";
         var mkdocs_page_url = null;
       </script>
@@ -46,13 +46,13 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../getting_started/">Getting started</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../dataspecs/">Dataspecs</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../datasets/">DataSets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../logging/">Logging & debugging</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API Reference</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../gui/windows_and_dialogs/">GUI - Windows</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../gui/plot_manager/">GUI - Plot Manager</a>
@@ -89,33 +89,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../utils/others/">Utils - Others</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">DataSet</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec.DataSet">DataSet</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#dataspec_manager.dataspec.DataSet--structure-types">Structure types</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#dataspec_manager.dataspec.DataSet--validation">Validation</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec.DataSet.construct_filepaths_nrecursive">construct_filepaths_nrecursive</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec.DataSet.construct_structured_filepaths">construct_structured_filepaths</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec_json_encoder.DataSetJSONEncoder">DataSetJSONEncoder</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec_json_decoder.DataSetJSONDecoder">DataSetJSONDecoder</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec_manager.DataSetManager">DataSetManager</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#dataspec_manager.dataspec_manager.DataSetManager--responsibilities">Responsibilities</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#dataspec_manager.dataspec_manager.DataSetManager.save_dataspec">save_dataspec</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="" href="../dataset_manager.md">DataSet</a>
                   </li>
               </ul>
       </div>
@@ -132,8 +106,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">API Reference</li>
-      <li class="breadcrumb-item active">DataSet</li>
+      <li class="breadcrumb-item active">DataSet Manager API Documentation</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/dataspec_manager.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -143,14 +116,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="dataspec-manager-api-documentation">DataSet Manager API Documentation</h1>
+                <h1 id="dataset-manager-api-documentation">DataSet Manager API Documentation</h1>
 
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="dataspec_manager.dataspec.DataSet"></a>
+<a id="dataset_manager.dataset.DataSet"></a>
     <div class="doc doc-contents first">
 
 
@@ -166,7 +139,7 @@
 locations and minimal metadata. Filepaths can be:
 - Added manually via <code>add_filepath</code>, or
 - Auto-populated from a root directory using <code>construct_filepaths(...)</code>.</p>
-<h3 id="dataspec_manager.dataspec.DataSet--structure-types">Structure types</h3>
+<h3 id="dataset_manager.dataset.DataSet--structure-types">Structure types</h3>
 <ul>
 <li><code>"flat"</code>:
     A simple one-level mapping from label -&gt; file path. This is the default
@@ -181,8 +154,8 @@ locations and minimal metadata. Filepaths can be:
     Reserved for legacy/experimental layouts; treated as an allowed but
     user-managed structure type.</li>
 </ul>
-<h3 id="dataspec_manager.dataspec.DataSet--validation">Validation</h3>
-<p>All paths added to the dataspec are checked for:
+<h3 id="dataset_manager.dataset.DataSet--validation">Validation</h3>
+<p>All paths added to the dataset are checked for:
 - Existence on disk.
 - Being a file (not a directory).
 - Having an extension in the accepted set (<code>xlsx</code>, <code>xls</code>, <code>csv</code>,
@@ -197,7 +170,7 @@ locations and minimal metadata. Filepaths can be:
 
 
               <details class="quote">
-                <summary>Source code in <code>dataspec_manager\dataspec.py</code></summary>
+                <summary>Source code in <code>dataset_manager\dataset.py</code></summary>
                 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  8</span>
 <span class="normal">  9</span>
 <span class="normal"> 10</span>
@@ -534,7 +507,7 @@ locations and minimal metadata. Filepaths can be:
 
 <span class="sd">        Validation</span>
 <span class="sd">        ----------</span>
-<span class="sd">        All paths added to the dataspec are checked for:</span>
+<span class="sd">        All paths added to the dataset are checked for:</span>
 <span class="sd">        - Existence on disk.</span>
 <span class="sd">        - Being a file (not a directory).</span>
 <span class="sd">        - Having an extension in the accepted set (``xlsx``, ``xls``, ``csv``,</span>
@@ -631,7 +604,7 @@ locations and minimal metadata. Filepaths can be:
     <span class="k">def</span><span class="w"> </span><span class="nf">construct_filepaths_nrecursive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_dir</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Will generate a flat file set and add it to the current filepaths. This will seek all files and</span>
-<span class="sd">            of the giver root_dir and append all dataspec files to the filepaths attribute. Note that</span>
+<span class="sd">            of the giver root_dir and append all dataset files to the filepaths attribute. Note that</span>
 <span class="sd">            root_dir should be an absolute path.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -661,7 +634,7 @@ locations and minimal metadata. Filepaths can be:
     <span class="k">def</span><span class="w"> </span><span class="nf">construct_structured_filepaths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Will generate a dirlabelled file set and add it to the current filepaths. This will seek all files and</span>
-<span class="sd">            subdirectories of the giver root_dir and append all dataspec files to the filepaths attribute. Note that</span>
+<span class="sd">            subdirectories of the giver root_dir and append all dataset files to the filepaths attribute. Note that</span>
 <span class="sd">            root_dir should be an absolute path.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Function construct_structured_filepaths is deprecated use construct_filepaths instead&quot;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
@@ -686,7 +659,7 @@ locations and minimal metadata. Filepaths can be:
                         <span class="k">else</span><span class="p">:</span>
                             <span class="n">errors</span> <span class="o">+=</span> <span class="n">error_msg</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">errors</span> <span class="o">=</span> <span class="s2">&quot;Flat dataspec_manager cannot use dirlabelled construction&quot;</span>
+            <span class="n">errors</span> <span class="o">=</span> <span class="s2">&quot;Flat dataset_manager cannot use dirlabelled construction&quot;</span>
 
         <span class="k">return</span> <span class="n">errors</span>
 
@@ -760,7 +733,7 @@ locations and minimal metadata. Filepaths can be:
 
         <span class="c1"># Check for duplicate label</span>
         <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepaths</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="k">return</span> <span class="s2">&quot;Duplicate label found in dataspec_manager&quot;</span>
+            <span class="k">return</span> <span class="s2">&quot;Duplicate label found in dataset_manager&quot;</span>
 
         <span class="c1"># Check that all paths are valid</span>
         <span class="k">for</span> <span class="n">sublabel</span> <span class="ow">in</span> <span class="n">path_to_validate</span><span class="p">:</span>
@@ -783,7 +756,7 @@ locations and minimal metadata. Filepaths can be:
             <span class="c1"># Add the file to the dataset and update the gui</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">colours</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">colour</span>
 
-    <span class="c1"># Checks are needed before paths are added to the dataspec_manager</span>
+    <span class="c1"># Checks are needed before paths are added to the dataset_manager</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_valid_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;path must be a string&quot;</span><span class="p">)</span>
@@ -822,7 +795,7 @@ locations and minimal metadata. Filepaths can be:
 <div class="doc doc-object doc-function">
 
 
-<h2 id="dataspec_manager.dataspec.DataSet.construct_filepaths_nrecursive" class="doc doc-heading">
+<h2 id="dataset_manager.dataset.DataSet.construct_filepaths_nrecursive" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">construct_filepaths_nrecursive</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span></code>
 
 </h2>
@@ -831,12 +804,12 @@ locations and minimal metadata. Filepaths can be:
     <div class="doc doc-contents ">
 
         <p>Will generate a flat file set and add it to the current filepaths. This will seek all files and
-    of the giver root_dir and append all dataspec files to the filepaths attribute. Note that
+    of the giver root_dir and append all dataset files to the filepaths attribute. Note that
     root_dir should be an absolute path.</p>
 
 
             <details class="mkdocstrings-source">
-              <summary>Source code in <code>dataspec_manager\dataspec.py</code></summary>
+              <summary>Source code in <code>dataset_manager\dataset.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">136</span>
 <span class="normal">137</span>
 <span class="normal">138</span>
@@ -865,7 +838,7 @@ locations and minimal metadata. Filepaths can be:
 <span class="normal">161</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">construct_filepaths_nrecursive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_dir</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Will generate a flat file set and add it to the current filepaths. This will seek all files and</span>
-<span class="sd">        of the giver root_dir and append all dataspec files to the filepaths attribute. Note that</span>
+<span class="sd">        of the giver root_dir and append all dataset files to the filepaths attribute. Note that</span>
 <span class="sd">        root_dir should be an absolute path.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -897,7 +870,7 @@ locations and minimal metadata. Filepaths can be:
 <div class="doc doc-object doc-function">
 
 
-<h2 id="dataspec_manager.dataspec.DataSet.construct_structured_filepaths" class="doc doc-heading">
+<h2 id="dataset_manager.dataset.DataSet.construct_structured_filepaths" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">construct_structured_filepaths</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span></code>
 
 </h2>
@@ -906,12 +879,12 @@ locations and minimal metadata. Filepaths can be:
     <div class="doc doc-contents ">
 
         <p>Will generate a dirlabelled file set and add it to the current filepaths. This will seek all files and
-    subdirectories of the giver root_dir and append all dataspec files to the filepaths attribute. Note that
+    subdirectories of the giver root_dir and append all dataset files to the filepaths attribute. Note that
     root_dir should be an absolute path.</p>
 
 
             <details class="mkdocstrings-source">
-              <summary>Source code in <code>dataspec_manager\dataspec.py</code></summary>
+              <summary>Source code in <code>dataset_manager\dataset.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">166</span>
 <span class="normal">167</span>
 <span class="normal">168</span>
@@ -945,7 +918,7 @@ locations and minimal metadata. Filepaths can be:
 <span class="normal">196</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">construct_structured_filepaths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Will generate a dirlabelled file set and add it to the current filepaths. This will seek all files and</span>
-<span class="sd">        subdirectories of the giver root_dir and append all dataspec files to the filepaths attribute. Note that</span>
+<span class="sd">        subdirectories of the giver root_dir and append all dataset files to the filepaths attribute. Note that</span>
 <span class="sd">        root_dir should be an absolute path.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Function construct_structured_filepaths is deprecated use construct_filepaths instead&quot;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
@@ -970,7 +943,7 @@ locations and minimal metadata. Filepaths can be:
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">errors</span> <span class="o">+=</span> <span class="n">error_msg</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">errors</span> <span class="o">=</span> <span class="s2">&quot;Flat dataspec_manager cannot use dirlabelled construction&quot;</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="s2">&quot;Flat dataset_manager cannot use dirlabelled construction&quot;</span>
 
     <span class="k">return</span> <span class="n">errors</span>
 </code></pre></div></td></tr></table></div>
@@ -992,7 +965,7 @@ locations and minimal metadata. Filepaths can be:
 
 
 
-<a id="dataspec_manager.dataspec_json_encoder.DataSetJSONEncoder"></a>
+<a id="dataset_manager.dataset_json_encoder.DataSetJSONEncoder"></a>
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
               Bases: <code><span title="json.JSONEncoder">JSONEncoder</span></code></p>
@@ -1006,10 +979,10 @@ locations and minimal metadata. Filepaths can be:
   representation using the format <code>"%Y.%m.%d_%H.%M.%S"</code>. This matches
   the format expected by <code>DataSet</code> and the corresponding JSON decoder.</li>
 <li>All other objects are serialised via their <code>__dict__</code> attribute,
-  which is sufficient for simple container-like classes such as <code>DataSpec</code>.</li>
+  which is sufficient for simple container-like classes such as <code>DataSet</code>.</li>
 </ul>
-<p>The encoder is intended to be used together with <code>DataSpecJSONDecoder</code> to
-provide a round-trip-safe JSON representation of dataspecs.</p>
+<p>The encoder is intended to be used together with <code>DataSetJSONEncoder</code> to
+provide a round-trip-safe JSON representation of datasets.</p>
 
 
 
@@ -1018,7 +991,7 @@ provide a round-trip-safe JSON representation of dataspecs.</p>
 
 
               <details class="quote">
-                <summary>Source code in <code>dataspec_manager\dataspec_json_encoder.py</code></summary>
+                <summary>Source code in <code>dataset_manager\dataset_json_encoder.py</code></summary>
                 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
@@ -1040,20 +1013,20 @@ provide a round-trip-safe JSON representation of dataspecs.</p>
 <span class="normal">25</span>
 <span class="normal">26</span>
 <span class="normal">27</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@decorate_class_with_logging</span><span class="p">(</span><span class="n">log_level</span><span class="o">=</span><span class="n">DEBUG</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">DataSpecJSONEncoder</span><span class="p">(</span><span class="n">JSONEncoder</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DataSetJSONEncoder</span><span class="p">(</span><span class="n">JSONEncoder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    JSON encoder for `DataSpec` objects and related dataclasses.</span>
+<span class="sd">    JSON encoder for `DataSet` objects and related dataclasses.</span>
 
 <span class="sd">    This encoder provides two custom behaviours:</span>
 
 <span class="sd">    - ``datetime.datetime`` instances are serialised to a compact string</span>
 <span class="sd">      representation using the format ``&quot;%Y.%m.%d_%H.%M.%S&quot;``. This matches</span>
-<span class="sd">      the format expected by `DataSpec` and the corresponding JSON decoder.</span>
+<span class="sd">      the format expected by `DataSet` and the corresponding JSON decoder.</span>
 <span class="sd">    - All other objects are serialised via their ``__dict__`` attribute,</span>
-<span class="sd">      which is sufficient for simple container-like classes such as `DataSpec`.</span>
+<span class="sd">      which is sufficient for simple container-like classes such as `DataSet`.</span>
 
-<span class="sd">    The encoder is intended to be used together with `DataSpecJSONDecoder` to</span>
-<span class="sd">    provide a round-trip-safe JSON representation of dataspecs.</span>
+<span class="sd">    The encoder is intended to be used together with `DataSetJSONEncoder` to</span>
+<span class="sd">    provide a round-trip-safe JSON representation of datasets.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
@@ -1089,23 +1062,23 @@ provide a round-trip-safe JSON representation of dataspecs.</p>
 
 
 
-<a id="dataspec_manager.dataspec_json_decoder.DataSpecJSONDecoder"></a>
+<a id="dataset_manager.dataset_json_decoder.DataSetJSONDecoder"></a>
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
               Bases: <code><span title="json.JSONDecoder">JSONDecoder</span></code></p>
 
 
 
-        <p>Custom JSON decoder that reconstructs <code>DataSpec</code> instances from JSON.</p>
+        <p>Custom JSON decoder that reconstructs <code>DataSet</code> instances from JSON.</p>
 <p>This decoder installs an <code>object_hook</code> that:
-- Detects dictionaries carrying the expected <code>DataSpec</code> fields
+- Detects dictionaries carrying the expected <code>DataSet</code> fields
   (e.g. <code>creation_date</code>, <code>name</code>, <code>device</code>, <code>experiment_date_time</code>,
   <code>notes</code>, <code>console</code>, <code>structure_type</code>, <code>filepaths</code>, <code>colours</code>).
-- Instantiates a new <code>DataSpec</code> using the stored creation date.
+- Instantiates a new <code>DataSet</code> using the stored creation date.
 - Replays all relevant setters to restore metadata, structure type, paths,
   colours, and annotations.</p>
 <p>If a JSON object does not match the expected shape, it is returned unchanged,
-allowing non-<code>DataSpec</code> data to be decoded normally.</p>
+allowing non-<code>DataSet</code> data to be decoded normally.</p>
 
 
 
@@ -1114,7 +1087,7 @@ allowing non-<code>DataSpec</code> data to be decoded normally.</p>
 
 
               <details class="quote">
-                <summary>Source code in <code>dataspec_manager\dataspec_json_decoder.py</code></summary>
+                <summary>Source code in <code>dataset_manager\dataset_json_decoder.py</code></summary>
                 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
 <span class="normal"> 7</span>
 <span class="normal"> 8</span>
@@ -1152,20 +1125,20 @@ allowing non-<code>DataSpec</code> data to be decoded normally.</p>
 <span class="normal">40</span>
 <span class="normal">41</span>
 <span class="normal">42</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@decorate_class_with_logging</span><span class="p">(</span><span class="n">log_level</span><span class="o">=</span><span class="n">DEBUG</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">DataSpecJSONDecoder</span><span class="p">(</span><span class="n">JSONDecoder</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DataSetJSONDecoder</span><span class="p">(</span><span class="n">JSONDecoder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Custom JSON decoder that reconstructs `DataSpec` instances from JSON.</span>
+<span class="sd">    Custom JSON decoder that reconstructs `DataSet` instances from JSON.</span>
 
 <span class="sd">    This decoder installs an `object_hook` that:</span>
-<span class="sd">    - Detects dictionaries carrying the expected `DataSpec` fields</span>
+<span class="sd">    - Detects dictionaries carrying the expected `DataSet` fields</span>
 <span class="sd">      (e.g. ``creation_date``, ``name``, ``device``, ``experiment_date_time``,</span>
 <span class="sd">      ``notes``, ``console``, ``structure_type``, ``filepaths``, ``colours``).</span>
-<span class="sd">    - Instantiates a new `DataSpec` using the stored creation date.</span>
+<span class="sd">    - Instantiates a new `DataSet` using the stored creation date.</span>
 <span class="sd">    - Replays all relevant setters to restore metadata, structure type, paths,</span>
 <span class="sd">      colours, and annotations.</span>
 
 <span class="sd">    If a JSON object does not match the expected shape, it is returned unchanged,</span>
-<span class="sd">    allowing non-`DataSpec` data to be decoded normally.</span>
+<span class="sd">    allowing non-`DataSet` data to be decoded normally.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;object_hook&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_hook</span><span class="p">)</span>
@@ -1174,17 +1147,17 @@ allowing non-<code>DataSpec</code> data to be decoded normally.</p>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">object_hook</span><span class="p">(</span><span class="n">dct</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">dataspec</span> <span class="o">=</span> <span class="n">DataSpec</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;creation_date&#39;</span><span class="p">])</span>
-            <span class="n">dataspec</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
-            <span class="n">dataspec</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;device&#39;</span><span class="p">])</span>
-            <span class="n">dataspec</span><span class="o">.</span><span class="n">set_experiment_date</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;experiment_date_time&#39;</span><span class="p">])</span>
-            <span class="n">dataspec</span><span class="o">.</span><span class="n">set_notes</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;notes&#39;</span><span class="p">])</span>
-            <span class="n">dataspec</span><span class="o">.</span><span class="n">set_console</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;console&#39;</span><span class="p">])</span>
-            <span class="n">dataspec</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;structure_type&#39;</span><span class="p">])</span>
-            <span class="n">dataspec</span><span class="o">.</span><span class="n">set_filepaths</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;filepaths&#39;</span><span class="p">])</span>
-            <span class="n">dataspec</span><span class="o">.</span><span class="n">set_colours</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;colours&#39;</span><span class="p">])</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">DataSet</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;creation_date&#39;</span><span class="p">])</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;device&#39;</span><span class="p">])</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">set_experiment_date</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;experiment_date_time&#39;</span><span class="p">])</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">set_notes</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;notes&#39;</span><span class="p">])</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">set_console</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;console&#39;</span><span class="p">])</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">set_structure_type</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;structure_type&#39;</span><span class="p">])</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">set_filepaths</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;filepaths&#39;</span><span class="p">])</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">set_colours</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;colours&#39;</span><span class="p">])</span>
 
-            <span class="k">return</span> <span class="n">dataspec</span>
+            <span class="k">return</span> <span class="n">dataset</span>
 
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">dct</span>
@@ -1217,24 +1190,24 @@ allowing non-<code>DataSpec</code> data to be decoded normally.</p>
 
 
 
-<a id="dataspec_manager.dataspec_manager.DataSpecManager"></a>
+<a id="dataset_manager.dataset_manager.DataSetManager"></a>
     <div class="doc doc-contents first">
 
 
 
-        <p>Small helper class for persisting <code>DataSpec</code> instances to and from JSON files.</p>
-<h3 id="dataspec_manager.dataspec_manager.DataSpecManager--responsibilities">Responsibilities</h3>
+        <p>Small helper class for persisting <code>DataSet</code> instances to and from JSON files.</p>
+<h3 id="dataset_manager.dataset_manager.DataSetManager--responsibilities">Responsibilities</h3>
 <ul>
-<li><code>save_dataspec(dataspec, file_name)</code>:
-    Serialises a <code>DataSpec</code> instance to disk using <code>DataSpecJSONEncoder</code>.
-    The method checks that the passed object is a <code>DataSpec</code> and writes
+<li><code>save_dataset(dataset, file_name)</code>:
+    Serialises a <code>DataSet</code> instance to disk using <code>DataSetJSONDecoder</code>.
+    The method checks that the passed object is a <code>DataSet</code> and writes
     the encoded JSON to the given file path.</li>
-<li><code>open_dataspec(file_name)</code>:
-    Opens a JSON file and deserialises it into a <code>DataSpec</code> instance using
-    <code>DataSpecJSONDecoder</code>.</li>
+<li><code>open_dataset(file_name)</code>:
+    Opens a JSON file and deserialises it into a <code>DataSet</code> instance using
+    <code>DataSetJSONEncoder</code>.</li>
 </ul>
-<p>The manager does not interpret the dataspec content; it only handles the
-IO and wiring between JSON encoder/decoder and the underlying <code>DataSpec</code>
+<p>The manager does not interpret the dataset content; it only handles the
+IO and wiring between JSON encoder/decoder and the underlying <code>DataSet</code>
 objects.</p>
 
 
@@ -1244,7 +1217,7 @@ objects.</p>
 
 
               <details class="quote">
-                <summary>Source code in <code>dataspec_manager\dataspec_manager.py</code></summary>
+                <summary>Source code in <code>dataset_manager\dataset_manager.py</code></summary>
                 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
@@ -1282,42 +1255,42 @@ objects.</p>
 <span class="normal">41</span>
 <span class="normal">42</span>
 <span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@decorate_class_with_logging</span><span class="p">(</span><span class="n">log_level</span><span class="o">=</span><span class="n">DEBUG</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">DataSpecManager</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DataSetManager</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">       Small helper class for persisting `DataSpec` instances to and from JSON files.</span>
+<span class="sd">       Small helper class for persisting `DataSet` instances to and from JSON files.</span>
 
 <span class="sd">       Responsibilities</span>
 <span class="sd">       ----------------</span>
-<span class="sd">       - `save_dataspec(dataspec, file_name)`:</span>
-<span class="sd">           Serialises a `DataSpec` instance to disk using `DataSpecJSONEncoder`.</span>
-<span class="sd">           The method checks that the passed object is a `DataSpec` and writes</span>
+<span class="sd">       - `save_dataset(dataset, file_name)`:</span>
+<span class="sd">           Serialises a `DataSet` instance to disk using `DataSetJSONDecoder`.</span>
+<span class="sd">           The method checks that the passed object is a `DataSet` and writes</span>
 <span class="sd">           the encoded JSON to the given file path.</span>
-<span class="sd">       - `open_dataspec(file_name)`:</span>
-<span class="sd">           Opens a JSON file and deserialises it into a `DataSpec` instance using</span>
-<span class="sd">           `DataSpecJSONDecoder`.</span>
+<span class="sd">       - `open_dataset(file_name)`:</span>
+<span class="sd">           Opens a JSON file and deserialises it into a `DataSet` instance using</span>
+<span class="sd">           `DataSetJSONEncoder`.</span>
 
-<span class="sd">       The manager does not interpret the dataspec content; it only handles the</span>
-<span class="sd">       IO and wiring between JSON encoder/decoder and the underlying `DataSpec`</span>
+<span class="sd">       The manager does not interpret the dataset content; it only handles the</span>
+<span class="sd">       IO and wiring between JSON encoder/decoder and the underlying `DataSet`</span>
 <span class="sd">       objects.</span>
 <span class="sd">   &quot;&quot;&quot;</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">save_dataspec</span><span class="p">(</span><span class="n">dataspec</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Saves the dataspec_manager data into a JSON file &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataspec</span><span class="p">,</span> <span class="n">DataSpec</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dataspec must be an instance of DataSpec&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Saves the dataset_manager data into a JSON file &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">DataSet</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dataset must be an instance of DataSet&quot;</span><span class="p">)</span>
 
         <span class="c1"># Who should check whether the filename is valid?</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataspec</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">DataSpecJSONEncoder</span><span class="p">)</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">DataSetJSONDecoder</span><span class="p">)</span>
         <span class="n">json_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">open_dataspec</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">open_dataset</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">DataSpecJSONDecoder</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">DataSetJSONEncoder</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -1337,8 +1310,8 @@ objects.</p>
 <div class="doc doc-object doc-function">
 
 
-<h2 id="dataspec_manager.dataspec_manager.DataSpecManager.save_dataspec" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">save_dataspec</span><span class="p">(</span><span class="n">dataspec</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span></code>
+<h2 id="dataset_manager.dataset_manager.DataSetManager.save_dataset" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">save_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span></code>
 
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
@@ -1349,11 +1322,11 @@ objects.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Saves the dataspec_manager data into a JSON file</p>
+        <p>Saves the dataset_manager data into a JSON file</p>
 
 
             <details class="mkdocstrings-source">
-              <summary>Source code in <code>dataspec_manager\dataspec_manager.py</code></summary>
+              <summary>Source code in <code>dataset_manager\dataset_manager.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">29</span>
 <span class="normal">30</span>
 <span class="normal">31</span>
@@ -1364,14 +1337,14 @@ objects.</p>
 <span class="normal">36</span>
 <span class="normal">37</span>
 <span class="normal">38</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">save_dataspec</span><span class="p">(</span><span class="n">dataspec</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot; Saves the dataspec_manager data into a JSON file &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataspec</span><span class="p">,</span> <span class="n">DataSpec</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dataspec must be an instance of DataSpec&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">save_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Saves the dataset_manager data into a JSON file &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">DataSet</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dataset must be an instance of DataSet&quot;</span><span class="p">)</span>
 
     <span class="c1"># Who should check whether the filename is valid?</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
-        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataspec</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">DataSpecJSONEncoder</span><span class="p">)</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">DataSetJSONDecoder</span><span class="p">)</span>
     <span class="n">json_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1390,9 +1363,6 @@ objects.</p>
               
             </div>
           </div><footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../utils/others/" class="btn btn-neutral float-left" title="Utils - Others"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-    </div>
 
   <hr/>
 
@@ -1417,8 +1387,6 @@ objects.</p>
           <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
-    
-      <span><a href="../utils/others/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
   </span>
