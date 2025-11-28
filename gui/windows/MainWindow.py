@@ -326,6 +326,9 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
 
 if __name__ == "__main__":
+    # Enable high-DPI scaling and per-monitor awareness
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
     # Initialise app, window and start execution
     app = QtWidgets.QApplication(sys.argv)
