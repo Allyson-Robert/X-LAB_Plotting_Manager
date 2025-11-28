@@ -48,7 +48,9 @@ def dialog_print(window: QtWidgets.QMainWindow, title, contents):
 
     # Connect the "OK" button to close the dialog
     ok_button.clicked.connect(dialog.accept)
-    save_button.clicked.connect(lambda: window.save_to_file(contents))
+    save_button.clicked.connect(
+        lambda: window.save_to_file(history_text_edit.toPlainText())
+    )
 
     # Show the dialog
     dialog.exec_()
