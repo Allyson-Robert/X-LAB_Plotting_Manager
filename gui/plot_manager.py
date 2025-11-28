@@ -74,27 +74,27 @@ def plot_manager(window, *args, **kwargs):
     # Instantiate proper device class and set the data
     current_device_class = window.dataset.get_device()
     device_module = getattr(implementations.devices.workers, current_device_class.lower())
-    experiment_cls = getattr(device_module, current_device_class)
+    device = getattr(device_module, current_device_class)
 
     # # Grab the correct plotting function and pass all options to it
     plot_function = window.get_current_plot_function()
 
     # Create a new thread for the device class to run in
     window.thread = QtCore.QThread()
-    window.experiment_worker = experiment_cls(current_device_class, dataset_selection, plot_function, options=options)
-    window.experiment_worker.moveToThread(window.thread)
+    window.device_worker = device(current_device_class, dataset_selection, plot_function, options=options)
+    window.device_worker.moveToThread(window.thread)
 
     # Connect signals and slots for the worker thread
-    window.thread.started.connect(window.experiment_worker.run)
-    window.experiment_worker.finished.connect(window.thread.quit)
-    window.experiment_worker.finished.connect(window.experiment_worker.deleteLater)
+    window.thread.started.connect(window.device_worker.run)
+    window.device_worker.finished.connect(window.thread.quit)
+    window.device_worker.finished.connect(window.device_worker.deleteLater)
     window.thread.finished.connect(window.thread.deleteLater)
-    window.experiment_worker.progress.connect(window.report_progress)
+    window.device_worker.progress.connect(window.report_progress)
 
     # Start the thread
     window.thread.start()
     window.console_print(
-        f"(run {window.experiment_worker.identifier}) producing {current_device_class}-{plot_function} plot for {window.get_dataset_name()} with options {options}")
+        f"(run {window.device_worker.identifier}) producing {current_device_class}-{plot_function} plot for {window.get_dataset_name()} with options {options}")
 
     # FIXME: Final resets
     # window.longRunningBtn.setEnabled(False)

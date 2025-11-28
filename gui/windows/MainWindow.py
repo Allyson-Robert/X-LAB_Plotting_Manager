@@ -85,7 +85,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         super(UiMainWindow, self).__init__()
 
         self.thread = None
-        self.experiment_worker = None
+        self.device_worker = None
         self.dataset = None
         self.dataset_location = None
 
