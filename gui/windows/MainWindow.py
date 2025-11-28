@@ -1,3 +1,15 @@
+# Extend the path to include the source root as well as gui root
+from pathlib import Path
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parent
+CWD = Path.cwd().resolve()
+
+for path in {PROJECT_ROOT, CWD}:
+    s = str(path)
+    if s not in sys.path:
+        sys.path.insert(0, s)
+
 # Generic dependency imports
 import importlib, datetime, json, logging, sys
 from PyQt5 import QtWidgets, uic, QtCore
@@ -314,6 +326,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
 
 if __name__ == "__main__":
+
     # Initialise app, window and start execution
     app = QtWidgets.QApplication(sys.argv)
     window = UiMainWindow()
