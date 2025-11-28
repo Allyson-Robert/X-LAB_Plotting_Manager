@@ -60,7 +60,6 @@ def plot_manager(window, *args, **kwargs):
     dataset_selection.set_name(window.dataset.get_name())
 
     # Recursively search for QWidget children with an alias to collect options and get their values
-    # TODO: Options should be a class whose instance can be passed
     options = PlotterOptions()
     for option in window.stackedWidget.currentWidget().findChildren(QtWidgets.QWidget):
         alias = option.property("alias")
