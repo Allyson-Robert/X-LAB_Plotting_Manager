@@ -65,7 +65,7 @@ python -m gui.windows.MainWindow
 
 This opens the main application window:
 
-![MainWindow](docs/images/MainWindow.png)
+![MainWindow](images/MainWindow.png)
 
 ---
 
@@ -77,7 +77,7 @@ From the menu bar:
 
 This opens the **Data Creation Window**, where you build datasets based on structured **datasets** that define required data inputs and metadata.
 
-![DataCreationWindow](docs/images/DataCreationWindow.png)
+![DataCreationWindow](images/DataCreationWindow.png)
 
 ---
 
@@ -89,6 +89,8 @@ Crucially, the following contracts must be implemented at least once in an `impl
  - **Data | DataCore**: Handles raw data access from files
  - **DataProcessor | DataProcessorCore**: Handles computation of any derived quantities from raw data, is the primary interface to obtain data for plotting. Defers to Data for raw data access.
  - **Plotter**: Handles plots and formatting, data is requested from DataProcessor
+
+![Contract Architecture](images/Contracts.png)
 
 The `implementations` module must have the following structure:
 

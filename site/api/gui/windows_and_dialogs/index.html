@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../../img/favicon.ico" />
-    <title>GUI - Windows - X-LAB Plotting Manager</title>
+    <title>Windows and Dialogs - X-LAB Plotting Manager</title>
     <link rel="stylesheet" href="../../../css/theme.css" />
     <link rel="stylesheet" href="../../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,7 +13,7 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "GUI - Windows";
+        var mkdocs_page_name = "Windows and Dialogs";
         var mkdocs_page_input_path = "api\\gui\\windows_and_dialogs.md";
         var mkdocs_page_url = null;
       </script>
@@ -51,119 +51,6 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
                   </li>
               </ul>
-              <p class="caption"><span class="caption-text">API Reference</span></p>
-              <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">GUI - Windows</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow">UiMainWindow</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow--responsibilities">Responsibilities</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow.navigate_to_docs">navigate_to_docs</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow.not_implemented">not_implemented</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow.show_about">show_about</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow">UiDataCreatorWindow</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow--overview">Overview</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow--behaviour">Behaviour</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow--parameters">Parameters</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.add_file_to_set">add_file_to_set</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.add_file_to_set--gets-the-path-and-label-and-adds-it-to-the-current-dataset-instance-while-updating-gui">Gets the path and label and adds it to the current DataSet instance while updating GUI</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.browse_dir">browse_dir</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.browse_dir--open-directory-selection-dialog-to-get-a-path-and-update-gui-when-confirmed">Open directory selection dialog to get a path and update gui when confirmed</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.browse_files">browse_files</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.browse_files--open-file-selection-dialog-to-get-a-file-path-and-update-gui-when-confirmed">Open file selection dialog to get a file path and update gui when confirmed</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.button_state">button_state</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.finish">finish</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.generate_set">generate_set</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.reset">reset</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.qtexteditconsole.QTextEditConsole">QTextEditConsole</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.qtexteditconsole.QTextEditConsole--typical-usage">Typical usage</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.qtexteditconsole.QTextEditConsole--parameters">Parameters</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.dialogs.dialog_print.dialog_print">dialog_print</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.dialogs.dialog_print.dialog_print--parameters">Parameters</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.dialogs.generate_about_dialog.generate_about_dialog">generate_about_dialog</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.dialogs.generate_about_dialog.generate_about_dialog--parameters">Parameters</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.dialogs.generate_about_dialog.generate_about_dialog--returns">Returns</a>
-    </li>
-        </ul>
-    </li>
-    </ul>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../plot_manager/">GUI - Plot Manager</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../utils/">GUI - Utils</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_types/">Data Types</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_processors/">Data Processors</a>
-                </li>
-    </ul>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter/">Plotter</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter_options/">PlotterOptions</a>
-                </li>
-    </ul>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/devices/">Contracts - Devices</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/file_readers/">Contracts - File Readers</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/observable/">Contracts - Observable</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../utils/class_utils/">Utils - Class Utils</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../utils/errors/">Utils - Errors</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../utils/logging/">Utils - Logging</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../utils/others/">Utils - Others</a>
-                  </li>
-                  <li class="toctree-l1"><a class="" href="../../dataset_manager.md">DataSet</a>
-                  </li>
-              </ul>
       </div>
     </div>
     </nav>
@@ -178,8 +65,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">API Reference</li>
-      <li class="breadcrumb-item active">GUI - Windows</li>
+      <li class="breadcrumb-item active">Windows and Dialogs</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/gui/windows_and_dialogs.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -2045,10 +1931,6 @@ logo_path : str
               
             </div>
           </div><footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../../logging/" class="btn btn-neutral float-left" title="Logging & debugging"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../plot_manager/" class="btn btn-neutral float-right" title="GUI - Plot Manager">Next <span class="icon icon-circle-arrow-right"></span></a>
-    </div>
 
   <hr/>
 
@@ -2074,10 +1956,6 @@ logo_path : str
         </span>
     
     
-      <span><a href="../../../logging/" style="color: #fcfcfc">&laquo; Previous</a></span>
-    
-    
-      <span><a href="../plot_manager/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
