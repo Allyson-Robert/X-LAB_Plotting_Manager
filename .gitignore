@@ -1,11 +1,5 @@
-/Legacy_Datasets/
-/TestingShit/
-/jeroen.json
-/kristof.json
-/gui/jeroen_shit.json
-/gui/tmp.json
-/gui/tmp_smol.json
 /implementations/
 *.pyc
 *.pyo
 /.idea/
+/site/
