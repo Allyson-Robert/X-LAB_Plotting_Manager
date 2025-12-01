@@ -2,9 +2,8 @@ X-Lab Plotting Tool v2.0.0
 Last update: 2023/09/10
 Author: Allyson Robert (https://github.com/Allyson-Robert)
 
-Licence: CC BY-NC-SA
-This license allows reusers to distribute, remix, adapt, and build upon the material in any medium or format for noncommercial purposes only, and only so long as attribution is given to the creator. If you remix, adapt, or build upon the material, you must license the modified material under identical terms.
-
+Licence: AGPL v3
+This license allows users to run, share, modify, and build upon the software in any medium or format, including for commercial use, as long as attribution is given to the original creators. If you modify the software or incorporate it into another program, you must make the complete corresponding source code available and license the modified work under the same terms. Additionally, if the software is used to provide a service over a network, the source code of that running version must also be shared under identical conditions.
 Written using: Python 3.10
 Python Dependencies:
     Data processing and plotting:
