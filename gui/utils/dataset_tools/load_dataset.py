@@ -15,7 +15,7 @@ def open_dataset_file(window: QtWidgets.QMainWindow, *args, **kwargs):
     Behaviour:
     - Prompts the user for a file.
     - Clears existing dataset state.
-    - Loads the JSON file using `DataSetJSONEncoder`.
+    - Loads the JSON file using `DataSetJSONDecoder`.
     - Updates notes, file list, plot options, and header display.
 
     If loading fails due to an incompatible device type, the GUI is reset and a

@@ -1,7 +1,7 @@
 import json
 from dataset_manager import DataSet
-from dataset_json_encoder import DataSetJSONDecoder
-from dataset_json_decoder import DataSetJSONEncoder
+from dataset_json_encoder import DataSetJSONEncoder
+from dataset_json_decoder import DataSetJSONDecoder
 from utils.logging import decorate_class_with_logging, DEBUG
 
 @decorate_class_with_logging(log_level=DEBUG)
@@ -12,12 +12,12 @@ class DataSetManager:
        Responsibilities
        ----------------
        - `save_dataset(dataset, file_name)`:
-           Serialises a `DataSet` instance to disk using `DataSetJSONDecoder`.
+           Serialises a `DataSet` instance to disk using `DataSetJSONEncoder`.
            The method checks that the passed object is a `DataSet` and writes
            the encoded JSON to the given file path.
        - `open_dataset(file_name)`:
            Opens a JSON file and deserialises it into a `DataSet` instance using
-           `DataSetJSONEncoder`.
+           `DataSetJSONDecoder`.
 
        The manager does not interpret the dataset content; it only handles the
        IO and wiring between JSON encoder/decoder and the underlying `DataSet`
@@ -34,10 +34,10 @@ class DataSetManager:
 
         # Who should check whether the filename is valid?
         with open(file_name, "w") as json_file:
-            json.dump(dataset, json_file, cls=DataSetJSONDecoder)
+            json.dump(dataset, json_file, cls=DataSetJSONEncoder)
         json_file.close()
 
     @staticmethod
     def open_dataset(file_name):
         with open(file_name) as json_file:
-            return json.load(json_file, cls=DataSetJSONEncoder)
+            return json.load(json_file, cls=DataSetJSONDecoder)

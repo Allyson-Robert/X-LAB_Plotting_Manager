@@ -195,7 +195,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             return self.console_print("Cannot autosave, no file location known. Open or create dataset first")
 
         with open(file_name, "w") as json_file:
-            json.dump(self.dataset, json_file, cls=dataset_manager.DataSetJSONDecoder)
+            json.dump(self.dataset, json_file, cls=dataset_manager.DataSetJSONEncoder)
         json_file.close()
 
         return self.console_print(f"Saved dataset to {file_name}")
@@ -210,7 +210,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
             self.dataset,
             indent=4,
             separators=(',', ': '),
-            cls=dataset_manager.DataSetJSONDecoder
+            cls=dataset_manager.DataSetJSONEncoder
         )
         dialog_print(window=self, title=f"DataSet RAW: {self.dataset.get_name()}", contents=pretty_json)
 
