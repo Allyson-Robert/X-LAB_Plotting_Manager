@@ -63,8 +63,10 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         self.doneBtn.clicked.connect(self.finish)
 
         # Enable button when all is filled
-        self.showSetPlainText.textChanged.connect(self.button_state)
-        self.nameEdit.textChanged.connect(self.button_state)
+        self.showSetPlainText.textChanged.connect(self.finish_button_state)
+        self.nameEdit.textChanged.connect(self.finish_button_state)
+        self.browseFilesText.textChanged.connect(self.label_button_state)
+        self.labelEdit.textChanged.connect(self.label_button_state)
 
         # Show the app
         self.show()
@@ -93,6 +95,14 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         # Read name and legend label from gui
         file_name = self.browseFilesText.toPlainText()
         file_label = self.labelEdit.text()
+
+        # Must add a label and file
+        if not (file_name and file_label):
+            self.show_message(
+                title="Label/Path Undefined",
+                message="No label or path were defined, cannot proceed"
+            )
+            return None
 
         # Check for duplicate label
         if file_label in self.dataset.get_labels():
@@ -145,7 +155,19 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         )
         self.dataset.set_structure_type(active_button)
 
-    def button_state(self):
+    def label_button_state(self):
+        """Only enable the add button once a label and a path were selected """
+        # Read name and legend label from gui
+        file_name = self.browseFilesText.toPlainText()
+        file_label = self.labelEdit.text()
+
+        if (file_name != "") and (file_label != ""):
+            self.addLabelBtn.setEnabled(True)
+        else:
+            self.addLabelBtn.setEnabled(False)
+
+
+    def finish_button_state(self):
         """ Only enable closing when some data was included """
         # TODO: hmmmmmmmmmmmm, should I be able to close the window if I mistakenly opened it?
         nameTxt = self.nameEdit.text()
@@ -169,7 +191,7 @@ class UiDataCreatorWindow(QtWidgets.QDialog):
         self.browseDirText.clear()
         self.browseFilesText.clear()
         self.showSetPlainText.clear()
-        self.button_state()
+        self.finish_button_state()
 
     def finish(self):
         """ Add name, device type,  and date and time dataset before exiting """
