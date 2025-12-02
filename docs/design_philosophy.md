@@ -195,6 +195,17 @@ It is the task of the `DeviceWorker` to tell the plotter which observables to re
 This ensures plotters stay reusable between devices and measurement types.
 In short they connect data → processors → plotters.
 
+Add the new worker class name to `implementations.devices.__init__.py`.
+
+```
+from . import workers
+
+__all__ = [
+    "Generic",
+    "NewWorker
+]
+```
+
 ---
 
 ### Step 6 — Provide a Widget for User Options
