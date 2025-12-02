@@ -6,59 +6,15 @@ It is designed around a clean separation between:
 - **Core GUI + contracts** (this repository), and  
 - **Device/experiment-specific implementations** (separate package you provide)
 
-## 🚀 Quick Installation
+## Install the software
+For instructions on installation see the [installation page](installing.md).
 
-### 1) Install Python
+> ✨ Make sure that you have an *implementations* module ready before proceeding.
+> This can be done by [writing your own](design_philosophy.md) or by cloning the provided [implementation](https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Implementations.git).
 
-Ensure you have **Python 3.10+** installed:  
-https://www.python.org/downloads/
+## 🚀 Launch the GUI
 
----
-
-### 2) Clone the project
-
-```bash
-git clone https://github.com/Allyson-Robert/X-LAB_Plotting_Manager.git
-```
-
----
-
-### 3) Set up a virtual environment and install dependencies
-
-```bash
-cd X-LAB_Plotting_Manager
-
-python -m venv .venv
-source .venv/bin/activate       # Windows: .venv\Scripts\activate
-
-# Example for Python 3.12
-pip install -r requirements-312.txt
-```
-
----
-
-### 4) Add an implementation package
-
-The GUI **requires an implementation** of the device/data/processor/plotter contracts.  
-You may:
-
-- Provide **your own** implementation inside `implementations/`  
-- Or clone the official example implementation:
-
-```bash
-git clone https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Implementations.git implementations/
-pip install -r implementations/requirements-312.txt
-```
-
-Without an implementation, the application will exit with an error on startup.
-
-> ✨ **Yes—you can write your own full implementation!**  
-> The documentation explains how to implement devices, datasets, data classes, processors, and plotters.
-
----
-
-### 5) Launch the GUI
-
+You can launch the GUI from your favourite IDE by pointing to `gui.windows.MainWindow` or by running the following command from the terminal:
 ```bash
 python -m gui.windows.MainWindow
 ```
@@ -81,53 +37,106 @@ This opens the **Data Creation Window**, where you build datasets based on struc
 
 ---
 
-## Implementation of contracts
-To use this framework, you will need to implement the contracts defined in the `contracts` module.
-Crucially, the following contracts must be implemented at least once in an `implementations` module:
+## 📉 Generating a plot
 
- - **DeviceWorker | DeviceWorkerCore**: Starts in a thread and exposes available plot types for any given abstract 'device'. It is responsible for connecting Plotter, DataProcessor and Data components. 
- - **Data | DataCore**: Handles raw data access from files
- - **DataProcessor | DataProcessorCore**: Handles computation of any derived quantities from raw data, is the primary interface to obtain data for plotting. Defers to Data for raw data access.
- - **Plotter**: Handles plots and formatting, data is requested from DataProcessor
+Once you have created a **DataSet**, it will appear in the main window with
+a list of the available data, the device information is already loaded.
+From here, generating a plot is quick and interactive.
 
-![Contract Architecture](images/Contracts.png)
+------------------------------------------------------------------------
 
-The `implementations` module must have the following structure:
+### 1️⃣ Select the Files You Want to Plot
 
+The application is already aware of
+- the available plot types for the device associated with the set
+- the associated **Data** and **DataProcessor** types (from the implementations module)
+- all **device-specific options** on the right are loaded from the correct widget
+
+Inside the **Set Contents panel**, tick the files you want to include.
+You can select:
+
+-   a single file (e.g., one heatmap, one IV curve), or\
+-   multiple files (for overlays, comparisons, etc.), depending on your
+    device's capabilities.
+
+This compatibility logic comes directly from how your device's
+`DeviceWorker` and `Plotter` implementations declare supported plots.
+
+
+------------------------------------------------------------------------
+
+### 2️⃣ Adjust Plot Options
+
+The **Options panel** on the right shows all customizable parameters for
+the chosen plot.
+This panel is defined by the widget for each device, meaning your implementation decides
+what appears here.
+
+Common options include:
+
+-   z-ranges, profiles
+-   normalisation
+-   etc.
+
+Two options are always available:
+-   legend title
+-   presentation
+
+I use the latter to format my plots to be clearer in a presentation context where I want line traces to be thicker for example.
+These options are gathered automatically into a `PlotterOptions` object:
+Plotters retrieve these values using:
+
+``` python
+options.get_option("legend_title")
 ```
-implementations/
-├── data/
-│   ├── __init__.py
-│   ├── data_processors/
-│   │   └── __init__.py
-│   └── data_types/
-│       └── __init__.py
-├── devices/
-│   ├── widgets/
-│   │   └── __init__.py
-│   ├── workers/
-│   │   └── __init__.py
-│   └── __init__.py
-├── plotters/
-│   └── __init__.py
-├── utils/
-│   ├── constants.py
-│   └── __init__.py
-├── config.json
-└── __init__.py
-```
 
+For example, a heatmap plotter can use these options to configure colour scales, ranges, and layout.
 
-A basic example/starting point can be found in the following repository: [X-LAB Plotting Manager Implementations](https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Implementations)
+------------------------------------------------------------------------
 
-## Running the GUI
+### 3️⃣ Choose a Plot Type
 
-Before running the GUI, ensure that you have an `implementations` module as described above.
-Also ensure that the root directory of the project is in your `PYTHONPATH`.
-To launch the GUI, run the following command from the root of the project:
+Open the **Plot Type** dropdown.
 
-```bash
-python -m gui.windows.MainWindow
-```
+Examples:
+-   A 2D scan might enable **plot_image** and **plot_distribution**
+-   A time-varying measurement might enable **plot**
+-   IV measurements might enable **plot_forward** or **plot_forward_and_reverse**
 
+Internally, the selected plot corresponds to a method defined inside
+your device's worker.
+This makes the system extensible: any worker method named `plot_*` can become a
+selectable plot.
 
+------------------------------------------------------------------------
+
+### 4️⃣ Click **Plot**
+
+Press the **Plot** button to start a worker and generate the visualisation.
+
+Behind the scenes, the GUI:
+
+1.  **Instantiates the device's worker**
+2.  Sends it:
+    -   a rebuilt DataSet containing the selected files
+    -   the plot type
+    -   a PlotterOptions instance
+3.  Moves the worker into a background `QThread`
+4.  Begins file reading (shown in the progress bar) and processing
+
+Each selected file is read using your concrete `Data` subclass and associated file reader (`self.file_reader()`) and processed with your `DataProcessor` subclass (`get_data()`, derived observables, validation).
+
+A progress bar updates live, and the plot is drawn once the worker emits
+its `finished` signal.
+
+------------------------------------------------------------------------
+
+### 5️⃣ Enjoy Your Plot
+
+Depending on your plotter implementation:
+
+-   Plotly figures may open interactively (zoom, hover, export)\
+-   Static plots can be saved as SVG/PNG/PDF\
+-   Additional export helpers may run automatically
+
+------------------------------------------------------------------------
