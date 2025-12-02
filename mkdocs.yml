@@ -14,24 +14,27 @@ plugins:
 nav:
   - Guide:
     - Home: index.md
-    - Getting started: getting_started.md
-    - DataSets: datasets.md
+    - Installing: installing.md
+    - Getting Started: getting_started.md
+    - How to think about this application?: design_philosophy.md
+    - How do I implement contracts?: implementing_contracts.md
+    - What are datasets: datasets.md
     - Logging & debugging: logging.md
-#  - API Reference:
-#      - GUI - Windows: api/gui/windows_and_dialogs.md
-#      - GUI - Plot Manager: api/gui/plot_manager.md
-#      - GUI - Utils: api/gui/utils.md
-#      - Contracts - Data:
-#          - Data Types: api/contracts/data/data_types.md
-#          - Data Processors: api/contracts/data/data_processors.md
-#      - Contracts - Plotters:
-#          - Plotter: api/contracts/plotters/plotter.md
-#          - PlotterOptions: api/contracts/plotters/plotter_options.md
-#      - Contracts - Devices: api/contracts/devices.md
-#      - Contracts - File Readers: api/contracts/file_readers.md
-#      - Contracts - Observable: api/contracts/observable.md
-#      - Utils - Class Utils: api/utils/class_utils.md
-#      - Utils - Errors: api/utils/errors.md
-#      - Utils - Logging: api/utils/logging.md
-#      - Utils - Others: api/utils/others.md
-#      - DataSet: api/dataset_manager.md
+  - API Reference:
+      - GUI - Windows: api/gui/windows_and_dialogs.md
+      - GUI - Plot Manager: api/gui/plot_manager.md
+      - GUI - Utils: api/gui/utils.md
+      - Contracts - Data:
+          - Data Types: api/contracts/data/data_types.md
+          - Data Processors: api/contracts/data/data_processors.md
+      - Contracts - Plotters:
+          - Plotter: api/contracts/plotters/plotter.md
+          - PlotterOptions: api/contracts/plotters/plotter_options.md
+      - Contracts - Devices: api/contracts/devices.md
+      - Contracts - File Readers: api/contracts/file_readers.md
+      - Contracts - Observable: api/contracts/observable.md
+      - Utils - Class Utils: api/utils/class_utils.md
+      - Utils - Errors: api/utils/errors.md
+      - Utils - Logging: api/utils/logging.md
+      - Utils - Others: api/utils/others.md
+      - DataSet: api/dataset_manager.md
