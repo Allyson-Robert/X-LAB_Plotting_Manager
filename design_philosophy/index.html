@@ -326,6 +326,14 @@ These names also populate the GUI’s “plot selector”, so choosing clear nam
 It is the task of the <code>DeviceWorker</code> to tell the plotter which observables to request from the <code>DataProcessor</code>.
 This ensures plotters stay reusable between devices and measurement types.
 In short they connect data → processors → plotters.</p>
+<p>Add the new worker class name to <code>implementations.devices.__init__.py</code>.</p>
+<pre><code>from . import workers
+
+__all__ = [
+    &quot;Generic&quot;,
+    &quot;NewWorker
+]
+</code></pre>
 <hr />
 <h3 id="step-6-provide-a-widget-for-user-options">Step 6 — Provide a Widget for User Options</h3>
 <p>Each device needs its own widget, these are searched for by the GUI.<br />
