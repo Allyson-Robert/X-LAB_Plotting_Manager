@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/api/gui/utils/" />
       <link rel="shortcut icon" href="../../../img/favicon.ico" />
     <title>Utils - X-LAB Plotting Manager</title>
     <link rel="stylesheet" href="../../../css/theme.css" />
@@ -15,7 +15,7 @@
         // Current page data
         var mkdocs_page_name = "Utils";
         var mkdocs_page_input_path = "api\\gui\\utils.md";
-        var mkdocs_page_url = null;
+        var mkdocs_page_url = "/X-LAB_Plotting_Manager/api/gui/utils/";
       </script>
     
     <!--[if lt IE 9]>
@@ -335,7 +335,8 @@
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>gui\utils\dataset_tools\load_dataset.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 65</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 64</span>
+<span class="normal"> 65</span>
 <span class="normal"> 66</span>
 <span class="normal"> 67</span>
 <span class="normal"> 68</span>
@@ -372,8 +373,7 @@
 <span class="normal"> 99</span>
 <span class="normal">100</span>
 <span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@with_logging</span>
+<span class="normal">102</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@with_logging</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_dataset</span><span class="p">(</span><span class="n">window</span><span class="p">:</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Populate the GUI with data from the currently loaded dataset.</span>
@@ -428,7 +428,7 @@
         <p>Save the currently loaded dataset to disk using a file dialog.</p>
 <p>Behaviour:
 - Ensures a dataset is loaded before saving.
-- Opens a save-file dialog and writes the dataset via <code>DataSetJSONDecoder</code>.
+- Opens a save-file dialog and writes the dataset via <code>DataSetJSONEncoder</code>.
 - Auto-appends a valid extension if necessary.
 - Updates the stored dataset location and logs status messages.</p>
 <h3 id="gui.utils.dataset_tools.save_dataset.save_dataset--parameters">Parameters</h3>
@@ -491,7 +491,7 @@
 
 <span class="sd">    Behaviour:</span>
 <span class="sd">    - Ensures a dataset is loaded before saving.</span>
-<span class="sd">    - Opens a save-file dialog and writes the dataset via `DataSetJSONDecoder`.</span>
+<span class="sd">    - Opens a save-file dialog and writes the dataset via `DataSetJSONEncoder`.</span>
 <span class="sd">    - Auto-appends a valid extension if necessary.</span>
 <span class="sd">    - Updates the stored dataset location and logs status messages.</span>
 
@@ -523,7 +523,7 @@
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
             <span class="n">current_dataset</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">get_dataset</span><span class="p">()</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">current_dataset</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">DataSetJSONDecoder</span><span class="p">)</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">current_dataset</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">DataSetJSONEncoder</span><span class="p">)</span>
             <span class="n">current_dataset</span><span class="o">.</span><span class="n">set_location</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
         <span class="n">json_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
