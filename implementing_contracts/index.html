@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/implementing_contracts/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>How do I implement contracts? - X-LAB Plotting Manager</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "How do I implement contracts?";
+        var mkdocs_page_input_path = "implementing_contracts.md";
+        var mkdocs_page_url = "/X-LAB_Plotting_Manager/implementing_contracts/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> X-LAB Plotting Manager
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../installing/">Installing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../getting_started/">Getting Started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../design_philosophy/">How to think about this application?</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">How do I implement contracts?</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-overview-of-the-contracts">1. Overview of the Contracts</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#11-data-datacore-reading-files-and-exposing-observables">1.1 Data / DataCore – reading files and exposing observables</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#12-dataprocessor-dataprocessorcore-derived-quantities">1.2 DataProcessor / DataProcessorCore – derived quantities</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#13-deviceworker-deviceworkercore-orchestrating-the-workflow">1.3 DeviceWorker / DeviceWorkerCore – orchestrating the workflow</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#14-plotter-and-its-subclasses-turning-processors-into-figures">1.4 Plotter and its subclasses – turning processors into figures</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#15-plotteroptions-options-bridge">1.5 PlotterOptions – options bridge</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-step-by-step-implementing-all-contracts">2. Step-by-Step: Implementing All Contracts</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#step-0-decide-what-you-want">Step 0 – Decide what you want</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-1-implement-the-data-contract-with-a-datacore-subclass">Step 1 – Implement the Data contract with a DataCore subclass</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-2-implement-dataprocessor-with-a-dataprocessorcore-subclass">Step 2 – Implement DataProcessor with a DataProcessorCore subclass</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-3-implement-a-deviceworker-using-deviceworkercore">Step 3 – Implement a DeviceWorker using DeviceWorkerCore</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-4-implement-or-reuse-a-plotter">Step 4 – Implement or reuse a Plotter</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-5-add-a-widget-and-option_aliases">Step 5 – Add a widget and option_aliases</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#recap">Recap</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../datasets/">What are datasets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../logging/">Logging & debugging</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/gui/windows_and_dialogs/">GUI - Windows</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/gui/plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/gui/utils/">GUI - Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/contracts/devices/">Contracts - Devices</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/contracts/file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/contracts/observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/class_utils/">Utils - Class Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/others/">Utils - Others</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/dataset_manager/">DataSet</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">X-LAB Plotting Manager</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Guide</li>
+      <li class="breadcrumb-item active">How do I implement contracts?</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/implementing_contracts.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="how-to-implement-contracts">How to Implement Contracts</h1>
+<p>This page explains <strong>how to go from “idea” to a working implementation</strong> by wiring together the four main contracts:</p>
+<ul>
+<li><code>Data</code> / <code>DataCore</code></li>
+<li><code>DataProcessor</code> / <code>DataProcessorCore</code></li>
+<li><code>DeviceWorker</code> / <code>DeviceWorkerCore</code></li>
+<li><code>Plotter</code> and its subclasses</li>
+</ul>
+<p>plus their supporting pieces: <code>PlotterOptions</code>, widgets, and datasets.</p>
+<p>This is the “how to implement it in code” companion to <strong>How to think about this application?</strong>. It assumes you’ve read that first and now want something more concrete.</p>
+<hr />
+<h2 id="1-overview-of-the-contracts">1. Overview of the Contracts</h2>
+<h3 id="11-data-datacore-reading-files-and-exposing-observables">1.1 <code>Data</code> / <code>DataCore</code> – reading files and exposing observables</h3>
+<p>The <code>Data</code> contract defines <em>how raw files are turned into named observables</em>.</p>
+<p>Key responsibilities:</p>
+<ul>
+<li>Read one raw file (<code>self.file_reader(filepath)</code>).</li>
+<li>Store raw values internally (e.g. in <code>self.raw_data</code>).</li>
+<li>
+<p>Provide values and units for each observable:</p>
+</li>
+<li>
+<p><code>get_data(observable)</code></p>
+</li>
+<li><code>get_units(observable)</code></li>
+<li><code>get_allowed_observables()</code> (names you support)</li>
+</ul>
+<p><code>DataCore</code> implements all of this except <code>read_file</code>, and provides a standard internal format:</p>
+<pre><code class="language-python">self.raw_data[observable] = {&quot;units&quot;: &quot;...&quot;, &quot;data&quot;: ...}
+</code></pre>
+<p>You normally <strong>subclass <code>DataCore</code></strong>, implement <code>read_file</code>, and fill <code>self.raw_data</code>.</p>
+<hr />
+<h3 id="12-dataprocessor-dataprocessorcore-derived-quantities">1.2 <code>DataProcessor</code> / <code>DataProcessorCore</code> – derived quantities</h3>
+<p>The <code>DataProcessor</code> contract defines <em>how you compute derived observables from raw data</em>.</p>
+<p>Key responsibilities:</p>
+<ul>
+<li><code>get_data(observable, *args, **kwargs)</code> – returns raw <strong>or</strong> processed data.</li>
+<li><code>get_units(observable)</code> – units for any observable.</li>
+<li><code>validate_observables(*args)</code> – sanity checks.</li>
+<li>Use a reference to a <code>Data</code> instance.</li>
+</ul>
+<p><code>DataProcessorCore</code>:</p>
+<ul>
+<li>
+<p>Talks to <code>Data</code> for raw values.</p>
+</li>
+<li>
+<p>Contains a dictionary of processing functions:</p>
+</li>
+</ul>
+<p><code>python
+  self._processing_functions = {
+      "elapsed_time": self.elapsed_time,
+      # your functions here…
+  }</code></p>
+<ul>
+<li>Caches results in <code>self.processed_data</code> to avoid recomputation.</li>
+</ul>
+<p>You usually <strong>subclass <code>DataProcessorCore</code></strong>, add entries to <code>_processing_functions</code>, and implement the corresponding methods.</p>
+<hr />
+<h3 id="13-deviceworker-deviceworkercore-orchestrating-the-workflow">1.3 <code>DeviceWorker</code> / <code>DeviceWorkerCore</code> – orchestrating the workflow</h3>
+<p>The <code>DeviceWorker</code> contract defines <em>how one device turns a dataset into one or more plots</em>, typically in a background thread.</p>
+<p>Responsibilities:</p>
+<ul>
+<li>Know which <code>Data</code> and <code>DataProcessor</code> subclasses to use (<code>set_data_type</code>, <code>set_processor_type</code>).</li>
+<li>Read all files from a dataset and build a processor per file (<code>set_data(dataspec)</code>).</li>
+<li>
+<p>Expose plot functions (named <code>plot_{something}</code>) that:</p>
+</li>
+<li>
+<p>instantiate a plotter</p>
+</li>
+<li>call <code>ready_plot</code> with processors and options</li>
+<li>call <code>draw_plot</code></li>
+</ul>
+<p><code>DeviceWorkerCore</code> already:</p>
+<ul>
+<li>Manages Qt signals (<code>finished</code>, <code>progress</code>).</li>
+<li>Reads all files from a <code>DataSpec</code> into <code>self.data_processors</code>.</li>
+<li>Injects useful options (e.g. experiment datetime, colours) into <code>PlotterOptions</code>.</li>
+</ul>
+<p>You generally <strong>subclass <code>DeviceWorkerCore</code></strong>, set the types, and implement a few <code>plot_*</code> methods.</p>
+<hr />
+<h3 id="14-plotter-and-its-subclasses-turning-processors-into-figures">1.4 <code>Plotter</code> and its subclasses – turning processors into figures</h3>
+<p>The <code>Plotter</code> contract is minimal:</p>
+<ul>
+<li><code>ready_plot(processors, options)</code> – configure everything.</li>
+<li><code>draw_plot()</code> – actually build and show the figure.</li>
+</ul>
+<p>Concrete plotters like <code>HeatmapPlotter</code>:</p>
+<ul>
+<li>Expect a mapping of keys → processors.</li>
+<li>Use <code>processor.get_data()</code> and <code>processor.get_units()</code> to get values and labels.</li>
+<li>Configure Plotly/Matplotlib objects and show them.</li>
+</ul>
+<p>You can <strong>reuse existing plotters</strong> (scatter, heatmap, histogram, …) or implement your own when the visualisation is new.</p>
+<hr />
+<h3 id="15-plotteroptions-options-bridge">1.5 <code>PlotterOptions</code> – options bridge</h3>
+<p><code>PlotterOptions</code> is a simple key–value store for options coming from the GUI:</p>
+<ul>
+<li><code>add_option(label, value)</code></li>
+<li><code>get_option(label)</code></li>
+<li><code>has_options(labels)</code></li>
+</ul>
+<p>The GUI builds this from widget elements with an <code>option_alias</code>. The worker passes it on to the plotter. Plotters read it to configure axes, ranges, log scales, etc.</p>
+<hr />
+<h2 id="2-step-by-step-implementing-all-contracts">2. Step-by-Step: Implementing All Contracts</h2>
+<p>We’ll implement a simple <strong>IV device</strong> that:</p>
+<ul>
+<li>reads two-column IV data (voltage, current),</li>
+<li>computes <code>voc</code> and <code>isc</code>,</li>
+<li>
+<p>exposes two plots:</p>
+</li>
+<li>
+<p>raw IV curve,</p>
+</li>
+<li>a small “parameters” view.</li>
+</ul>
+<p>This mirrors the workflow you described in the “How to think about this application?” page.</p>
+<hr />
+<h3 id="step-0-decide-what-you-want">Step 0 – Decide what you want</h3>
+<p>Before touching code, answer:</p>
+<ol>
+<li>
+<p><strong>What do the files look like?</strong>
+   Two columns: <code>V</code> (voltage), <code>I</code> (current).</p>
+</li>
+<li>
+<p><strong>What observables do I need?</strong>
+   Raw: <code>voltage</code>, <code>current</code>.
+   Derived: <code>voc</code>, <code>isc</code>.</p>
+</li>
+<li>
+<p><strong>What plots should the device offer?</strong></p>
+</li>
+<li>
+<p><code>plot_iv_curve</code></p>
+</li>
+<li>
+<p><code>plot_iv_parameters</code></p>
+</li>
+<li>
+<p><strong>Which visualisation type fits?</strong></p>
+</li>
+<li>
+<p>IV curve → scatter/line plot.</p>
+</li>
+<li>Parameters → maybe a simple text summary.</li>
+</ol>
+<p>We’ll assume a generic <strong>ScatterPlotter</strong> already exists (similar in spirit to <code>HeatmapPlotter</code>).</p>
+<hr />
+<h3 id="step-1-implement-the-data-contract-with-a-datacore-subclass">Step 1 – Implement the <code>Data</code> contract with a <code>DataCore</code> subclass</h3>
+<p>Create a class (e.g. <code>IVData</code>) that:</p>
+<ul>
+<li>subclasses <code>DataCore</code>,</li>
+<li>implements <code>read_file</code>,</li>
+<li>fills <code>self.raw_data</code> with the right observables.</li>
+</ul>
+<p>Skeleton:</p>
+<pre><code class="language-python">from analysis.data.data_types.data_types import DataCore  # path adjusted to your project
+
+class IVData(DataCore):
+    def __init__(self, label):
+        super().__init__(file_reader=read_two_column_file)
+        self.raw_data = {
+            &quot;voltage&quot;: None,
+            &quot;current&quot;: None,
+        }
+        self._allowed_observables = self.raw_data.keys()
+
+    def read_file(self, filepath: str) -&gt; None:
+        # 1. Reuse an existing reader (csv, etc.)
+        file_results = self.file_reader(filepath)  # your reader
+
+        # 2. Store observables using the standard structure
+        if self.raw_data[&quot;voltage&quot;] is None:
+            self.raw_data[&quot;voltage&quot;] = {&quot;units&quot;: &quot;V&quot;, &quot;data&quot;: file_results['0']}
+        if self.raw_data[&quot;current&quot;] is None:
+            self.raw_data[&quot;current&quot;] = {&quot;units&quot;: &quot;A&quot;, &quot;data&quot;: file_results['1']}
+</code></pre>
+<p>Notes:</p>
+<ul>
+<li><code>DataCore.get_data</code>, <code>get_units</code>, and <code>get_allowed_observables</code> are already implemented for you.</li>
+<li>The important part is populating <code>self.raw_data</code> and <code>_allowed_observables</code>.</li>
+</ul>
+<hr />
+<h3 id="step-2-implement-dataprocessor-with-a-dataprocessorcore-subclass">Step 2 – Implement <code>DataProcessor</code> with a <code>DataProcessorCore</code> subclass</h3>
+<p>Next, create an <code>IVProcessor</code> that:</p>
+<ul>
+<li>uses your <code>IVData</code>,</li>
+<li>computes <code>voc</code> and <code>isc</code>,</li>
+<li>reuses the core behavior for everything else.</li>
+</ul>
+<pre><code class="language-python">from contracts.data_processors import DataProcessorCore
+from implementations.data.data_types.iv_data import IVData
+
+class IVProcessor(DataProcessorCore):
+    def __init__(self, data: IVData):
+        super().__init__(data)
+
+        # Add your own processing functions
+        self._processing_functions.update({
+            &quot;voc&quot;: self.compute_open_circuit_voltage,
+            &quot;isc&quot;: self.compute_short_circuit_current,
+        })
+
+        # Reset processed_data &amp; keys after updating
+        self.processed_data = {key: None for key in self._processing_functions}
+        self._processed_observables = self.processed_data.keys()
+
+    def compute_open_circuit_voltage(self):
+        voltage = self.get_data(&quot;voltage&quot;)
+        current = self.get_data(&quot;current&quot;)
+        # Very naive example: find V where I is closest to 0
+        idx = min(range(len(current)), key=lambda i: abs(current[i]))
+        return {&quot;units&quot;: &quot;V&quot;, &quot;data&quot;: voltage[idx]}
+
+    def compute_short_circuit_current(self):
+        voltage = self.get_data(&quot;voltage&quot;)
+        current = self.get_data(&quot;current&quot;)
+        # Naive example: find I where V is closest to 0
+        idx = min(range(len(voltage)), key=lambda i: abs(voltage[i]))
+        return {&quot;units&quot;: &quot;A&quot;, &quot;data&quot;: current[idx]}
+
+    def validate_observables(self, *observables) -&gt; None:
+        &quot;&quot;&quot;Optional: sanity checks before plotting.&quot;&quot;&quot;
+        for obs in observables:
+            if (
+                obs not in self.data.get_allowed_observables()
+                and obs not in self._processed_observables
+            ):
+                raise ValueError(f&quot;Observable '{obs}' not available for IVProcessor&quot;)
+</code></pre>
+<p>This uses the <code>DataProcessorCore</code> machinery:</p>
+<ul>
+<li>raw requests are delegated to <code>data</code> by the DataProcessorCore,</li>
+<li>processed requests computed on demand and cached,</li>
+<li>units resolved consistently.</li>
+</ul>
+<hr />
+<h3 id="step-3-implement-a-deviceworker-using-deviceworkercore">Step 3 – Implement a <code>DeviceWorker</code> using <code>DeviceWorkerCore</code></h3>
+<p>Now we glue everything together with an <code>IVDeviceWorker</code>.</p>
+<p>It should:</p>
+<ul>
+<li>set the <code>data_type</code> and <code>processor_type</code>,</li>
+<li>define <code>plot_iv_curve</code> and <code>plot_iv_parameters</code>,</li>
+<li>use existing plotters.</li>
+</ul>
+<pre><code class="language-python">from contracts.device_worker import DeviceWorkerCore
+from implementations.data.data_types.iv_data import IVData
+from implementations.data.data_processors.iv_processor import IVProcessor
+from implementations.plotters.scatter_plotter import ScatterPlotter  # hypothetical
+from contracts.plotter_options import PlotterOptions  # or wherever it lives
+
+class IVDeviceWorker(DeviceWorkerCore):
+    def __init__(self, device, dataspec, plot_type, options: PlotterOptions):
+        super().__init__(device, dataspec, plot_type, options)
+
+        # Connect contracts
+        self.set_data_type(IVData)
+        self.set_processor_type(IVProcessor)
+
+    def plot_iv_curve(self, title: str):
+        &quot;&quot;&quot;Plot V-I curve for all selected files.&quot;&quot;&quot;
+        plotter = ScatterPlotter(title=title)
+
+        # self.data_processors is a dict: label → IVProcessor
+        plotter.ready_plot(self.data_processors, self.options)
+        plotter.draw_plot()
+
+    def plot_iv_parameters(self, title: str):
+        &quot;&quot;&quot;Plot Voc and Isc as points or bars.&quot;&quot;&quot;
+        # You could reuse ScatterPlotter or something more tailored
+        plotter = ScatterPlotter(title=title)
+
+        # You might pre-process values into a form the plotter expects,
+        # or let it call get_data(&quot;voc&quot;) / get_data(&quot;isc&quot;) directly.
+        plotter.ready_plot(self.data_processors, self.options)
+        plotter.draw_plot()
+</code></pre>
+<p>Notes:</p>
+<ul>
+<li><code>DeviceWorkerCore.run()</code> will call the method referenced by <code>self.plot_type</code> (e.g. <code>"plot_iv_curve"</code>) and handle threading and signals.</li>
+<li>Each plot function <strong>must instantiate its own plotter</strong> to keep plotters stateless and reusable.</li>
+</ul>
+<hr />
+<h3 id="step-4-implement-or-reuse-a-plotter">Step 4 – Implement or reuse a <code>Plotter</code></h3>
+<p>If you already have a generic <code>ScatterPlotter</code>, use it. A minimal custom plotter implementing the <code>Plotter</code> contract might look like:</p>
+<pre><code class="language-python">from contracts.plotter import Plotter
+from contracts.plotter_options import PlotterOptions
+
+import plotly.graph_objects as go
+
+class ScatterPlotter(Plotter):
+    def __init__(self, title: str):
+        self.title = title
+        self.fig = go.Figure()
+        self.processors = None
+        self.options = None
+
+    def ready_plot(self, processors, options: PlotterOptions):
+        # Store for later use
+        self.processors = processors
+        self.options = options
+
+        self.fig.update_layout(title=self.title)
+
+    def draw_plot(self):
+        for label, processor in self.processors.items():
+            x = processor.get_data(&quot;voltage&quot;)
+            y = processor.get_data(&quot;current&quot;)
+            self.fig.add_trace(
+                go.Scatter(
+                    x=x,
+                    y=y,
+                    mode=&quot;lines+markers&quot;,
+                    name=label,
+                )
+            )
+
+        self.fig.update_xaxes(title=processor.get_units(&quot;voltage&quot;))
+        self.fig.update_yaxes(title=processor.get_units(&quot;current&quot;))
+        self.fig.show()
+</code></pre>
+<hr />
+<h3 id="step-5-add-a-widget-and-option_aliases">Step 5 – Add a widget and <code>option_alias</code>es</h3>
+<p>For the IV device you might want:</p>
+<ul>
+<li>a checkbox for “log y-axis”</li>
+<li>a checkbox for “show markers”</li>
+<li>maybe a dropdown for which derived parameter to show in the parameters plot</li>
+</ul>
+<p>In your Qt Designer / XML file, set:</p>
+<ul>
+<li><code>option_alias="log_y"</code> on the log-scale checkbox</li>
+<li><code>option_alias="show_markers"</code> on the markers checkbox</li>
+</ul>
+<p>The GUI will read those, build a <code>PlotterOptions</code>:</p>
+<pre><code class="language-python">options.add_option(&quot;log_y&quot;, True or False)
+options.add_option(&quot;show_markers&quot;, True or False)
+</code></pre>
+<p>Your plotter can then react:</p>
+<pre><code class="language-python">if options.get_option(&quot;log_y&quot;):
+    self.fig.update_yaxes(type=&quot;log&quot;)
+</code></pre>
+<p><code>PlotterOptions</code> is just a small dict wrapper with helper methods, but it’s the key bridge between GUI choices and plotting logic.</p>
+<hr />
+<h2 id="recap">Recap</h2>
+<p>To implement a new workflow in the X-LAB framework, you:</p>
+<ol>
+<li><strong>Define a <code>DataCore</code> subclass</strong> to read files and expose raw observables.</li>
+<li><strong>Define a <code>DataProcessorCore</code> subclass</strong> to compute derived quantities needed for your science.</li>
+<li><strong>Define a <code>DeviceWorkerCore</code> subclass</strong> that sets types, exposes <code>plot_*</code> methods, and instantiates plotters.</li>
+<li><strong>Reuse or implement <code>Plotter</code> subclasses</strong> to convert processors into visualisations.</li>
+<li><strong>Add a widget with <code>option_alias</code>es</strong> so users can control plots via the GUI, flowing through <code>PlotterOptions</code>.</li>
+</ol>
+<p>At every step, keep asking:</p>
+<blockquote>
+<p><strong>Can I reuse an existing reader, DataCore, processor, plotter, or widget?</strong></p>
+</blockquote>
+<p>If the answer is “yes”, your implementation will stay small, robust, and easy for the next scientist to understand.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../design_philosophy/" class="btn btn-neutral float-left" title="How to think about this application?"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../datasets/" class="btn btn-neutral float-right" title="What are datasets">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../design_philosophy/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../datasets/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

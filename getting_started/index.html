@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/getting_started/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Getting started - X-LAB Plotting Manager</title>
+    <title>Getting Started - X-LAB Plotting Manager</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,7 +13,7 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Getting started";
+        var mkdocs_page_name = "Getting Started";
         var mkdocs_page_input_path = "getting_started.md";
         var mkdocs_page_url = "/X-LAB_Plotting_Manager/getting_started/";
       </script>
@@ -44,33 +44,80 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Getting started</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../installing/">Installing</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Getting Started</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#quick-installation">🚀 Quick Installation</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#1-install-python">1) Install Python</a>
+    <li class="toctree-l2"><a class="reference internal" href="#install-the-software">Install the software</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#2-clone-the-project">2) Clone the project</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#3-set-up-a-virtual-environment-and-install-dependencies">3) Set up a virtual environment and install dependencies</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#4-add-an-implementation-package">4) Add an implementation package</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#5-launch-the-gui">5) Launch the GUI</a>
-    </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#launch-the-gui">🚀 Launch the GUI</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#creating-a-dataset">📦 Creating a Dataset</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#implementation-of-contracts">Implementation of contracts</a>
+    <li class="toctree-l2"><a class="reference internal" href="#generating-a-plot">📉 Generating a plot</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-select-the-files-you-want-to-plot">1️⃣ Select the Files You Want to Plot</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#running-the-gui">Running the GUI</a>
+    <li class="toctree-l3"><a class="reference internal" href="#2-adjust-plot-options">2️⃣ Adjust Plot Options</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-choose-a-plot-type">3️⃣ Choose a Plot Type</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-click-plot">4️⃣ Click Plot</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-enjoy-your-plot">5️⃣ Enjoy Your Plot</a>
+    </li>
+        </ul>
     </li>
     </ul>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../datasets/">DataSets</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../design_philosophy/">How to think about this application?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../implementing_contracts/">How do I implement contracts?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../datasets/">What are datasets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../logging/">Logging & debugging</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/gui/windows_and_dialogs/">GUI - Windows</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/gui/plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/gui/utils/">GUI - Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/contracts/devices/">Contracts - Devices</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/contracts/file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/contracts/observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/class_utils/">Utils - Class Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/others/">Utils - Others</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/dataset_manager/">DataSet</a>
                   </li>
               </ul>
       </div>
@@ -88,7 +135,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">Guide</li>
-      <li class="breadcrumb-item active">Getting started</li>
+      <li class="breadcrumb-item active">Getting Started</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/getting_started.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -105,42 +152,14 @@ It is designed around a clean separation between:</p>
 <li><strong>Core GUI + contracts</strong> (this repository), and  </li>
 <li><strong>Device/experiment-specific implementations</strong> (separate package you provide)</li>
 </ul>
-<h2 id="quick-installation">🚀 Quick Installation</h2>
-<h3 id="1-install-python">1) Install Python</h3>
-<p>Ensure you have <strong>Python 3.10+</strong> installed:<br />
-https://www.python.org/downloads/</p>
-<hr />
-<h3 id="2-clone-the-project">2) Clone the project</h3>
-<pre><code class="language-bash">git clone https://github.com/Allyson-Robert/X-LAB_Plotting_Manager.git
-</code></pre>
-<hr />
-<h3 id="3-set-up-a-virtual-environment-and-install-dependencies">3) Set up a virtual environment and install dependencies</h3>
-<pre><code class="language-bash">cd X-LAB_Plotting_Manager
-
-python -m venv .venv
-source .venv/bin/activate       # Windows: .venv\Scripts\activate
-
-# Example for Python 3.12
-pip install -r requirements-312.txt
-</code></pre>
-<hr />
-<h3 id="4-add-an-implementation-package">4) Add an implementation package</h3>
-<p>The GUI <strong>requires an implementation</strong> of the device/data/processor/plotter contracts.<br />
-You may:</p>
-<ul>
-<li>Provide <strong>your own</strong> implementation inside <code>implementations/</code>  </li>
-<li>Or clone the official example implementation:</li>
-</ul>
-<pre><code class="language-bash">git clone https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Implementations.git implementations/
-pip install -r implementations/requirements-312.txt
-</code></pre>
-<p>Without an implementation, the application will exit with an error on startup.</p>
+<h2 id="install-the-software">Install the software</h2>
+<p>For instructions on installation see the <a href="../installing/">installation page</a>.</p>
 <blockquote>
-<p>✨ <strong>Yes—you can write your own full implementation!</strong><br />
-The documentation explains how to implement devices, datasets, data classes, processors, and plotters.</p>
+<p>✨ Make sure that you have an <em>implementations</em> module ready before proceeding.
+This can be done by <a href="../design_philosophy/">writing your own</a> or by cloning the provided <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Implementations.git">implementation</a>.</p>
 </blockquote>
-<hr />
-<h3 id="5-launch-the-gui">5) Launch the GUI</h3>
+<h2 id="launch-the-gui">🚀 Launch the GUI</h2>
+<p>You can launch the GUI from your favourite IDE by pointing to <code>gui.windows.MainWindow</code> or by running the following command from the terminal:</p>
 <pre><code class="language-bash">python -m gui.windows.MainWindow
 </code></pre>
 <p>This opens the main application window:</p>
@@ -152,51 +171,90 @@ The documentation explains how to implement devices, datasets, data classes, pro
 <p>This opens the <strong>Data Creation Window</strong>, where you build datasets based on structured <strong>datasets</strong> that define required data inputs and metadata.</p>
 <p><img alt="DataCreationWindow" src="../images/DataCreationWindow.png" /></p>
 <hr />
-<h2 id="implementation-of-contracts">Implementation of contracts</h2>
-<p>To use this framework, you will need to implement the contracts defined in the <code>contracts</code> module.
-Crucially, the following contracts must be implemented at least once in an <code>implementations</code> module:</p>
+<h2 id="generating-a-plot">📉 Generating a plot</h2>
+<p>Once you have created a <strong>DataSet</strong>, it will appear in the main window with
+a list of the available data, the device information is already loaded.
+From here, generating a plot is quick and interactive.</p>
+<hr />
+<h3 id="1-select-the-files-you-want-to-plot">1️⃣ Select the Files You Want to Plot</h3>
+<p>The application is already aware of
+- the available plot types for the device associated with the set
+- the associated <strong>Data</strong> and <strong>DataProcessor</strong> types (from the implementations module)
+- all <strong>device-specific options</strong> on the right are loaded from the correct widget</p>
+<p>Inside the <strong>Set Contents panel</strong>, tick the files you want to include.
+You can select:</p>
 <ul>
-<li><strong>DeviceWorker | DeviceWorkerCore</strong>: Starts in a thread and exposes available plot types for any given abstract 'device'. It is responsible for connecting Plotter, DataProcessor and Data components. </li>
-<li><strong>Data | DataCore</strong>: Handles raw data access from files</li>
-<li><strong>DataProcessor | DataProcessorCore</strong>: Handles computation of any derived quantities from raw data, is the primary interface to obtain data for plotting. Defers to Data for raw data access.</li>
-<li><strong>Plotter</strong>: Handles plots and formatting, data is requested from DataProcessor</li>
+<li>a single file (e.g., one heatmap, one IV curve), or\</li>
+<li>multiple files (for overlays, comparisons, etc.), depending on your
+    device's capabilities.</li>
 </ul>
-<p><img alt="Contract Architecture" src="../images/Contracts.png" /></p>
-<p>The <code>implementations</code> module must have the following structure:</p>
-<pre><code>implementations/
-├── data/
-│   ├── __init__.py
-│   ├── data_processors/
-│   │   └── __init__.py
-│   └── data_types/
-│       └── __init__.py
-├── devices/
-│   ├── widgets/
-│   │   └── __init__.py
-│   ├── workers/
-│   │   └── __init__.py
-│   └── __init__.py
-├── plotters/
-│   └── __init__.py
-├── utils/
-│   ├── constants.py
-│   └── __init__.py
-├── config.json
-└── __init__.py
+<p>This compatibility logic comes directly from how your device's
+<code>DeviceWorker</code> and <code>Plotter</code> implementations declare supported plots.</p>
+<hr />
+<h3 id="2-adjust-plot-options">2️⃣ Adjust Plot Options</h3>
+<p>The <strong>Options panel</strong> on the right shows all customizable parameters for
+the chosen plot.
+This panel is defined by the widget for each device, meaning your implementation decides
+what appears here.</p>
+<p>Common options include:</p>
+<ul>
+<li>z-ranges, profiles</li>
+<li>normalisation</li>
+<li>etc.</li>
+</ul>
+<p>Two options are always available:
+-   legend title
+-   presentation</p>
+<p>I use the latter to format my plots to be clearer in a presentation context where I want line traces to be thicker for example.
+These options are gathered automatically into a <code>PlotterOptions</code> object:
+Plotters retrieve these values using:</p>
+<pre><code class="language-python">options.get_option(&quot;legend_title&quot;)
 </code></pre>
-<p>A basic example/starting point can be found in the following repository: <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Implementations">X-LAB Plotting Manager Implementations</a></p>
-<h2 id="running-the-gui">Running the GUI</h2>
-<p>Before running the GUI, ensure that you have an <code>implementations</code> module as described above.
-Also ensure that the root directory of the project is in your <code>PYTHONPATH</code>.
-To launch the GUI, run the following command from the root of the project:</p>
-<pre><code class="language-bash">python -m gui.windows.MainWindow
-</code></pre>
+<p>For example, a heatmap plotter can use these options to configure colour scales, ranges, and layout.</p>
+<hr />
+<h3 id="3-choose-a-plot-type">3️⃣ Choose a Plot Type</h3>
+<p>Open the <strong>Plot Type</strong> dropdown.</p>
+<p>Examples:
+-   A 2D scan might enable <strong>plot_image</strong> and <strong>plot_distribution</strong>
+-   A time-varying measurement might enable <strong>plot</strong>
+-   IV measurements might enable <strong>plot_forward</strong> or <strong>plot_forward_and_reverse</strong></p>
+<p>Internally, the selected plot corresponds to a method defined inside
+your device's worker.
+This makes the system extensible: any worker method named <code>plot_*</code> can become a
+selectable plot.</p>
+<hr />
+<h3 id="4-click-plot">4️⃣ Click <strong>Plot</strong></h3>
+<p>Press the <strong>Plot</strong> button to start a worker and generate the visualisation.</p>
+<p>Behind the scenes, the GUI:</p>
+<ol>
+<li><strong>Instantiates the device's worker</strong></li>
+<li>Sends it:<ul>
+<li>a rebuilt DataSet containing the selected files</li>
+<li>the plot type</li>
+<li>a PlotterOptions instance</li>
+</ul>
+</li>
+<li>Moves the worker into a background <code>QThread</code></li>
+<li>Begins file reading (shown in the progress bar) and processing</li>
+</ol>
+<p>Each selected file is read using your concrete <code>Data</code> subclass and associated file reader (<code>self.file_reader()</code>) and processed with your <code>DataProcessor</code> subclass (<code>get_data()</code>, derived observables, validation).</p>
+<p>A progress bar updates live, and the plot is drawn once the worker emits
+its <code>finished</code> signal.</p>
+<hr />
+<h3 id="5-enjoy-your-plot">5️⃣ Enjoy Your Plot</h3>
+<p>Depending on your plotter implementation:</p>
+<ul>
+<li>Plotly figures may open interactively (zoom, hover, export)\</li>
+<li>Static plots can be saved as SVG/PNG/PDF\</li>
+<li>Additional export helpers may run automatically</li>
+</ul>
+<hr />
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../datasets/" class="btn btn-neutral float-right" title="DataSets">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../installing/" class="btn btn-neutral float-left" title="Installing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../design_philosophy/" class="btn btn-neutral float-right" title="How to think about this application?">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -223,10 +281,10 @@ To launch the GUI, run the following command from the root of the project:</p>
         </span>
     
     
-      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../installing/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../datasets/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../design_philosophy/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

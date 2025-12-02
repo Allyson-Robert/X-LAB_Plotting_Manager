@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/datasets/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>DataSets - X-LAB Plotting Manager</title>
+    <title>What are datasets - X-LAB Plotting Manager</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,7 +13,7 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "DataSets";
+        var mkdocs_page_name = "What are datasets";
         var mkdocs_page_input_path = "datasets.md";
         var mkdocs_page_url = "/X-LAB_Plotting_Manager/datasets/";
       </script>
@@ -44,9 +44,15 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../getting_started/">Getting started</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../installing/">Installing</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">DataSets</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../getting_started/">Getting Started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../design_philosophy/">How to think about this application?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../implementing_contracts/">How do I implement contracts?</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">What are datasets</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#why-datasets-matter">Why datasets matter</a>
     </li>
@@ -67,6 +73,47 @@
                   <li class="toctree-l1"><a class="reference internal" href="../logging/">Logging & debugging</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/gui/windows_and_dialogs/">GUI - Windows</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/gui/plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/gui/utils/">GUI - Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/contracts/devices/">Contracts - Devices</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/contracts/file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/contracts/observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/class_utils/">Utils - Class Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/others/">Utils - Others</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/dataset_manager/">DataSet</a>
+                  </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -82,7 +129,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">Guide</li>
-      <li class="breadcrumb-item active">DataSets</li>
+      <li class="breadcrumb-item active">What are datasets</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/datasets.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -92,86 +139,118 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="datasets">datasets</h1>
-<p>A <strong>dataset</strong> is a central configuration object in this framework. It describes <em>which data it refers to</em>, and <em>how that data should be processed and visualised</em>.  </p>
-<p>datasets are saved as small, human-readable JSON files, typically with extensions such as:</p>
+                <h1 id="datasets">Datasets</h1>
+<p>A <strong>dataset</strong> is a small, portable configuration file describing <em>which data belongs together</em>, <em>how it should be interpreted</em>, and <em>how it can be plotted</em>. 
+Datasets are human-readable JSON files with extensions such as:</p>
 <ul>
-<li><code>.ds</code></li>
-<li><code>.dataset</code></li>
-<li><code>.json</code> (depending on preference or tooling)</li>
+<li><code>.ds</code>  </li>
+<li><code>.dataset</code>  </li>
+<li><code>.json</code>  </li>
 </ul>
-<p>These files act as <strong>portable analysis definitions</strong>.</p>
+<p>These files are the backbone of the framework’s reproducible analysis system.</p>
 <hr />
 <h2 id="why-datasets-matter">Why datasets matter</h2>
-<p>In many ad-hoc analysis workflows, users prepare a Python script containing:</p>
+<p>Typical ad-hoc analysis involves scattering paths, parameters, units, and processing logic across multiple scripts. 
+Over time, this leads to:</p>
 <ul>
-<li>A bundle of paths pointing to raw data</li>
-<li>Hand-written code selecting processors or plotters</li>
-<li>Hard-coded parameters and metadata</li>
+<li>inconsistent metadata  </li>
+<li>accidental path mistakes  </li>
+<li>hard-to-reproduce results  </li>
+<li>difficulty sharing analyses across a team  </li>
 </ul>
-<p>This approach becomes fragile quickly:</p>
+<p>A <strong>dataset</strong> solves this by acting as a <em>single source of truth</em>. 
+It encapsulates:</p>
 <ul>
-<li>Paths get copied incorrectly  </li>
-<li>Important metadata is lost or scattered across scripts  </li>
-<li>Reuse across experiments becomes painful  </li>
-<li>Sharing analysis logic across a team becomes inconsistent  </li>
+<li>experiment metadata  </li>
+<li>device type  </li>
+<li>datafile grouping  </li>
+<li>labels and colours  </li>
+<li>the experiment timestamp  </li>
+<li>notes and documentation  </li>
 </ul>
-<p><strong>datasets solve this problem.</strong></p>
-<p>Instead of writing one script per dataset, you describe the experiment or analysis <strong>in a structured JSON file</strong>. 
-The framework then:</p>
+<p>The GUI and framework then build the correct:</p>
 <ul>
-<li>Loads the dataset  </li>
-<li>Resolves the correct devices, processors, readers, and plotters  </li>
-<li>Executes the run in a fully defined and reproducible way  </li>
+<li>data readers  </li>
+<li>processors  </li>
+<li>plotters  </li>
 </ul>
-<p>This gives repeatable, clean, long-lived analyses—without rewriting code.</p>
+<p>…automatically and consistently.</p>
 <hr />
 <h2 id="typical-lifecycle-of-a-dataset">Typical lifecycle of a dataset</h2>
 <h3 id="1-creation">1. <strong>Creation</strong></h3>
-<p>datasets are usually created through the <strong>Data Creation Window</strong> in the GUI.</p>
-<p>The window helps users:</p>
+<p>Datasets are primarily created using the <strong>Data Creation Window</strong> in the GUI.<br />
+This ensures correctness and prevents invalid or incomplete JSON.</p>
+<p>In this window the user:</p>
 <ul>
-<li>Label a set of datafiles</li>
-<li>Select a device type - defining the plots that are compatible</li>
-<li>Setting an experiment date and time</li>
-<li>Select data sources and label them</li>
-<li>Save to disk to a valid dataset JSON file for reuse</li>
+<li>names the dataset  </li>
+<li>selects the device  </li>
+<li>sets the <strong>experiment date &amp; time</strong>  </li>
+<li>adds one or more datafiles and assigns labels  </li>
+<li>optionally assigns colours  </li>
+<li>writes notes or comments  </li>
+<li>saves the dataset JSON to disk  </li>
 </ul>
-<p>This UI is recommended because it ensures correctness and reduces manual JSON editing errors.</p>
+<p>All required metadata is enforced by the window.</p>
 <hr />
 <h3 id="2-storage">2. <strong>Storage</strong></h3>
-<p>datasets are stored as JSON files using the framework’s custom encoder/decoder.<br />
-They are lightweight, human-editable, and versionable (ideal for Git).</p>
+<p>A dataset is stored as a compact JSON configuration. 
+Key fields include:</p>
+<ul>
+<li>dataset name  </li>
+<li>creation timestamp  </li>
+<li>experiment timestamp  </li>
+<li>device identifier  </li>
+<li>list of files and their labels  </li>
+<li>optional colours  </li>
+<li>notes  </li>
+</ul>
+<p>A custom encoder and decoder handle the saving and loading of <code>DataSet</code> instances from JSON files on disk.</p>
+<p><strong>Example (illustrative only):</strong></p>
+<pre><code class="language-json">{
+    &quot;location&quot;: null,
+    &quot;name&quot;: &quot;Example Set&quot;,
+    &quot;creation_date&quot;: &quot;2025.12.02_14.19.54&quot;,
+    &quot;experiment_date_time&quot;: &quot;2023.03.30_13.19.54&quot;,
+    &quot;device&quot;: &quot;Generic&quot;,
+    &quot;notes&quot;: &quot;&quot;,
+    &quot;console&quot;: {},
+    &quot;structure_type&quot;: &quot;flat&quot;,
+    &quot;filepaths&quot;: {
+        &quot;Example IV Curve&quot;: &quot;path/to/IV_2023_03_30_13_17_28.txt&quot;
+    },
+    &quot;colours&quot;: {}
+}
+</code></pre>
+<p><em>(This example demonstrates the structure only. Do not use it directly.)</em></p>
 <hr />
 <h3 id="3-execution">3. <strong>Execution</strong></h3>
-<p>When a run begins:</p>
+<p>Once a dataset is loaded in the main GUI:</p>
 <ol>
-<li>The dataset is loaded</li>
-<li>The framework reads its fields</li>
-<li>A subset of the files can be selected for plotting</li>
-<li>The plot manager will construct matching device, processors, and plotters in a separate thread to prevent ui-lockup</li>
-<li>Loading is reported to the user via the UI progress bar</li>
-<li>The analysis/plot executes as defined by the devive, plotter and processor implementations</li>
-<li>Results are shown as defined by the user</li>
+<li><strong>Its files are automatically listed</strong>  </li>
+<li><strong>The user selects a subset of files</strong> to plot  </li>
+<li><strong>The device determines which plots are valid</strong>  </li>
+<li><strong>Plot options appear immediately</strong>  </li>
+<li><strong>The run happens in a background worker thread</strong>  </li>
+<li><strong>The reader, processor, and plotter cooperate automatically</strong>  </li>
+<li><strong>The result is displayed to the user</strong></li>
 </ol>
-<p>Because datasets are declarative, execution is consistent and repeatable.</p>
 <hr />
 <h2 id="tldr">TL;DR</h2>
-<p>datasets are a <strong>powerful, central abstraction</strong> in this framework.<br />
-They describe “where to find data” and what can be done with it in a clean, structured way, enabling:</p>
+<p>Datasets provide a clean, structured, reproducible way to define:</p>
 <ul>
-<li>Reproducibility  </li>
-<li>Reuse  </li>
-<li>Metadata-driven analysis  </li>
-<li>Clean separation between data and code  </li>
-<li>Easy sharing across users and teams  </li>
+<li>what the data is  </li>
+<li>where it lives  </li>
+<li>how it should be interpreted  </li>
+<li>which device and plots apply  </li>
+<li>how files relate to one another  </li>
+<li>metadata needed for processing  </li>
 </ul>
-<p>Together with the Data Creation Window, datasets transform analysis workflows from scattered scripts into a <strong>coherent, modern, configuration-driven system</strong>.</p>
+<p>Together with the Data Creation Window, datasets transform analysis workflows from scattered scripts into a <strong>declarative, maintainable, and shareable system</strong>.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../getting_started/" class="btn btn-neutral float-left" title="Getting started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../implementing_contracts/" class="btn btn-neutral float-left" title="How do I implement contracts?"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../logging/" class="btn btn-neutral float-right" title="Logging & debugging">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -199,7 +278,7 @@ They describe “where to find data” and what can be done with it in a clean, 
         </span>
     
     
-      <span><a href="../getting_started/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../implementing_contracts/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../logging/" style="color: #fcfcfc">Next &raquo;</a></span>

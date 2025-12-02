@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/logging/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/installing/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Logging & debugging - X-LAB Plotting Manager</title>
+    <title>Installing - X-LAB Plotting Manager</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,9 +13,9 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Logging \u0026 debugging";
-        var mkdocs_page_input_path = "logging.md";
-        var mkdocs_page_url = "/X-LAB_Plotting_Manager/logging/";
+        var mkdocs_page_name = "Installing";
+        var mkdocs_page_input_path = "installing.md";
+        var mkdocs_page_url = "/X-LAB_Plotting_Manager/installing/";
       </script>
     
     <!--[if lt IE 9]>
@@ -44,7 +44,17 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../installing/">Installing</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Installing</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-install-python">1) Install Python</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-clone-the-project">2) Clone the project</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-set-up-a-virtual-environment-and-install-dependencies">3) Set up a virtual environment and install dependencies</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-add-an-implementation-package">4) Add an implementation package</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../getting_started/">Getting Started</a>
                   </li>
@@ -54,15 +64,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../datasets/">What are datasets</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Logging & debugging</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#design-goals">Design goals</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#plotters-and-other-user-code">Plotters and other user code</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#logging-decorators">Logging decorators</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../logging/">Logging & debugging</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API Reference</span></p>
@@ -121,9 +123,9 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">Guide</li>
-      <li class="breadcrumb-item active">Logging & debugging</li>
+      <li class="breadcrumb-item active">Installing</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/logging.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/installing.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -131,85 +133,46 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="logging">Logging</h1>
-<p>Logging provides insight into <strong>what the framework is doing</strong>, both internally and in your own extensions.<br />
-It is especially important when:</p>
-<ul>
-<li>Running long or complex analyses</li>
-<li>Debugging failing devices, processors or plotters</li>
-<li>Understanding what happened in a past run</li>
-</ul>
-<p>This project provides a <strong>central logging setup</strong> that can write to the <strong>UI console</strong>, so users can see messages directly in the application</p>
+                <h1 id="installing-the-application">Installing the Application</h1>
+<h2 id="1-install-python">1) Install Python</h2>
+<p>Ensure you have <strong>Python 3.10+</strong> installed:<br />
+https://www.python.org/downloads/</p>
 <hr />
-<h2 id="design-goals">Design goals</h2>
-<p>The logging system is designed to:</p>
-<ul>
-<li>Feed logs into the <strong>GUI console</strong> for live feedback</li>
-<li>Make it easy to <strong>add</strong> logging to user defined methods and classes</li>
-<li>Enables logging by default on Data, DataProcessor, and Worker Core classes</li>
-</ul>
-<p>Conceptually, there are three main pieces:</p>
-<ol>
-<li>A shared logging configuration and helpers</li>
-<li>Pre-decorated framework components (especially worker cores)</li>
-<li>Decorators you can use on your own code (plotters, custom methods, etc.)</li>
-</ol>
-<hr />
-<h2 id="plotters-and-other-user-code">Plotters and other user code</h2>
-<p>Unlike workers, <strong>plotters do not have a core class</strong> that is pre-decorated.</p>
-<p>This is an intentional design choice:</p>
-<ul>
-<li>Plotters can be very simple or very complex</li>
-<li>Users may want fine-grained control over what is logged and when</li>
-</ul>
-<p>As a result:</p>
-<blockquote>
-<p>Plotters <strong><em>must be explicitly decorated</em></strong> by the user if they should participate in the logging system.</p>
-</blockquote>
-<p>The same is true for any other user-defined methods or classes that you want to show up in the logs (and optionally in the UI console):</p>
-<ul>
-<li>Custom data processors not deriving from DataProcessorCore</li>
-<li>Helper functions</li>
-<li>Utility classes</li>
-</ul>
-<p>By decorating them yourself, you decide:</p>
-<ul>
-<li>Which functions are logged</li>
-<li>At what level (info, debug, warning, error)</li>
-<li>How verbose the output should be</li>
-</ul>
-<hr />
-<h2 id="logging-decorators">Logging decorators</h2>
-<p>The utilities module exposes decorators that do the heavy lifting.<br />
-Typical patterns include:</p>
-<ul>
-<li>A <strong>function decorator</strong> – logs entry and exit of a function, plus optional details.</li>
-<li>A <strong>class decorator</strong> – automatically decorates every (or selected) method of a class.</li>
-</ul>
-<p>At a conceptual level, usage looks like this:</p>
-<pre><code class="language-python">from utils.logging import with_logging, decorate_class_with_logging
-
-@with_logging
-def my_helper_function(...):
-    # your helper logic here
-    ...
-
-@decorate_class_with_logging
-class MyCustomPlotter:
-    def draw_plot(self, ...):
+<h2 id="2-clone-the-project">2) Clone the project</h2>
+<pre><code class="language-bash">git clone https://github.com/Allyson-Robert/X-LAB_Plotting_Manager.git
 </code></pre>
-<p>Summary:</p>
-<p>Decorators are provided to decorate classes <code>@decorate_class_with_logging</code> and functions <code>@with_logging</code>.
-Cores come pre-decorated with logging, and their messages go to the UI console without extra effort.
-Plotters, and any other user-defined components, must be decorated explicitly to participate in the logging ecosystem.
-The logging utilities make it easy to track the execution of your code in a consistent way, providing a unified view of the system’s behaviour.</p>
-<p>By using the logging system thoughtfully, you get a transparent, traceable view of your data analysis runs, from dataset-driven configuration through to final plots.</p>
+<hr />
+<h2 id="3-set-up-a-virtual-environment-and-install-dependencies">3) Set up a virtual environment and install dependencies</h2>
+<pre><code class="language-bash">cd X-LAB_Plotting_Manager
+
+python -m venv .venv
+source .venv/bin/activate       # Windows: .venv\Scripts\activate
+
+# Example for Python 3.12
+pip install -r requirements-312.txt
+</code></pre>
+<hr />
+<h2 id="4-add-an-implementation-package">4) Add an implementation package</h2>
+<p>The GUI <strong>requires an implementation</strong> of the device/data/processor/plotter contracts.<br />
+You may:</p>
+<ul>
+<li>Provide <strong>your own</strong> implementation inside <code>implementations/</code>  </li>
+<li>Or clone the official example implementation:</li>
+</ul>
+<pre><code class="language-bash">git clone https://github.com/Allyson-Robert/X-LAB_Plotting_Manager_Implementations.git implementations/
+pip install -r implementations/requirements-312.txt
+</code></pre>
+<p>Without an implementation, the application will exit with an error on startup.</p>
+<blockquote>
+<p>✨ <strong>Yes—you can write your own full implementation!</strong><br />
+The documentation explains how to implement devices, datasets, data classes, processors, and plotters.</p>
+</blockquote>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../datasets/" class="btn btn-neutral float-left" title="What are datasets"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../api/gui/windows_and_dialogs/" class="btn btn-neutral float-right" title="GUI - Windows">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../getting_started/" class="btn btn-neutral float-right" title="Getting Started">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -236,10 +199,10 @@ The logging utilities make it easy to track the execution of your code in a cons
         </span>
     
     
-      <span><a href="../datasets/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../api/gui/windows_and_dialogs/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../getting_started/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

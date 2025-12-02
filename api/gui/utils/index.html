@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/api/gui/utils/" />
       <link rel="shortcut icon" href="../../../img/favicon.ico" />
-    <title>Utils - X-LAB Plotting Manager</title>
+    <title>GUI - Utils - X-LAB Plotting Manager</title>
     <link rel="stylesheet" href="../../../css/theme.css" />
     <link rel="stylesheet" href="../../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,7 +13,7 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Utils";
+        var mkdocs_page_name = "GUI - Utils";
         var mkdocs_page_input_path = "api\\gui\\utils.md";
         var mkdocs_page_url = "/X-LAB_Plotting_Manager/api/gui/utils/";
       </script>
@@ -44,11 +44,124 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting started</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../installing/">Installing</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">DataSets</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting Started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../design_philosophy/">How to think about this application?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../implementing_contracts/">How do I implement contracts?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">What are datasets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../windows_and_dialogs/">GUI - Windows</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">GUI - Utils</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#clear">Clear</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.clear.clear_all.clear_all">clear_all</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.clear.clear_all.clear_all--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.clear.clear_data.clear_data">clear_data</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.clear.clear_data.clear_data--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset-tools">DataSet Tools</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.dataset_tools.create_dataset.create_dataset">create_dataset</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.dataset_tools.create_dataset.create_dataset--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.dataset_tools.load_dataset.load_dataset">load_dataset</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.dataset_tools.load_dataset.load_dataset--raises">Raises</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.dataset_tools.load_dataset.load_dataset--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.dataset_tools.save_dataset.save_dataset">save_dataset</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.dataset_tools.save_dataset.save_dataset--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#other">Other</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.get_qwidget_value.get_qwidget_value">get_qwidget_value</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.get_qwidget_value.get_qwidget_value--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.get_qwidget_value.get_qwidget_value--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.search_for_first_active_radio_button.search_for_first_active_radio_button">search_for_first_active_radio_button</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.search_for_first_active_radio_button.search_for_first_active_radio_button--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.search_for_first_active_radio_button.search_for_first_active_radio_button--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.split_camelCase.split_camel_case">split_camel_case</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.split_camelCase.split_camel_case--examples">Examples</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.split_camelCase.split_camel_case--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.split_camelCase.split_camel_case--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/devices/">Contracts - Devices</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/class_utils/">Utils - Class Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/others/">Utils - Others</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../dataset_manager/">DataSet</a>
                   </li>
               </ul>
       </div>
@@ -65,7 +178,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Utils</li>
+          <li class="breadcrumb-item">API Reference</li>
+      <li class="breadcrumb-item active">GUI - Utils</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/gui/utils.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -428,7 +542,7 @@
         <p>Save the currently loaded dataset to disk using a file dialog.</p>
 <p>Behaviour:
 - Ensures a dataset is loaded before saving.
-- Opens a save-file dialog and writes the dataset via <code>DataSetJSONEncoder</code>.
+- Opens a save-file dialog and writes the dataset via <code>DataSetJSONDecoder</code>.
 - Auto-appends a valid extension if necessary.
 - Updates the stored dataset location and logs status messages.</p>
 <h3 id="gui.utils.dataset_tools.save_dataset.save_dataset--parameters">Parameters</h3>
@@ -491,7 +605,7 @@
 
 <span class="sd">    Behaviour:</span>
 <span class="sd">    - Ensures a dataset is loaded before saving.</span>
-<span class="sd">    - Opens a save-file dialog and writes the dataset via `DataSetJSONEncoder`.</span>
+<span class="sd">    - Opens a save-file dialog and writes the dataset via `DataSetJSONDecoder`.</span>
 <span class="sd">    - Auto-appends a valid extension if necessary.</span>
 <span class="sd">    - Updates the stored dataset location and logs status messages.</span>
 
@@ -763,6 +877,10 @@
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../plot_manager/" class="btn btn-neutral float-left" title="GUI - Plot Manager"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../contracts/data/data_types/" class="btn btn-neutral float-right" title="Data Types">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
 
   <hr/>
 
@@ -788,6 +906,10 @@
         </span>
     
     
+      <span><a href="../plot_manager/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../contracts/data/data_types/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

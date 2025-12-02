@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/api/dataspec_manager/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/api/dataset_manager/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>DataSet Manager API Documentation - X-LAB Plotting Manager</title>
+    <title>DataSet - X-LAB Plotting Manager</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,9 +13,9 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "DataSet Manager API Documentation";
-        var mkdocs_page_input_path = "api\\dataspec_manager.md";
-        var mkdocs_page_url = "/X-LAB_Plotting_Manager/api/dataspec_manager/";
+        var mkdocs_page_name = "DataSet";
+        var mkdocs_page_input_path = "api\\dataset_manager.md";
+        var mkdocs_page_url = "/X-LAB_Plotting_Manager/api/dataset_manager/";
       </script>
     
     <!--[if lt IE 9]>
@@ -44,11 +44,84 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../getting_started/">Getting started</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../installing/">Installing</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../datasets/">DataSets</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting_started/">Getting Started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../design_philosophy/">How to think about this application?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../implementing_contracts/">How do I implement contracts?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../datasets/">What are datasets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../logging/">Logging & debugging</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../gui/windows_and_dialogs/">GUI - Windows</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../gui/plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../gui/utils/">GUI - Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../contracts/data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../contracts/data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../contracts/plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../contracts/plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../contracts/devices/">Contracts - Devices</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../contracts/file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../contracts/observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/class_utils/">Utils - Class Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/others/">Utils - Others</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">DataSet</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset.DataSet">DataSet</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#dataset_manager.dataset.DataSet--structure-types">Structure types</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dataset_manager.dataset.DataSet--validation">Validation</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset.DataSet.construct_filepaths_nrecursive">construct_filepaths_nrecursive</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset.DataSet.construct_structured_filepaths">construct_structured_filepaths</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset_json_encoder.DataSetJSONEncoder">DataSetJSONEncoder</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset_json_decoder.DataSetJSONDecoder">DataSetJSONDecoder</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset_manager.DataSetManager">DataSetManager</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#dataset_manager.dataset_manager.DataSetManager--responsibilities">Responsibilities</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset_manager.DataSetManager.save_dataset">save_dataset</a>
+    </li>
+    </ul>
                   </li>
               </ul>
       </div>
@@ -65,9 +138,10 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">DataSet Manager API Documentation</li>
+          <li class="breadcrumb-item">API Reference</li>
+      <li class="breadcrumb-item active">DataSet</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/dataspec_manager.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/dataset_manager.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -1158,12 +1232,12 @@ allowing non-<code>DataSet</code> data to be decoded normally.</p>
 <h3 id="dataset_manager.dataset_manager.DataSetManager--responsibilities">Responsibilities</h3>
 <ul>
 <li><code>save_dataset(dataset, file_name)</code>:
-    Serialises a <code>DataSet</code> instance to disk using <code>DataSetJSONEncoder</code>.
+    Serialises a <code>DataSet</code> instance to disk using <code>DataSetJSONDecoder</code>.
     The method checks that the passed object is a <code>DataSet</code> and writes
     the encoded JSON to the given file path.</li>
 <li><code>open_dataset(file_name)</code>:
     Opens a JSON file and deserialises it into a <code>DataSet</code> instance using
-    <code>DataSetJSONDecoder</code>.</li>
+    <code>DataSetJSONEncoder</code>.</li>
 </ul>
 <p>The manager does not interpret the dataset content; it only handles the
 IO and wiring between JSON encoder/decoder and the underlying <code>DataSet</code>
@@ -1221,12 +1295,12 @@ objects.</p>
 <span class="sd">       Responsibilities</span>
 <span class="sd">       ----------------</span>
 <span class="sd">       - `save_dataset(dataset, file_name)`:</span>
-<span class="sd">           Serialises a `DataSet` instance to disk using `DataSetJSONEncoder`.</span>
+<span class="sd">           Serialises a `DataSet` instance to disk using `DataSetJSONDecoder`.</span>
 <span class="sd">           The method checks that the passed object is a `DataSet` and writes</span>
 <span class="sd">           the encoded JSON to the given file path.</span>
 <span class="sd">       - `open_dataset(file_name)`:</span>
 <span class="sd">           Opens a JSON file and deserialises it into a `DataSet` instance using</span>
-<span class="sd">           `DataSetJSONDecoder`.</span>
+<span class="sd">           `DataSetJSONEncoder`.</span>
 
 <span class="sd">       The manager does not interpret the dataset content; it only handles the</span>
 <span class="sd">       IO and wiring between JSON encoder/decoder and the underlying `DataSet`</span>
@@ -1243,13 +1317,13 @@ objects.</p>
 
         <span class="c1"># Who should check whether the filename is valid?</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">DataSetJSONEncoder</span><span class="p">)</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">DataSetJSONDecoder</span><span class="p">)</span>
         <span class="n">json_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">open_dataset</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">DataSetJSONDecoder</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">DataSetJSONEncoder</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -1303,7 +1377,7 @@ objects.</p>
 
     <span class="c1"># Who should check whether the filename is valid?</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
-        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">DataSetJSONEncoder</span><span class="p">)</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">json_file</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">DataSetJSONDecoder</span><span class="p">)</span>
     <span class="n">json_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1322,6 +1396,9 @@ objects.</p>
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../utils/others/" class="btn btn-neutral float-left" title="Utils - Others"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
 
   <hr/>
 
@@ -1346,6 +1423,8 @@ objects.</p>
           <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
+    
+      <span><a href="../utils/others/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
   </span>

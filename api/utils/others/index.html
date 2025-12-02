@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/api/utils/others/" />
       <link rel="shortcut icon" href="../../../img/favicon.ico" />
-    <title>Additional utilities - X-LAB Plotting Manager</title>
+    <title>Utils - Others - X-LAB Plotting Manager</title>
     <link rel="stylesheet" href="../../../css/theme.css" />
     <link rel="stylesheet" href="../../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,7 +13,7 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Additional utilities";
+        var mkdocs_page_name = "Utils - Others";
         var mkdocs_page_input_path = "api\\utils\\others.md";
         var mkdocs_page_url = "/X-LAB_Plotting_Manager/api/utils/others/";
       </script>
@@ -44,11 +44,86 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting started</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../installing/">Installing</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">DataSets</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting Started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../design_philosophy/">How to think about this application?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../implementing_contracts/">How do I implement contracts?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">What are datasets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../gui/windows_and_dialogs/">GUI - Windows</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gui/plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gui/utils/">GUI - Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/devices/">Contracts - Devices</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../class_utils/">Utils - Class Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Utils - Others</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#utils.check_implementations.check_implementations">check_implementations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utils.console_colours.ConsoleColours">ConsoleColours</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utils.custom_datetime.CustomDatetime">CustomDatetime</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utils.custom_datetime.CustomDatetime.create_datetime_from_string">create_datetime_from_string</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utils.custom_datetime.CustomDatetime.get_current_timestamp">get_current_timestamp</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utils.export_to_csv.export_to_csv">export_to_csv</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#utils.export_to_csv.export_to_csv--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#utils.export_to_csv.export_to_csv--notes">Notes</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utils.read_config.read_config">read_config</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#utils.read_config.read_config--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#utils.read_config.read_config--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../dataset_manager/">DataSet</a>
                   </li>
               </ul>
       </div>
@@ -65,7 +140,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Additional utilities</li>
+          <li class="breadcrumb-item">API Reference</li>
+      <li class="breadcrumb-item active">Utils - Others</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/utils/others.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -727,6 +803,10 @@ length and will raise <code>IndexError</code> if this is not the case.</p>
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../logging/" class="btn btn-neutral float-left" title="Utils - Logging"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../dataset_manager/" class="btn btn-neutral float-right" title="DataSet">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
 
   <hr/>
 
@@ -752,6 +832,10 @@ length and will raise <code>IndexError</code> if this is not the case.</p>
         </span>
     
     
+      <span><a href="../logging/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../dataset_manager/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
