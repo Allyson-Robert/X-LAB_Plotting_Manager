@@ -10,7 +10,7 @@ def save_dataset(window: QtWidgets.QMainWindow, *args, **kwargs):
 
     Behaviour:
     - Ensures a dataset is loaded before saving.
-    - Opens a save-file dialog and writes the dataset via `DataSetJSONDecoder`.
+    - Opens a save-file dialog and writes the dataset via `DataSetJSONEncoder`.
     - Auto-appends a valid extension if necessary.
     - Updates the stored dataset location and logs status messages.
 

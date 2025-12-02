@@ -16,13 +16,13 @@ def create_fileset() -> DataSet:
 
 def save_fileset(fileset: DataSet, path: str):
     with open(path, "w") as json_file:
-        json.dump(fileset, json_file, cls=DataSetJSONDecoder)
+        json.dump(fileset, json_file, cls=DataSetJSONEncoder)
     json_file.close()
 
 
 def open_fileset(path: str) -> DataSet:
     with open(path) as json_file:
-        fileset = json.load(json_file, cls=DataSetJSONEncoder)
+        fileset = json.load(json_file, cls=DataSetJSONDecoder)
     return fileset
 
 
