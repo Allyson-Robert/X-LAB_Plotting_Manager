@@ -195,7 +195,7 @@
         <enum>QTabWidget::Triangular</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="documentMode">
         <bool>false</bool>
@@ -334,6 +334,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="addLabelBtn">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="font">
              <font>
               <family>Open Sans</family>
