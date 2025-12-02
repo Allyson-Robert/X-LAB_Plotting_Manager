@@ -2,7 +2,9 @@
 
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows-lightgrey)
+![Licence](https://img.shields.io/badge/license-AGPL--3.0-blue)
 ![Status](https://img.shields.io/badge/status-active-success)
+[![DOI](https://zenodo.org/badge/582567119.svg)](https://doi.org/10.5281/zenodo.17792618)
 
 The **X-LAB Plotting Manager** is a PyQt-based desktop application for managing scientific data and generating publication-ready plots.  
 It is designed around a clean separation between:
