@@ -262,9 +262,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         # Free button and log to console
         self.plotBtn.setEnabled(True)
-        self.console_print(f"(run {self.device_worker.identifier}) finished")
 
-        # Drop strong references so GC can do its thing
+        # Cleanup the worker and the thread
+        self.thread.quit()
+        self.thread.wait()
+        self.thread.deleteLater()
+
         self.device_worker = None
         self.thread = None
 
