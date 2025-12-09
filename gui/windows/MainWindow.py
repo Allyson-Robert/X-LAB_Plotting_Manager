@@ -256,17 +256,26 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         self.progressBar.setValue(progress)
 
-    def on_plot_thread_finished(self):
+    def on_plot_thread_finished(self, thread_data):
         # Reset UI elements
         self.progressBar.setValue(0)
 
         # Free button and log to console
         self.plotBtn.setEnabled(True)
-        self.console_print(f"(run {self.device_worker.identifier}) finished")
 
-        # Drop strong references so GC can do its thing
+        # Cleanup the worker and the thread
+        self.thread.quit()
+        self.thread.wait()
+        self.thread.deleteLater()
+
         self.device_worker = None
         self.thread = None
+
+        if thread_data['ok']:
+            self.console_print(f"(run {self.device_worker.identifier}) finished succesfully")
+        else:
+            self.console_print(message=thread_data["message"], level="alert")
+            print(thread_data["traceback"])
 
     def save_to_file(self, plaintext: str):
         file_dialog = QtWidgets.QFileDialog.getSaveFileName(self, "Save File", "", "Text Files (*.txt);;All Files (*)")
@@ -275,10 +284,10 @@ class UiMainWindow(QtWidgets.QMainWindow):
             with open(file_path, 'w') as file:
                 file.write(plaintext)
 
-    def console_print(self, fstring, level="normal"):
+    def console_print(self, message, level="normal"):
         # Print a message to the gui console
         now = datetime.datetime.now()
-        fstring_to_print = now.strftime(f"{constants.DATETIME_FORMAT}: ") + fstring
+        fstring_to_print = now.strftime(f"{constants.DATETIME_FORMAT}: ") + message
 
         c = ConsoleColours()
 

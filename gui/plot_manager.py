@@ -91,8 +91,7 @@ def plot_manager(window, *args, **kwargs):
     window.device_worker.finished.connect(window.device_worker.deleteLater)
 
     # When the thread is actually finished, clean up and reset GUI
-    window.thread.finished.connect(window.thread.deleteLater)
-    window.thread.finished.connect(window.on_plot_thread_finished)
+    window.device_worker.finished.connect(window.on_plot_thread_finished)
 
     # Progress updates
     window.device_worker.progress.connect(window.report_progress)
@@ -101,5 +100,3 @@ def plot_manager(window, *args, **kwargs):
     window.thread.start()
     window.console_print(
         f"(run {window.device_worker.identifier}) producing {current_device_class}-{plot_function} plot for {window.get_dataset_name()} with options {options}")
-
-    window.plotBtn.setEnabled(False)

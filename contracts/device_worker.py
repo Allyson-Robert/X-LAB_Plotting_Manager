@@ -78,7 +78,7 @@ class DeviceWorkerCore(DeviceWorker):
             Subclasses provide plotting methods referenced by `plot_type` and may
             extend run behaviour if needed.
     """
-    finished = QtCore.pyqtSignal()
+    finished = QtCore.pyqtSignal(dict)
     progress = QtCore.pyqtSignal(int)
 
     def __init__(self, device, dataset, plot_type, options: PlotterOptions):
@@ -135,11 +135,17 @@ class DeviceWorkerCore(DeviceWorker):
             self.progress.emit(int(100*counter/nr_of_files))
 
     def run(self):
-        # Set the data
-        self.set_data(self.dataset)
+        try:
+            # Set the data
+            self.set_data(self.dataset)
 
-        # Grab the correct plot and execute it, including uuid in the title
-        title = f"{self.dataset.get_name()} (run {self.identifier})"
-        plot_type = getattr(self, self.plot_type)
-        plot_type(title=title)
-        self.finished.emit()
+            # Grab the correct plot and execute it, including uuid in the title
+            title = f"{self.dataset.get_name()} (run {self.identifier})"
+            plot_type = getattr(self, self.plot_type)
+            plot_type(title=title)
+            self.finished.emit({"ok": True})
+
+        # Catchall is intentional
+        except Exception as e:
+            import traceback
+            self.finished.emit({"ok": False,"message": f"{e}" ,"traceback": traceback.format_exc()})
