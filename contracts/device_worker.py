@@ -135,7 +135,6 @@ class DeviceWorkerCore(DeviceWorker):
             self.progress.emit(int(100*counter/nr_of_files))
 
     def run(self):
-        # Catch the run in case of errors
         try:
             # Set the data
             self.set_data(self.dataset)
@@ -146,6 +145,7 @@ class DeviceWorkerCore(DeviceWorker):
             plot_type(title=title)
             self.finished.emit({"ok": True})
 
-        except Exception:
+        # Catchall is intentional
+        except Exception as e:
             import traceback
-            self.finished.emit({"ok": False, "traceback": traceback.format_exc()})
+            self.finished.emit({"ok": False,"message": f"{e}" ,"traceback": traceback.format_exc()})

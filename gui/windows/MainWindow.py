@@ -274,7 +274,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         if thread_data['ok']:
             self.console_print(f"(run {self.device_worker.identifier}) finished succesfully")
         else:
-            self.console_print(message=thread_data["traceback"], level="alert")
+            self.console_print(message=thread_data["message"], level="alert")
             print(thread_data["traceback"])
 
     def save_to_file(self, plaintext: str):
