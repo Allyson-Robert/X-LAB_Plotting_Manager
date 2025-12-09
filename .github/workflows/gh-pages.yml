@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mkdocs
+          pip install mkdocs mkdocstrings[python]
           # if you use mkdocs-material or plugins, add them here
           # pip install mkdocs-material mkdocs-awesome-pages-plugin ...
 
