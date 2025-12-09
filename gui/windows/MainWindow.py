@@ -284,10 +284,10 @@ class UiMainWindow(QtWidgets.QMainWindow):
             with open(file_path, 'w') as file:
                 file.write(plaintext)
 
-    def console_print(self, fstring, level="normal"):
+    def console_print(self, message, level="normal"):
         # Print a message to the gui console
         now = datetime.datetime.now()
-        fstring_to_print = now.strftime(f"{constants.DATETIME_FORMAT}: ") + fstring
+        fstring_to_print = now.strftime(f"{constants.DATETIME_FORMAT}: ") + message
 
         c = ConsoleColours()
 
