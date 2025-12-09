@@ -100,5 +100,3 @@ def plot_manager(window, *args, **kwargs):
     window.thread.start()
     window.console_print(
         f"(run {window.device_worker.identifier}) producing {current_device_class}-{plot_function} plot for {window.get_dataset_name()} with options {options}")
-
-    # window.plotBtn.setEnabled(False)
