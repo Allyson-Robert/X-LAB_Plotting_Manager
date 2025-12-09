@@ -263,7 +263,13 @@ class UiMainWindow(QtWidgets.QMainWindow):
         # Free button and log to console
         self.plotBtn.setEnabled(True)
 
-        # Cleanup the worker and the thread
+        if thread_data['ok']:
+            self.console_print(f"(run {self.device_worker.identifier}) finished succesfully")
+        else:
+            self.console_print(message=thread_data["message"], level="alert")
+            print(thread_data["traceback"])
+
+        # Cleanup the worker and the thread after showing the message
         self.thread.quit()
         self.thread.wait()
         self.thread.deleteLater()
@@ -271,11 +277,7 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.device_worker = None
         self.thread = None
 
-        if thread_data['ok']:
-            self.console_print(f"(run {self.device_worker.identifier}) finished succesfully")
-        else:
-            self.console_print(message=thread_data["message"], level="alert")
-            print(thread_data["traceback"])
+        self.console_print(message="Disposed of Thread and Worker")
 
     def save_to_file(self, plaintext: str):
         file_dialog = QtWidgets.QFileDialog.getSaveFileName(self, "Save File", "", "Text Files (*.txt);;All Files (*)")
