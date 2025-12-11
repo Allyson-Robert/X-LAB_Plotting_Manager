@@ -156,3 +156,4 @@ TBD
 ## Known Issues
 
 For Python 3.10 the specific version of PyQt5 triggers a deprecation warning. This does not affect functionality and can be safely ignored.
+Matlplotlib is incompatible with worker threads and requires the use of a non-interactive backend when used in processors. The implementation package must set the backend appropriately (e.g. 'Agg').
