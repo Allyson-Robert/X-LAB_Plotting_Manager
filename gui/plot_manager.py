@@ -58,6 +58,7 @@ def plot_manager(window, *args, **kwargs):
     dataset_selection.set_device(window.dataset.get_device())
     dataset_selection.set_structure_type(window.dataset.get_structure_type())
     dataset_selection.set_name(window.dataset.get_name())
+    dataset_selection.set_location(window.dataset.get_location())
 
     # Recursively search for QWidget children with an alias to collect options and get their values
     options = PlotterOptions()
@@ -89,6 +90,9 @@ def plot_manager(window, *args, **kwargs):
     # When the worker says "I'm done", stop the thread and schedule the worker for deletion
     window.device_worker.finished.connect(window.thread.quit)
     window.device_worker.finished.connect(window.device_worker.deleteLater)
+
+    # Connect console printing
+    window.device_worker.console_print.connect(window.console_print)
 
     # When the thread is actually finished, clean up and reset GUI
     window.device_worker.finished.connect(window.on_plot_thread_finished)

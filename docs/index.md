@@ -20,6 +20,7 @@ Datasets are stored as JSON files that act as portable analysis definitions.
 
 ### • Analysis/Plotting execution  
 The main window lets you loads a dataset (by creation or by reading from the disk), spawns worker threads, processes the data, and renders the plots.
+Note: There is currently an incompatibility with interactive matplotlib, see the [known issues](./known-issues.md) for details.
 
 ### • Contract‑based extensibility  
 You can implement new:

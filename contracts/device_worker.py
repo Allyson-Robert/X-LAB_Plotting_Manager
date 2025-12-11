@@ -80,6 +80,7 @@ class DeviceWorkerCore(DeviceWorker):
     """
     finished = QtCore.pyqtSignal(dict)
     progress = QtCore.pyqtSignal(int)
+    console_print = QtCore.pyqtSignal(str, str)
 
     def __init__(self, device, dataset, plot_type, options: PlotterOptions):
         super().__init__()

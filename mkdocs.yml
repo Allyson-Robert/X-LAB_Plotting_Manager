@@ -20,6 +20,7 @@ nav:
     - How do I implement contracts?: implementing_contracts.md
     - What are datasets: datasets.md
     - Logging & debugging: logging.md
+    - Known Issues: known_issues.md
   - API Reference:
       - GUI - Windows: api/gui/windows_and_dialogs.md
       - GUI - Plot Manager: api/gui/plot_manager.md
