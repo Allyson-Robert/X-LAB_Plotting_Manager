@@ -1,3 +1,5 @@
+import warnings
+
 from PyQt5 import QtGui
 
 
@@ -15,4 +17,10 @@ class ConsoleColours:
         self._result = QtGui.QColor(0, 255, 127)
 
     def get_colour(self, level):
-        return getattr(self, f"_{level}")
+        level_name = f"_{level}"
+        try:
+            colour = getattr(self, level_name)
+        except AttributeError:
+            warnings.warn(f"ConsoleColours: Unknown level '{level}', defaulting to 'normal'")
+            level_name = "_normal"
+        return getattr(self, level_name)
