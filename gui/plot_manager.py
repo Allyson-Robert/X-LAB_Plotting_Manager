@@ -58,6 +58,7 @@ def plot_manager(window, *args, **kwargs):
     dataset_selection.set_device(window.dataset.get_device())
     dataset_selection.set_structure_type(window.dataset.get_structure_type())
     dataset_selection.set_name(window.dataset.get_name())
+    dataset_selection.set_location(window.dataset.get_location())
 
     # Recursively search for QWidget children with an alias to collect options and get their values
     options = PlotterOptions()
