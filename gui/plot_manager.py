@@ -90,6 +90,9 @@ def plot_manager(window, *args, **kwargs):
     window.device_worker.finished.connect(window.thread.quit)
     window.device_worker.finished.connect(window.device_worker.deleteLater)
 
+    # Connect console printing
+    window.device_worker.console_print.connect(window.console_print)
+
     # When the thread is actually finished, clean up and reset GUI
     window.device_worker.finished.connect(window.on_plot_thread_finished)
 
