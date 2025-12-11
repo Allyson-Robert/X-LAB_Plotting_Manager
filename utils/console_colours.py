@@ -12,6 +12,7 @@ class ConsoleColours:
         self._alert = QtGui.QColor(255, 0, 0)
         self._warning = QtGui.QColor(255, 127, 0)
         self._normal = QtGui.QColor(255,255,255)
+        self._result = QtGui.QColor(0, 255, 127)
 
     def get_colour(self, level):
         return getattr(self, f"_{level}")
