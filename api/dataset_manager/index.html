@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/api/dataset_manager/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>DataSet - X-LAB Plotting Manager</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "DataSet";
+        var mkdocs_page_input_path = "api/dataset_manager.md";
+        var mkdocs_page_url = "/X-LAB_Plotting_Manager/api/dataset_manager/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> X-LAB Plotting Manager
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../installing/">Installing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting_started/">Getting Started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../design_philosophy/">How to think about this application?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../implementing_contracts/">How do I implement contracts?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../datasets/">What are datasets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../logging/">Logging & debugging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../known_issues/">Known Issues</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../gui/windows_and_dialogs/">GUI - Windows</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../gui/plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../gui/utils/">GUI - Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../contracts/data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../contracts/data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../contracts/plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../contracts/plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../contracts/devices/">Contracts - Devices</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../contracts/file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../contracts/observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/class_utils/">Utils - Class Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/others/">Utils - Others</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">DataSet</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset.DataSet">DataSet</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#dataset_manager.dataset.DataSet--structure-types">Structure types</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dataset_manager.dataset.DataSet--validation">Validation</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset.DataSet.construct_filepaths_nrecursive">construct_filepaths_nrecursive</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset.DataSet.construct_structured_filepaths">construct_structured_filepaths</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset_json_encoder.DataSetJSONEncoder">DataSetJSONEncoder</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset_json_decoder.DataSetJSONDecoder">DataSetJSONDecoder</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset_manager.DataSetManager">DataSetManager</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#dataset_manager.dataset_manager.DataSetManager--responsibilities">Responsibilities</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset_manager.dataset_manager.DataSetManager.save_dataset">save_dataset</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">X-LAB Plotting Manager</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API Reference</li>
+      <li class="breadcrumb-item active">DataSet</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/dataset_manager.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="dataset-manager-api-documentation">DataSet Manager API Documentation</h1>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="dataset_manager.dataset.DataSet"></a>
+    <div class="doc doc-contents first">
+
+
+
+        <p>Container for experiment metadata and associated data file locations.</p>
+<p>A <code>DataSet</code> instance describes a single experiment or dataset in terms of:
+- Basic metadata: name, creation date, experiment date/time, device identifier.
+- User annotations: free-form notes and a simple time-stamped console log.
+- File layout: a mapping from human-readable labels to absolute file paths.
+- Optional colour mapping: label-to-colour mapping for consistent plotting.
+- Structure type: how files are organised on disk (e.g. flat vs. directory-labelled).</p>
+<p>The class does <em>not</em> interpret the contents of the files; it only tracks their
+locations and minimal metadata. Filepaths can be:
+- Added manually via <code>add_filepath</code>, or
+- Auto-populated from a root directory using <code>construct_filepaths(...)</code>.</p>
+<h3 id="dataset_manager.dataset.DataSet--structure-types">Structure types</h3>
+<ul>
+<li><code>"flat"</code>:
+    A simple one-level mapping from label -&gt; file path. This is the default
+    and most common mode; <code>construct_filepaths_nrecursive</code> will scan a single
+    directory and register all supported files using their stem as label.</li>
+<li><code>"dirlabelled"</code>:
+    A directory-labelled mode where each top-level directory becomes a label
+    and contains its own mapping of files. This is handled by
+    <code>construct_structured_filepaths</code> and is considered deprecated in favour
+    of the generic <code>construct_filepaths</code>.</li>
+<li><code>"structured"</code>:
+    Reserved for legacy/experimental layouts; treated as an allowed but
+    user-managed structure type.</li>
+</ul>
+<h3 id="dataset_manager.dataset.DataSet--validation">Validation</h3>
+<p>All paths added to the dataset are checked for:
+- Existence on disk.
+- Being a file (not a directory).
+- Having an extension in the accepted set (<code>xlsx</code>, <code>xls</code>, <code>csv</code>,
+  <code>txt</code>, <code>dpt</code>, <code>json</code>).</p>
+<p>Two <code>DataSet</code> instances are considered equal if all their attributes
+(including filepaths, colours, and metadata) match exactly.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>dataset_manager/dataset.py</code></summary>
+                <pre class="highlight"><code class="language-python">@decorate_class_with_logging(log_level=DEBUG)
+class DataSet:
+    """
+        Container for experiment metadata and associated data file locations.
+
+        A `DataSet` instance describes a single experiment or dataset in terms of:
+        - Basic metadata: name, creation date, experiment date/time, device identifier.
+        - User annotations: free-form notes and a simple time-stamped console log.
+        - File layout: a mapping from human-readable labels to absolute file paths.
+        - Optional colour mapping: label-to-colour mapping for consistent plotting.
+        - Structure type: how files are organised on disk (e.g. flat vs. directory-labelled).
+
+        The class does *not* interpret the contents of the files; it only tracks their
+        locations and minimal metadata. Filepaths can be:
+        - Added manually via `add_filepath`, or
+        - Auto-populated from a root directory using `construct_filepaths(...)`.
+
+        Structure types
+        ----------------
+        - ``"flat"``:
+            A simple one-level mapping from label -&gt; file path. This is the default
+            and most common mode; `construct_filepaths_nrecursive` will scan a single
+            directory and register all supported files using their stem as label.
+        - ``"dirlabelled"``:
+            A directory-labelled mode where each top-level directory becomes a label
+            and contains its own mapping of files. This is handled by
+            `construct_structured_filepaths` and is considered deprecated in favour
+            of the generic `construct_filepaths`.
+        - ``"structured"``:
+            Reserved for legacy/experimental layouts; treated as an allowed but
+            user-managed structure type.
+
+        Validation
+        ----------
+        All paths added to the dataset are checked for:
+        - Existence on disk.
+        - Being a file (not a directory).
+        - Having an extension in the accepted set (``xlsx``, ``xls``, ``csv``,
+          ``txt``, ``dpt``, ``json``).
+
+        Two `DataSet` instances are considered equal if all their attributes
+        (including filepaths, colours, and metadata) match exactly.
+    """
+
+    # TODO: properly deprecate structured, assume flat for now
+    _allowed_structure_types = ("flat", "dirlabelled", "structured")
+    _accepted_extensions = ("xlsx", "xls", "csv", "txt", "dpt", "json")
+
+    def __init__(self, creation_date: str):
+        if not isinstance(creation_date, str):
+            raise ValueError("creation_date must be a string in format YYYY.MM.DD_HH.MM.SS")
+        self.location = None
+        self.name = ""
+        self.creation_date = datetime.strptime(creation_date, "%Y.%m.%d_%H.%M.%S")
+        self.experiment_date_time = None
+        # FEATURE REQUEST: Allow multiple device types to be compatible with the same set
+        self.device = ""
+        self.notes = ""
+        self.console = {}
+        self.structure_type = None
+        self.filepaths = {}
+        self.colours = {}
+
+    # Setters
+    def set_name(self, name: str):
+        if not isinstance(name, str):
+            raise ValueError("name must be a string")
+        self.name = name
+
+    def set_experiment_date(self, experiment_date_time: str):
+        if not isinstance(experiment_date_time, str):
+            raise ValueError("experiment_date_time must be a string in format YYYY.MM.DD_HH.MM.SS")
+        self.experiment_date_time = datetime.strptime(experiment_date_time, "%Y.%m.%d_%H.%M.%S")
+
+    def set_device(self, device: str):
+        if not isinstance(device, str):
+            raise ValueError("device must be a string")
+        self.device = device
+
+    def set_structure_type(self, desired_type: str):
+        if not desired_type in self._allowed_structure_types:
+            raise ValueError
+
+        if self.structure_type is None:
+            self.structure_type = desired_type
+        # Warn users when trying to overwrite the structure type
+
+    def set_notes(self, notes_content: str):
+        if not isinstance(notes_content, str):
+            raise ValueError("notes_content must be a string")
+        self.notes = notes_content
+
+    def set_console(self, console_content: dict):
+        if not isinstance(console_content, dict):
+            raise ValueError("console_content must be a dict")
+        self.console = console_content
+
+    def set_filepaths(self, filepaths: dict):
+        if not isinstance(filepaths, dict):
+            raise ValueError("filepaths must be a dict")
+        self.filepaths = filepaths
+
+    def set_colours(self, colours: dict):
+        if not isinstance(colours, dict):
+            raise ValueError("colours must be a dict")
+        self.colours = colours
+
+    def set_location(self, location: str):
+        if not isinstance(location, str):
+            raise ValueError("location must be a string/path")
+        self.location = location
+
+    def construct_filepaths(self, root_dir: str, type: str) -&gt; str:
+        warnings.warn("New function construct_filepaths_nrecursive not implemented recursively")
+        # TODO: Should depend on experiment type (making structure redundant)?
+        # TODO: Something about the experiment type compatibility here.
+        if type in self._allowed_structure_types:
+            self.set_structure_type(type)
+        else:
+            return f"Incompatible structure type ({type}). Choose from {self._allowed_structure_types}"
+
+        match type:
+            case "flat":
+                return self.construct_filepaths_nrecursive(root_dir)
+            case "dirlabelled":
+                return self.construct_structured_filepaths(root_dir)
+
+
+    def construct_filepaths_nrecursive(self, root_dir) -&gt; str:
+        """
+        Will generate a flat file set and add it to the current filepaths. This will seek all files and
+            of the giver root_dir and append all dataset files to the filepaths attribute. Note that
+            root_dir should be an absolute path.
+        """
+
+        errors = ""
+        # Checks which files are contained in the root dir
+        items = natsort.natsorted(os.listdir(root_dir))
+        for item in items:
+            # Ignores duplicates
+            if item in self.filepaths.keys():
+                errors += f"Ignored {item}: duplicate label \n"
+                continue
+
+            # Only add valid files
+            path = f"{root_dir}/{item}"
+            is_path_valid, error_msg = self._check_valid_path(path)
+            if is_path_valid:
+                # Use filename as path label
+                self.add_filepath(path=path, label=Path(path).stem)
+            else:
+                errors += error_msg
+
+        return errors
+
+    def construct_filepaths_recursive(self, root_dir) -&gt; str:
+        raise NotImplementedError
+
+    def construct_structured_filepaths(self, root_dir: str) -&gt; str:
+        """
+        Will generate a dirlabelled file set and add it to the current filepaths. This will seek all files and
+            subdirectories of the giver root_dir and append all dataset files to the filepaths attribute. Note that
+            root_dir should be an absolute path.
+        """
+        warnings.warn("Function construct_structured_filepaths is deprecated use construct_filepaths instead", DeprecationWarning)
+        if self.get_structure_type() != "flat":
+            errors = ""
+            items = natsort.natsorted(os.listdir(root_dir))
+            for item in items:
+                if item in self.filepaths.keys():
+                    errors += f"Ignored {item}: duplicate label \n"
+                    continue
+
+                # Create nested dict for subdirectories
+                path = f"{root_dir}/{item}"
+                if not os.path.isfile(path):
+                    self.filepaths[item] = {}
+                    for file in natsort.natsorted(os.listdir(path)):
+                        # Only append to dataset if file is actually a file with an accepted extension
+                        filepath = f"{path}/{file}"
+                        is_path_valid, error_msg = self._check_valid_path(filepath)
+                        if is_path_valid:
+                            self.filepaths[item][file] = filepath
+                        else:
+                            errors += error_msg
+        else:
+            errors = "Flat dataset_manager cannot use dirlabelled construction"
+
+        return errors
+
+    # Getters
+    def get_filepath(self, label: str) -&gt; str:
+        return self.filepaths[label]
+
+    def get_filepaths(self) -&gt; dict:
+        return self.filepaths
+
+    def get_experiment_date(self):
+        return self.experiment_date_time
+
+    def get_single_colour(self, label: str) -&gt; str:
+        if label in self.colours.keys():
+            return self.colours[label]
+        return None
+
+    def get_all_colours(self) -&gt; dict:
+        if len(self.colours) == 0:
+            return None
+        return self.colours
+
+    def get_labels(self):
+        return self.filepaths.keys()
+
+    def get_console(self) -&gt; dict:
+        return self.console
+
+    def get_notes(self) -&gt; str:
+        return self.notes
+
+    def get_structure_type(self) -&gt; str:
+        return self.structure_type
+
+    def get_device(self) -&gt; str:
+        return self.device
+
+    def get_creation_date(self) -&gt; datetime:
+        return self.creation_date
+
+    def get_name(self) -&gt; str:
+        return self.name
+
+    def get_location(self) -&gt; str | None:
+        if self.location:
+            return self.location
+        return None
+
+    # Adding / Appending
+    def add_notes(self, additional_notes: str):
+        if not isinstance(additional_notes, str):
+            raise ValueError("additional_notes must be a string")
+        self.notes += additional_notes
+
+    def add_console(self, date_and_time: str, additional_console: str):
+        if not isinstance(date_and_time, str):
+            raise ValueError("date_and_time must be a string")
+        if not isinstance(additional_console, str):
+            raise ValueError("additional_console must be a string")
+        self.console[date_and_time] = additional_console
+
+    # Path management
+    def add_filepath(self, path: str, label: str):
+        # Wrap flat paths for validation
+        if self.get_structure_type() == 'flat':
+            path_to_validate = {label: path}
+        else:
+            path_to_validate = path
+        path_to_store = path
+
+        # Check for duplicate label
+        if label in self.filepaths.keys():
+            return "Duplicate label found in dataset_manager"
+
+        # Check that all paths are valid
+        for sublabel in path_to_validate:
+            # Check path before adding:
+            is_path_valid, error_msg = self._check_valid_path(path=path_to_validate[sublabel])
+            if not is_path_valid:
+                print(error_msg)
+                return "Will not add file with disallowed extension"
+
+        # Add the path
+        self.filepaths[label] = path_to_store
+
+        return ""
+
+    def add_colour(self, colour: str, label: str):
+        # Checks for duplicate label
+        if label in self.colours.keys():
+            return "Duplicate label found in colours"
+        else:
+            # Add the file to the dataset and update the gui
+            self.colours[label] = colour
+
+    # Checks are needed before paths are added to the dataset_manager
+    def _check_valid_path(self, path: str):
+        if not isinstance(path, str):
+            raise ValueError("path must be a string")
+        # Checks whether the path exists and points to a file
+        if os.path.exists(path) and os.path.isfile(path):
+            # Checks if the file has the proper extension
+            if path.endswith(self._accepted_extensions):
+                return True, ""
+            else:
+                return False, f"DataSet Forbidden Extension: Ignored {path}\n"
+        elif os.path.exists(path) and not os.path.isfile(path):
+            return False, f"DataSet Not a File: Ignored {path}\n"
+        else:
+            return False, f"DataSet Filesystem Error: Ignored {path}\n"
+
+    def __eq__(self, other):
+        if type(other) is type(self):
+            return self.__dict__ == other.__dict__
+        return False</code></pre>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="dataset_manager.dataset.DataSet.construct_filepaths_nrecursive" class="doc doc-heading">
+            <code class="highlight language-python">construct_filepaths_nrecursive(root_dir)</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Will generate a flat file set and add it to the current filepaths. This will seek all files and
+    of the giver root_dir and append all dataset files to the filepaths attribute. Note that
+    root_dir should be an absolute path.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>dataset_manager/dataset.py</code></summary>
+              <pre class="highlight"><code class="language-python">def construct_filepaths_nrecursive(self, root_dir) -&gt; str:
+    """
+    Will generate a flat file set and add it to the current filepaths. This will seek all files and
+        of the giver root_dir and append all dataset files to the filepaths attribute. Note that
+        root_dir should be an absolute path.
+    """
+
+    errors = ""
+    # Checks which files are contained in the root dir
+    items = natsort.natsorted(os.listdir(root_dir))
+    for item in items:
+        # Ignores duplicates
+        if item in self.filepaths.keys():
+            errors += f"Ignored {item}: duplicate label \n"
+            continue
+
+        # Only add valid files
+        path = f"{root_dir}/{item}"
+        is_path_valid, error_msg = self._check_valid_path(path)
+        if is_path_valid:
+            # Use filename as path label
+            self.add_filepath(path=path, label=Path(path).stem)
+        else:
+            errors += error_msg
+
+    return errors</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="dataset_manager.dataset.DataSet.construct_structured_filepaths" class="doc doc-heading">
+            <code class="highlight language-python">construct_structured_filepaths(root_dir)</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Will generate a dirlabelled file set and add it to the current filepaths. This will seek all files and
+    subdirectories of the giver root_dir and append all dataset files to the filepaths attribute. Note that
+    root_dir should be an absolute path.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>dataset_manager/dataset.py</code></summary>
+              <pre class="highlight"><code class="language-python">def construct_structured_filepaths(self, root_dir: str) -&gt; str:
+    """
+    Will generate a dirlabelled file set and add it to the current filepaths. This will seek all files and
+        subdirectories of the giver root_dir and append all dataset files to the filepaths attribute. Note that
+        root_dir should be an absolute path.
+    """
+    warnings.warn("Function construct_structured_filepaths is deprecated use construct_filepaths instead", DeprecationWarning)
+    if self.get_structure_type() != "flat":
+        errors = ""
+        items = natsort.natsorted(os.listdir(root_dir))
+        for item in items:
+            if item in self.filepaths.keys():
+                errors += f"Ignored {item}: duplicate label \n"
+                continue
+
+            # Create nested dict for subdirectories
+            path = f"{root_dir}/{item}"
+            if not os.path.isfile(path):
+                self.filepaths[item] = {}
+                for file in natsort.natsorted(os.listdir(path)):
+                    # Only append to dataset if file is actually a file with an accepted extension
+                    filepath = f"{path}/{file}"
+                    is_path_valid, error_msg = self._check_valid_path(filepath)
+                    if is_path_valid:
+                        self.filepaths[item][file] = filepath
+                    else:
+                        errors += error_msg
+    else:
+        errors = "Flat dataset_manager cannot use dirlabelled construction"
+
+    return errors</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="dataset_manager.dataset_json_encoder.DataSetJSONEncoder"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="json.JSONEncoder">JSONEncoder</span></code></p>
+
+
+
+        <p>JSON encoder for <code>DataSet</code> objects and related dataclasses.</p>
+<p>This encoder provides two custom behaviours:</p>
+<ul>
+<li><code>datetime.datetime</code> instances are serialised to a compact string
+  representation using the format <code>"%Y.%m.%d_%H.%M.%S"</code>. This matches
+  the format expected by <code>DataSet</code> and the corresponding JSON decoder.</li>
+<li>All other objects are serialised via their <code>__dict__</code> attribute,
+  which is sufficient for simple container-like classes such as <code>DataSet</code>.</li>
+</ul>
+<p>The encoder is intended to be used together with <code>DataSetJSONEncoder</code> to
+provide a round-trip-safe JSON representation of datasets.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>dataset_manager/dataset_json_encoder.py</code></summary>
+                <pre class="highlight"><code class="language-python">@decorate_class_with_logging(log_level=DEBUG)
+class DataSetJSONEncoder(JSONEncoder):
+    """
+    JSON encoder for `DataSet` objects and related dataclasses.
+
+    This encoder provides two custom behaviours:
+
+    - ``datetime.datetime`` instances are serialised to a compact string
+      representation using the format ``"%Y.%m.%d_%H.%M.%S"``. This matches
+      the format expected by `DataSet` and the corresponding JSON decoder.
+    - All other objects are serialised via their ``__dict__`` attribute,
+      which is sufficient for simple container-like classes such as `DataSet`.
+
+    The encoder is intended to be used together with `DataSetJSONEncoder` to
+    provide a round-trip-safe JSON representation of datasets.
+    """
+    def default(self, o):
+        if isinstance(o, datetime.datetime):
+            return o.strftime("%Y.%m.%d_%H.%M.%S")
+        else:
+            return o.__dict__</code></pre>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="dataset_manager.dataset_json_decoder.DataSetJSONDecoder"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="json.JSONDecoder">JSONDecoder</span></code></p>
+
+
+
+        <p>Custom JSON decoder that reconstructs <code>DataSet</code> instances from JSON.</p>
+<p>This decoder installs an <code>object_hook</code> that:
+- Detects dictionaries carrying the expected <code>DataSet</code> fields
+  (e.g. <code>creation_date</code>, <code>name</code>, <code>device</code>, <code>experiment_date_time</code>,
+  <code>notes</code>, <code>console</code>, <code>structure_type</code>, <code>filepaths</code>, <code>colours</code>).
+- Instantiates a new <code>DataSet</code> using the stored creation date.
+- Replays all relevant setters to restore metadata, structure type, paths,
+  colours, and annotations.</p>
+<p>If a JSON object does not match the expected shape, it is returned unchanged,
+allowing non-<code>DataSet</code> data to be decoded normally.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>dataset_manager/dataset_json_decoder.py</code></summary>
+                <pre class="highlight"><code class="language-python">@decorate_class_with_logging(log_level=DEBUG)
+class DataSetJSONDecoder(JSONDecoder):
+    """
+    Custom JSON decoder that reconstructs `DataSet` instances from JSON.
+
+    This decoder installs an `object_hook` that:
+    - Detects dictionaries carrying the expected `DataSet` fields
+      (e.g. ``creation_date``, ``name``, ``device``, ``experiment_date_time``,
+      ``notes``, ``console``, ``structure_type``, ``filepaths``, ``colours``).
+    - Instantiates a new `DataSet` using the stored creation date.
+    - Replays all relevant setters to restore metadata, structure type, paths,
+      colours, and annotations.
+
+    If a JSON object does not match the expected shape, it is returned unchanged,
+    allowing non-`DataSet` data to be decoded normally.
+    """
+    def __init__(self, **kwargs):
+        kwargs.setdefault("object_hook", self.object_hook)
+        super().__init__(**kwargs)
+
+    @staticmethod
+    def object_hook(dct):
+        try:
+            dataset = DataSet(dct['creation_date'])
+            dataset.set_name(dct['name'])
+            dataset.set_device(dct['device'])
+            dataset.set_experiment_date(dct['experiment_date_time'])
+            dataset.set_notes(dct['notes'])
+            dataset.set_console(dct['console'])
+            dataset.set_structure_type(dct['structure_type'])
+            dataset.set_filepaths(dct['filepaths'])
+            dataset.set_colours(dct['colours'])
+
+            return dataset
+
+        except KeyError:
+            return dct</code></pre>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="dataset_manager.dataset_manager.DataSetManager"></a>
+    <div class="doc doc-contents first">
+
+
+
+        <p>Small helper class for persisting <code>DataSet</code> instances to and from JSON files.</p>
+<h3 id="dataset_manager.dataset_manager.DataSetManager--responsibilities">Responsibilities</h3>
+<ul>
+<li><code>save_dataset(dataset, file_name)</code>:
+    Serialises a <code>DataSet</code> instance to disk using <code>DataSetJSONEncoder</code>.
+    The method checks that the passed object is a <code>DataSet</code> and writes
+    the encoded JSON to the given file path.</li>
+<li><code>open_dataset(file_name)</code>:
+    Opens a JSON file and deserialises it into a <code>DataSet</code> instance using
+    <code>DataSetJSONDecoder</code>.</li>
+</ul>
+<p>The manager does not interpret the dataset content; it only handles the
+IO and wiring between JSON encoder/decoder and the underlying <code>DataSet</code>
+objects.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>dataset_manager/dataset_manager.py</code></summary>
+                <pre class="highlight"><code class="language-python">@decorate_class_with_logging(log_level=DEBUG)
+class DataSetManager:
+    """
+       Small helper class for persisting `DataSet` instances to and from JSON files.
+
+       Responsibilities
+       ----------------
+       - `save_dataset(dataset, file_name)`:
+           Serialises a `DataSet` instance to disk using `DataSetJSONEncoder`.
+           The method checks that the passed object is a `DataSet` and writes
+           the encoded JSON to the given file path.
+       - `open_dataset(file_name)`:
+           Opens a JSON file and deserialises it into a `DataSet` instance using
+           `DataSetJSONDecoder`.
+
+       The manager does not interpret the dataset content; it only handles the
+       IO and wiring between JSON encoder/decoder and the underlying `DataSet`
+       objects.
+   """
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def save_dataset(dataset, file_name):
+        """ Saves the dataset_manager data into a JSON file """
+        if not isinstance(dataset, DataSet):
+            raise ValueError("dataset must be an instance of DataSet")
+
+        # Who should check whether the filename is valid?
+        with open(file_name, "w") as json_file:
+            json.dump(dataset, json_file, cls=DataSetJSONEncoder)
+        json_file.close()
+
+    @staticmethod
+    def open_dataset(file_name):
+        with open(file_name) as json_file:
+            return json.load(json_file, cls=DataSetJSONDecoder)</code></pre>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="dataset_manager.dataset_manager.DataSetManager.save_dataset" class="doc doc-heading">
+            <code class="highlight language-python">save_dataset(dataset, file_name)</code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Saves the dataset_manager data into a JSON file</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>dataset_manager/dataset_manager.py</code></summary>
+              <pre class="highlight"><code class="language-python">@staticmethod
+def save_dataset(dataset, file_name):
+    """ Saves the dataset_manager data into a JSON file """
+    if not isinstance(dataset, DataSet):
+        raise ValueError("dataset must be an instance of DataSet")
+
+    # Who should check whether the filename is valid?
+    with open(file_name, "w") as json_file:
+        json.dump(dataset, json_file, cls=DataSetJSONEncoder)
+    json_file.close()</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../utils/others/" class="btn btn-neutral float-left" title="Utils - Others"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../utils/others/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

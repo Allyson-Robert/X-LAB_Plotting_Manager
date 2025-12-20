@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/api/gui/utils/" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>GUI - Utils - X-LAB Plotting Manager</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "GUI - Utils";
+        var mkdocs_page_input_path = "api/gui/utils.md";
+        var mkdocs_page_url = "/X-LAB_Plotting_Manager/api/gui/utils/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> X-LAB Plotting Manager
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../installing/">Installing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting Started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../design_philosophy/">How to think about this application?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../implementing_contracts/">How do I implement contracts?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">What are datasets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../known_issues/">Known Issues</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../windows_and_dialogs/">GUI - Windows</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">GUI - Utils</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#clear">Clear</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.clear.clear_all.clear_all">clear_all</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.clear.clear_all.clear_all--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.clear.clear_data.clear_data">clear_data</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.clear.clear_data.clear_data--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset-tools">DataSet Tools</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.dataset_tools.create_dataset.create_dataset">create_dataset</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.dataset_tools.create_dataset.create_dataset--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.dataset_tools.load_dataset.load_dataset">load_dataset</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.dataset_tools.load_dataset.load_dataset--raises">Raises</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.dataset_tools.load_dataset.load_dataset--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.dataset_tools.save_dataset.save_dataset">save_dataset</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.dataset_tools.save_dataset.save_dataset--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#other">Other</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.get_qwidget_value.get_qwidget_value">get_qwidget_value</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.get_qwidget_value.get_qwidget_value--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.get_qwidget_value.get_qwidget_value--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.search_for_first_active_radio_button.search_for_first_active_radio_button">search_for_first_active_radio_button</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.search_for_first_active_radio_button.search_for_first_active_radio_button--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.search_for_first_active_radio_button.search_for_first_active_radio_button--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.utils.split_camelCase.split_camel_case">split_camel_case</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.split_camelCase.split_camel_case--examples">Examples</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.split_camelCase.split_camel_case--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.utils.split_camelCase.split_camel_case--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/devices/">Contracts - Devices</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/class_utils/">Utils - Class Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/others/">Utils - Others</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../dataset_manager/">DataSet</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">X-LAB Plotting Manager</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API Reference</li>
+      <li class="breadcrumb-item active">GUI - Utils</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/gui/utils.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="utils">Utils</h1>
+<h2 id="clear">Clear</h2>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="gui.utils.clear.clear_all.clear_all"></a>
+    <div class="doc doc-contents first">
+
+        <p>Fully reset the GUI state and remove all in-memory data.</p>
+<p>This helper:
+- Clears the active <code>DataSet</code> and GUI fields via <code>clear_data</code>.
+- Empties the console widget.
+- Writes a confirmation message to the GUI console.</p>
+<h3 id="gui.utils.clear.clear_all.clear_all--parameters">Parameters</h3>
+<p>window : QMainWindow
+    Main application window whose state should be cleared.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/utils/clear/clear_all.py</code></summary>
+              <pre class="highlight"><code class="language-python">def clear_all(window: QtWidgets.QMainWindow):
+    """
+    Fully reset the GUI state and remove all in-memory data.
+
+    This helper:
+    - Clears the active `DataSet` and GUI fields via `clear_data`.
+    - Empties the console widget.
+    - Writes a confirmation message to the GUI console.
+
+    Parameters
+    ----------
+    window : QMainWindow
+        Main application window whose state should be cleared.
+    """
+    clear_data(window)
+    window.consoleTextEdit.clear()
+    window.console_print("Cleared memory")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="gui.utils.clear.clear_data.clear_data"></a>
+    <div class="doc doc-contents first">
+
+        <p>Clear the currently loaded dataset and reset all GUI widgets tied to it.</p>
+<p>Resets:
+- Stored <code>DataSet</code> object and its disk location.
+- Set name, device name, notes, and list widgets.
+- Plot type combobox and stacked widget view.</p>
+<p>A console message is printed to confirm completion.</p>
+<h3 id="gui.utils.clear.clear_data.clear_data--parameters">Parameters</h3>
+<p>window : QMainWindow
+    Main GUI instance that holds dataset-related widgets.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/utils/clear/clear_data.py</code></summary>
+              <pre class="highlight"><code class="language-python">def clear_data(window: QtWidgets.QMainWindow):
+    """
+    Clear the currently loaded dataset and reset all GUI widgets tied to it.
+
+    Resets:
+    - Stored `DataSet` object and its disk location.
+    - Set name, device name, notes, and list widgets.
+    - Plot type combobox and stacked widget view.
+
+    A console message is printed to confirm completion.
+
+    Parameters
+    ----------
+    window : QMainWindow
+        Main GUI instance that holds dataset-related widgets.
+    """
+    window.dataset = None
+    window.dataset_location = None
+
+    window.currSetNameLineEdit.clear()
+    window.currDeviceLineEdit.clear()
+    window.notesPlainText.clear()
+    window.console_print("Cleared dataset from memory")
+
+    window.stackedWidget.setCurrentWidget(window.stackedWidget.widget(0))
+    window.selectedFilesList.clear()
+    window.plotTypeCombo.clear()</code></pre>
+            </details>
+    </div>
+
+</div><h2 id="dataset-tools">DataSet Tools</h2>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="gui.utils.dataset_tools.create_dataset.create_dataset"></a>
+    <div class="doc doc-contents first">
+
+        <p>Launch the DataSet creation dialog and construct a new dataset from user input.</p>
+<p>Workflow:
+- Opens the DataSet creator window populated with available devices.
+- On confirmation:
+    * Clears existing state.
+    * Stores the newly created dataset.
+    * Loads it into the GUI and updates the header.
+    * Immediately saves it to disk.
+- If cancelled, informs the user that no dataset was created.</p>
+<h3 id="gui.utils.dataset_tools.create_dataset.create_dataset--parameters">Parameters</h3>
+<p>window : QMainWindow
+    Main application window controlling dataset creation.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/utils/dataset_tools/create_dataset.py</code></summary>
+              <pre class="highlight"><code class="language-python">@with_logging
+def create_dataset(window: QtWidgets.QMainWindow, *args, **kwargs):
+    """
+    Launch the DataSet creation dialog and construct a new dataset from user input.
+
+    Workflow:
+    - Opens the DataSet creator window populated with available devices.
+    - On confirmation:
+        * Clears existing state.
+        * Stores the newly created dataset.
+        * Loads it into the GUI and updates the header.
+        * Immediately saves it to disk.
+    - If cancelled, informs the user that no dataset was created.
+
+    Parameters
+    ----------
+    window : QMainWindow
+        Main application window controlling dataset creation.
+    """
+    window.set_dataset_window(gui.windows.DataSetCreatorWindow.UiDataCreatorWindow(devices = [k for k in window.devices]))
+    window.get_dataset_window().show()
+
+    if window.dataWindow.exec() == 1:
+        # If the window was properly closed (Done button) then creation was successful
+        #     Copy dataset_tools and print to console
+        clear_data(window)
+        window.set_dataset(window.get_dataset_window().get_dataset())
+        window.console_print(f"DataSet file created")
+        load_dataset(window)
+        window.update_header()
+        save_dataset(window)
+    else:
+        # Warn user that window was improperly closed and that no dataset_tools was created
+        window.console_print("No DataSet file was created")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="gui.utils.dataset_tools.load_dataset.load_dataset"></a>
+    <div class="doc doc-contents first">
+
+        <p>Populate the GUI with data from the currently loaded dataset.</p>
+<p>Actions:
+- Adds all dataset labels to the file selection list.
+- Selects all items by default.
+- Populates the plot-type combobox with device-appropriate plotting functions.</p>
+<h3 id="gui.utils.dataset_tools.load_dataset.load_dataset--raises">Raises</h3>
+<p>IncompatibleDeviceTypeFound
+    If the dataset’s device type does not match available plot handlers.</p>
+<h3 id="gui.utils.dataset_tools.load_dataset.load_dataset--parameters">Parameters</h3>
+<p>window : QMainWindow
+    GUI instance holding a loaded dataset.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/utils/dataset_tools/load_dataset.py</code></summary>
+              <pre class="highlight"><code class="language-python">@with_logging
+def load_dataset(window: QtWidgets.QMainWindow):
+    """
+    Populate the GUI with data from the currently loaded dataset.
+
+    Actions:
+    - Adds all dataset labels to the file selection list.
+    - Selects all items by default.
+    - Populates the plot-type combobox with device-appropriate plotting functions.
+
+    Raises
+    ------
+    IncompatibleDeviceTypeFound
+        If the dataset’s device type does not match available plot handlers.
+
+    Parameters
+    ----------
+    window : QMainWindow
+        GUI instance holding a loaded dataset.
+    """
+    # Add all top level keys to the selection list of the gui
+    for label in window.dataset.get_labels():
+        window.selectedFilesList.addItem(label)
+
+    # FEATURE REQUEST: Make this a setting
+    # Select all items by default
+    window.selectedFilesList.selectAll()
+
+    # Edit combobox to show all available plot types
+    try:
+        for function in window.get_plot_functions(window.get_current_device()):
+            window.plotTypeCombo.addItem(function)
+
+    except KeyError:
+        window.console_print(
+            f"Incompatible device type [{window.get_current_device()}] found in {window.get_dataset_name()}, select another dataset or implement the device type. DataSet path: N/A")
+        raise IncompatibleDeviceTypeFound
+
+    window.console_print("DataSet loaded")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="gui.utils.dataset_tools.save_dataset.save_dataset"></a>
+    <div class="doc doc-contents first">
+
+        <p>Save the currently loaded dataset to disk using a file dialog.</p>
+<p>Behaviour:
+- Ensures a dataset is loaded before saving.
+- Opens a save-file dialog and writes the dataset via <code>DataSetJSONEncoder</code>.
+- Auto-appends a valid extension if necessary.
+- Updates the stored dataset location and logs status messages.</p>
+<h3 id="gui.utils.dataset_tools.save_dataset.save_dataset--parameters">Parameters</h3>
+<p>window : QMainWindow
+    GUI window containing the active dataset.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/utils/dataset_tools/save_dataset.py</code></summary>
+              <pre class="highlight"><code class="language-python">@with_logging
+def save_dataset(window: QtWidgets.QMainWindow, *args, **kwargs):
+    """
+    Save the currently loaded dataset to disk using a file dialog.
+
+    Behaviour:
+    - Ensures a dataset is loaded before saving.
+    - Opens a save-file dialog and writes the dataset via `DataSetJSONEncoder`.
+    - Auto-appends a valid extension if necessary.
+    - Updates the stored dataset location and logs status messages.
+
+    Parameters
+    ----------
+    window : QMainWindow
+        GUI window containing the active dataset.
+    """
+
+    # Make sure there is a dataset to save
+    if window.get_dataset_name() is None:
+        return window.console_print("Err: Must first load dataset", level="warning")
+
+    # Run the file dialog
+    # TODO: There's a bug in ubuntu 24 that has the filter reinitialised when navigating the path
+    file_name = QtWidgets.QFileDialog.getSaveFileName(
+        parent=window,
+        caption="Save file to disk",
+        filter="DataSets (*.json *.dataset *.ds);;All (*)",
+        initialFilter="DataSets (*.json *.dataset *.ds)"
+    )[0]
+
+    if file_name != "":
+        # Ensure the file name has a valid extension
+        if file_name:
+            if not any(file_name.endswith(ext) for ext in ('.json', '.dataset', '.ds')):
+                # Default to .dataset if no valid extension
+                file_name += '.ds'
+
+        with open(file_name, "w") as json_file:
+            current_dataset = window.get_dataset()
+            json.dump(current_dataset, json_file, cls=fs.DataSetJSONEncoder)
+            current_dataset.set_location(file_name)
+        json_file.close()
+
+        return window.console_print(f"Saved dataset file to {file_name}")
+    else:
+        # File dialog was exited without choosing a file
+        return window.console_print(f"No file selected")</code></pre>
+            </details>
+    </div>
+
+</div><h2 id="other">Other</h2>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="gui.utils.get_qwidget_value.get_qwidget_value"></a>
+    <div class="doc doc-contents first">
+
+        <p>Extract the current value from common Qt widget types.</p>
+<p>Supported widgets:
+- QDoubleSpinBox / QSpinBox → numeric value
+- QCheckBox → boolean <code>isChecked</code>
+- QLineEdit / QComboBox → text, with "None"/"none" mapped to <code>None</code></p>
+<p>Raises <code>NotImplementedError</code> if the widget type is unsupported.</p>
+<h3 id="gui.utils.get_qwidget_value.get_qwidget_value--parameters">Parameters</h3>
+<p>widget : QWidget
+    The widget whose value should be extracted.</p>
+<h3 id="gui.utils.get_qwidget_value.get_qwidget_value--returns">Returns</h3>
+<p>Any
+    The widget's value in a Python-friendly type.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/utils/get_qwidget_value.py</code></summary>
+              <pre class="highlight"><code class="language-python">def get_qwidget_value(widget):
+    """
+    Extract the current value from common Qt widget types.
+
+    Supported widgets:
+    - QDoubleSpinBox / QSpinBox → numeric value
+    - QCheckBox → boolean `isChecked`
+    - QLineEdit / QComboBox → text, with "None"/"none" mapped to `None`
+
+    Raises `NotImplementedError` if the widget type is unsupported.
+
+    Parameters
+    ----------
+    widget : QWidget
+        The widget whose value should be extracted.
+
+    Returns
+    -------
+    Any
+        The widget's value in a Python-friendly type.
+    """
+    if not isinstance(widget, QtWidgets.QWidget):
+        raise ValueError("Input must be a QWidget instance")
+
+    if isinstance(widget, QtWidgets.QDoubleSpinBox) or isinstance(widget, QtWidgets.QSpinBox):
+        return widget.value()
+    elif isinstance(widget, QtWidgets.QCheckBox):
+        return widget.isChecked()
+    elif isinstance(widget, QtWidgets.QLineEdit):
+        return _cast_none_string_to_none_type(widget.text())
+    elif isinstance(widget, QtWidgets.QComboBox):
+        return _cast_none_string_to_none_type(widget.currentText())
+    else:
+        raise NotImplementedError(f"Widget type {type(widget)} not supported")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="gui.utils.search_for_first_active_radio_button.search_for_first_active_radio_button"></a>
+    <div class="doc doc-contents first">
+
+        <p>Find and return the checked QRadioButton within a dialog.</p>
+<p>Scans all child radio buttons and returns the first active one.</p>
+<h3 id="gui.utils.search_for_first_active_radio_button.search_for_first_active_radio_button--parameters">Parameters</h3>
+<p>dialog : QDialog
+    Container widget containing radio buttons.</p>
+<h3 id="gui.utils.search_for_first_active_radio_button.search_for_first_active_radio_button--returns">Returns</h3>
+<p>QRadioButton or None
+    The checked radio button, or <code>None</code> if no selection exists.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/utils/search_for_first_active_radio_button.py</code></summary>
+              <pre class="highlight"><code class="language-python">def search_for_first_active_radio_button(dialog: QtWidgets.QDialog) -&gt; QtWidgets.QRadioButton:
+    """
+    Find and return the checked QRadioButton within a dialog.
+
+    Scans all child radio buttons and returns the first active one.
+
+    Parameters
+    ----------
+    dialog : QDialog
+        Container widget containing radio buttons.
+
+    Returns
+    -------
+    QRadioButton or None
+        The checked radio button, or `None` if no selection exists.
+    """
+    for radio_button in dialog.findChildren(QtWidgets.QRadioButton):
+        if radio_button.isChecked():
+            return radio_button
+    return None</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="gui.utils.split_camelCase.split_camel_case"></a>
+    <div class="doc doc-contents first">
+
+        <p>Split a CamelCase string into its component words.</p>
+<h3 id="gui.utils.split_camelCase.split_camel_case--examples">Examples</h3>
+<p>"MyPlotType" → ["My", "Plot", "Type"]</p>
+<h3 id="gui.utils.split_camelCase.split_camel_case--parameters">Parameters</h3>
+<p>camel_case : str
+    Input CamelCase string.</p>
+<h3 id="gui.utils.split_camelCase.split_camel_case--returns">Returns</h3>
+<p>list[str]
+    List of lowercase/uppercase-correct word segments.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/utils/split_camelCase.py</code></summary>
+              <pre class="highlight"><code class="language-python">def split_camel_case(camel_case) -&gt; list[str]:
+    """
+    Split a CamelCase string into its component words.
+
+    Examples
+    --------
+    "MyPlotType" → ["My", "Plot", "Type"]
+
+    Parameters
+    ----------
+    camel_case : str
+        Input CamelCase string.
+
+    Returns
+    -------
+    list[str]
+        List of lowercase/uppercase-correct word segments.
+    """
+    return re.findall(r'[A-Z]?[a-z]+|[A-Z]+(?=[A-Z]|$)', camel_case)</code></pre>
+            </details>
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../plot_manager/" class="btn btn-neutral float-left" title="GUI - Plot Manager"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../contracts/data/data_types/" class="btn btn-neutral float-right" title="Data Types">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../plot_manager/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../contracts/data/data_types/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

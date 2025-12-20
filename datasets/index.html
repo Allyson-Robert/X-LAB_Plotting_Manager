@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/datasets/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>What are datasets - X-LAB Plotting Manager</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "What are datasets";
+        var mkdocs_page_input_path = "datasets.md";
+        var mkdocs_page_url = "/X-LAB_Plotting_Manager/datasets/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> X-LAB Plotting Manager
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../installing/">Installing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../getting_started/">Getting Started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../design_philosophy/">How to think about this application?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../implementing_contracts/">How do I implement contracts?</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">What are datasets</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#why-datasets-matter">Why datasets matter</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#typical-lifecycle-of-a-dataset">Typical lifecycle of a dataset</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-creation">1. Creation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-storage">2. Storage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-execution">3. Execution</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tldr">TL;DR</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../logging/">Logging & debugging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../known_issues/">Known Issues</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/gui/windows_and_dialogs/">GUI - Windows</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/gui/plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/gui/utils/">GUI - Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/contracts/plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/contracts/devices/">Contracts - Devices</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/contracts/file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/contracts/observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/class_utils/">Utils - Class Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/utils/others/">Utils - Others</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/dataset_manager/">DataSet</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">X-LAB Plotting Manager</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Guide</li>
+      <li class="breadcrumb-item active">What are datasets</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/datasets.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="datasets">Datasets</h1>
+<p>A <strong>dataset</strong> is a small, portable configuration file describing <em>which data belongs together</em>, <em>how it should be interpreted</em>, and <em>how it can be plotted</em>. 
+Datasets are human-readable JSON files with extensions such as:</p>
+<ul>
+<li><code>.ds</code>  </li>
+<li><code>.dataset</code>  </li>
+<li><code>.json</code>  </li>
+</ul>
+<p>These files are the backbone of the framework’s reproducible analysis system.</p>
+<hr />
+<h2 id="why-datasets-matter">Why datasets matter</h2>
+<p>Typical ad-hoc analysis involves scattering paths, parameters, units, and processing logic across multiple scripts. 
+Over time, this leads to:</p>
+<ul>
+<li>inconsistent metadata  </li>
+<li>accidental path mistakes  </li>
+<li>hard-to-reproduce results  </li>
+<li>difficulty sharing analyses across a team  </li>
+</ul>
+<p>A <strong>dataset</strong> solves this by acting as a <em>single source of truth</em>. 
+It encapsulates:</p>
+<ul>
+<li>experiment metadata  </li>
+<li>device type  </li>
+<li>datafile grouping  </li>
+<li>labels and colours  </li>
+<li>the experiment timestamp  </li>
+<li>notes and documentation  </li>
+</ul>
+<p>The GUI and framework then build the correct:</p>
+<ul>
+<li>data readers  </li>
+<li>processors  </li>
+<li>plotters  </li>
+</ul>
+<p>…automatically and consistently.</p>
+<hr />
+<h2 id="typical-lifecycle-of-a-dataset">Typical lifecycle of a dataset</h2>
+<h3 id="1-creation">1. <strong>Creation</strong></h3>
+<p>Datasets are primarily created using the <strong>Data Creation Window</strong> in the GUI.<br />
+This ensures correctness and prevents invalid or incomplete JSON.</p>
+<p>In this window the user:</p>
+<ul>
+<li>names the dataset  </li>
+<li>selects the device  </li>
+<li>sets the <strong>experiment date &amp; time</strong>  </li>
+<li>adds one or more datafiles and assigns labels  </li>
+<li>optionally assigns colours  </li>
+<li>writes notes or comments  </li>
+<li>saves the dataset JSON to disk  </li>
+</ul>
+<p>All required metadata is enforced by the window.</p>
+<hr />
+<h3 id="2-storage">2. <strong>Storage</strong></h3>
+<p>A dataset is stored as a compact JSON configuration. 
+Key fields include:</p>
+<ul>
+<li>dataset name  </li>
+<li>creation timestamp  </li>
+<li>experiment timestamp  </li>
+<li>device identifier  </li>
+<li>list of files and their labels  </li>
+<li>optional colours  </li>
+<li>notes  </li>
+</ul>
+<p>A custom encoder and decoder handle the saving and loading of <code>DataSet</code> instances from JSON files on disk.</p>
+<p><strong>Example (illustrative only):</strong></p>
+<pre><code class="language-json">{
+    &quot;location&quot;: null,
+    &quot;name&quot;: &quot;Example Set&quot;,
+    &quot;creation_date&quot;: &quot;2025.12.02_14.19.54&quot;,
+    &quot;experiment_date_time&quot;: &quot;2023.03.30_13.19.54&quot;,
+    &quot;device&quot;: &quot;Generic&quot;,
+    &quot;notes&quot;: &quot;&quot;,
+    &quot;console&quot;: {},
+    &quot;structure_type&quot;: &quot;flat&quot;,
+    &quot;filepaths&quot;: {
+        &quot;Example IV Curve&quot;: &quot;path/to/IV_2023_03_30_13_17_28.txt&quot;
+    },
+    &quot;colours&quot;: {}
+}
+</code></pre>
+<p><em>(This example demonstrates the structure only. Do not use it directly.)</em></p>
+<hr />
+<h3 id="3-execution">3. <strong>Execution</strong></h3>
+<p>Once a dataset is loaded in the main GUI:</p>
+<ol>
+<li><strong>Its files are automatically listed</strong>  </li>
+<li><strong>The user selects a subset of files</strong> to plot  </li>
+<li><strong>The device determines which plots are valid</strong>  </li>
+<li><strong>Plot options appear immediately</strong>  </li>
+<li><strong>The run happens in a background worker thread</strong>  </li>
+<li><strong>The reader, processor, and plotter cooperate automatically</strong>  </li>
+<li><strong>The result is displayed to the user</strong></li>
+</ol>
+<hr />
+<h2 id="tldr">TL;DR</h2>
+<p>Datasets provide a clean, structured, reproducible way to define:</p>
+<ul>
+<li>what the data is  </li>
+<li>where it lives  </li>
+<li>how it should be interpreted  </li>
+<li>which device and plots apply  </li>
+<li>how files relate to one another  </li>
+<li>metadata needed for processing  </li>
+</ul>
+<p>Together with the Data Creation Window, datasets transform analysis workflows from scattered scripts into a <strong>declarative, maintainable, and shareable system</strong>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../implementing_contracts/" class="btn btn-neutral float-left" title="How do I implement contracts?"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../logging/" class="btn btn-neutral float-right" title="Logging & debugging">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../implementing_contracts/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../logging/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

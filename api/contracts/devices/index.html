@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/api/contracts/devices/" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Contracts - Devices - X-LAB Plotting Manager</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Contracts - Devices";
+        var mkdocs_page_input_path = "api/contracts/devices.md";
+        var mkdocs_page_url = "/X-LAB_Plotting_Manager/api/contracts/devices/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> X-LAB Plotting Manager
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../installing/">Installing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting Started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../design_philosophy/">How to think about this application?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../implementing_contracts/">How do I implement contracts?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">What are datasets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../known_issues/">Known Issues</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../gui/windows_and_dialogs/">GUI - Windows</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gui/plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gui/utils/">GUI - Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Contracts - Devices</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#contracts.device_worker.WorkerMeta">WorkerMeta</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#contracts.device_worker.DeviceWorker">DeviceWorker</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#contracts.device_worker.DeviceWorkerCore">DeviceWorkerCore</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/class_utils/">Utils - Class Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/others/">Utils - Others</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../dataset_manager/">DataSet</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">X-LAB Plotting Manager</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API Reference</li>
+      <li class="breadcrumb-item active">Contracts - Devices</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/contracts/devices.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="devices">Devices</h1>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="contracts.device_worker.WorkerMeta"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="type">type</span>(<span title="abc.ABC">ABC</span>)</code>, <code><span title="type">type</span>(<span title="PyQt5.QtCore.QObject">QObject</span>)</code></p>
+
+
+
+        <p>Metaclass enabling multiple inheritance of ABC and QObject.</p>
+
+
+<details class="overview" open>
+  <summary>Overview</summary>
+  <p>Resolves metaclass conflicts so <code>DeviceWorker</code> can be both an ABC
+and a Qt QObject.</p>
+</details>        <ul>
+<li>Combines behavior of <code>ABC</code> and <code>QtCore.QObject</code> metatypes.</li>
+</ul>
+
+
+<details class="usage-notes" open>
+  <summary>Usage Notes</summary>
+  <p>Use this metaclass only for worker classes that inherit from QObject.</p>
+</details>
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>contracts/device_worker.py</code></summary>
+                <pre class="highlight"><code class="language-python">class WorkerMeta(type(ABC), type(QtCore.QObject)):
+    """
+        Metaclass enabling multiple inheritance of ABC and QObject.
+
+        Overview:
+            Resolves metaclass conflicts so `DeviceWorker` can be both an ABC
+            and a Qt QObject.
+
+        - Combines behavior of `ABC` and `QtCore.QObject` metatypes.
+
+        Usage Notes:
+            Use this metaclass only for worker classes that inherit from QObject.
+    """
+    pass</code></pre>
+              </details>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="contracts.device_worker.DeviceWorker"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="abc.ABC">ABC</span></code>, <code><span title="PyQt5.QtCore.QObject">QObject</span></code></p>
+
+
+
+        <p>Abstract base for device worker objects that run in a Qt context.</p>
+
+
+<details class="overview" open>
+  <summary>Overview</summary>
+  <p>Defines the required API for workers that accept a DataSet,
+run a task, and accept data/processor types.</p>
+</details>        <ul>
+<li>Required methods: set_data, run, set_data_type, set_processor_type.</li>
+<li>Provides a short <code>identifier</code> used for run labelling.</li>
+</ul>
+
+
+<details class="usage-notes" open>
+  <summary>Usage Notes</summary>
+  <p>Concrete workers should implement thread-safe run logic and emit signals.</p>
+</details>
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>contracts/device_worker.py</code></summary>
+                <pre class="highlight"><code class="language-python">class DeviceWorker(ABC, QtCore.QObject, metaclass=WorkerMeta):
+    """
+        Abstract base for device worker objects that run in a Qt context.
+
+        Overview:
+            Defines the required API for workers that accept a DataSet,
+            run a task, and accept data/processor types.
+
+        - Required methods: set_data, run, set_data_type, set_processor_type.
+        - Provides a short `identifier` used for run labelling.
+
+        Usage Notes:
+            Concrete workers should implement thread-safe run logic and emit signals.
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.identifier = str(uuid.uuid4())[:4]
+
+    @abstractmethod
+    def set_data(self, dataset: DataSet):
+        pass
+
+    @abstractmethod
+    def run(self):
+        pass
+
+    @abstractmethod
+    def set_data_type(self, data_type):
+        pass
+
+    @abstractmethod
+    def set_processor_type(self, processor_type):
+        pass</code></pre>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="contracts.device_worker.DeviceWorkerCore"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="contracts.device_worker.DeviceWorker" href="#contracts.device_worker.DeviceWorker">DeviceWorker</a></code></p>
+
+
+
+        <p>Concrete worker base implementing common setup and progress handling.</p>
+
+
+<details class="overview" open>
+  <summary>Overview</summary>
+  <p>Implements option handling, dataset instantiation and a simple run
+flow that prepares data processors, emits progress, and calls a plot.</p>
+</details>        <ul>
+<li>Manages <code>device</code>, <code>dataset</code>, <code>plot_type</code>, <code>options</code>, and <code>data_processors</code>.</li>
+<li>Populates processors per-file and emits <code>progress</code>/<code>finished</code> signals.</li>
+<li><code>set_data_type</code> / <code>set_processor_type</code> are simple setters.</li>
+</ul>
+
+
+<details class="usage-notes" open>
+  <summary>Usage Notes</summary>
+  <p>Subclasses provide plotting methods referenced by <code>plot_type</code> and may
+extend run behaviour if needed.</p>
+</details>
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>contracts/device_worker.py</code></summary>
+                <pre class="highlight"><code class="language-python">@decorate_class_with_logging(log_level=DEBUG_WORKER)
+class DeviceWorkerCore(DeviceWorker):
+    """
+        Concrete worker base implementing common setup and progress handling.
+
+        Overview:
+            Implements option handling, dataset instantiation and a simple run
+            flow that prepares data processors, emits progress, and calls a plot.
+
+        - Manages `device`, `dataset`, `plot_type`, `options`, and `data_processors`.
+        - Populates processors per-file and emits `progress`/`finished` signals.
+        - `set_data_type` / `set_processor_type` are simple setters.
+
+        Usage Notes:
+            Subclasses provide plotting methods referenced by `plot_type` and may
+            extend run behaviour if needed.
+    """
+    finished = QtCore.pyqtSignal(dict)
+    progress = QtCore.pyqtSignal(int)
+    console_print = QtCore.pyqtSignal(str, str)
+
+    def __init__(self, device, dataset, plot_type, options: PlotterOptions):
+        super().__init__()
+
+        self.device = device
+        self.dataset = dataset
+        self.plot_type = plot_type
+
+        self.options = options
+        self.options.add_option(label="experiment_datetime", value = dataset.get_experiment_date())
+
+
+        self.data_processors = None
+
+        self.processor_type = None
+        self.data_type = None
+
+    def set_data_type(self, data_type):
+        if not issubclass(data_type, Data):
+            raise TypeError("data_type must be a subclass of Data")
+        self.data_type = data_type
+
+    def set_processor_type(self, processor_type):
+        if not issubclass(processor_type, DataProcessor):
+            raise TypeError("processor_type must be a subclass of DataProcessor")
+        self.processor_type = processor_type
+
+    def set_data(self, dataset: DataSet):
+        if not isinstance(dataset, DataSet):
+            raise TypeError("dataset must be an instance of DataSet")
+
+        # CHECK: Check that dataset and processor types have been set
+        # Initialise an empty dict and get the required filepaths
+        self.data_processors = {}
+        filepaths = dataset.get_filepaths()
+
+        colours = dataset.get_all_colours()
+        if colours is not None:
+            self.options.add_option(label="colours", value=colours)
+
+        # Progress housekeeping
+        nr_of_files = len(filepaths)
+        counter = 0
+
+        # Read the dataset and instantiate a processor for each file
+        for key in filepaths:
+            data = self.data_type(key)
+            data.read_file(filepaths[key])
+            self.data_processors[key] = self.processor_type(data)
+
+            # Emit progress signal
+            counter += 1
+            self.progress.emit(int(100*counter/nr_of_files))
+
+    def run(self):
+        try:
+            # Set the data
+            self.set_data(self.dataset)
+
+            # Grab the correct plot and execute it, including uuid in the title
+            title = f"{self.dataset.get_name()} (run {self.identifier})"
+            plot_type = getattr(self, self.plot_type)
+            plot_type(title=title)
+            self.finished.emit({"ok": True})
+
+        # Catchall is intentional
+        except Exception as e:
+            import traceback
+            self.finished.emit({"ok": False,"message": f"{e}" ,"traceback": traceback.format_exc()})</code></pre>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../plotters/plotter_options/" class="btn btn-neutral float-left" title="PlotterOptions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../file_readers/" class="btn btn-neutral float-right" title="Contracts - File Readers">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../plotters/plotter_options/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../file_readers/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

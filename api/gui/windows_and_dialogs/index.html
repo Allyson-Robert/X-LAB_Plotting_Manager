@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://allyson-robert.github.io/X-LAB_Plotting_Manager/api/gui/windows_and_dialogs/" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>GUI - Windows - X-LAB Plotting Manager</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "GUI - Windows";
+        var mkdocs_page_input_path = "api/gui/windows_and_dialogs.md";
+        var mkdocs_page_url = "/X-LAB_Plotting_Manager/api/gui/windows_and_dialogs/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> X-LAB Plotting Manager
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../installing/">Installing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/">Getting Started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../design_philosophy/">How to think about this application?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../implementing_contracts/">How do I implement contracts?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../datasets/">What are datasets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../logging/">Logging & debugging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../known_issues/">Known Issues</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">GUI - Windows</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow">UiMainWindow</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow--responsibilities">Responsibilities</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow.navigate_to_docs">navigate_to_docs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow.not_implemented">not_implemented</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.MainWindow.UiMainWindow.show_about">show_about</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow">UiDataCreatorWindow</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow--overview">Overview</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow--behaviour">Behaviour</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.add_file_to_set">add_file_to_set</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.add_file_to_set--gets-the-path-and-label-and-adds-it-to-the-current-dataset-instance-while-updating-gui">Gets the path and label and adds it to the current DataSet instance while updating GUI</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.browse_dir">browse_dir</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.browse_dir--open-directory-selection-dialog-to-get-a-path-and-update-gui-when-confirmed">Open directory selection dialog to get a path and update gui when confirmed</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.browse_files">browse_files</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.browse_files--open-file-selection-dialog-to-get-a-file-path-and-update-gui-when-confirmed">Open file selection dialog to get a file path and update gui when confirmed</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.finish">finish</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.finish_button_state">finish_button_state</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.generate_set">generate_set</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.label_button_state">label_button_state</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.reset">reset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.qtexteditconsole.QTextEditConsole">QTextEditConsole</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.qtexteditconsole.QTextEditConsole--typical-usage">Typical usage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.qtexteditconsole.QTextEditConsole--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.dialogs.dialog_print.dialog_print">dialog_print</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.dialogs.dialog_print.dialog_print--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gui.windows.dialogs.generate_about_dialog.generate_about_dialog">generate_about_dialog</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.dialogs.generate_about_dialog.generate_about_dialog--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gui.windows.dialogs.generate_about_dialog.generate_about_dialog--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plot_manager/">GUI - Plot Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/">GUI - Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Data</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_types/">Data Types</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/data/data_processors/">Data Processors</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Contracts - Plotters</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter/">Plotter</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../contracts/plotters/plotter_options/">PlotterOptions</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/devices/">Contracts - Devices</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/file_readers/">Contracts - File Readers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contracts/observable/">Contracts - Observable</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/class_utils/">Utils - Class Utils</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/errors/">Utils - Errors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/logging/">Utils - Logging</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../utils/others/">Utils - Others</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../dataset_manager/">DataSet</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">X-LAB Plotting Manager</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API Reference</li>
+      <li class="breadcrumb-item active">GUI - Windows</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager/edit/master/docs/api/gui/windows_and_dialogs.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="windows-and-dialogs">Windows and Dialogs</h1>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="gui.windows.MainWindow.UiMainWindow"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="PyQt5.QtWidgets.QMainWindow">QMainWindow</span></code></p>
+
+
+
+        <p>Main GUI window for interactive, automated plotting of experimental data.</p>
+<h3 id="gui.windows.MainWindow.UiMainWindow--responsibilities">Responsibilities</h3>
+<ul>
+<li>Load the main QtDesigner-generated UI file and dynamically attach device-
+  specific option panels to the central <code>QStackedWidget</code>.</li>
+<li>Manage the currently loaded <code>DataSet</code>:<ul>
+<li>Creating, loading, saving, and autosaving datasets.</li>
+<li>Displaying raw JSON content and console history in helper dialogs.</li>
+<li>Updating header fields (set name, device type) when datasets change.</li>
+</ul>
+</li>
+<li>Integrate logging with a QTextEdit-based console for time-stamped messages.</li>
+<li>Provide a thin controller layer for:<ul>
+<li>Launching the plotting pipeline via <code>plot_manager</code>.</li>
+<li>Handling progress updates and console appends.</li>
+<li>Adding notes and console history back into the dataset.</li>
+</ul>
+</li>
+</ul>
+<p>On construction, the window:
+- Discovers available devices from <code>implementations.devices</code>.
+- Loads and registers per-device widgets and their plot functions.
+- Wires menu actions and buttons to dataset, plotting, and utility actions.
+- Optionally auto-opens a demo dataset if a file name is supplied.</p>
+<p>The class is intended to be the central hub of the GUI application, with
+device-specific logic pushed into worker classes and implementations.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>gui/windows/MainWindow.py</code></summary>
+                <pre class="highlight"><code class="language-python">class UiMainWindow(QtWidgets.QMainWindow):
+    """
+    Main GUI window for interactive, automated plotting of experimental data.
+
+    Responsibilities
+    ----------------
+    - Load the main QtDesigner-generated UI file and dynamically attach device-
+      specific option panels to the central `QStackedWidget`.
+    - Manage the currently loaded `DataSet`:
+        * Creating, loading, saving, and autosaving datasets.
+        * Displaying raw JSON content and console history in helper dialogs.
+        * Updating header fields (set name, device type) when datasets change.
+    - Integrate logging with a QTextEdit-based console for time-stamped messages.
+    - Provide a thin controller layer for:
+        * Launching the plotting pipeline via `plot_manager`.
+        * Handling progress updates and console appends.
+        * Adding notes and console history back into the dataset.
+
+    On construction, the window:
+    - Discovers available devices from `implementations.devices`.
+    - Loads and registers per-device widgets and their plot functions.
+    - Wires menu actions and buttons to dataset, plotting, and utility actions.
+    - Optionally auto-opens a demo dataset if a file name is supplied.
+
+    The class is intended to be the central hub of the GUI application, with
+    device-specific logic pushed into worker classes and implementations.
+    """
+    def __init__(self, demo_file_name: str = None):
+        super(UiMainWindow, self).__init__()
+
+        self.thread = None
+        self.device_worker = None
+        self.dataset = None
+        self.dataset_location = None
+
+        # Load the UI, Note that loadUI adds objects to 'self' using objectName
+        self.dataWindow = None
+        uic.loadUi(constant_paths.WINDOW_PATH, self)
+
+        # Read the config file
+        self.config = read_config(constant_paths.CONFIG_PATH)
+
+        # Create/Get a logger with the desired settings
+        self.logger = logging.getLogger(constants.LOG_NAME)
+        self.consoleTextEdit.setFormatter(
+            logging.Formatter(
+                "%(asctime)s [%(levelname)8.8s] %(message)s",
+                datefmt=f'{constants.DATETIME_FORMAT}: '
+            )
+        )
+        self.logger.addHandler(self.consoleTextEdit)
+        self.logger.setLevel(self.config['log_level'])
+
+        self.plot_functions = {}
+        self.devices = {}
+
+        # Get list of devices as defined manually in the.devices __init__.py file
+        for entry in devices.__all__:
+            # Find and load the widget for any given device and add it to the stackedWidget
+            entry_ui_file = entry.lower() + ".ui"
+            entry_widget = uic.loadUi(constant_paths.WIDGET_PATH + entry_ui_file)
+            entry_index = self.stackedWidget.addWidget(entry_widget)
+            self.devices[entry] = entry_index
+
+            # Import the corresponding module and get the class methods to set the plot_functions combobox when needed
+            module = importlib.import_module(f"{devices.workers.__name__}.{entry.lower()}")
+            entry_cls = getattr(module, entry)
+            self.plot_functions[entry] = get_class_methods(entry_cls, ignore=["run"])
+
+        # Reset stacked widget to empty page
+        self.stackedWidget.setCurrentWidget(self.stackedWidget.widget(0))
+
+        # Define menubar actions
+        self.actionCreate_Set.triggered.connect(partial(create_dataset, self))
+        self.actionSave_Set.triggered.connect(partial(save_dataset, self))
+        self.actionLoad_Set.triggered.connect(partial(open_dataset_file, self))
+        self.actionPreferences.triggered.connect(self.not_implemented)
+        self.actionQuit.triggered.connect(self.quit)
+
+        self.actionSave_format.triggered.connect(self.not_implemented)
+        self.actionColour_scheme.triggered.connect(self.not_implemented)
+        self.actionLine_width.triggered.connect(self.not_implemented)
+
+        self.actionDocumentation.triggered.connect(self.navigate_to_docs)
+        self.actionAbout.triggered.connect(self.show_about)
+
+        # Define gui button actions
+        self.showDataBtn.clicked.connect(self.display_data)
+        self.showHistoryBtn.clicked.connect(self.display_history)
+        self.addNotesBtn.clicked.connect(self.add_notes)
+
+        self.appendBtn.clicked.connect(self.append_console_to_set)
+        self.clearBtn.clicked.connect(partial(clear_data, window=self))
+        self.clearAllBtn.clicked.connect(partial(clear_all, window=self))
+        self.quitBtn.clicked.connect(self.quit)
+
+        # Define stackedWidget widget actions
+        self.plotBtn.clicked.connect(partial(plot_manager, self))
+
+        # Make sure the progress bar is cleared
+        self.progressBar.setValue(0)
+
+        # Show the app
+        self.show()
+        self.console_print("Program Started")
+
+    # Getters
+    def get_plot_functions(self, device='Generic') -&gt; list:
+        return self.plot_functions[device]
+
+    def get_current_plot_function(self) -&gt; str:
+        return self.plotTypeCombo.currentText()
+
+    def get_current_device(self) -&gt; str:
+        return self.dataset.get_device()
+
+    def get_dataset(self):
+        return self.dataset
+
+    def get_dataset_name(self) -&gt; str:
+        if self.dataset is None:
+            return None
+        return self.dataset.get_name()
+
+    def get_dataset_window(self) -&gt; QtWidgets.QDialog:
+        return self.dataWindow
+
+    # Setters
+    def set_dataset_window(self, dataset_window: QtWidgets.QDialog):
+        self.dataWindow = dataset_window
+
+    def set_dataset(self, dataset: dataset_manager.dataset.DataSet):
+        self.dataset = dataset
+
+    # FUNCTIONALITY
+    def autosave(self):
+        file_name = self.dataset.get_location()
+        if file_name is None:
+            return self.console_print("Cannot autosave, no file location known. Open or create dataset first")
+
+        with open(file_name, "w") as json_file:
+            json.dump(self.dataset, json_file, cls=dataset_manager.DataSetJSONEncoder)
+        json_file.close()
+
+        return self.console_print(f"Saved dataset to {file_name}")
+
+    def display_data(self):
+        # Abort if no dataset was loaded
+        if self.dataset is None:
+            return self.console_print("Err: Must first load DataSet", level="warning")
+
+        # Pretty print the dataset in a simple dialog
+        pretty_json = json.dumps(
+            self.dataset,
+            indent=4,
+            separators=(',', ': '),
+            cls=dataset_manager.DataSetJSONEncoder
+        )
+        dialog_print(window=self, title=f"DataSet RAW: {self.dataset.get_name()}", contents=pretty_json)
+
+        return None
+
+    def display_history(self):
+        if self.dataset is None:
+            return self.console_print("Err: Must first load DataSet", level="warning")
+
+        # Prints only the console history to a simple dialog
+        pretty_history = ""
+        for k, v in sorted(self.dataset.get_console().items()):
+            line = f"{v}\n"
+            pretty_history += line
+
+        dialog_print(window=self, title=f"DataSet History: {self.dataset.get_name()}", contents=pretty_history)
+
+        return None
+
+    def add_notes(self):
+        if self.dataset is None:
+            return self.console_print("Err: Must first load DataSet", level="warning")
+
+        # Add any notes to the dataset_manager with a trailing new line
+        self.dataset.add_notes(self.notesPlainText.toPlainText() + "\n")
+        self.console_print("Notes added to dataset_manager")
+        self.autosave()
+
+        return None
+
+    def update_header(self):
+        # Header should reflect opened dataset
+        self.currSetNameLineEdit.setText(self.dataset.get_name())
+        self.currDeviceLineEdit.setText(self.dataset.get_device())
+
+        # Stacked widget should show the correct widget for the opened dataset
+        new_page = self.stackedWidget.widget(self.devices[self.dataset.get_device()])
+        self.stackedWidget.setCurrentWidget(new_page)
+
+    def report_progress(self, progress: int):
+        if not (isinstance(progress, int) and 0 &lt;= progress &lt;= 100):
+            raise ValueError("Progress must be an integer between 0 and 100")
+
+        self.progressBar.setValue(progress)
+
+    def on_plot_thread_finished(self, thread_data):
+        # Reset UI elements
+        self.progressBar.setValue(0)
+
+        # Free button and log to console
+        self.plotBtn.setEnabled(True)
+
+        if thread_data['ok']:
+            self.console_print(f"(run {self.device_worker.identifier}) finished succesfully")
+        else:
+            self.console_print(message=thread_data["message"], level="alert")
+            print(thread_data["traceback"])
+
+        # Cleanup the worker and the thread after showing the message
+        self.thread.quit()
+        self.thread.wait()
+        self.thread.deleteLater()
+
+        self.device_worker = None
+        self.thread = None
+
+        self.console_print(message="Disposed of Thread and Worker")
+
+    def save_to_file(self, plaintext: str):
+        file_dialog = QtWidgets.QFileDialog.getSaveFileName(self, "Save File", "", "Text Files (*.txt);;All Files (*)")
+        if file_dialog[0]:  # Check if a file was selected
+            file_path = file_dialog[0]
+            with open(file_path, 'w') as file:
+                file.write(plaintext)
+
+    def console_print(self, message, level="normal"):
+        # Print a message to the gui console
+        now = datetime.datetime.now()
+        fstring_to_print = now.strftime(f"{constants.DATETIME_FORMAT}: ") + message
+
+        c = ConsoleColours()
+
+        self.consoleTextEdit.setTextColor(c.get_colour(level))
+        self.consoleTextEdit.append(fstring_to_print)
+        self.consoleTextEdit.setTextColor(c.get_colour("normal"))
+
+    def append_console_to_set(self):
+        if self.dataset is None:
+            return self.console_print("Err: Must first load DataSet", level="warning")
+
+        # Append console contents to the dataset_manager
+        console_text = self.consoleTextEdit.toPlainText()
+        now = datetime.datetime.now()
+        self.dataset.add_console(now.strftime(constants.DATETIME_FORMAT), console_text)
+        self.console_print("Added console contents to set")
+        self.autosave()
+
+        return None
+
+    def show_about(self):
+        """
+            Shows a simple window with licence, authorship and build information
+        """
+        # Grab the "about" info from about.txt
+        with open(constant_paths.ABOUT_PATH) as about_file:
+            about_contents = about_file.read()
+
+        about_dialog = generate_about_dialog(about_contents, self.centralWidget(), constant_paths.LOGO_PATH)
+
+        # Show the about dialog
+        about_dialog.exec_()
+
+    def navigate_to_docs(self):
+        """
+            Opens the default web browser and navigates to the documentation URL.
+        """
+        import webbrowser
+        webbrowser.open(constant_paths.DOCS_URL)
+
+    def not_implemented(self):
+        """
+            Shows the user a message that the current feature is planned but not yet implemented.
+        """
+        self.console_print("Feature not implemented", level='warning')
+
+    # ESC now triggers a program exit
+    def keyPressEvent(self, event) -&gt; None:
+        if event.key() == QtCore.Qt.Key.Key_Escape:
+            self.quit()
+        else:
+            super(UiMainWindow, self).keyPressEvent(event)
+
+    # CHECK: Program exit is not safe
+    @staticmethod
+    def quit():
+        # Terminate the application
+        sys.exit()</code></pre>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.MainWindow.UiMainWindow.navigate_to_docs" class="doc doc-heading">
+            <code class="highlight language-python">navigate_to_docs()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Opens the default web browser and navigates to the documentation URL.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/MainWindow.py</code></summary>
+              <pre class="highlight"><code class="language-python">def navigate_to_docs(self):
+    """
+        Opens the default web browser and navigates to the documentation URL.
+    """
+    import webbrowser
+    webbrowser.open(constant_paths.DOCS_URL)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.MainWindow.UiMainWindow.not_implemented" class="doc doc-heading">
+            <code class="highlight language-python">not_implemented()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Shows the user a message that the current feature is planned but not yet implemented.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/MainWindow.py</code></summary>
+              <pre class="highlight"><code class="language-python">def not_implemented(self):
+    """
+        Shows the user a message that the current feature is planned but not yet implemented.
+    """
+    self.console_print("Feature not implemented", level='warning')</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.MainWindow.UiMainWindow.show_about" class="doc doc-heading">
+            <code class="highlight language-python">show_about()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Shows a simple window with licence, authorship and build information</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/MainWindow.py</code></summary>
+              <pre class="highlight"><code class="language-python">def show_about(self):
+    """
+        Shows a simple window with licence, authorship and build information
+    """
+    # Grab the "about" info from about.txt
+    with open(constant_paths.ABOUT_PATH) as about_file:
+        about_contents = about_file.read()
+
+    about_dialog = generate_about_dialog(about_contents, self.centralWidget(), constant_paths.LOGO_PATH)
+
+    # Show the about dialog
+    about_dialog.exec_()</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="PyQt5.QtWidgets.QDialog">QDialog</span></code></p>
+
+
+
+        <p>Dialog for interactively creating new <code>DataSet</code> instances.</p>
+<h3 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow--overview">Overview</h3>
+<p>This window guides the user through constructing a dataset by:
+- Selecting a device type from a combobox.
+- Adding individual files with custom labels, or
+- Auto-generating filepaths from a directory according to a chosen structure.
+- Setting the experiment name and experiment date/time.</p>
+<h3 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow--behaviour">Behaviour</h3>
+<ul>
+<li>Maintains an internal <code>DataSet</code> object that is updated as the user adds
+  files or generates sets from directories.</li>
+<li>Displays the current file mapping as formatted JSON in a plain-text widget.</li>
+<li>Validates that both a name and at least one file are present before
+  enabling the “Done” button.</li>
+<li>On completion (<code>finish</code>), writes name, device type, and experiment
+  datetime into the dataset and closes with an accepted result.</li>
+</ul>
+<h3 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow--parameters">Parameters</h3>
+<p>devices : list[str], optional
+    List of available device names to present in the device selection combo
+    box. Defaults to a single <code>"N/A"</code> entry when not specified.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>gui/windows/DataSetCreatorWindow.py</code></summary>
+                <pre class="highlight"><code class="language-python">class UiDataCreatorWindow(QtWidgets.QDialog):
+    """
+       Dialog for interactively creating new `DataSet` instances.
+
+       Overview
+       --------
+       This window guides the user through constructing a dataset by:
+       - Selecting a device type from a combobox.
+       - Adding individual files with custom labels, or
+       - Auto-generating filepaths from a directory according to a chosen structure.
+       - Setting the experiment name and experiment date/time.
+
+       Behaviour
+       ---------
+       - Maintains an internal `DataSet` object that is updated as the user adds
+         files or generates sets from directories.
+       - Displays the current file mapping as formatted JSON in a plain-text widget.
+       - Validates that both a name and at least one file are present before
+         enabling the “Done” button.
+       - On completion (`finish`), writes name, device type, and experiment
+         datetime into the dataset and closes with an accepted result.
+
+       Parameters
+       ----------
+       devices : list[str], optional
+           List of available device names to present in the device selection combo
+           box. Defaults to a single `"N/A"` entry when not specified.
+       """
+    def __init__(self, devices: list[str] = ["N/A"]):
+        super(UiDataCreatorWindow, self).__init__()
+
+        # Load the UI,
+        # Note that loadUI adds objects to 'self' using objectName
+        uic.loadUi("gui/windows/DataSetCreatorWindow.ui", self)
+
+        self.dataset = dataset_manager.DataSet(datetime.datetime.now().strftime("%Y.%m.%d_%H.%M.%S"))
+
+        # Add the correct devices to the experiment combo box
+        self.dataTypeCombo.addItems(devices)
+
+        # Set date to today by default
+        self.dateTimeEdit.setDateTime(datetime.datetime.now())
+
+        # Set starting tab to manual dataset creation
+        self.tabWidget.setCurrentIndex(0)
+
+        # Define widget action
+        self.browseFilesBtn.clicked.connect(self.browse_files)
+        self.browseDirBtn.clicked.connect(self.browse_dir)
+        self.addLabelBtn.clicked.connect(self.add_file_to_set)
+        self.generateBtn.clicked.connect(self.generate_set)
+        self.resetBtn.clicked.connect(self.reset)
+        self.doneBtn.clicked.connect(self.finish)
+
+        # Enable button when all is filled
+        self.showSetPlainText.textChanged.connect(self.finish_button_state)
+        self.nameEdit.textChanged.connect(self.finish_button_state)
+        self.browseFilesText.textChanged.connect(self.label_button_state)
+        self.labelEdit.textChanged.connect(self.label_button_state)
+
+        # Show the app
+        self.show()
+
+    def get_dataset(self) -&gt; dataset_manager.dataset.DataSet:
+        return self.dataset
+
+    def browse_files(self):
+        """
+        # Open file selection dialog to get a file path and update gui when confirmed
+        """
+        file_name = QtWidgets.QFileDialog.getOpenFileName(self, "Open File")
+        self.browseFilesText.setPlainText(file_name[0])
+
+    def browse_dir(self):
+        """
+        # Open directory selection dialog to get a path and update gui when confirmed
+        """
+        dir_name = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Directory')
+        self.browseDirText.setPlainText(dir_name)
+
+    def add_file_to_set(self):
+        """
+        # Gets the path and label and adds it to the current DataSet instance while updating GUI
+        """
+        # Read name and legend label from gui
+        file_name = self.browseFilesText.toPlainText()
+        file_label = self.labelEdit.text()
+
+        # Must add a label and file
+        if not (file_name and file_label):
+            self.show_message(
+                title="Label/Path Undefined",
+                message="No label or path were defined, cannot proceed"
+            )
+            return None
+
+        # Check for duplicate label
+        if file_label in self.dataset.get_labels():
+            self.show_message(
+                title="Duplicate Label",
+                message="""This label has already been used. Choose another label and try again."""
+            )
+        else:
+            # Add the file to the dataset and update the gui
+            self.dataset.set_structure_type("flat")
+            self.dataset.add_filepath(file_name, file_label)
+            self.showSetPlainText.setPlainText(
+                json.dumps(
+                    self.dataset.get_filepaths(),
+                    indent=4,
+                    separators=(',', ': ')
+                )
+            )
+            self.browseFilesText.clear()
+
+        # Empty label widget
+        self.labelEdit.clear()
+
+    def generate_set(self):
+        """
+        Automatically generate a set of filepaths based on a directory path. Will create nested structure if desired
+        """
+        path = self.browseDirText.toPlainText()
+
+        # If path is not selected, show message and return None
+        if not path:
+            self.show_message(title="No directory selected", message="""No directory was selected, please select directory and try again""")
+            return None
+
+        # Construct the filepaths for this dataset
+        active_button = split_camel_case(search_for_first_active_radio_button(self).objectName())[0]
+        errors = self.dataset.construct_filepaths(root_dir=path, type=active_button)
+
+        # Show the directories/files that were ignored to the user
+        if errors != "":
+            self.show_message(title="Files were ignored", message=errors)
+
+        # Show the files in the gui
+        self.showSetPlainText.setPlainText(
+            json.dumps(
+                self.dataset.get_filepaths(),
+                indent=4,
+                separators=(',', ': ')
+            )
+        )
+        self.dataset.set_structure_type(active_button)
+
+    def label_button_state(self):
+        """Only enable the add button once a label and a path were selected """
+        # Read name and legend label from gui
+        file_name = self.browseFilesText.toPlainText()
+        file_label = self.labelEdit.text()
+
+        if (file_name != "") and (file_label != ""):
+            self.addLabelBtn.setEnabled(True)
+        else:
+            self.addLabelBtn.setEnabled(False)
+
+
+    def finish_button_state(self):
+        """ Only enable closing when some data was included """
+        # TODO: hmmmmmmmmmmmm, should I be able to close the window if I mistakenly opened it?
+        nameTxt = self.nameEdit.text()
+        files = self.showSetPlainText.toPlainText()
+        if (files != "") and (nameTxt != ""):
+            self.doneBtn.setEnabled(True)
+        else:
+            self.doneBtn.setEnabled(False)
+
+    @staticmethod
+    def show_message(title, message):
+        msg = QtWidgets.QMessageBox()
+        msg.setWindowTitle(title)
+        msg.setText(message)
+        x = msg.exec_()
+
+    def reset(self):
+        """ Completely reset this UI by clearing all elements """
+        self.nameEdit.clear()
+        self.labelEdit.clear()
+        self.browseDirText.clear()
+        self.browseFilesText.clear()
+        self.showSetPlainText.clear()
+        self.finish_button_state()
+
+    def finish(self):
+        """ Add name, device type,  and date and time dataset before exiting """
+        self.dataset.set_name(self.nameEdit.text())
+        self.dataset.set_device(self.dataTypeCombo.currentText())
+        experiment_date_time = self.dateTimeEdit.dateTime().toPyDateTime().strftime("%Y.%m.%d_%H.%M.%S")
+        self.dataset.set_experiment_date(experiment_date_time)
+
+        self.done(1)</code></pre>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.add_file_to_set" class="doc doc-heading">
+            <code class="highlight language-python">add_file_to_set()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <h3 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.add_file_to_set--gets-the-path-and-label-and-adds-it-to-the-current-dataset-instance-while-updating-gui">Gets the path and label and adds it to the current DataSet instance while updating GUI</h3>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/DataSetCreatorWindow.py</code></summary>
+              <pre class="highlight"><code class="language-python">def add_file_to_set(self):
+    """
+    # Gets the path and label and adds it to the current DataSet instance while updating GUI
+    """
+    # Read name and legend label from gui
+    file_name = self.browseFilesText.toPlainText()
+    file_label = self.labelEdit.text()
+
+    # Must add a label and file
+    if not (file_name and file_label):
+        self.show_message(
+            title="Label/Path Undefined",
+            message="No label or path were defined, cannot proceed"
+        )
+        return None
+
+    # Check for duplicate label
+    if file_label in self.dataset.get_labels():
+        self.show_message(
+            title="Duplicate Label",
+            message="""This label has already been used. Choose another label and try again."""
+        )
+    else:
+        # Add the file to the dataset and update the gui
+        self.dataset.set_structure_type("flat")
+        self.dataset.add_filepath(file_name, file_label)
+        self.showSetPlainText.setPlainText(
+            json.dumps(
+                self.dataset.get_filepaths(),
+                indent=4,
+                separators=(',', ': ')
+            )
+        )
+        self.browseFilesText.clear()
+
+    # Empty label widget
+    self.labelEdit.clear()</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.browse_dir" class="doc doc-heading">
+            <code class="highlight language-python">browse_dir()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <h3 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.browse_dir--open-directory-selection-dialog-to-get-a-path-and-update-gui-when-confirmed">Open directory selection dialog to get a path and update gui when confirmed</h3>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/DataSetCreatorWindow.py</code></summary>
+              <pre class="highlight"><code class="language-python">def browse_dir(self):
+    """
+    # Open directory selection dialog to get a path and update gui when confirmed
+    """
+    dir_name = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Directory')
+    self.browseDirText.setPlainText(dir_name)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.browse_files" class="doc doc-heading">
+            <code class="highlight language-python">browse_files()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <h3 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.browse_files--open-file-selection-dialog-to-get-a-file-path-and-update-gui-when-confirmed">Open file selection dialog to get a file path and update gui when confirmed</h3>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/DataSetCreatorWindow.py</code></summary>
+              <pre class="highlight"><code class="language-python">def browse_files(self):
+    """
+    # Open file selection dialog to get a file path and update gui when confirmed
+    """
+    file_name = QtWidgets.QFileDialog.getOpenFileName(self, "Open File")
+    self.browseFilesText.setPlainText(file_name[0])</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.finish" class="doc doc-heading">
+            <code class="highlight language-python">finish()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add name, device type,  and date and time dataset before exiting</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/DataSetCreatorWindow.py</code></summary>
+              <pre class="highlight"><code class="language-python">def finish(self):
+    """ Add name, device type,  and date and time dataset before exiting """
+    self.dataset.set_name(self.nameEdit.text())
+    self.dataset.set_device(self.dataTypeCombo.currentText())
+    experiment_date_time = self.dateTimeEdit.dateTime().toPyDateTime().strftime("%Y.%m.%d_%H.%M.%S")
+    self.dataset.set_experiment_date(experiment_date_time)
+
+    self.done(1)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.finish_button_state" class="doc doc-heading">
+            <code class="highlight language-python">finish_button_state()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Only enable closing when some data was included</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/DataSetCreatorWindow.py</code></summary>
+              <pre class="highlight"><code class="language-python">def finish_button_state(self):
+    """ Only enable closing when some data was included """
+    # TODO: hmmmmmmmmmmmm, should I be able to close the window if I mistakenly opened it?
+    nameTxt = self.nameEdit.text()
+    files = self.showSetPlainText.toPlainText()
+    if (files != "") and (nameTxt != ""):
+        self.doneBtn.setEnabled(True)
+    else:
+        self.doneBtn.setEnabled(False)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.generate_set" class="doc doc-heading">
+            <code class="highlight language-python">generate_set()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Automatically generate a set of filepaths based on a directory path. Will create nested structure if desired</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/DataSetCreatorWindow.py</code></summary>
+              <pre class="highlight"><code class="language-python">def generate_set(self):
+    """
+    Automatically generate a set of filepaths based on a directory path. Will create nested structure if desired
+    """
+    path = self.browseDirText.toPlainText()
+
+    # If path is not selected, show message and return None
+    if not path:
+        self.show_message(title="No directory selected", message="""No directory was selected, please select directory and try again""")
+        return None
+
+    # Construct the filepaths for this dataset
+    active_button = split_camel_case(search_for_first_active_radio_button(self).objectName())[0]
+    errors = self.dataset.construct_filepaths(root_dir=path, type=active_button)
+
+    # Show the directories/files that were ignored to the user
+    if errors != "":
+        self.show_message(title="Files were ignored", message=errors)
+
+    # Show the files in the gui
+    self.showSetPlainText.setPlainText(
+        json.dumps(
+            self.dataset.get_filepaths(),
+            indent=4,
+            separators=(',', ': ')
+        )
+    )
+    self.dataset.set_structure_type(active_button)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.label_button_state" class="doc doc-heading">
+            <code class="highlight language-python">label_button_state()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Only enable the add button once a label and a path were selected</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/DataSetCreatorWindow.py</code></summary>
+              <pre class="highlight"><code class="language-python">def label_button_state(self):
+    """Only enable the add button once a label and a path were selected """
+    # Read name and legend label from gui
+    file_name = self.browseFilesText.toPlainText()
+    file_label = self.labelEdit.text()
+
+    if (file_name != "") and (file_label != ""):
+        self.addLabelBtn.setEnabled(True)
+    else:
+        self.addLabelBtn.setEnabled(False)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="gui.windows.DataSetCreatorWindow.UiDataCreatorWindow.reset" class="doc doc-heading">
+            <code class="highlight language-python">reset()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Completely reset this UI by clearing all elements</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/DataSetCreatorWindow.py</code></summary>
+              <pre class="highlight"><code class="language-python">def reset(self):
+    """ Completely reset this UI by clearing all elements """
+    self.nameEdit.clear()
+    self.labelEdit.clear()
+    self.browseDirText.clear()
+    self.browseFilesText.clear()
+    self.showSetPlainText.clear()
+    self.finish_button_state()</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="gui.windows.qtexteditconsole.QTextEditConsole"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="logging.Handler">Handler</span></code>, <code><span title="PyQt5.QtWidgets.QTextEdit">QTextEdit</span></code></p>
+
+
+
+        <p>QTextEdit-based logging console widget for the GUI.</p>
+<p>This class bridges the <code>logging</code> module with a Qt text widget by:
+- Subclassing both <code>logging.Handler</code> and <code>QTextEdit</code>.
+- Emitting formatted log messages through a dedicated Qt signal
+  (<code>appendTextEdit</code>), which is connected to the widget's <code>append</code> slot.
+- Keeping the text area read-only so it behaves like a console.</p>
+<h3 id="gui.windows.qtexteditconsole.QTextEditConsole--typical-usage">Typical usage</h3>
+<ul>
+<li>Create an instance and add it as a handler to a <code>logging.Logger</code>.</li>
+<li>Configure a formatter for the handler.</li>
+<li>Logged messages will appear in the GUI with the configured format.</li>
+</ul>
+<h3 id="gui.windows.qtexteditconsole.QTextEditConsole--parameters">Parameters</h3>
+<p>parent : QWidget
+    Parent widget that will own this console.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>gui/windows/qtexteditconsole.py</code></summary>
+                <pre class="highlight"><code class="language-python">class QTextEditConsole(logging.Handler, QtWidgets.QTextEdit):
+    """
+    QTextEdit-based logging console widget for the GUI.
+
+    This class bridges the `logging` module with a Qt text widget by:
+    - Subclassing both `logging.Handler` and `QTextEdit`.
+    - Emitting formatted log messages through a dedicated Qt signal
+      (`appendTextEdit`), which is connected to the widget's `append` slot.
+    - Keeping the text area read-only so it behaves like a console.
+
+    Typical usage
+    -------------
+    - Create an instance and add it as a handler to a `logging.Logger`.
+    - Configure a formatter for the handler.
+    - Logged messages will appear in the GUI with the configured format.
+
+    Parameters
+    ----------
+    parent : QWidget
+        Parent widget that will own this console.
+    """
+    appendTextEdit = QtCore.pyqtSignal(str)
+
+    def __init__(self, parent):
+        logging.Handler.__init__(self)
+        super(QtWidgets.QTextEdit, self).__init__(parent)
+
+        self.setReadOnly(True)
+        self.appendTextEdit.connect(self.append)
+
+    def emit(self, record):
+        msg = self.format(record)
+        self.appendTextEdit.emit(msg)</code></pre>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="gui.windows.dialogs.dialog_print.dialog_print"></a>
+    <div class="doc doc-contents first">
+
+        <p>Display text content inside a modal dialog with optional saving.</p>
+<p>The dialog contains:
+- A read-only text editor showing <code>contents</code>.
+- “OK” to close the dialog.
+- “SAVE” to delegate saving via <code>window.save_to_file</code>.</p>
+<h3 id="gui.windows.dialogs.dialog_print.dialog_print--parameters">Parameters</h3>
+<p>window : QMainWindow
+    Parent window providing the save callback.
+title : str
+    Dialog title bar text.
+contents : str
+    Text content to display.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/dialogs/dialog_print.py</code></summary>
+              <pre class="highlight"><code class="language-python">def dialog_print(window: QtWidgets.QMainWindow, title, contents):
+    """
+    Display text content inside a modal dialog with optional saving.
+
+    The dialog contains:
+    - A read-only text editor showing `contents`.
+    - “OK” to close the dialog.
+    - “SAVE” to delegate saving via `window.save_to_file`.
+
+    Parameters
+    ----------
+    window : QMainWindow
+        Parent window providing the save callback.
+    title : str
+        Dialog title bar text.
+    contents : str
+        Text content to display.
+    """
+    # Prepare a text edit widget to host the contents
+    history_text_edit = QtWidgets.QTextEdit(window)
+    history_text_edit.setPlainText(contents)
+
+    # Initialise the window
+    dialog = QtWidgets.QDialog(window)
+    dialog.setWindowTitle(title)
+
+    # Set a default width and minimum height for the dialog
+    dialog.resize(600, 400)
+
+    # Create a QVBoxLayout for the dialog
+    layout = QtWidgets.QVBoxLayout(dialog)
+
+    # Add the QTextEdit widget to the layout
+    layout.addWidget(history_text_edit)
+
+    # Create a QHBoxLayout and host buttons
+    button_layout = QtWidgets.QHBoxLayout()
+    ok_button = QtWidgets.QPushButton("OK")
+    save_button = QtWidgets.QPushButton("SAVE")
+    button_layout.addWidget(ok_button)
+    button_layout.addWidget(save_button)
+
+    # Add the button layout to the main layout
+    layout.addLayout(button_layout)
+
+    # Connect the "OK" button to close the dialog
+    ok_button.clicked.connect(dialog.accept)
+    save_button.clicked.connect(
+        lambda: window.save_to_file(history_text_edit.toPlainText())
+    )
+
+    # Show the dialog
+    dialog.exec_()</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="gui.windows.dialogs.generate_about_dialog.generate_about_dialog"></a>
+    <div class="doc doc-contents first">
+
+        <p>Build and return an 'About' information dialog containing a logo and text.</p>
+<p>Features:
+- Displays an application logo loaded via QPixmap.
+- Shows about text with HTML formatting support.
+- Uses a fixed-size vertical layout.</p>
+<h3 id="gui.windows.dialogs.generate_about_dialog.generate_about_dialog--parameters">Parameters</h3>
+<p>about_contents : str
+    HTML/markdown-like text describing the application.
+centralwidget : QWidget
+    Parent widget for modal behavior.
+logo_path : str
+    Directory path to the logo image file.</p>
+<h3 id="gui.windows.dialogs.generate_about_dialog.generate_about_dialog--returns">Returns</h3>
+<p>QDialog
+    Configured dialog ready to be shown.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>gui/windows/dialogs/generate_about_dialog.py</code></summary>
+              <pre class="highlight"><code class="language-python">def generate_about_dialog(about_contents, centralwidget, logo_path):
+    """
+    Build and return an 'About' information dialog containing a logo and text.
+
+    Features:
+    - Displays an application logo loaded via QPixmap.
+    - Shows about text with HTML formatting support.
+    - Uses a fixed-size vertical layout.
+
+    Parameters
+    ----------
+    about_contents : str
+        HTML/markdown-like text describing the application.
+    centralwidget : QWidget
+        Parent widget for modal behavior.
+    logo_path : str
+        Directory path to the logo image file.
+
+    Returns
+    -------
+    QDialog
+        Configured dialog ready to be shown.
+    """
+    # Create a custom QDialog for the about information
+    about_dialog = QtWidgets.QDialog(centralwidget)
+    about_dialog.setWindowTitle("About")
+
+    # Set the fixed size of the dialog
+    about_dialog.setFixedSize(650, 700)  # Adjust the dimensions as needed
+
+    # Load and set the image using QPixmap (make sure the path is correct)
+    pixmap = QtGui.QPixmap(logo_path + "X_logo_x-lab_baseline_KL.png")
+    pixmap = pixmap.scaled(600, 200, QtCore.Qt.KeepAspectRatio)
+    image_label = QtWidgets.QLabel(about_dialog)
+    image_label.setPixmap(pixmap)
+
+    # Create a QLabel for the text (using HTML formatting)
+    text_label = QtWidgets.QLabel(about_dialog)
+    text_label.setWordWrap(True)
+    text_label.setText(about_contents)
+
+    # Create a QVBoxLayout for the dialog and add the image and text labels
+    layout = QtWidgets.QVBoxLayout(about_dialog)
+    layout.addWidget(image_label)
+    layout.addWidget(text_label)
+
+    about_dialog.setLayout(layout)
+
+    return about_dialog</code></pre>
+            </details>
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../../known_issues/" class="btn btn-neutral float-left" title="Known Issues"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../plot_manager/" class="btn btn-neutral float-right" title="GUI - Plot Manager">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Allyson-Robert/X-LAB_Plotting_Manager" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../../known_issues/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../plot_manager/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
