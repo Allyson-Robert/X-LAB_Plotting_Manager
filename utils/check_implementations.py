@@ -150,24 +150,6 @@ def _import_impl_modules() -> Mapping[str, object]:
             ) from exc
     return modules
 
-def _iter_package_modules(pkg, import_errors=None):
-    """Yield a package and all its submodules, recording import errors."""
-    if import_errors is None:
-        import_errors = {}
-    yield pkg
-    pkg_path = getattr(pkg, "__path__", None)
-    if pkg_path is None:
-        return
-    prefix = pkg.__name__ + "."
-    for info in pkgutil.walk_packages(pkg_path, prefix):
-        try:
-            submod = importlib.import_module(info.name)
-        except Exception as e:  # not just ImportError
-            import_errors[info.name] = e
-            continue
-        else:
-            yield submod
-
 def _find_concrete_subclasses_in_package(
     pkg: object,
     base_classes: Iterable[Type[object]],
