@@ -4,6 +4,9 @@ import importlib, inspect, pkgutil
 from pathlib import Path
 from typing import Iterable, Mapping, Type
 
+from dataclasses import dataclass
+from types import ModuleType
+
 from contracts.data_types import (
     Data,
     DataCore,
@@ -102,6 +105,31 @@ class ImplementationImportError(RuntimeError):
             lines.append(f"  - {name}: {exc!r}")
         super().__init__("\n".join(lines))
 
+@dataclass
+class PackageScanResult:
+    modules: list[ModuleType]
+    import_errors: dict[str, Exception]
+
+def _scan_package(pkg) -> PackageScanResult:
+    modules = []
+    import_errors = {}
+
+    modules.append(pkg)
+    pkg_path = getattr(pkg, "__path__", None)
+    if pkg_path is None:
+        return PackageScanResult(modules, import_errors)
+
+    prefix = pkg.__name__ + "."
+    for info in pkgutil.walk_packages(pkg_path, prefix):
+        try:
+            submod = importlib.import_module(info.name)
+        except Exception as e:
+            import_errors[info.name] = e
+        else:
+            modules.append(submod)
+
+    return PackageScanResult(modules, import_errors)
+
 def _import_impl_modules() -> Mapping[str, object]:
     """Import key implementation packages."""
     names = {
@@ -144,17 +172,20 @@ def _find_concrete_subclasses_in_package(
     pkg: object,
     base_classes: Iterable[Type[object]],
 ) -> list[Type[object]]:
-    """Return all non-abstract subclasses of base_classes found in a package."""
+
+    scan = _scan_package(pkg)
+
+    if scan.import_errors:
+        raise ImplementationImportError(pkg, scan.import_errors)
+
     bases = tuple(base_classes)
     found: list[Type[object]] = []
 
-    for module in _iter_package_modules(pkg):
+    for module in scan.modules:
         for _, cls in inspect.getmembers(module, inspect.isclass):
             if not any(issubclass(cls, b) for b in bases):
                 continue
-            if cls in bases:
-                continue
-            if inspect.isabstract(cls):
+            if cls in bases or inspect.isabstract(cls):
                 continue
             found.append(cls)
 
