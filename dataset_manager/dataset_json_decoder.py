@@ -35,6 +35,8 @@ class DataSetJSONDecoder(JSONDecoder):
             dataset.set_structure_type(dct['structure_type'])
             dataset.set_filepaths(dct['filepaths'])
             dataset.set_colours(dct['colours'])
+            if 'groups' in dct:
+                dataset.set_groups(dct['groups'])
 
             return dataset
 

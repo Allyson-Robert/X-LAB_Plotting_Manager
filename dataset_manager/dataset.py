@@ -15,6 +15,7 @@ class DataSet:
         - User annotations: free-form notes and a simple time-stamped console log.
         - File layout: a mapping from human-readable labels to absolute file paths.
         - Optional colour mapping: label-to-colour mapping for consistent plotting.
+        - Optional grouping: a mapping of labels to user-defined groups (e.g. for batch processing).
         - Structure type: how files are organised on disk (e.g. flat vs. directory-labelled).
 
         The class does *not* interpret the contents of the files; it only tracks their
@@ -67,6 +68,7 @@ class DataSet:
         self.structure_type = None
         self.filepaths = {}
         self.colours = {}
+        self.groups = None
 
     # Setters
     def set_name(self, name: str):
@@ -111,6 +113,11 @@ class DataSet:
         if not isinstance(colours, dict):
             raise ValueError("colours must be a dict")
         self.colours = colours
+        
+    def set_groups(self, groups: dict):
+        if not isinstance(groups, dict):
+            raise ValueError("groups must be a dict")
+        self.groups = groups
 
     def set_location(self, location: str):
         if not isinstance(location, str):
@@ -236,6 +243,16 @@ class DataSet:
     def get_name(self) -> str:
         return self.name
 
+    def get_group(self, label) -> dict:
+        if self.groups is not None:
+            return self.groups[label]
+        return None
+
+    def get_groups(self) -> dict:
+        if self.groups is not None:
+            return self.groups
+        return None
+
     def get_location(self) -> str | None:
         if self.location:
             return self.location
@@ -287,6 +304,18 @@ class DataSet:
         else:
             # Add the file to the dataset and update the gui
             self.colours[label] = colour
+
+    def add_group(self, groups: list[str], label: str):
+        # Initialise groups dict if not already done
+        if self.groups is None:
+            self.groups = {}
+
+        # Checks for duplicate label
+        if label in self.groups.keys():
+            return "Duplicate label found in groups"
+        else:
+            # Add the file to the dataset and update the gui
+            self.groups[label] = groups
 
     # Checks are needed before paths are added to the dataset_manager
     def _check_valid_path(self, path: str):

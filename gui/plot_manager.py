@@ -55,6 +55,9 @@ def plot_manager(window, *args, **kwargs):
         colour = window.dataset.get_single_colour(lbl)
         dataset_selection.add_colour(colour, lbl)
 
+        groups = window.dataset.get_group(lbl)
+        dataset_selection.add_group(groups, lbl)
+
     dataset_selection.set_device(window.dataset.get_device())
     dataset_selection.set_structure_type(window.dataset.get_structure_type())
     dataset_selection.set_name(window.dataset.get_name())
